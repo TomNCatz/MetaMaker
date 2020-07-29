@@ -1,0 +1,49 @@
+{
+  "nodeList": [
+    {
+      "title": "HelpInfo",
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "helpInfo",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Branch",
+            "slotType": 0,
+            "explicitNode": "Branch"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Branch",
+      "fields": [
+        {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Entry",
+          "defaultValue": "Action"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "Info",
+          "minHeight": 40.0,
+          "defaultValue": "Detailed description"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Branches",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Branch",
+            "slotType": 0,
+            "explicitNode": "Branch"
+          }
+        }
+      ]
+    }
+  ]
+}

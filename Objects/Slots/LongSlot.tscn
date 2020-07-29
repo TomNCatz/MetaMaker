@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Code/NodeSlots/LongSlot.cs" type="Script" id=1]
+[ext_resource path="res://DLLs/Growl.cs" type="Script" id=2]
+
+[node name="LongSlot" type="HBoxContainer"]
+margin_right = 138.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("Label")
+_fieldPath = NodePath("Field")
+
+[node name="Label" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 67.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+
+[node name="Field" type="LineEdit" parent="."]
+margin_left = 71.0
+margin_right = 138.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource( 2 )
+_lowestLogLevel = 7

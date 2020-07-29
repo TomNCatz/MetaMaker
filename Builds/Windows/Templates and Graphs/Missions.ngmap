@@ -1,0 +1,380 @@
+{
+  "nodeList": {
+    "0": {
+      "title": "Mission Data",
+      "fields": {
+        "0": {
+          "fieldType": "FIELD_LIST",
+          "label": "missions",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "children",
+            "slotType": 0
+          }
+        }
+      }
+    },
+    "1": {
+      "title": "Mission",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 0
+        },
+        "1": {
+          "fieldType": "KEY",
+          "label": "missionId",
+          "slotType": 0,
+          "keyPrefix": "Mis-",
+          "keySize": 6
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "name",
+          "defaultValue": "Mission Name"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "autoActivate",
+          "defaultValue": false
+        },
+        "4": {
+          "fieldType": "BOOLEAN",
+          "label": "autoTurnIn",
+          "defaultValue": false
+        },
+        "5": {
+          "fieldType": "ENUM",
+          "label": "visibility",
+          "values": {
+            "0": "SHOWN",
+            "1": "HIDDEN_UNTIL_AVAILABLE",
+            "2": "HIDDEN_UNTIL_COMPLETE",
+            "3": "HIDDEN"
+          }
+        },
+        "6": {
+          "fieldType": "FIELD_LIST",
+          "label": "unlockDependencies",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "Mission",
+            "slotType": 0
+          }
+        },
+        "7": {
+          "fieldType": "FIELD_LIST",
+          "label": "objectives",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Objective",
+            "slotType": 1
+          }
+        },
+        "8": {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "displayData",
+          "slotType": 2
+        }
+      }
+    },
+    "2": {
+      "title": "Objective",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "KEY",
+          "label": "objectiveId",
+          "slotType": 1,
+          "keyPrefix": "Obj-",
+          "keySize": 3
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "name",
+          "defaultValue": "Objective Name"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "required",
+          "defaultValue": true
+        },
+        "4": {
+          "fieldType": "ENUM",
+          "label": "visibility",
+          "values": {
+            "0": "SHOWN",
+            "1": "HIDDEN_UNTIL_AVAILABLE",
+            "2": "HIDDEN_UNTIL_COMPLETE",
+            "3": "HIDDEN"
+          }
+        },
+        "5": {
+          "fieldType": "TEXT_LINE",
+          "label": "actionId",
+          "defaultValue": ""
+        },
+        "6": {
+          "fieldType": "BOOLEAN",
+          "label": "canUnComplete",
+          "defaultValue": true
+        },
+        "7": {
+          "fieldType": "BOOLEAN",
+          "label": "canFail",
+          "defaultValue": true
+        },
+        "8": {
+          "fieldType": "BOOLEAN",
+          "label": "hideWhenComplete",
+          "defaultValue": true
+        },
+        "9": {
+          "fieldType": "BOOLEAN",
+          "label": "useTotal",
+          "defaultValue": true
+        },
+        "10": {
+          "fieldType": "BOOLEAN",
+          "label": "showAsTime",
+          "defaultValue": true
+        },
+        "11": {
+          "fieldType": "INT",
+          "label": "highValue",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        "12": {
+          "fieldType": "INT",
+          "label": "lowValue",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        "13": {
+          "fieldType": "FIELD_LIST",
+          "label": "unlockDependencies",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "Objective",
+            "slotType": 1
+          }
+        },
+        "14": {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "displayData",
+          "slotType": 3
+        }
+      }
+    },
+    "3": {
+      "title": "Mission Display Data",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 2
+        }
+      }
+    },
+    "4": {
+      "title": "Objective Display Data",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 3
+        }
+      }
+    }
+  },
+  "data": {
+    "ngMapNodeName": "Mission Data",
+    "ngMapNodePosition": {
+      "x": 80.0,
+      "y": 340.0
+    },
+    "ngMapNodeSize": {
+      "x": 247.0,
+      "y": 84.0
+    },
+    "missions": {
+      "0": {
+        "ngMapNodeName": "Mission",
+        "ngMapNodePosition": {
+          "x": 500.0,
+          "y": 200.0
+        },
+        "ngMapNodeSize": {
+          "x": 323.0,
+          "y": 250.0
+        },
+        "missionId": "Mis-xVC3SI",
+        "name": "Mission 1",
+        "autoActivate": true,
+        "autoTurnIn": false,
+        "visibility": "SHOWN",
+        "unlockDependencies": {},
+        "objectives": {
+          "0": {
+            "ngMapNodeName": "Objective",
+            "ngMapNodePosition": {
+              "x": 1000.0,
+              "y": -60.0
+            },
+            "ngMapNodeSize": {
+              "x": 323.0,
+              "y": 370.0
+            },
+            "objectiveId": "Obj-y7K",
+            "name": "Kill WASPs",
+            "required": true,
+            "visibility": "SHOWN",
+            "actionId": "Killed WASP",
+            "canUnComplete": false,
+            "canFail": false,
+            "hideWhenComplete": false,
+            "useTotal": true,
+            "showAsTime": false,
+            "highValue": 10,
+            "lowValue": 0,
+            "unlockDependencies": {},
+            "displayData": {
+              "ngMapNodeName": "Objective Display Data",
+              "ngMapNodePosition": {
+                "x": 1400.0,
+                "y": 240.0
+              },
+              "ngMapNodeSize": {
+                "x": 191.0,
+                "y": 61.0
+              }
+            }
+          },
+          "1": {
+            "ngMapNodeName": "Objective",
+            "ngMapNodePosition": {
+              "x": 1000.0,
+              "y": 380.0
+            },
+            "ngMapNodeSize": {
+              "x": 323.0,
+              "y": 385.0
+            },
+            "objectiveId": "Obj-qg5",
+            "name": "Kill Queen",
+            "required": true,
+            "visibility": "HIDDEN_UNTIL_AVAILABLE",
+            "actionId": "Killed Queen",
+            "canUnComplete": false,
+            "canFail": false,
+            "hideWhenComplete": false,
+            "useTotal": true,
+            "showAsTime": false,
+            "highValue": 1,
+            "lowValue": 0,
+            "unlockDependencies": {
+              "0": "Obj-y7K"
+            },
+            "displayData": {
+              "ngMapNodeName": "Objective Display Data",
+              "ngMapNodePosition": {
+                "x": 1400.0,
+                "y": 700.0
+              },
+              "ngMapNodeSize": {
+                "x": 191.0,
+                "y": 61.0
+              }
+            }
+          }
+        },
+        "displayData": {
+          "ngMapNodeName": "Mission Display Data",
+          "ngMapNodePosition": {
+            "x": 660.0,
+            "y": 520.0
+          },
+          "ngMapNodeSize": {
+            "x": 188.0,
+            "y": 61.0
+          }
+        }
+      },
+      "1": {
+        "ngMapNodeName": "Mission",
+        "ngMapNodePosition": {
+          "x": 500.0,
+          "y": 880.0
+        },
+        "ngMapNodeSize": {
+          "x": 323.0,
+          "y": 250.0
+        },
+        "missionId": "Mis-z9flzh",
+        "name": "Mission 2",
+        "autoActivate": false,
+        "autoTurnIn": false,
+        "visibility": "SHOWN",
+        "unlockDependencies": {
+          "0": "Mis-xVC3SI"
+        },
+        "objectives": {
+          "0": {
+            "ngMapNodeName": "Objective",
+            "ngMapNodePosition": {
+              "x": 1155.0,
+              "y": 967.1448
+            },
+            "ngMapNodeSize": {
+              "x": 323.0,
+              "y": 370.0
+            },
+            "objectiveId": "Obj-878",
+            "name": "Run from pigs",
+            "required": true,
+            "visibility": "HIDDEN_UNTIL_AVAILABLE",
+            "actionId": "",
+            "canUnComplete": false,
+            "canFail": false,
+            "hideWhenComplete": false,
+            "useTotal": true,
+            "showAsTime": true,
+            "highValue": 600,
+            "lowValue": 0,
+            "unlockDependencies": {},
+            "displayData": {
+              "ngMapNodeName": "Objective Display Data",
+              "ngMapNodePosition": {
+                "x": 1540.0,
+                "y": 1280.0
+              },
+              "ngMapNodeSize": {
+                "x": 191.0,
+                "y": 61.0
+              }
+            }
+          }
+        },
+        "displayData": {
+          "ngMapNodeName": "Mission Display Data",
+          "ngMapNodePosition": {
+            "x": 700.0,
+            "y": 1160.0
+          },
+          "ngMapNodeSize": {
+            "x": 188.0,
+            "y": 61.0
+          }
+        }
+      }
+    }
+  }
+}

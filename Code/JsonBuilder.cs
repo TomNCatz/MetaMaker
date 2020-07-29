@@ -1,0 +1,1094 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Godot;
+using LibT;
+using LibT.Serialization;
+using LibT.Services;
+using RSG;
+using RSG.Exceptions;
+using File = Godot.File;
+
+public class JsonBuilder : Control
+{
+	#region Resources
+	private const string RESENT_SOURCE = "user://Recent.json";
+	
+	private const string DEFAULT_TEMPLATE_SOURCE = "res://Resources/TEMPLATE.tmplt";
+	private const string HELP_INFO_SOURCE = "res://Resources/HelpInfo.json";
+	private const string VERSION = "res://Resources/Version.txt";
+	private const string NODE_SOURCE = "res://Objects/SlottedGraphNode.tscn";
+	
+	private const string SEPARATOR_SOURCE = "res://Objects/Slots/SeparatorSlot.tscn";
+	private const string KEY_SOURCE = "res://Objects/Slots/KeySlot.tscn";
+	private const string KEY_LINK_SOURCE = "res://Objects/Slots/KeyLinkSlot.tscn";
+	private const string LINK_TO_PARENT_SOURCE = "res://Objects/Slots/LinkToParentSlot.tscn";
+	private const string LINK_TO_CHILD_SOURCE = "res://Objects/Slots/LinkToChildSlot.tscn";
+	private const string FIELD_LIST_SOURCE = "res://Objects/Slots/FieldListSlot.tscn";
+	private const string FIELD_DICTIONARY_SOURCE = "res://Objects/Slots/FieldDictionarySlot.tscn";
+	private const string INFO_SOURCE = "res://Objects/Slots/InfoSlot.tscn";
+	private const string AUTO_SOURCE = "res://Objects/Slots/AutoSlot.tscn";
+	private const string TYPE_SOURCE = "res://Objects/Slots/TypeSlot.tscn";
+	private const string ENUM_SOURCE = "res://Objects/Slots/EnumSlot.tscn";
+	private const string TEXT_LINE_SOURCE = "res://Objects/Slots/TextLineSlot.tscn";
+	private const string TEXT_AREA_SOURCE = "res://Objects/Slots/TextAreaSlot.tscn";
+	private const string TEXT_AREA_RICH_SOURCE = "res://Objects/Slots/TextAreaRichSlot.tscn";
+	private const string BOOLEAN_SOURCE = "res://Objects/Slots/BooleanSlot.tscn";
+	private const string INT_SOURCE = "res://Objects/Slots/IntSlot.tscn";
+	private const string FLOAT_SOURCE = "res://Objects/Slots/FloatSlot.tscn";
+	private const string LONG_SOURCE = "res://Objects/Slots/LongSlot.tscn";
+	private const string COLOR_SOURCE = "res://Objects/Slots/ColorSlot.tscn";
+	private const string VECTOR2_SOURCE = "res://Objects/Slots/Vector2Slot.tscn";
+	private const string VECTOR3_SOURCE = "res://Objects/Slots/Vector3Slot.tscn";
+	private const string VECTOR4_SOURCE = "res://Objects/Slots/Vector4Slot.tscn";
+	private const string DATETIME_OFFSET_SOURCE = "res://Objects/Slots/DateTimeOffsetSlot.tscn";
+	private const string DATETIME_SOURCE = "res://Objects/Slots/DateTimeSlot.tscn";
+	private const string TIME_SPAN_SOURCE = "res://Objects/Slots/TimeSpanSlot.tscn";
+
+	private static PackedScene nodeScene;
+	public static PackedScene separatorScene;
+	public static PackedScene keyScene;
+	public static PackedScene keyLinkScene;
+	public static PackedScene linkToParentScene;
+	public static PackedScene linkToChildScene;
+	public static PackedScene fieldListScene;
+	public static PackedScene fieldDictionaryScene;
+	public static PackedScene infoScene;
+	public static PackedScene autoScene;
+	public static PackedScene typeScene;
+	public static PackedScene enumScene;
+	public static PackedScene textLineScene;
+	public static PackedScene textAreaScene;
+	public static PackedScene textAreaRichScene;
+	public static PackedScene booleanScene;
+	public static PackedScene intScene;
+	public static PackedScene floatScene;
+	public static PackedScene longScene;
+	public static PackedScene colorScene;
+	public static PackedScene vector3Scene;
+	public static PackedScene vector4Scene;
+	public static PackedScene vector2Scene;
+	public static PackedScene dateTimeOffsetScene;
+	public static PackedScene dateTimeScene;
+	public static PackedScene timeSpanScene;
+	#endregion
+
+	#region Variables
+	[Export] private NodePath _graphPath;
+	private GraphEdit _graph;
+	[Export] private NodePath _fileMenuButtonPath;
+	private MenuButton _fileMenuButton;
+	[Export] private NodePath _editMenuButtonPath;
+	private MenuButton _editMenuButton;
+	[Export] private NodePath _filePopupPath;
+	private FileDialogExtended _filePopup;
+	[Export] private NodePath _errorPopupPath;
+	private AcceptDialog _errorPopup;
+	[Export] private NodePath _areYouSurePopupPath;
+	private AreYouSurePopup _areYouSurePopup;
+	[Export] private NodePath _helpInfoPopupPath;
+	private HelpPopup _helpInfoPopup;
+	[Export] private NodePath _nodeOptionPath;
+	private OptionButton _nodeOption;
+	[Export] private NodePath _nodeButtonPath;
+	private Button _nodeButton;
+
+	public Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
+	public List<string> _recentFiles = new List<string>();
+	public readonly List<Tuple<KeyLinkSlot, string>> _loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
+	public bool includeNodeData = true;
+	public bool includeGraphData = true;
+	public bool pastingData = false;
+	
+	private Vector2 _offset = new Vector2(50,100);
+	private Vector2 _buffer = new Vector2(40,10);
+	private Dictionary<string,GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
+	private List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
+	private SlottedGraphNode _lastSelection;
+	private GenericDataArray _copied;
+	private PopupMenu _editMenu;
+	private PopupMenu _createSubmenu;
+	private PopupMenu _recentSubmenu;
+	private string _defaultListing;
+	private string _explicitNode;
+
+	private string SaveFilePath
+	{
+		set
+		{
+			_saveFilePath = value;
+			UpdateTitle();
+		}
+		get => _saveFilePath;
+	}
+	private string _saveFilePath;
+
+	private static readonly Color[] _parentChildColors = {Colors.Aquamarine,Colors.Beige,Colors.Gold,Colors.Black,Colors.Firebrick};
+	private static readonly Color[] _keyColors = {Colors.Chartreuse,Colors.Cornflower,Colors.Cornsilk,Colors.Indigo,Colors.HotPink};
+
+
+	public bool HasUnsavedChanges
+	{
+		set
+		{
+			_hasUnsavedChanges = value;
+			UpdateTitle();
+		}
+		get => _hasUnsavedChanges;
+	}
+	private bool _hasUnsavedChanges;
+	#endregion
+
+	#region Setup
+	public override void _Ready()
+	{
+		try
+		{
+			ServiceProvider.Add( this );
+			
+			nodeScene = GD.Load<PackedScene>(NODE_SOURCE);
+			separatorScene = GD.Load<PackedScene>(SEPARATOR_SOURCE);
+			keyScene = GD.Load<PackedScene>(KEY_SOURCE);
+			keyLinkScene = GD.Load<PackedScene>(KEY_LINK_SOURCE);
+			linkToParentScene = GD.Load<PackedScene>(LINK_TO_PARENT_SOURCE);
+			linkToChildScene = GD.Load<PackedScene>(LINK_TO_CHILD_SOURCE);
+			fieldListScene = GD.Load<PackedScene>(FIELD_LIST_SOURCE);
+			fieldDictionaryScene = GD.Load<PackedScene>(FIELD_DICTIONARY_SOURCE);
+			infoScene = GD.Load<PackedScene>(INFO_SOURCE);
+			autoScene = GD.Load<PackedScene>(AUTO_SOURCE);
+			typeScene = GD.Load<PackedScene>(TYPE_SOURCE);
+			enumScene = GD.Load<PackedScene>(ENUM_SOURCE);
+			textLineScene = GD.Load<PackedScene>(TEXT_LINE_SOURCE);
+			textAreaScene = GD.Load<PackedScene>(TEXT_AREA_SOURCE);
+			textAreaRichScene = GD.Load<PackedScene>(TEXT_AREA_RICH_SOURCE);
+			booleanScene = GD.Load<PackedScene>(BOOLEAN_SOURCE);
+			intScene = GD.Load<PackedScene>(INT_SOURCE);
+			floatScene = GD.Load<PackedScene>(FLOAT_SOURCE);
+			longScene = GD.Load<PackedScene>(LONG_SOURCE);
+			colorScene = GD.Load<PackedScene>(COLOR_SOURCE);
+			vector2Scene = GD.Load<PackedScene>(VECTOR2_SOURCE);
+			vector3Scene = GD.Load<PackedScene>(VECTOR3_SOURCE);
+			vector4Scene = GD.Load<PackedScene>(VECTOR4_SOURCE);
+			dateTimeOffsetScene = GD.Load<PackedScene>(DATETIME_OFFSET_SOURCE);
+			dateTimeScene = GD.Load<PackedScene>(DATETIME_SOURCE);
+			timeSpanScene = GD.Load<PackedScene>(TIME_SPAN_SOURCE);
+			
+			_recentSubmenu = new PopupMenu();
+			_recentSubmenu.Name = "RecentMenu";
+			_recentSubmenu.Connect( "id_pressed", this, nameof(OnRecentMenuSelection));
+
+			_fileMenuButton = this.GetNodeFromPath<MenuButton>( _fileMenuButtonPath );
+			PopupMenu menu = _fileMenuButton.GetPopup();
+			menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
+			menu.AddItem( "Build Template (CTRL+N)", 0 );
+			menu.AddItem( "Load Template", 1 );
+			menu.AddItem( "Export as Template", 9 );
+			menu.AddItem( "Shift Template Under Data", 7 );
+			menu.AddSeparator(  );
+			menu.AddItem( "Save Graph (CTRL+S)", 11 );
+			menu.AddItem( "Save Graph As", 2 );
+			menu.AddItem( "Load Graph", 3 );
+			menu.AddChild( _recentSubmenu );
+			menu.AddSubmenuItem( "Recent Graph", "RecentMenu" );
+			menu.AddSeparator(  );
+			menu.AddItem( "Clear Data", 6 );
+			menu.AddItem( "Export Slim JSON", 10 );
+			menu.AddItem( "Export Data to JSON", 4 );
+			menu.AddItem( "Import Data from JSON", 5 );
+			menu.AddSeparator(  );
+			menu.AddItem( "Help and FAQ", 12 );
+			menu.AddItem( "Quit", 8 );
+			
+			_createSubmenu = new PopupMenu();
+			_createSubmenu.Name = "CreateMenu";
+			_createSubmenu.Connect( "id_pressed", this, nameof(OnCreateMenuSelection));
+
+			_editMenuButton = this.GetNodeFromPath<MenuButton>( _editMenuButtonPath );
+			_editMenu = _editMenuButton.GetPopup();
+			_editMenu.Connect( "id_pressed", this, nameof(OnEditMenuSelection));
+			_editMenu.AddChild( _createSubmenu );
+			_editMenu.AddSubmenuItem( "Create", "CreateMenu" );
+			_editMenu.AddItem( "Copy Downstream (CTRL+C)", 0 );
+			_editMenu.AddItem( "Paste Nodes (CTRL+V)", 1 );
+			_editMenu.AddItem( "Delete Node (DEL)", 2 );
+			
+			
+			_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
+			_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
+			_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
+
+			string version = LoadJsonFile( VERSION );
+			_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
+			_helpInfoPopup.Version = version;
+			GenericDataArray helpData = new GenericDataArray();
+			helpData.FromJson( LoadJsonFile( HELP_INFO_SOURCE ) );
+			_helpInfoPopup.LoadFromGda( helpData );
+			
+			_graph = this.GetNodeFromPath<GraphEdit>( _graphPath );
+			_graph.Connect( "connection_request", this, nameof(OnConnectionRequest) );
+			_graph.Connect( "disconnection_request", this, nameof(OnDisconnectionRequest) );
+			_graph.Connect( "node_selected", this, nameof(SelectNode) );
+			_graph.Connect( "node_unselected", this, nameof(DeselectNode) );
+			_graph.Connect( "copy_nodes_request", this, nameof(RequestCopyNode) );
+			_graph.Connect( "paste_nodes_request", this, nameof(RequestPasteNode) );
+			_graph.Connect( "delete_nodes_request", this, nameof(RequestDeleteNode) );
+			_graph.Connect( "gui_input", this, nameof(GraphClick) );
+			
+			_nodeOption = this.GetNodeFromPath<OptionButton>( _nodeOptionPath );
+			
+			_nodeButton = this.GetNodeFromPath<Button>( _nodeButtonPath );
+			_nodeButton.Connect( "pressed", this, nameof(CreateNode) );
+			
+			GetTree().SetAutoAcceptQuit(false);
+			
+			LoadRecents();
+			LoadDefaultTemplate();
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+	
+	public override void _Notification(int what)
+	{
+		if( what == MainLoop.NotificationWmQuitRequest )
+		{
+			RequestQuit();
+		}
+	}
+
+	public override void _Input( InputEvent @event )
+	{
+		try
+		{
+			if( @event is InputEventKey eventKey )
+			{
+				if(!eventKey.IsPressed())
+				{
+					if( eventKey.Control || eventKey.Command )
+					{
+						if( OS.GetScancodeString( eventKey.Scancode ).Equals( "S" ) )
+						{
+							SaveGraph();
+						}
+						else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "N" ) )
+						{
+							LoadDefaultTemplate();
+						}
+						else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "P" ) )
+						{
+							SortNodes();
+						}
+					}
+				}
+			}
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void LoadRecents()
+	{
+		File file = new File();
+		if( !file.FileExists( RESENT_SOURCE ) ) return;
+
+		GenericDataArray gda = new GenericDataArray();
+		gda.FromJson( LoadJsonFile( RESENT_SOURCE ) );
+
+		gda.GetValue( "RecentFiles", out _recentFiles );
+
+		if( _recentFiles.Count <= 0 ) return;
+
+		for( int i = 0; i < _recentFiles.Count; i++ )
+		{
+			if( !file.FileExists( _recentFiles[i] ) )
+			{
+				_recentFiles.RemoveAt( i );
+				i--;
+			}
+		}
+		
+		AddRecentFile( _recentFiles[0] );
+	}
+
+	private void SaveRecents()
+	{
+		GenericDataArray gda = new GenericDataArray();
+		gda.AddValue( "RecentFiles", _recentFiles );
+		
+		SaveJsonFile( RESENT_SOURCE, gda.ToJson() );
+	}
+	#endregion
+
+	#region Buttons
+	private void CreateNode()
+	{
+		try
+		{
+			if( _nodeData.Count <= 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
+
+			CreateNode( _nodeData[_nodeOption.GetItemText(_nodeOption.Selected)] );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void OnFileMenuSelection( int id )
+	{
+		try
+		{
+			switch(id)
+			{
+				case 0 :  LoadDefaultTemplate(); break;
+				case 1 :  PickTemplateToLoad(); break;
+				case 2 :  SaveGraphAs(); break;
+				case 3 :  LoadGraph(); break;
+				case 4 :  ExportDataJson(); break;
+				case 5 :  ImportDataJson(); break;
+				case 6 :  ClearData(); break;
+				case 7 :  ShiftTemplateUnderData(); break;
+				case 8 :  RequestQuit(); break;
+				case 9 :  ExportTemplateJson(); break;
+				case 10 :  
+					includeNodeData = false;
+					ExportDataJson();
+					break;
+				case 11 :  SaveGraph(); break;
+				case 12 :  OpenHelpPopup(); break;
+			}
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void OnEditMenuSelection( int id )
+	{
+		try
+		{
+			switch(id)
+			{
+				case 0 :  RequestCopyNode(); break;
+				case 1 :  RequestPasteNode(); break;
+				case 2 :  RequestDeleteNode(); break;
+			}
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void OnCreateMenuSelection( int id )
+	{
+		try
+		{
+			CreateNode( _nodeData[_createSubmenu.GetItemText( id )] );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void OnRecentMenuSelection( int id )
+	{
+		try
+		{
+			LoadGraph( _recentSubmenu.GetItemText( id ) );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+	
+	private void GraphClick( InputEvent @event )
+	{
+		if( @event is InputEventMouseButton eventMouse )
+		{
+			if(!eventMouse.IsPressed())
+			{
+				_offset = _graph.ScrollOffset + eventMouse.Position;
+				
+				if( eventMouse.ButtonIndex == 2 )
+				{
+					_editMenu.Popup_(  );
+					_editMenu.RectPosition = eventMouse.Position;
+				}
+			}
+		}
+	}
+
+	private void LoadDefaultTemplate()
+	{
+		LoadTemplate( LoadJsonFile( DEFAULT_TEMPLATE_SOURCE ) );
+
+		HasUnsavedChanges = false;
+		SaveFilePath = null;
+	}
+
+	private void PickTemplateToLoad()
+	{
+		_filePopup.Show( new[] { "*.tmplt" }, false, "Open a Template file" )
+			.Then( path =>
+			{
+				LoadTemplate( LoadJsonFile( path ) );
+
+				HasUnsavedChanges = false;
+				SaveFilePath = null;
+			} )
+			.Catch( CatchException );
+	}
+
+	private IPromise CheckIfSavedFirst()
+	{
+		if(!HasUnsavedChanges) return Promise.Resolved();
+		
+		Promise promise = new Promise();
+
+		_areYouSurePopup.Display( 
+			leftPress: () => { SaveGraph().Then( promise.Resolve ); },
+			middlePress: promise.Resolve,
+			rightPress: () => { promise.Reject( new PromiseExpectedError( "cancel" ) ); } 
+			);
+		
+		return promise;
+	}
+	
+	private IPromise SaveGraph()
+	{
+		if( string.IsNullOrEmpty( SaveFilePath ) )
+		{
+			return SaveGraphAs();
+		}
+
+		SaveGraph( SaveFilePath );
+
+		return Promise.Resolved();
+	}
+
+	private IPromise SaveGraphAs()
+	{
+		IPromise promise =
+		_filePopup.Show( new[] { "*.ngmap" }, true, "Save Full Graph" )
+			.Then( SaveGraph );
+		
+		promise.Catch( CatchException );
+		
+		return promise;
+	}
+
+	private void SaveGraph( string path )
+	{
+		try
+		{
+			SaveFilePath = path;
+			includeNodeData = true;
+			includeGraphData = true;
+			var graph = new GenericDataArray();
+
+			// save template
+			graph.AddValue( "defaultListing", _defaultListing );
+			graph.AddValue( "explicitNode", _explicitNode );
+			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
+			graph.AddValue( "nodeList", nodeList );
+					
+			// save data
+			graph.AddValue( "data", SaveData() );
+					
+			string json = graph.ToJson();
+					
+			SaveJsonFile( path, json );
+
+			HasUnsavedChanges = false;
+			
+			AddRecentFile( path );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void LoadGraph()
+	{
+		_filePopup.Show( new[] { "*.ngmap" }, false, "Load Full Graph" )
+			.Then( LoadGraph )
+			.Catch( CatchException );
+	}
+
+	private void LoadGraph( string path )
+	{
+		string json = LoadJsonFile( path );
+
+		LoadTemplate( json );
+
+		var graph = new GenericDataArray();
+		graph.FromJson( json );
+		graph.GetValue( "data", out GenericDataArray data );
+		LoadData( data );
+
+		HasUnsavedChanges = false;
+		SaveFilePath = path;
+		AddRecentFile( path );
+	}
+
+	private void ExportDataJson()
+	{
+		_filePopup.Show( new[] { "*.json" }, true, "Save Data to JSON" )
+			.Then( path =>
+			{
+				includeGraphData = false;
+				SaveJsonFile( path, SaveData().ToJson() );
+			} )
+			.Catch( CatchException );
+	}
+
+	private void ExportTemplateJson()
+	{
+		_filePopup.Show( new[] { "*.tmplt" }, true, "Save Data to Template" )
+			.Then( path =>
+			{
+				includeNodeData = false;
+				includeGraphData = false;
+				SaveJsonFile( path, SaveData().ToJson() );
+			} )
+			.Catch( CatchException );
+	}
+	
+	private void ImportDataJson()
+	{
+		_filePopup.Show( new[] { "*.json" }, false, "Load Data from JSON" )
+			.Then( path =>
+			{
+				ClearData();
+
+				string json = LoadJsonFile( path );
+				var data = new GenericDataArray();
+				data.FromJson( json );
+				LoadData( data );
+
+				this.DelayedInvoke( 0.5f, SortNodes );
+			} )
+			.Catch( CatchException );
+	}
+
+	private void ShiftTemplateUnderData()
+	{
+		_filePopup.Show( new[] { "*.tmplt" }, false, "Select Template File for Use" )
+			.Then( path =>
+			{
+				includeNodeData = true;
+				includeGraphData = true;
+				GenericDataArray data = SaveData();
+				LoadTemplate( LoadJsonFile( path ) );
+				LoadData( data );
+			} )
+			.Catch( CatchException );
+	}
+
+	private void RequestQuit()
+	{
+		SaveRecents();
+		CheckIfSavedFirst()
+			.Then( ()=> GetTree().Quit() );
+	}
+
+	private void ClearData()
+	{
+		generatedKeys.Clear();
+		for( int i = _nodes.Count-1; i >= 0; i-- )
+		{
+			_nodes[i].CloseRequest();
+		}
+		
+		HasUnsavedChanges = false;
+		SaveFilePath = null;
+	}
+
+	private void OpenHelpPopup()
+	{
+		_helpInfoPopup.PopupCentered();
+	}
+
+	private void RequestCopyNode()
+	{
+		if( _lastSelection == null ) return;
+
+		includeNodeData = true;
+		includeGraphData = true;
+	
+		_copied = _lastSelection.GetObjectData();
+	}
+
+	private void RequestPasteNode()
+	{
+		if( _copied == null ) return;
+
+		pastingData = true;
+		
+		int start = _nodes.Count;
+		LoadNode( _copied );
+
+		Vector2 startOffset = _offset - _nodes[start].Offset;
+
+		for( int i = start; i < _nodes.Count; i++ )
+		{
+			_nodes[i].Offset = _nodes[i].Offset + startOffset;
+			_graph.SetSelected( _nodes[i] );
+		}
+
+		pastingData = false;
+	}
+
+	private void RequestDeleteNode()
+	{
+		if( _lastSelection == null ) return;
+		
+		_lastSelection.CloseRequest();
+		
+		HasUnsavedChanges = true;
+	}
+
+	private void SelectNode(Node node)
+	{
+		//Log.LogL( $"Selected {node.Name}" );
+		_lastSelection = node as SlottedGraphNode;
+		
+		HasUnsavedChanges = true;
+	}
+
+	private void DeselectNode(Node node)
+	{
+		//Log.LogL( $"Deselected {node.Name}" );
+		//_lastSelection = null;
+	}
+	#endregion
+
+	#region Helper Functions
+	private SlottedGraphNode CreateNode(GenericDataArray nodeData, GenericDataArray nodeContent = null)
+	{
+		if( nodeData == null ) throw new ArgumentNullException($"CreateNode passed NULL nodeData");
+
+		
+		Node child = nodeScene.Instance();
+		_graph.AddChild(child);
+		var node = child as SlottedGraphNode;
+
+		if(node == null) throw new NullReferenceException("nodeScene is not a SlottedGraphNode");
+		
+		node.Offset = _offset;
+		
+		_nodes.Add( node );
+
+		node.SetSlots( nodeData );
+		HasUnsavedChanges = true;
+
+		if( nodeContent == null ) return node;
+		
+		node.SetObjectData( nodeContent );
+
+		return node;
+	}
+
+	private string LoadJsonFile( string path )
+	{
+		File file = new File();
+		if( !file.FileExists( path ) )
+		{
+			throw new FileNotFoundException($"File '{path}' not found!");
+		}
+		
+		file.Open( path, File.ModeFlags.Read );
+		
+		string json = file.GetAsText();
+		file.Close();
+
+		return json;
+	}
+
+	private void SaveJsonFile( string path, string json )
+	{
+		File file = new File();
+		file.Open( path, File.ModeFlags.Write );
+		
+		file.StoreString( json );
+		file.Close();
+	}
+
+	private void LoadTemplate( string json )
+	{
+		GenericDataArray gda = new GenericDataArray();
+		gda.FromJson( json );
+
+		gda.GetValue( "defaultListing", out _defaultListing );
+		gda.GetValue( "explicitNode", out _explicitNode );
+		
+		if( string.IsNullOrEmpty( _defaultListing ) )
+		{
+			_defaultListing = "listing";
+		}
+		GenericDataArray listing = gda.GetGdo( "nodeList" ) as GenericDataArray;
+
+		LoadTemplate( listing.values.Values.ToList() );
+	}
+
+	private void LoadTemplate(List<GenericDataObject> dataList)
+	{
+		if( dataList == null )
+		{
+			throw new NullReferenceException("LoadTemplate does not accept a null dataList");
+		}
+		
+		ClearData();
+		_nodeOption.Clear();
+		_nodeData.Clear();
+		_createSubmenu.Clear();
+		_createSubmenu.RectSize = Vector2.Zero;
+		
+		foreach( GenericDataObject gdo in dataList )
+		{
+			GenericDataArray item = gdo as GenericDataArray;
+			
+			item.GetValue( "title", out string title );
+			_nodeData.Add( title, item );
+		}
+
+		foreach( KeyValuePair<string,GenericDataArray> dataPair in _nodeData )
+		{
+			_nodeOption.AddItem( dataPair.Key );
+			_createSubmenu.AddItem( dataPair.Key );
+		}
+	}
+
+	private GenericDataArray SaveData()
+	{
+		List<GenericDataArray> parentSlots = new List<GenericDataArray>();
+
+		foreach( SlottedGraphNode node in _nodes )
+		{
+			if( !node.LinkedToParent )
+			{
+				parentSlots.Add( node.GetObjectData() );
+			}
+		}
+
+		if( parentSlots.Count == 1 )
+		{
+			return parentSlots[0];
+		}
+		
+		GenericDataArray gda = new GenericDataArray();
+
+		gda.AddValue( _defaultListing,parentSlots );
+
+		return gda;
+	}
+
+	private void LoadData(GenericDataArray data)
+	{
+		if( data.values.ContainsKey( "ngMapNodeName" ) )
+		{
+			LoadNode( data );
+		}
+		else if(data.values.Count == 1)
+		{
+			string key = data.values.Keys.First();
+			
+			data.GetValue( key, out List<GenericDataArray> items );
+
+			foreach( GenericDataArray item in items )
+			{
+				if( !item.values.ContainsKey( "ngMapNodeName" ) )
+				{
+					item.AddValue( "ngMapNodeName", _explicitNode );
+				}
+				LoadNode( item );
+			}
+		}
+		else
+		{
+			data.AddValue( "ngMapNodeName", _explicitNode );
+			LoadNode( data );
+		}
+
+		foreach( Tuple<KeyLinkSlot,string> loadingLink in _loadingLinks )
+		{
+			LinkToKey( loadingLink.Item1, loadingLink.Item2 );
+		}
+		
+		_loadingLinks.Clear();
+	}
+
+
+	private void CatchException( Exception ex )
+	{
+		if(ex is PromiseExpectedError) return;
+		
+		Log.Except( ex );
+		_errorPopup.DialogText = ex.Message;
+		
+		#if DEBUG
+			_errorPopup.DialogText = $"{ex.Message} \n\n{ex.StackTrace}";
+		#endif
+		
+		_errorPopup.PopupCentered();
+	}
+	
+	private void AddRecentFile( string path )
+	{
+		if( _recentFiles.Contains( path ) )
+		{
+			_recentFiles.Remove( path );
+		}
+		_recentFiles.Insert( 0, path );
+		_recentSubmenu.Clear();
+
+		foreach( string file in _recentFiles )
+		{
+			_recentSubmenu.AddItem( file );
+		}
+
+		if( _recentFiles.Count > 0 )
+		{
+			_filePopup.CurrentDir = _recentFiles[0].Substring( 0, _recentFiles[0].LastIndexOf( '/' ));
+		}
+	}
+
+	private void SortNodes()
+	{
+		Vector2 currentPos = Vector2.Zero;
+		
+		foreach( SlottedGraphNode node in _nodes )
+		{
+			if( !node.LinkedToParent )
+			{
+				Vector2 size = SortChild( node, currentPos );
+				currentPos += new Vector2(0, size.y);
+			}
+		}
+	}
+
+	private void UpdateTitle()
+	{
+		var title = "MetaMaker";
+		if( !string.IsNullOrEmpty( _saveFilePath ) )
+		{
+			title += " - " + _saveFilePath;
+		}
+
+		if( HasUnsavedChanges )
+		{
+			title += "*";
+		}
+		
+		OS.SetWindowTitle( title );
+	}
+
+	private Vector2 SortChild( SlottedGraphNode node, Vector2 corner )
+	{
+		node.Offset = corner;
+		Vector2 sizeMin = node.RectSize + _buffer;
+		corner += new Vector2( sizeMin.x, 0 );
+		float x = 0;
+		float y = 0;
+
+		foreach( SlottedGraphNode child in node.children )
+		{
+			Vector2 size = SortChild( child, new Vector2( 0, y ) + corner );
+			y += size.y + _buffer.y;
+			if( size.x > x )
+			{
+				x = size.x;
+			}
+		}
+
+		if( y < sizeMin.y ) y = sizeMin.y;
+		
+		return new Vector2( x + _buffer.x, y );
+	}
+
+	public SlottedGraphNode LoadNode( GenericDataArray nodeContent )
+	{
+		if( _nodeData.Count <= 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
+
+		nodeContent.GetValue( "ngMapNodeName", out string nodeName );
+
+		if( !_nodeData.ContainsKey( nodeName ) )
+		{
+			throw new ArgumentOutOfRangeException($"'{nodeName}' not found in loaded data");
+		}
+		
+		GenericDataArray nodeData = _nodeData[nodeName];
+		
+		if( nodeData == null ) throw new ArgumentNullException($"Data for '{nodeName}' was null");
+
+		return CreateNode(nodeData, nodeContent);
+	}
+
+	public static Color GetParentChildColor( int slotType )
+	{
+		return _parentChildColors[slotType % _parentChildColors.Length];
+	}
+
+	public static Color GetKeyColor( int slotType )
+	{
+		return _keyColors[slotType % _keyColors.Length];
+	}
+	#endregion
+
+	#region Connections
+	public void OnConnectionRequest( string from, int fromSlot, string to, int toSlot)
+	{
+		Node leftSlot = _graph.GetNode<SlottedGraphNode>( from ).GetSlot( fromSlot );
+		var rightGraph = _graph.GetNode<SlottedGraphNode>( to );
+		Node rightSlot = rightGraph.GetSlot( toSlot );
+
+		if( leftSlot is KeySlot leftKey )
+		{
+			if( !( rightSlot is KeyLinkSlot keyLink ) )
+			{
+				throw new Exception($"{rightSlot.Name} is not a KeyLinkSlot");
+			}
+			if( !keyLink.AddKey( leftKey.GetKey ) ) return;
+
+			_graph.ConnectNode( @from, fromSlot, to, toSlot );
+		}
+		else if( leftSlot is LinkToChildSlot leftLink )
+		{
+			if( !( rightSlot is LinkToParentSlot rightLink) || rightLink.IsLinked ) return;
+			if( !leftLink.LinkChild( rightGraph ) ) return;
+
+			rightLink.Link();
+			_graph.ConnectNode( @from, fromSlot, to, toSlot );
+		}
+	}
+	
+	private void OnDisconnectionRequest( string from, int fromSlot, string to, int toSlot)
+	{
+		Node leftSlot = _graph.GetNode<SlottedGraphNode>( from ).GetSlot( fromSlot );
+		var rightGraph = _graph.GetNode<SlottedGraphNode>( to );
+		Node rightSlot = rightGraph.GetSlot( toSlot );
+
+		if( leftSlot is KeySlot leftKey )
+		{
+			if( !( rightSlot is KeyLinkSlot keyLink ) )
+			{
+				throw new Exception($"{rightSlot.Name} is not a KeyLinkSlot");
+			}
+			if( !keyLink.RemoveKey( leftKey.GetKey ) ) return;
+
+			_graph.DisconnectNode( from, fromSlot, to, toSlot );
+		}
+		else if( leftSlot is LinkToChildSlot leftLink )
+		{
+			if( !( rightSlot is LinkToParentSlot rightLink) || !rightLink.IsLinked ) return;
+			if( !leftLink.UnLinkChild( rightGraph ) ) return;
+
+			rightLink.Unlink();
+			_graph.DisconnectNode( @from, fromSlot, to, toSlot );
+		}
+	}
+
+	public void FreeNode( SlottedGraphNode graphNode )
+	{
+		if( _lastSelection == graphNode )
+		{
+			_lastSelection = null;
+		}
+		
+		Godot.Collections.Array connections = _graph.GetConnectionList();
+		foreach( Godot.Collections.Dictionary connection in connections )
+		{
+			if( Equals( connection["from"], graphNode.Name ) || 
+				Equals( connection["to"], graphNode.Name ) )
+			{
+				OnDisconnectionRequest( (string)connection["from"],
+					(int)connection["from_port"],
+					(string)connection["to"],
+					(int)connection["to_port"] );
+			}
+		}
+
+		_nodes.Remove( graphNode );
+	}
+
+	public List<GraphConnection> GetConnectionsToNode(SlottedGraphNode graphNode)
+	{
+		Godot.Collections.Array fullList = _graph.GetConnectionList();
+		List<GraphConnection> connections = new List<GraphConnection>();
+		
+		foreach( Godot.Collections.Dictionary connection in fullList )
+		{
+			if( !Equals( connection["from"], graphNode.Name ) && 
+			    !Equals( connection["to"], graphNode.Name ) )
+			{
+				continue;
+			}
+
+			var link = new GraphConnection
+			{
+				from = (string)connection["from"],
+				fromPort = (int)connection["from_port"],
+				to = (string)connection["to"],
+				toPort = (int)connection["to_port"]
+			};
+			
+			link.goingRight = Equals( link.from, graphNode.Name );
+			connections.Add( link );
+		}
+
+		return connections;
+	}
+
+	public void BreakConnections(List<GraphConnection> connections)
+	{
+		foreach( GraphConnection connection in connections )
+		{
+			OnDisconnectionRequest( connection.from, connection.fromPort, connection.to, connection.toPort );
+		}
+	}
+
+	public void RebuildConnections(List<GraphConnection> connections)
+	{
+		foreach( GraphConnection connection in connections )
+		{
+			OnConnectionRequest( connection.from, connection.fromPort, connection.to, connection.toPort );
+		}
+	}
+
+	private void LinkToKey( KeyLinkSlot link, string key )
+	{
+		if( !generatedKeys.ContainsKey( key ) )
+		{
+			throw new ArgumentException("Attempting link to key not found",nameof(key));
+		}
+		
+		SlottedGraphNode linkParent = link.GetParent<SlottedGraphNode>();
+		int toSlot = linkParent.GetChildIndex( link );
+
+		if( toSlot < 0 )
+		{
+			throw new ArgumentException($"{link.Name} not found in {linkParent.Name}",nameof(link));
+		}
+		
+		SlottedGraphNode keyParent = generatedKeys[key].GetParent<SlottedGraphNode>();
+		int fromSlot = keyParent.GetChildIndex( generatedKeys[key] );
+		
+		if( fromSlot < 0 )
+		{
+			throw new ArgumentException($"{generatedKeys[key].Name} not found in {keyParent.Name}",nameof(link));
+		}
+		
+		OnConnectionRequest( keyParent.Name, fromSlot ,linkParent.Name, toSlot );
+	}
+	#endregion
+}

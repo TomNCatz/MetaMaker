@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF4BBC8F-A1BF-4ADF-9A6D-BD13953C047A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <OutputPath>.mono\temp\bin\$(Configuration)</OutputPath>
+    <RootNamespace>MetaMaker</RootNamespace>
+    <AssemblyName>MetaMaker</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <GodotProjectGeneratorVersion>1.0.0.0</GodotProjectGeneratorVersion>
+    <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)</IntermediateOutputPath>
+    <ApiConfiguration Condition=" '$(Configuration)' != 'ExportRelease' ">Debug</ApiConfiguration>
+    <ApiConfiguration Condition=" '$(Configuration)' == 'ExportRelease' ">Release</ApiConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportDebug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ExportRelease|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;DEBUG;TOOLS;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies">
+      <Version>1.0.0</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <Reference Include="GodotSharp">
+      <HintPath>$(ProjectDir)\.mono\assemblies\$(ApiConfiguration)\GodotSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Debug' ">
+      <HintPath>$(ProjectDir)\.mono\assemblies\$(ApiConfiguration)\GodotSharpEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="LibT, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>DLLs\LibT.dll</HintPath>
+    </Reference>
+    <Reference Include="LibTGodot, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>DLLs\LibTGodot.dll</HintPath>
+    </Reference>
+    <Reference Include="RSG.Promises, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>DLLs\RSG.Promises.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\AreYouSurePopup.cs" />
+    <Compile Include="Code\FieldDefinition.cs" />
+    <Compile Include="Code\FieldType.cs" />
+    <Compile Include="Code\FileDialogExtended.cs" />
+    <Compile Include="Code\GraphConnection.cs" />
+    <Compile Include="Code\HelpPopup.cs" />
+    <Compile Include="Code\IGdaLoadable.cs" />
+    <Compile Include="Code\ILinkKeySource.cs" />
+    <Compile Include="Code\ILinkKeyTracker.cs" />
+    <Compile Include="Code\ILinkNodeToChild.cs" />
+    <Compile Include="Code\ILinkNodeToPartent.cs" />
+    <Compile Include="Code\JsonBuilder.cs" />
+    <Compile Include="Code\NodeDefinition.cs" />
+    <Compile Include="Code\NodeSlots\AutoSlot.cs" />
+    <Compile Include="Code\NodeSlots\BooleanSlot.cs" />
+    <Compile Include="Code\NodeSlots\ColorSlot.cs" />
+    <Compile Include="Code\NodeSlots\EnumSlot.cs" />
+    <Compile Include="Code\NodeSlots\FieldDictionarySlot.cs" />
+    <Compile Include="Code\NodeSlots\FieldListSlot.cs" />
+    <Compile Include="Code\NodeSlots\FloatSlot.cs" />
+    <Compile Include="Code\NodeSlots\InfoSlot.cs" />
+    <Compile Include="Code\NodeSlots\IntSlot.cs" />
+    <Compile Include="Code\NodeSlots\KeyLinkSlot.cs" />
+    <Compile Include="Code\NodeSlots\KeySlot.cs" />
+    <Compile Include="Code\NodeSlots\LinkToChildSlot.cs" />
+    <Compile Include="Code\NodeSlots\LinkToParentSlot.cs" />
+    <Compile Include="Code\NodeSlots\TextAreaRichSlot.cs" />
+    <Compile Include="Code\NodeSlots\TextAreaSlot.cs" />
+    <Compile Include="Code\NodeSlots\TextLineSlot.cs" />
+    <Compile Include="Code\NodeSlots\Vector2Slot.cs" />
+    <Compile Include="Code\NodeSlots\Vector3Slot.cs" />
+    <Compile Include="Code\NodeSlots\Vector4Slot.cs" />
+    <Compile Include="Code\SlottedGraphNode.cs" />
+    <Compile Include="DLLs\Growl.cs" />
+    <Compile Include="DLLs\NodeExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

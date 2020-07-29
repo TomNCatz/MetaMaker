@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Code/JsonBuilder.cs" type="Script" id=1]
+[ext_resource path="res://DLLs/Growl.cs" type="Script" id=2]
+[ext_resource path="res://Textures/SaveIcon.png" type="Texture" id=3]
+[ext_resource path="res://Objects/ErrorPopup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/FileDialog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/AreYouSurePopup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/HelpPopup.tscn" type="PackedScene" id=7]
+
+[node name="JsonBuilderMain" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 2.10522
+margin_bottom = 2.10522
+color = Color( 0.196078, 0.137255, 0.117647, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_graphPath = NodePath("GraphEdit")
+_fileMenuButtonPath = NodePath("HBoxContainer/FileMenu")
+_editMenuButtonPath = NodePath("HBoxContainer/EditMenu")
+_filePopupPath = NodePath("FileDialog")
+_errorPopupPath = NodePath("ErrorPopup")
+_areYouSurePopupPath = NodePath("AreYouSurePopup")
+_helpInfoPopupPath = NodePath("HelpPopup")
+_nodeOptionPath = NodePath("HBoxContainer/OptionButton")
+_nodeButtonPath = NodePath("HBoxContainer/Button")
+
+[node name="Growl" type="Node" parent="."]
+script = ExtResource( 2 )
+_lowestLogLevel = 7
+_logFile = "LogData"
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 38.0
+right_disconnects = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 38.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileMenu" type="MenuButton" parent="HBoxContainer"]
+margin_right = 70.0
+margin_bottom = 38.0
+text = "File"
+icon = ExtResource( 3 )
+flat = false
+switch_on_hover = true
+
+[node name="EditMenu" type="MenuButton" parent="HBoxContainer"]
+margin_left = 74.0
+margin_right = 110.0
+margin_bottom = 38.0
+text = "Edit"
+flat = false
+switch_on_hover = true
+
+[node name="ColorRect" type="Control" parent="HBoxContainer"]
+margin_left = 114.0
+margin_right = 134.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 20, 0 )
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
+margin_left = 138.0
+margin_right = 238.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+margin_left = 242.0
+margin_right = 358.0
+margin_bottom = 38.0
+text = "Make New Node"
+
+[node name="ErrorPopup" parent="." instance=ExtResource( 4 )]
+
+[node name="FileDialog" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="AreYouSurePopup" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[node name="HelpPopup" parent="." instance=ExtResource( 7 )]

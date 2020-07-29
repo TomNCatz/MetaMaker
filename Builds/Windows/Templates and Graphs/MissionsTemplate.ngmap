@@ -1,0 +1,1329 @@
+{
+  "nodeList": [
+    {
+      "title": "Graph",
+      "fields": {
+        "0": {
+          "fieldType": "FIELD_LIST",
+          "label": "nodeList",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 0,
+            "explicitNode": "Node"
+          }
+        }
+      }
+    },
+    {
+      "title": "Node",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 0
+        },
+        "1": {
+          "fieldType": "TEXT_LINE",
+          "label": "title",
+          "defaultValue": "Node"
+        },
+        "2": {
+          "fieldType": "FIELD_LIST",
+          "label": "fields",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 1,
+            "explicitNode": ""
+          }
+        }
+      }
+    },
+    {
+      "title": "Separator Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SEPARATOR"
+        }
+      }
+    },
+    {
+      "title": "Key Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "id"
+        },
+        "3": {
+          "fieldType": "INT",
+          "label": "slotType",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        "4": {
+          "fieldType": "TEXT_LINE",
+          "label": "keyPrefix",
+          "defaultValue": ""
+        },
+        "5": {
+          "fieldType": "INT",
+          "label": "keySize",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 1,
+          "defaultValue": 1
+        }
+      }
+    },
+    {
+      "title": "Key Tracker Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_TRACKER"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "target"
+        },
+        "3": {
+          "fieldType": "INT",
+          "label": "slotType",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        }
+      }
+    },
+    {
+      "title": "Link To Parent Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LINK_TO_PARENT"
+        },
+        "2": {
+          "fieldType": "INT",
+          "label": "slotType",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        }
+      }
+    },
+    {
+      "title": "Link To Child Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LINK_TO_CHILD"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children"
+        },
+        "3": {
+          "fieldType": "INT",
+          "label": "slotType",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        "4": {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        }
+      }
+    },
+    {
+      "title": "Field List Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FIELD_LIST"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Fields"
+        },
+        "3": {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "field",
+          "slotType": 1,
+          "explicitNode": ""
+        }
+      }
+    },
+    {
+      "title": "Field Dictionary Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FIELD_DICTIONARY"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Fields"
+        },
+        "3": {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "field",
+          "slotType": 1,
+          "explicitNode": ""
+        }
+      }
+    },
+    {
+      "title": "Info Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "INFO"
+        },
+        "2": {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "label",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        },
+        "3": {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0
+        }
+      }
+    },
+    {
+      "title": "Auto Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "AUTO"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "text"
+        },
+        "3": {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultValue",
+          "defaultValue": "default"
+        }
+      }
+    },
+    {
+      "title": "Enum Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "ENUM"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Type"
+        },
+        "3": {
+          "fieldType": "FIELD_LIST",
+          "label": "values",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "ENUM"
+          }
+        }
+      }
+    },
+    {
+      "title": "Text Line Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_LINE"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "String"
+        },
+        "3": {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultValue",
+          "defaultValue": "String"
+        }
+      }
+    },
+    {
+      "title": "Text Area Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_AREA"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Some text"
+        },
+        "3": {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0
+        },
+        "4": {
+          "fieldType": "TEXT_AREA",
+          "label": "defaultValue",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        }
+      }
+    },
+    {
+      "title": "Rich Text Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_AREA_RICH"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Some text"
+        },
+        "3": {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0
+        },
+        "4": {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "defaultValue",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        }
+      }
+    },
+    {
+      "title": "Float Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FLOAT"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "B-aH6"
+        },
+        "4": {
+          "fieldType": "FLOAT",
+          "label": "max",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        "5": {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "B-2hF"
+        },
+        "6": {
+          "fieldType": "FLOAT",
+          "label": "min",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        "7": {
+          "fieldType": "FLOAT",
+          "label": "defaultValue",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        }
+      }
+    },
+    {
+      "title": "Int Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "INT"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "B-zqM"
+        },
+        "4": {
+          "fieldType": "INT",
+          "label": "max",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        "5": {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "B-Y2e"
+        },
+        "6": {
+          "fieldType": "INT",
+          "label": "min",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        "7": {
+          "fieldType": "INT",
+          "label": "defaultValue",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        }
+      }
+    },
+    {
+      "title": "Long Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LONG"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "allowNegative",
+          "defaultValue": true,
+          "id": "B-zqM"
+        },
+        "4": {
+          "fieldType": "LONG",
+          "label": "defaultValue",
+          "allowNegative": true,
+          "defaultValue": 0
+        }
+      }
+    },
+    {
+      "title": "Boolean Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "BOOLEAN"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "IsActive"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "defaultValue",
+          "defaultValue": false,
+          "id": "B-SAC"
+        },
+        "4": {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "BOOL-",
+          "keySize": 3
+        }
+      }
+    },
+    {
+      "title": "Linked Boolean Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "BOOLEAN"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "IsActive"
+        },
+        "3": {
+          "fieldType": "BOOLEAN",
+          "label": "defaultValue",
+          "defaultValue": false,
+          "id": "B-Ili"
+        },
+        "4": {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "BOOL-",
+          "keySize": 3
+        },
+        "5": {
+          "fieldType": "FIELD_LIST",
+          "label": "matchTrue",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "true when true",
+            "slotType": 0
+          }
+        },
+        "6": {
+          "fieldType": "FIELD_LIST",
+          "label": "invertTrue",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "false when true",
+            "slotType": 0
+          }
+        },
+        "7": {
+          "fieldType": "FIELD_LIST",
+          "label": "matchFalse",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "false when false",
+            "slotType": 0
+          }
+        },
+        "8": {
+          "fieldType": "FIELD_LIST",
+          "label": "invertFalse",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "true when false",
+            "slotType": 0
+          }
+        }
+      }
+    },
+    {
+      "title": "Color Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "COLOR"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Color"
+        },
+        "3": {
+          "fieldType": "COLOR",
+          "label": "defaultValue",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false
+        },
+        "4": {
+          "fieldType": "BOOLEAN",
+          "label": "asHtml",
+          "defaultValue": false,
+          "id": "B-Dog"
+        }
+      }
+    },
+    {
+      "title": "Date Time Offset Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DATE_TIME_OFFSET"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Date"
+        },
+        "3": {
+          "fieldType": "DATE_TIME_OFFSET",
+          "label": "defaultValue",
+          "defaultValue": {
+            "date": "2020-07-16T14:34:11.0000000",
+            "offset": "-07:00"
+          }
+        }
+      }
+    },
+    {
+      "title": "Date Time Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DATE_TIME"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Date"
+        },
+        "3": {
+          "fieldType": "DATE_TIME",
+          "label": "defaultValue",
+          "defaultValue": {
+            "date": "2020-07-16T14:34:16.0000000",
+            "offset": "-00:00"
+          }
+        }
+      }
+    },
+    {
+      "title": "Time Span Slot",
+      "fields": {
+        "0": {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        "1": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TIME_SPAN"
+        },
+        "2": {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Duration"
+        },
+        "3": {
+          "fieldType": "TIME_SPAN",
+          "label": "defaultValue",
+          "defaultValue": 0
+        }
+      }
+    }
+  ],
+  "data": {
+    "ngMapNodeName": "Graph",
+    "ngMapNodePosition": {
+      "x": -140.0,
+      "y": 680.0
+    },
+    "ngMapNodeSize": {
+      "x": 244.0,
+      "y": 129.0
+    },
+    "nodeList": [
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 0.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 109.0
+        },
+        "title": "Mission Container",
+        "fields": [
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 640.0,
+              "y": 0.0
+            },
+            "ngMapNodeSize": {
+              "x": 187.999878,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "missions",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 840.0,
+                "y": 0.0
+              },
+              "ngMapNodeSize": {
+                "x": 194.0,
+                "y": 134.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "children",
+              "slotType": 0,
+              "explicitNode": ""
+            }
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 200.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 229.0
+        },
+        "title": "Mission",
+        "fields": [
+          {
+            "ngMapNodeName": "Link To Parent Slot",
+            "ngMapNodePosition": {
+              "x": 660.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 203.0,
+              "y": 84.0
+            },
+            "fieldType": "LINK_TO_PARENT",
+            "slotType": 0
+          },
+          {
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 159.0
+            },
+            "fieldType": "KEY",
+            "label": "missionId",
+            "slotType": 0,
+            "keyPrefix": "Mis-",
+            "keySize": 6
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 680.0,
+              "y": 280.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "name",
+            "defaultValue": "Mission Name"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 160.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "autoActivate",
+            "defaultValue": false,
+            "id": "BOOL-8oX"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 300.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "autoTurnIn",
+            "defaultValue": false,
+            "id": "BOOL-R1r"
+          },
+          {
+            "ngMapNodeName": "Enum Slot",
+            "ngMapNodePosition": {
+              "x": 820.0,
+              "y": 380.0
+            },
+            "ngMapNodeSize": {
+              "x": 230.0,
+              "y": 209.0
+            },
+            "fieldType": "ENUM",
+            "label": "visibility",
+            "values": [
+              "SHOWN",
+              "HIDDEN_UNTIL_AVAILABLE",
+              "HIDDEN_UNTIL_COMPLETE",
+              "HIDDEN"
+            ]
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 1060.0,
+              "y": 460.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "unlockDependencies",
+            "field": {
+              "ngMapNodeName": "Key Tracker Slot",
+              "ngMapNodePosition": {
+                "x": 1260.0,
+                "y": 440.0
+              },
+              "ngMapNodeSize": {
+                "x": 188.000122,
+                "y": 109.0
+              },
+              "fieldType": "KEY_TRACKER",
+              "label": "Mission",
+              "slotType": 0
+            }
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 1060.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "objectives",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 1260.0,
+                "y": 560.0
+              },
+              "ngMapNodeSize": {
+                "x": 194.000122,
+                "y": 134.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "Objective",
+              "slotType": 1,
+              "explicitNode": ""
+            }
+          },
+          {
+            "ngMapNodeName": "Link To Child Slot",
+            "ngMapNodePosition": {
+              "x": 1500.0,
+              "y": 440.0
+            },
+            "ngMapNodeSize": {
+              "x": 194.0,
+              "y": 134.0
+            },
+            "fieldType": "LINK_TO_CHILD",
+            "label": "displayData",
+            "slotType": 2,
+            "explicitNode": ""
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 720.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 319.0
+        },
+        "title": "Objective",
+        "fields": [
+          {
+            "ngMapNodeName": "Link To Parent Slot",
+            "ngMapNodePosition": {
+              "x": 680.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 203.0,
+              "y": 84.0
+            },
+            "fieldType": "LINK_TO_PARENT",
+            "slotType": 1
+          },
+          {
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodePosition": {
+              "x": 900.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 159.0
+            },
+            "fieldType": "KEY",
+            "label": "objectiveId",
+            "slotType": 1,
+            "keyPrefix": "Obj-",
+            "keySize": 3
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 800.0
+            },
+            "ngMapNodeSize": {
+              "x": 187.999878,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "name",
+            "defaultValue": "Objective Name"
+          },
+          {
+            "ngMapNodeName": "Linked Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 262.0,
+              "y": 239.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "required",
+            "defaultValue": false,
+            "id": "BOOL-0Lr",
+            "matchTrue": [],
+            "invertTrue": [],
+            "matchFalse": [
+              "BOOL-0Lr"
+            ],
+            "invertFalse": []
+          },
+          {
+            "ngMapNodeName": "Enum Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 230.000122,
+              "y": 209.0
+            },
+            "fieldType": "ENUM",
+            "label": "visibility",
+            "values": [
+              "SHOWN",
+              "HIDDEN_UNTIL_AVAILABLE",
+              "HIDDEN_UNTIL_COMPLETE",
+              "HIDDEN"
+            ]
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 900.0
+            },
+            "ngMapNodeSize": {
+              "x": 187.999878,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "actionId",
+            "defaultValue": ""
+          },
+          {
+            "ngMapNodeName": "Linked Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 960.0
+            },
+            "ngMapNodeSize": {
+              "x": 262.0,
+              "y": 254.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "canFail",
+            "defaultValue": false,
+            "id": "BOOL-0Lr",
+            "matchTrue": [
+              "BOOL-0Lr",
+              "BOOL-0Lr"
+            ],
+            "invertTrue": [],
+            "matchFalse": [],
+            "invertFalse": []
+          },
+          {
+            "ngMapNodeName": "Linked Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 1220.0
+            },
+            "ngMapNodeSize": {
+              "x": 262.0,
+              "y": 239.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "canUnComplete",
+            "defaultValue": false,
+            "id": "BOOL-0Lr",
+            "matchTrue": [],
+            "invertTrue": [],
+            "matchFalse": [
+              "BOOL-0Lr"
+            ],
+            "invertFalse": []
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 920.0,
+              "y": 1000.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "hideWhenComplete",
+            "defaultValue": true,
+            "id": "BOOL-6AS"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 1000.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "useTotal",
+            "defaultValue": true,
+            "id": "BOOL-P6x"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1320.0,
+              "y": 1000.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.000122,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "showAsTime",
+            "defaultValue": true,
+            "id": "BOOL-DUr"
+          },
+          {
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodePosition": {
+              "x": 860.0,
+              "y": 1160.0
+            },
+            "ngMapNodeSize": {
+              "x": 189.0,
+              "y": 209.0
+            },
+            "fieldType": "INT",
+            "label": "highValue",
+            "hasMax": false,
+            "max": 0,
+            "hasMin": false,
+            "min": 0,
+            "defaultValue": 0
+          },
+          {
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodePosition": {
+              "x": 660.0,
+              "y": 1160.0
+            },
+            "ngMapNodeSize": {
+              "x": 189.0,
+              "y": 209.0
+            },
+            "fieldType": "INT",
+            "label": "lowValue",
+            "hasMax": false,
+            "max": 0,
+            "hasMin": false,
+            "min": 0,
+            "defaultValue": 0
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 1140.0,
+              "y": 1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "unlockDependencies",
+            "field": {
+              "ngMapNodeName": "Key Tracker Slot",
+              "ngMapNodePosition": {
+                "x": 1340.0,
+                "y": 1180.0
+              },
+              "ngMapNodeSize": {
+                "x": 188.000122,
+                "y": 109.0
+              },
+              "fieldType": "KEY_TRACKER",
+              "label": "Objective",
+              "slotType": 1
+            }
+          },
+          {
+            "ngMapNodeName": "Link To Child Slot",
+            "ngMapNodePosition": {
+              "x": 1140.0,
+              "y": 1300.0
+            },
+            "ngMapNodeSize": {
+              "x": 194.0,
+              "y": 134.0
+            },
+            "fieldType": "LINK_TO_CHILD",
+            "label": "displayData",
+            "slotType": 3,
+            "explicitNode": ""
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1500.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 109.0
+        },
+        "title": "Mission Display Data",
+        "fields": [
+          {
+            "ngMapNodeName": "Link To Parent Slot",
+            "ngMapNodePosition": {
+              "x": 680.0,
+              "y": 1540.0
+            },
+            "ngMapNodeSize": {
+              "x": 203.0,
+              "y": 84.0
+            },
+            "fieldType": "LINK_TO_PARENT",
+            "slotType": 2
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1700.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 109.0
+        },
+        "title": "Objective Display Data",
+        "fields": [
+          {
+            "ngMapNodeName": "Link To Parent Slot",
+            "ngMapNodePosition": {
+              "x": 680.0,
+              "y": 1740.0
+            },
+            "ngMapNodeSize": {
+              "x": 203.0,
+              "y": 84.0
+            },
+            "fieldType": "LINK_TO_PARENT",
+            "slotType": 3
+          }
+        ]
+      }
+    ]
+  }
+}

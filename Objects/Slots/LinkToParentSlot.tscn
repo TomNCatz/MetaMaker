@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeSlots/LinkToParentSlot.cs" type="Script" id=1]
+
+
+[node name="LinkToParentSlot" type="Label"]
+margin_top = 13.0
+margin_right = 40.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "Link To Parent"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

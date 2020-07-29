@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/HelpPopup.cs" type="Script" id=1]
+
+[node name="HelpPopup" type="WindowDialog"]
+margin_right = 967.0
+margin_bottom = 559.0
+window_title = "Help and Info"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_treePath = NodePath("../HelpPopup/ScrollContainer/HBoxContainer/Tree")
+_infoPath = NodePath("../HelpPopup/ScrollContainer/HBoxContainer/Info")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+margin_right = 967.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="ScrollContainer/HBoxContainer"]
+margin_right = 481.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Info" type="Label" parent="ScrollContainer/HBoxContainer"]
+margin_left = 485.0
+margin_right = 967.0
+margin_bottom = 559.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+align = 1
+valign = 1
