@@ -212,8 +212,7 @@ public class JsonBuilder : Control
 			_editMenu.AddItem( "Copy Downstream (CTRL+C)", 0 );
 			_editMenu.AddItem( "Paste Nodes (CTRL+V)", 1 );
 			_editMenu.AddItem( "Delete Node (DEL)", 2 );
-			
-			
+
 			_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
 			_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
 			_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
@@ -385,7 +384,7 @@ public class JsonBuilder : Control
 			CatchException( e );
 		}
 	}
-
+	
 	private void OnCreateMenuSelection( int id )
 	{
 		try
