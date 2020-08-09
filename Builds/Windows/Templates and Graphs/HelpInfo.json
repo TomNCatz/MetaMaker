@@ -496,6 +496,54 @@
           ]
         },
         {
+          "Entry": "Vector2 Slot",
+          "Info": "Stores two decimal values as a vector",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Vector3 Slot",
+          "Info": "Stores three decimal values as a vector",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Vector4 Slot",
+          "Info": "Stores four decimal values as a vector",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
           "Entry": "Color Slot",
           "Info": "Stores a color",
           "Branches": [

@@ -1,4 +1,6 @@
 {
+  "defaultListing": "listing",
+  "explicitNode": {},
   "nodeList": [
     {
       "title": "HelpInfo",
@@ -302,7 +304,7 @@
               "y": 200.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Paste Nodes (CTRL+V)",
@@ -333,7 +335,7 @@
         },
         "ngMapNodeSize": {
           "x": 248.0,
-          "y": 513.0
+          "y": 558.0
         },
         "Entry": "Nodes",
         "Info": "Descriptions of the different Template nodes \nand their purpose",
@@ -1411,20 +1413,20 @@
             "ngMapNodeName": "Branch",
             "ngMapNodePosition": {
               "x": 2600.0,
-              "y": 3680.0
+              "y": 3700.0
             },
             "ngMapNodeSize": {
               "x": 248.0,
-              "y": 208.0
+              "y": 183.0
             },
-            "Entry": "Color Slot",
-            "Info": "Stores a color",
+            "Entry": "Vector2 Slot",
+            "Info": "Stores two decimal values as a vector",
             "Branches": [
               {
                 "ngMapNodeName": "Branch",
                 "ngMapNodePosition": {
                   "x": 2860.0,
-                  "y": 3680.0
+                  "y": 3700.0
                 },
                 "ngMapNodeSize": {
                   "x": 248.0,
@@ -1438,7 +1440,7 @@
                 "ngMapNodeName": "Branch",
                 "ngMapNodePosition": {
                   "x": 3120.0,
-                  "y": 3680.0
+                  "y": 3700.0
                 },
                 "ngMapNodeSize": {
                   "x": 248.0,
@@ -1446,20 +1448,6 @@
                 },
                 "Entry": "defaultValue",
                 "Info": "Starting value for this slot",
-                "Branches": []
-              },
-              {
-                "ngMapNodeName": "Branch",
-                "ngMapNodePosition": {
-                  "x": 3380.0,
-                  "y": 3680.0
-                },
-                "ngMapNodeSize": {
-                  "x": 248.0,
-                  "y": 163.0
-                },
-                "Entry": "asHtml",
-                "Info": "If false will save as an object with RGBA values between 0 and 1\nIf true will save as an html string in the format #AARRGGBB",
                 "Branches": []
               }
             ]
@@ -1474,8 +1462,8 @@
               "x": 248.0,
               "y": 183.0
             },
-            "Entry": "Date Time Offset Slot",
-            "Info": "Stores a DateTimeOffset",
+            "Entry": "Vector3 Slot",
+            "Info": "Stores three decimal values as a vector",
             "Branches": [
               {
                 "ngMapNodeName": "Branch",
@@ -1517,8 +1505,8 @@
               "x": 248.0,
               "y": 183.0
             },
-            "Entry": "Date Time Slot",
-            "Info": "Stores a DateTime without offset",
+            "Entry": "Vector4 Slot",
+            "Info": "Stores four decimal values as a vector",
             "Branches": [
               {
                 "ngMapNodeName": "Branch",
@@ -1558,10 +1546,10 @@
             },
             "ngMapNodeSize": {
               "x": 248.0,
-              "y": 183.0
+              "y": 208.0
             },
-            "Entry": "Time Span Slot",
-            "Info": "Stores a span of time as ticks\nThere are 10,000,000 in a second",
+            "Entry": "Color Slot",
+            "Info": "Stores a color",
             "Branches": [
               {
                 "ngMapNodeName": "Branch",
@@ -1582,6 +1570,149 @@
                 "ngMapNodePosition": {
                   "x": 3120.0,
                   "y": 4420.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 4420.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "asHtml",
+                "Info": "If false will save as an object with RGBA values between 0 and 1\nIf true will save as an html string in the format #AARRGGBB",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 4680.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Date Time Offset Slot",
+            "Info": "Stores a DateTimeOffset",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 4680.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 4680.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 4920.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Date Time Slot",
+            "Info": "Stores a DateTime without offset",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 4920.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 4920.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 5160.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Time Span Slot",
+            "Info": "Stores a span of time as ticks\nThere are 10,000,000 in a second",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 5160.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 5160.0
                 },
                 "ngMapNodeSize": {
                   "x": 248.0,
