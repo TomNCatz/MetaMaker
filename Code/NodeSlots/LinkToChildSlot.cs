@@ -73,9 +73,7 @@ namespace LibT
 				
 				data.AddValue( "ngMapNodeName", _explicitNode );
 			}
-			
-			//SlottedGraphNode parent = GetParent<SlottedGraphNode>();
-			
+
 			SlottedGraphNode node = _builderInjection.Get.LoadNode( data );
 
 			_builderInjection.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);

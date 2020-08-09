@@ -2,7 +2,7 @@ using Godot;
 using LibT;
 using LibT.Serialization;
 
-public class Vector2Slot : Container, IGdaLoadable
+public class Vector2Slot : Container, IGdaLoadable, IGdoConvertible
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -23,11 +23,23 @@ public class Vector2Slot : Container, IGdaLoadable
 	{
 		data.GetValue( "label", out string label );
 		_label.Text = label;
-			
-		GenericDataArray gda = data.GetGdo( "defaultValue" ) as GenericDataArray;
-		gda.GetValue( "x", out float x );
-		gda.GetValue( "y", out float y );
-		_x.Value = x;
-		_y.Value = y;
+
+		data.GetValue( "defaultValue", out Vector2 vector );
+		_x.Value = vector.x;
+		_y.Value = vector.y;
+	}
+
+	public void GetObjectData( GenericDataArray objData )
+	{
+		LibT.Maths.Vector2 vector = new Vector2((float)_x.Value,(float)_y.Value);
+		objData.AddValue( _label.Text, vector );
+	}
+
+	public void SetObjectData( GenericDataArray objData )
+	{
+		objData.GetValue( _label.Text, out Vector2 vector );
+
+		_x.Value = vector.x;
+		_y.Value = vector.y;
 	}
 }

@@ -1,8 +1,10 @@
 using Godot;
 using LibT;
+using LibT.Maths;
 using LibT.Serialization;
+using Color = Godot.Color;
 
-public class Vector4Slot : Container, IGdaLoadable
+public class Vector4Slot : Container, IGdaLoadable, IGdoConvertible
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -29,15 +31,27 @@ public class Vector4Slot : Container, IGdaLoadable
 	{
 		data.GetValue( "label", out string label );
 		_label.Text = label;
-			
-		GenericDataArray gda = data.GetGdo( "defaultValue" ) as GenericDataArray;
-		gda.GetValue( "x", out float x );
-		gda.GetValue( "y", out float y );
-		gda.GetValue( "z", out float z );
-		gda.GetValue( "w", out float w );
-		_x.Value = x;
-		_y.Value = y;
-		_z.Value = z;
-		_w.Value = w;
+		
+		data.GetValue( "defaultValue", out Vector4 vector );
+		_x.Value = vector.x;
+		_y.Value = vector.y;
+		_z.Value = vector.z;
+		_w.Value = vector.w;
+	}
+
+	public void GetObjectData( GenericDataArray objData )
+	{
+		LibT.Maths.Vector4 vector = new Vector4((float)_x.Value,(float)_y.Value,(float)_z.Value,(float)_w.Value);
+		objData.AddValue( _label.Text, vector );
+	}
+
+	public void SetObjectData( GenericDataArray objData )
+	{
+		objData.GetValue( _label.Text, out Vector4 vector );
+
+		_x.Value = vector.x;
+		_y.Value = vector.y;
+		_z.Value = vector.z;
+		_w.Value = vector.w;
 	}
 }

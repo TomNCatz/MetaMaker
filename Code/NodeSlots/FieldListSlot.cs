@@ -48,7 +48,7 @@ namespace LibT
 
 			foreach( Node node in _children )
 			{
-				if(node == null) continue;
+				if( node == null ) continue;
 
 				if( !( node is IGdoConvertible convertible ) ) continue;
 

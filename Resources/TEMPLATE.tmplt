@@ -686,6 +686,90 @@
       ]
     },
     {
+      "title": "Vector2 Slot",
+      "fields": [
+        {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR2"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector"
+        },
+        {
+          "fieldType": "VECTOR2",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "title": "Vector3 Slot",
+      "fields": [
+        {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR3"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector"
+        },
+        {
+          "fieldType": "VECTOR3",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "title": "Vector4 Slot",
+      "fields": [
+        {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR4"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector"
+        },
+        {
+          "fieldType": "VECTOR4",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          }
+        }
+      ]
+    },
+    {
       "title": "Color Slot",
       "fields": [
         {

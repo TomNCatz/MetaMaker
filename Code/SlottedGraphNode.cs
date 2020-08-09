@@ -257,10 +257,14 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 
 		if( index < 0 ) return;
 		
+		var connections = _builder.GetConnectionsToNode( this );
+		_builder.BreakConnections( connections );
+		
 		ShiftSlotsUp( index );
 
 		slots.Remove( child );
 		child.QueueFree();
+		ShiftConnections( index, connections, true );
 	}
 	
 	public int GetChildIndex( Node child )
@@ -279,9 +283,6 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 
     private void ShiftSlotsDown(int start)
     {
-	    var connections = _builder.GetConnectionsToNode( this );
-	    _builder.BreakConnections( connections );
-	    
 	    for( int i = slots.Count-2; i >= start; i-- )
 	    {
 		    int leftType = GetSlotTypeLeft( i );
@@ -335,9 +336,6 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
     
     private void ShiftSlotsUp(int start)
     {
-	    var connections = _builder.GetConnectionsToNode( this );
-	    _builder.BreakConnections( connections );
-	    
 	    for( int i = start+1; i < slots.Count; i++ )
 	    {
 		    int leftType = GetSlotTypeLeft( i );
@@ -349,8 +347,6 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 			    true, leftType, leftColor, 
 			    true, rightType, rightColor );
 	    }
-
-	    ShiftConnections( start, connections, true );
     }
 
     public void CloseRequest()
