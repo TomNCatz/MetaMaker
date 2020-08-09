@@ -95,6 +95,7 @@ public class JsonBuilder : Control
 	private Button _nodeButton;
 
 	public Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
+	public List<string> _recentTemplates = new List<string>();
 	public List<string> _recentFiles = new List<string>();
 	public readonly List<Tuple<KeyLinkSlot, string>> _loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 	public bool includeNodeData = true;
@@ -109,6 +110,8 @@ public class JsonBuilder : Control
 	private GenericDataArray _copied;
 	private PopupMenu _editMenu;
 	private PopupMenu _createSubmenu;
+	private PopupMenu _recentTemplateSubmenu;
+	private PopupMenu _recentShiftSubmenu;
 	private PopupMenu _recentSubmenu;
 	private string _defaultListing;
 	private string _explicitNode;
@@ -174,6 +177,14 @@ public class JsonBuilder : Control
 			dateTimeScene = GD.Load<PackedScene>(DATETIME_SOURCE);
 			timeSpanScene = GD.Load<PackedScene>(TIME_SPAN_SOURCE);
 			
+			_recentTemplateSubmenu = new PopupMenu();
+			_recentTemplateSubmenu.Name = "RecentTemplateMenu";
+			_recentTemplateSubmenu.Connect( "id_pressed", this, nameof(OnRecentTemplateMenuSelection));
+			
+			_recentShiftSubmenu = new PopupMenu();
+			_recentShiftSubmenu.Name = "RecentShiftMenu";
+			_recentShiftSubmenu.Connect( "id_pressed", this, nameof(OnRecentShiftMenuSelection));
+			
 			_recentSubmenu = new PopupMenu();
 			_recentSubmenu.Name = "RecentMenu";
 			_recentSubmenu.Connect( "id_pressed", this, nameof(OnRecentMenuSelection));
@@ -183,8 +194,12 @@ public class JsonBuilder : Control
 			menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
 			menu.AddItem( "Build Template (CTRL+N)", 0 );
 			menu.AddItem( "Load Template", 1 );
-			menu.AddItem( "Export as Template", 9 );
+			menu.AddChild( _recentTemplateSubmenu );
+			menu.AddSubmenuItem( "Recent Template", "RecentTemplateMenu" );
 			menu.AddItem( "Shift Template Under Data", 7 );
+			menu.AddChild( _recentShiftSubmenu );
+			menu.AddSubmenuItem( "Recent Template Under Data", "RecentShiftMenu" );
+			menu.AddItem( "Export as Template", 9 );
 			menu.AddSeparator(  );
 			menu.AddItem( "Save Graph (CTRL+S)", 11 );
 			menu.AddItem( "Save Graph As", 2 );
@@ -300,24 +315,41 @@ public class JsonBuilder : Control
 
 		gda.GetValue( "RecentFiles", out _recentFiles );
 
-		if( _recentFiles.Count <= 0 ) return;
-
-		for( int i = 0; i < _recentFiles.Count; i++ )
+		if( _recentFiles.Count > 0 )
 		{
-			if( !file.FileExists( _recentFiles[i] ) )
+			for( int i = 0; i < _recentFiles.Count; i++ )
 			{
-				_recentFiles.RemoveAt( i );
+				if( !file.FileExists( _recentFiles[i] ) )
+				{
+					_recentFiles.RemoveAt( i );
+					i--;
+				}
+			}
+
+			AddRecentFile( _recentFiles[0] );
+		}
+		
+		gda.GetValue( "RecentTemplates", out _recentTemplates );
+
+		if( _recentTemplates.Count <= 0 ) return;
+
+		for( int i = 0; i < _recentTemplates.Count; i++ )
+		{
+			if( !file.FileExists( _recentTemplates[i] ) )
+			{
+				_recentTemplates.RemoveAt( i );
 				i--;
 			}
 		}
 		
-		AddRecentFile( _recentFiles[0] );
+		AddRecentTemplateFile( _recentTemplates[0] );
 	}
 
 	private void SaveRecents()
 	{
 		GenericDataArray gda = new GenericDataArray();
 		gda.AddValue( "RecentFiles", _recentFiles );
+		gda.AddValue( "RecentTemplates", _recentTemplates );
 		
 		SaveJsonFile( RESENT_SOURCE, gda.ToJson() );
 	}
@@ -397,6 +429,35 @@ public class JsonBuilder : Control
 		}
 	}
 
+	private void OnRecentTemplateMenuSelection( int id )
+	{
+		try
+		{
+			string path = _recentTemplateSubmenu.GetItemText( id );
+			LoadTemplate( LoadJsonFile( path ) );
+			AddRecentTemplateFile( path );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void OnRecentShiftMenuSelection( int id )
+	{
+		try
+		{
+			ShiftTemplateUnderData(_recentShiftSubmenu.GetItemText( id ));
+			string path = _recentShiftSubmenu.GetItemText( id );
+			ShiftTemplateUnderData( path );
+			AddRecentTemplateFile( path );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
 	private void OnRecentMenuSelection( int id )
 	{
 		try
@@ -441,6 +502,7 @@ public class JsonBuilder : Control
 			{
 				LoadTemplate( LoadJsonFile( path ) );
 
+				AddRecentTemplateFile( path );
 				HasUnsavedChanges = false;
 				SaveFilePath = null;
 			} )
@@ -559,6 +621,7 @@ public class JsonBuilder : Control
 				includeNodeData = false;
 				includeGraphData = false;
 				SaveJsonFile( path, SaveData().ToJson() );
+				AddRecentTemplateFile( path );
 			} )
 			.Catch( CatchException );
 	}
@@ -583,15 +646,25 @@ public class JsonBuilder : Control
 	private void ShiftTemplateUnderData()
 	{
 		_filePopup.Show( new[] { "*.tmplt" }, false, "Select Template File for Use" )
-			.Then( path =>
-			{
-				includeNodeData = true;
-				includeGraphData = true;
-				GenericDataArray data = SaveData();
-				LoadTemplate( LoadJsonFile( path ) );
-				LoadData( data );
-			} )
+			.Then( ShiftTemplateUnderData )
 			.Catch( CatchException );
+	}
+
+	private void ShiftTemplateUnderData(string path)
+	{
+		try
+		{
+			includeNodeData = true;
+			includeGraphData = true;
+			GenericDataArray data = SaveData();
+			LoadTemplate( LoadJsonFile( path ) );
+			LoadData( data );
+			AddRecentTemplateFile( path );
+		}
+		catch( Exception ex )
+		{
+			CatchException( ex );
+		}
 	}
 
 	private void RequestQuit()
@@ -859,6 +932,23 @@ public class JsonBuilder : Control
 		if( _recentFiles.Count > 0 )
 		{
 			_filePopup.CurrentDir = _recentFiles[0].Substring( 0, _recentFiles[0].LastIndexOf( '/' ));
+		}
+	}
+	
+	private void AddRecentTemplateFile( string path )
+	{
+		if( _recentTemplates.Contains( path ) )
+		{
+			_recentTemplates.Remove( path );
+		}
+		_recentTemplates.Insert( 0, path );
+		_recentTemplateSubmenu.Clear();
+		_recentShiftSubmenu.Clear();
+
+		foreach( string file in _recentTemplates )
+		{
+			_recentTemplateSubmenu.AddItem( file );
+			_recentShiftSubmenu.AddItem( file );
 		}
 	}
 
