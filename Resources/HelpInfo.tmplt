@@ -1,7 +1,15 @@
 {
+  "defaultListing": "",
+  "explicitNode": "",
   "nodeList": [
     {
       "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "FIELD_LIST",
@@ -17,6 +25,12 @@
     },
     {
       "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",

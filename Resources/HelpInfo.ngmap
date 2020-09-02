@@ -1,9 +1,15 @@
 {
   "defaultListing": "listing",
-  "explicitNode": {},
+  "explicitNode": "",
   "nodeList": [
     {
       "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "FIELD_LIST",
@@ -19,6 +25,12 @@
     },
     {
       "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -56,7 +68,7 @@
     },
     "ngMapNodeSize": {
       "x": 242.0,
-      "y": 114.0
+      "y": 125.0
     },
     "helpInfo": [
       {
@@ -334,7 +346,7 @@
           "y": 480.0
         },
         "ngMapNodeSize": {
-          "x": 248.0,
+          "x": 247.999878,
           "y": 558.0
         },
         "Entry": "Nodes",
@@ -1768,6 +1780,20 @@
             "Branches": []
           }
         ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 420.952026,
+          "y": 818.3948
+        },
+        "ngMapNodeSize": {
+          "x": 614.0,
+          "y": 149.0
+        },
+        "Entry": "License Info",
+        "Info": "The MIT License (MIT)\n\nCopyright (c) 2020 Blade End\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+        "Branches": []
       }
     ]
   }

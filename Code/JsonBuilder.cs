@@ -45,6 +45,7 @@ public class JsonBuilder : Control
 	private const string DATETIME_OFFSET_SOURCE = "res://Objects/Slots/DateTimeOffsetSlot.tscn";
 	private const string DATETIME_SOURCE = "res://Objects/Slots/DateTimeSlot.tscn";
 	private const string TIME_SPAN_SOURCE = "res://Objects/Slots/TimeSpanSlot.tscn";
+	private const string NODE_BACKGROUND_SOURCE = "res://Textures/NodeBackground.png";
 
 	private static PackedScene nodeScene;
 	public static PackedScene separatorScene;
@@ -72,6 +73,8 @@ public class JsonBuilder : Control
 	public static PackedScene dateTimeOffsetScene;
 	public static PackedScene dateTimeScene;
 	public static PackedScene timeSpanScene;
+
+	public static Texture nodeBackgroundTexture;
 	#endregion
 
 	#region Variables
@@ -176,6 +179,8 @@ public class JsonBuilder : Control
 			dateTimeOffsetScene = GD.Load<PackedScene>(DATETIME_OFFSET_SOURCE);
 			dateTimeScene = GD.Load<PackedScene>(DATETIME_SOURCE);
 			timeSpanScene = GD.Load<PackedScene>(TIME_SPAN_SOURCE);
+
+			nodeBackgroundTexture = GD.Load<Texture>( NODE_BACKGROUND_SOURCE );
 			
 			_recentTemplateSubmenu = new PopupMenu();
 			_recentTemplateSubmenu.Name = "RecentTemplateMenu";

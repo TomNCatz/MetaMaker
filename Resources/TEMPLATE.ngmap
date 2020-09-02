@@ -4,6 +4,12 @@
   "nodeList": [
     {
       "title": "Graph",
+      "color": {
+        "r": 0.328125,
+        "g": 0.328125,
+        "b": 0.328125,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "TEXT_LINE",
@@ -29,6 +35,12 @@
     },
     {
       "title": "Node",
+      "color": {
+        "r": 0.6875,
+        "g": 0.6875,
+        "b": 0.6875,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -40,6 +52,17 @@
           "defaultValue": "Node"
         },
         "2": {
+          "fieldType": "COLOR",
+          "label": "color",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false
+        },
+        "3": {
           "fieldType": "FIELD_LIST",
           "label": "fields",
           "field": {
@@ -53,6 +76,12 @@
     },
     {
       "title": "Separator Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -67,6 +96,12 @@
     },
     {
       "title": "Key Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -109,6 +144,12 @@
     },
     {
       "title": "Key Tracker Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -137,6 +178,12 @@
     },
     {
       "title": "Link To Parent Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -160,6 +207,12 @@
     },
     {
       "title": "Link To Child Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -193,6 +246,12 @@
     },
     {
       "title": "Field List Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -218,6 +277,12 @@
     },
     {
       "title": "Field Dictionary Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -243,6 +308,12 @@
     },
     {
       "title": "Info Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -272,6 +343,12 @@
     },
     {
       "title": "Auto Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -296,6 +373,12 @@
     },
     {
       "title": "Type Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -320,6 +403,12 @@
     },
     {
       "title": "Enum Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -348,6 +437,12 @@
     },
     {
       "title": "Text Line Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -372,6 +467,12 @@
     },
     {
       "title": "Text Area Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -406,6 +507,12 @@
     },
     {
       "title": "Rich Text Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -440,6 +547,12 @@
     },
     {
       "title": "Float Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -498,6 +611,12 @@
     },
     {
       "title": "Int Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -556,6 +675,12 @@
     },
     {
       "title": "Long Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -587,6 +712,12 @@
     },
     {
       "title": "Boolean Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -619,6 +750,12 @@
     },
     {
       "title": "Linked Boolean Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -687,6 +824,12 @@
     },
     {
       "title": "Vector2 Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -714,6 +857,12 @@
     },
     {
       "title": "Vector3 Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -742,6 +891,12 @@
     },
     {
       "title": "Vector4 Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -771,6 +926,12 @@
     },
     {
       "title": "Color Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -807,6 +968,12 @@
     },
     {
       "title": "Date Time Offset Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -834,6 +1001,12 @@
     },
     {
       "title": "Date Time Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -861,6 +1034,12 @@
     },
     {
       "title": "Time Span Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": {
         "0": {
           "fieldType": "LINK_TO_PARENT",
@@ -891,7 +1070,7 @@
       "y": 2100.0
     },
     "ngMapNodeSize": {
-      "x": 244.0,
+      "x": 244.000061,
       "y": 524.0
     },
     "defaultListing": "nodeList",
@@ -904,10 +1083,16 @@
           "y": -320.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 139.0
+          "x": 224.000122,
+          "y": 162.0
         },
         "title": "Graph",
+        "color": {
+          "r": 0.328125,
+          "g": 0.328125,
+          "b": 0.328125,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Text Line Slot",
@@ -916,7 +1101,7 @@
               "y": -320.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -930,7 +1115,7 @@
               "y": -320.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -944,7 +1129,7 @@
               "y": -320.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -956,7 +1141,7 @@
                 "y": -320.0
               },
               "ngMapNodeSize": {
-                "x": 194.0,
+                "x": 193.999878,
                 "y": 134.0
               },
               "fieldType": "LINK_TO_CHILD",
@@ -974,10 +1159,16 @@
           "y": -120.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 139.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Node",
+        "color": {
+          "r": 0.6875,
+          "g": 0.6875,
+          "b": 0.6875,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -986,7 +1177,7 @@
               "y": -120.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -999,12 +1190,32 @@
               "y": -120.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
             "label": "title",
             "defaultValue": "Node"
+          },
+          {
+            "ngMapNodeName": "Color Slot",
+            "ngMapNodePosition": {
+              "x": 1080.0,
+              "y": -120.0
+            },
+            "ngMapNodeSize": {
+              "x": 187.999878,
+              "y": 132.0
+            },
+            "fieldType": "COLOR",
+            "label": "color",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false
           },
           {
             "ngMapNodeName": "Field List Slot",
@@ -1025,7 +1236,7 @@
                 "y": 20.0
               },
               "ngMapNodeSize": {
-                "x": 194.0,
+                "x": 193.999878,
                 "y": 134.0
               },
               "fieldType": "LINK_TO_CHILD",
@@ -1043,10 +1254,16 @@
           "y": 220.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 124.0
+          "x": 224.000122,
+          "y": 147.0
         },
         "title": "Separator Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1068,7 +1285,7 @@
               "y": 220.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1084,10 +1301,16 @@
           "y": 400.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 184.0
+          "x": 224.000122,
+          "y": 207.0
         },
         "title": "Key Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1109,7 +1332,7 @@
               "y": 400.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1123,7 +1346,7 @@
               "y": 400.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1155,7 +1378,7 @@
               "y": 520.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1169,7 +1392,7 @@
               "y": 520.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "INT",
@@ -1189,10 +1412,16 @@
           "y": 800.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Key Tracker Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1214,7 +1443,7 @@
               "y": 800.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1228,7 +1457,7 @@
               "y": 880.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1242,7 +1471,7 @@
               "y": 800.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "INT",
@@ -1262,10 +1491,16 @@
           "y": 1060.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 139.0
+          "x": 224.000122,
+          "y": 162.0
         },
         "title": "Link To Parent Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1287,7 +1522,7 @@
               "y": 1060.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1301,7 +1536,7 @@
               "y": 1060.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "INT",
@@ -1321,10 +1556,16 @@
           "y": 1340.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 192.0
         },
         "title": "Link To Child Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1346,7 +1587,7 @@
               "y": 1320.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1360,7 +1601,7 @@
               "y": 1420.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1374,7 +1615,7 @@
               "y": 1320.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "INT",
@@ -1392,7 +1633,7 @@
               "y": 1440.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1408,10 +1649,16 @@
           "y": 1600.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Field List Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1433,7 +1680,7 @@
               "y": 1600.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1447,7 +1694,7 @@
               "y": 1600.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1461,7 +1708,7 @@
               "y": 1700.0
             },
             "ngMapNodeSize": {
-              "x": 194.0,
+              "x": 194.000122,
               "y": 134.0
             },
             "fieldType": "LINK_TO_CHILD",
@@ -1478,10 +1725,16 @@
           "y": 1900.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Field Dictionary Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1490,7 +1743,7 @@
               "y": 1900.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1503,7 +1756,7 @@
               "y": 1900.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1517,7 +1770,7 @@
               "y": 2020.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1531,7 +1784,7 @@
               "y": 2020.0
             },
             "ngMapNodeSize": {
-              "x": 194.0,
+              "x": 194.000122,
               "y": 134.0
             },
             "fieldType": "LINK_TO_CHILD",
@@ -1548,10 +1801,16 @@
           "y": 2240.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Info Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1560,7 +1819,7 @@
               "y": 2220.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1573,7 +1832,7 @@
               "y": 2300.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1587,7 +1846,7 @@
               "y": 2220.0
             },
             "ngMapNodeSize": {
-              "x": 199.0,
+              "x": 198.999878,
               "y": 212.0
             },
             "fieldType": "TEXT_AREA_RICH",
@@ -1602,7 +1861,7 @@
               "y": 2220.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "FLOAT",
@@ -1622,10 +1881,16 @@
           "y": 2480.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Auto Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1634,7 +1899,7 @@
               "y": 2500.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1647,7 +1912,7 @@
               "y": 2500.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1661,7 +1926,7 @@
               "y": 2500.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1675,7 +1940,7 @@
               "y": 2500.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1691,10 +1956,16 @@
           "y": 2700.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Type Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1703,7 +1974,7 @@
               "y": 2720.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1716,7 +1987,7 @@
               "y": 2720.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1730,7 +2001,7 @@
               "y": 2720.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1744,7 +2015,7 @@
               "y": 2720.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1760,10 +2031,16 @@
           "y": 2940.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Enum Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1772,7 +2049,7 @@
               "y": 2940.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1785,7 +2062,7 @@
               "y": 2940.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1799,7 +2076,7 @@
               "y": 2940.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1813,7 +2090,7 @@
               "y": 3060.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -1825,7 +2102,7 @@
                 "y": 3060.0
               },
               "ngMapNodeSize": {
-                "x": 188.0,
+                "x": 188.000122,
                 "y": 109.0
               },
               "fieldType": "TEXT_LINE",
@@ -1842,10 +2119,16 @@
           "y": 3240.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Text Line Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1854,7 +2137,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1867,7 +2150,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1881,7 +2164,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1895,7 +2178,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1911,10 +2194,16 @@
           "y": 3480.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 192.0
         },
         "title": "Text Area Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -1923,7 +2212,7 @@
               "y": 3460.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -1936,7 +2225,7 @@
               "y": 3460.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1964,7 +2253,7 @@
               "y": 3460.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "FLOAT",
@@ -1982,7 +2271,7 @@
               "y": 3600.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 212.0
             },
             "fieldType": "TEXT_AREA",
@@ -1999,10 +2288,16 @@
           "y": 3860.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 192.0
         },
         "title": "Rich Text Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2011,7 +2306,7 @@
               "y": 3840.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2024,7 +2319,7 @@
               "y": 3840.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2052,7 +2347,7 @@
               "y": 3840.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "FLOAT",
@@ -2070,7 +2365,7 @@
               "y": 3960.0
             },
             "ngMapNodeSize": {
-              "x": 199.0,
+              "x": 198.999878,
               "y": 212.0
             },
             "fieldType": "TEXT_AREA_RICH",
@@ -2087,10 +2382,16 @@
           "y": 4240.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 214.0
+          "x": 224.000122,
+          "y": 237.0
         },
         "title": "Float Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2099,7 +2400,7 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2112,7 +2413,7 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2126,7 +2427,7 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2140,7 +2441,7 @@
               "y": 4340.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2155,7 +2456,7 @@
               "y": 4360.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "FLOAT",
@@ -2173,7 +2474,7 @@
               "y": 4400.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2188,7 +2489,7 @@
               "y": 4440.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "FLOAT",
@@ -2226,10 +2527,16 @@
           "y": 4760.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 214.0
+          "x": 224.000122,
+          "y": 237.0
         },
         "title": "Int Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2238,7 +2545,7 @@
               "y": 4760.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2251,7 +2558,7 @@
               "y": 4760.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2265,7 +2572,7 @@
               "y": 4760.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2279,7 +2586,7 @@
               "y": 4860.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2294,7 +2601,7 @@
               "y": 4880.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "INT",
@@ -2312,7 +2619,7 @@
               "y": 4920.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2327,7 +2634,7 @@
               "y": 4960.0
             },
             "ngMapNodeSize": {
-              "x": 189.0,
+              "x": 188.999878,
               "y": 209.0
             },
             "fieldType": "INT",
@@ -2365,10 +2672,16 @@
           "y": 5280.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 192.0
         },
         "title": "Long Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2377,7 +2690,7 @@
               "y": 5280.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2390,7 +2703,7 @@
               "y": 5280.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2404,7 +2717,7 @@
               "y": 5280.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2418,7 +2731,7 @@
               "y": 5280.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2433,7 +2746,7 @@
               "y": 5400.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 134.0
             },
             "fieldType": "LONG",
@@ -2450,10 +2763,16 @@
           "y": 5620.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 192.0
         },
         "title": "Boolean Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2462,7 +2781,7 @@
               "y": 5620.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2475,7 +2794,7 @@
               "y": 5620.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2489,7 +2808,7 @@
               "y": 5620.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2503,7 +2822,7 @@
               "y": 5720.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2518,7 +2837,7 @@
               "y": 5660.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 159.0
             },
             "fieldType": "KEY",
@@ -2536,10 +2855,16 @@
           "y": 5920.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 229.0
+          "x": 224.000122,
+          "y": 252.0
         },
         "title": "Linked Boolean Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2548,7 +2873,7 @@
               "y": 5920.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2561,7 +2886,7 @@
               "y": 5920.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2575,7 +2900,7 @@
               "y": 5920.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2589,7 +2914,7 @@
               "y": 6020.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2604,7 +2929,7 @@
               "y": 6140.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 159.0
             },
             "fieldType": "KEY",
@@ -2620,7 +2945,7 @@
               "y": 6040.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -2632,7 +2957,7 @@
                 "y": 6040.0
               },
               "ngMapNodeSize": {
-                "x": 188.0,
+                "x": 187.999878,
                 "y": 109.0
               },
               "fieldType": "KEY_TRACKER",
@@ -2647,7 +2972,7 @@
               "y": 6160.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -2659,7 +2984,7 @@
                 "y": 6160.0
               },
               "ngMapNodeSize": {
-                "x": 188.0,
+                "x": 187.999878,
                 "y": 109.0
               },
               "fieldType": "KEY_TRACKER",
@@ -2674,7 +2999,7 @@
               "y": 6040.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -2686,7 +3011,7 @@
                 "y": 6040.0
               },
               "ngMapNodeSize": {
-                "x": 188.0,
+                "x": 187.999878,
                 "y": 109.0
               },
               "fieldType": "KEY_TRACKER",
@@ -2701,7 +3026,7 @@
               "y": 6160.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -2713,7 +3038,7 @@
                 "y": 6160.0
               },
               "ngMapNodeSize": {
-                "x": 188.0,
+                "x": 187.999878,
                 "y": 109.0
               },
               "fieldType": "KEY_TRACKER",
@@ -2730,10 +3055,16 @@
           "y": 6360.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Vector2 Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2742,7 +3073,7 @@
               "y": 6360.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2755,7 +3086,7 @@
               "y": 6360.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2769,7 +3100,7 @@
               "y": 6360.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2783,7 +3114,7 @@
               "y": 6460.0
             },
             "ngMapNodeSize": {
-              "x": 290.0,
+              "x": 290.000122,
               "y": 109.0
             },
             "fieldType": "VECTOR2",
@@ -2802,10 +3133,16 @@
           "y": 6640.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Vector3 Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2814,7 +3151,7 @@
               "y": 6640.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2827,7 +3164,7 @@
               "y": 6640.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2841,7 +3178,7 @@
               "y": 6640.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2855,7 +3192,7 @@
               "y": 6740.0
             },
             "ngMapNodeSize": {
-              "x": 297.0,
+              "x": 297.000122,
               "y": 127.0
             },
             "fieldType": "VECTOR3",
@@ -2875,10 +3212,16 @@
           "y": 6940.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Vector4 Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2887,7 +3230,7 @@
               "y": 6940.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2900,7 +3243,7 @@
               "y": 6940.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2914,7 +3257,7 @@
               "y": 6940.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2928,7 +3271,7 @@
               "y": 7040.0
             },
             "ngMapNodeSize": {
-              "x": 290.0,
+              "x": 290.000122,
               "y": 137.0
             },
             "fieldType": "VECTOR4",
@@ -2949,10 +3292,16 @@
           "y": 7260.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 169.0
+          "x": 224.000122,
+          "y": 192.0
         },
         "title": "Color Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -2961,7 +3310,7 @@
               "y": 7260.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -2974,7 +3323,7 @@
               "y": 7260.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2988,7 +3337,7 @@
               "y": 7260.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3022,7 +3371,7 @@
               "y": 7380.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -3039,10 +3388,16 @@
           "y": 7580.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Date Time Offset Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -3051,7 +3406,7 @@
               "y": 7580.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -3064,7 +3419,7 @@
               "y": 7580.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3078,7 +3433,7 @@
               "y": 7580.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3092,7 +3447,7 @@
               "y": 7700.0
             },
             "ngMapNodeSize": {
-              "x": 277.0,
+              "x": 276.999878,
               "y": 103.0
             },
             "fieldType": "DATE_TIME_OFFSET",
@@ -3111,10 +3466,16 @@
           "y": 7880.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Date Time Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -3123,7 +3484,7 @@
               "y": 7880.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -3136,7 +3497,7 @@
               "y": 7880.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3150,7 +3511,7 @@
               "y": 7880.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3164,7 +3525,7 @@
               "y": 8000.0
             },
             "ngMapNodeSize": {
-              "x": 249.0,
+              "x": 249.000122,
               "y": 103.0
             },
             "fieldType": "DATE_TIME",
@@ -3183,10 +3544,16 @@
           "y": 8160.0
         },
         "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 154.0
+          "x": 224.000122,
+          "y": 177.0
         },
         "title": "Time Span Slot",
+        "color": {
+          "r": 0.333333343,
+          "g": 0.8117647,
+          "b": 0.8117647,
+          "a": 1.0
+        },
         "fields": [
           {
             "ngMapNodeName": "Link To Parent Slot",
@@ -3195,7 +3562,7 @@
               "y": 8160.0
             },
             "ngMapNodeSize": {
-              "x": 203.0,
+              "x": 203.000122,
               "y": 84.0
             },
             "fieldType": "LINK_TO_PARENT",
@@ -3208,7 +3575,7 @@
               "y": 8160.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 187.999878,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3222,7 +3589,7 @@
               "y": 8160.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000366,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3236,7 +3603,7 @@
               "y": 8280.0
             },
             "ngMapNodeSize": {
-              "x": 188.0,
+              "x": 188.000122,
               "y": 103.0
             },
             "fieldType": "TIME_SPAN",

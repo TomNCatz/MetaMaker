@@ -4,6 +4,12 @@
   "nodeList": [
     {
       "title": "Graph",
+      "color": {
+        "r": 0.328125,
+        "g": 0.328125,
+        "b": 0.328125,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "TEXT_LINE",
@@ -29,6 +35,12 @@
     },
     {
       "title": "Node",
+      "color": {
+        "r": 0.6875,
+        "g": 0.6875,
+        "b": 0.6875,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -38,6 +50,17 @@
           "fieldType": "TEXT_LINE",
           "label": "title",
           "defaultValue": "Node"
+        },
+        {
+          "fieldType": "COLOR",
+          "label": "color",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -53,6 +76,12 @@
     },
     {
       "title": "Separator Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -67,6 +96,12 @@
     },
     {
       "title": "Key Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -109,6 +144,12 @@
     },
     {
       "title": "Key Tracker Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -137,6 +178,12 @@
     },
     {
       "title": "Link To Parent Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -160,6 +207,12 @@
     },
     {
       "title": "Link To Child Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -193,6 +246,12 @@
     },
     {
       "title": "Field List Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -218,6 +277,12 @@
     },
     {
       "title": "Field Dictionary Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -243,6 +308,12 @@
     },
     {
       "title": "Info Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -272,6 +343,12 @@
     },
     {
       "title": "Auto Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -296,6 +373,12 @@
     },
     {
       "title": "Type Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -320,6 +403,12 @@
     },
     {
       "title": "Enum Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -348,6 +437,12 @@
     },
     {
       "title": "Text Line Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -372,6 +467,12 @@
     },
     {
       "title": "Text Area Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -406,6 +507,12 @@
     },
     {
       "title": "Rich Text Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -440,6 +547,12 @@
     },
     {
       "title": "Float Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -498,6 +611,12 @@
     },
     {
       "title": "Int Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -556,6 +675,12 @@
     },
     {
       "title": "Long Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -587,6 +712,12 @@
     },
     {
       "title": "Boolean Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -619,6 +750,12 @@
     },
     {
       "title": "Linked Boolean Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -687,6 +824,12 @@
     },
     {
       "title": "Vector2 Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -714,6 +857,12 @@
     },
     {
       "title": "Vector3 Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -742,6 +891,12 @@
     },
     {
       "title": "Vector4 Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -771,6 +926,12 @@
     },
     {
       "title": "Color Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -807,6 +968,12 @@
     },
     {
       "title": "Date Time Offset Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -834,6 +1001,12 @@
     },
     {
       "title": "Date Time Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
@@ -861,6 +1034,12 @@
     },
     {
       "title": "Time Span Slot",
+      "color": {
+        "r": 0.333333343,
+        "g": 0.8117647,
+        "b": 0.8117647,
+        "a": 1.0
+      },
       "fields": [
         {
           "fieldType": "LINK_TO_PARENT",
