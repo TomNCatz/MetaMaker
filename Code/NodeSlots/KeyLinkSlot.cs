@@ -11,18 +11,31 @@ namespace LibT
 		private Label _title;
 		[Export] private NodePath _fieldPath;
 		private Label _field;
-		private ServiceInjection<JsonBuilder> builder = new ServiceInjection<JsonBuilder>();
+		private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
 
 		
 		public override void _Ready()
 		{
 			_title = this.GetNodeFromPath<Label>( _titlePath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
+			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+		}
+
+		public override void _GuiInput( InputEvent @event )
+		{
+			InputEventMouseButton mouseButton = @event as InputEventMouseButton;
+	    
+			if( mouseButton != null && !mouseButton.Pressed )
+			{
+				if( string.IsNullOrEmpty( _field.Text ) ) return;
+
+				_builder.Get.CenterViewOnKeyedNode( _field.Text );
+			}
 		}
 
 		public bool AddKey(string link)
 		{
-			if( !string.IsNullOrEmpty(_field.Text) ) return false;
+			if( !string.IsNullOrEmpty( _field.Text ) ) return false;
 
 			_field.Text = link;
 			
@@ -31,7 +44,7 @@ namespace LibT
 
 		public bool RemoveKey(string link)
 		{
-			if( string.IsNullOrEmpty(_field.Text) ) return false;
+			if( string.IsNullOrEmpty( _field.Text ) ) return false;
 
 			_field.Text = string.Empty;
 			
@@ -55,7 +68,7 @@ namespace LibT
 
 			if( string.IsNullOrEmpty( key ) ) return;
 			
-			builder.Get._loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
+			_builder.Get._loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
 		}
 	}
 }

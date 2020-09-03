@@ -94,14 +94,30 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 		if(definition.values.ContainsKey( "color" ))
 		{
 			definition.GetValue( "color", out Color color );
-			var style = new StyleBoxTexture();
-			style.Texture = JsonBuilder.nodeBackgroundTexture;
-			style.MarginLeft = 4;
-			style.MarginRight = 4;
-			style.MarginTop = 22;
-			style.MarginBottom = 4;
-			style.ModulateColor = color;
-			Set( "custom_styles/frame", style );
+			if(color.a > 0.01f)
+			{
+				var style = new StyleBoxTexture
+				{
+					Texture = JsonBuilder.nodeBackgroundTexture,
+					MarginLeft = 4,
+					MarginRight = 4,
+					MarginTop = 22,
+					MarginBottom = 4,
+					ModulateColor = color
+				};
+				Set( "custom_styles/frame", style );
+
+				style = new StyleBoxTexture
+				{
+					Texture = JsonBuilder.nodeBackgroundSelectedTexture,
+					MarginLeft = 4,
+					MarginRight = 4,
+					MarginTop = 22,
+					MarginBottom = 4,
+					ModulateColor = color
+				};
+				Set( "custom_styles/selectedframe", style );
+			}
 		}
 
 		GenericDataArray listing = definition.GetGdo( "fields" ) as GenericDataArray;

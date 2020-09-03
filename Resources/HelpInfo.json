@@ -615,6 +615,67 @@
       ]
     },
     {
+      "Entry": "Mouse and Keyboard",
+      "Info": "Basic application controls",
+      "Branches": [
+        {
+          "Entry": "Left Click",
+          "Info": "Select a node\nSelect a field",
+          "Branches": []
+        },
+        {
+          "Entry": "Left Drag",
+          "Info": "Select a box of nodes",
+          "Branches": []
+        },
+        {
+          "Entry": "Left Drag Selected Node",
+          "Info": "Moves all currently highlighted nodes",
+          "Branches": []
+        },
+        {
+          "Entry": "CTRL Left Click Node",
+          "Info": "Toggles the node selected and unselected",
+          "Branches": []
+        },
+        {
+          "Entry": "Middle Drag",
+          "Info": "Pan view",
+          "Branches": []
+        },
+        {
+          "Entry": "Right Click",
+          "Info": "Open Edit window",
+          "Branches": []
+        },
+        {
+          "Entry": "Scroll Wheel",
+          "Info": "Pans the view vertically",
+          "Branches": []
+        },
+        {
+          "Entry": "Shift Scroll Wheel",
+          "Info": "Pans the view horizontally",
+          "Branches": []
+        },
+        {
+          "Entry": "CTRL C",
+          "Info": "Copy selected node and it's children",
+          "Branches": []
+        },
+        {
+          "Entry": "CTRL V",
+          "Info": "Paste selected node and it's children",
+          "Branches": []
+        },
+        {
+          "Entry": "DEL",
+          "Info": "Delete selected node",
+          "Branches": []
+        }
+      ]
+    },
+    {
       "Entry": "FAQ",
       "Info": "Frequently asked questions, or at least questions I think will be asked\nif something behaves oddly it might be explained here\nIf you have a question not answered here, you can ask\nat D.Tom.Norris@gmail.com",
       "Branches": [

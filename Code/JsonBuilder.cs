@@ -10,10 +10,10 @@ using RSG;
 using RSG.Exceptions;
 using File = Godot.File;
 
-public class JsonBuilder : Control
+public class JsonBuilder : ColorRect
 {
 	#region Resources
-	private const string RESENT_SOURCE = "user://Recent.json";
+	private const string SETTINGS_SOURCE = "user://Settings.json";
 	
 	private const string DEFAULT_TEMPLATE_SOURCE = "res://Resources/TEMPLATE.tmplt";
 	private const string HELP_INFO_SOURCE = "res://Resources/HelpInfo.json";
@@ -46,6 +46,7 @@ public class JsonBuilder : Control
 	private const string DATETIME_SOURCE = "res://Objects/Slots/DateTimeSlot.tscn";
 	private const string TIME_SPAN_SOURCE = "res://Objects/Slots/TimeSpanSlot.tscn";
 	private const string NODE_BACKGROUND_SOURCE = "res://Textures/NodeBackground.png";
+	private const string NODE_BACKGROUND_SELECTED_SOURCE = "res://Textures/NodeBackgroundSelected.png";
 
 	private static PackedScene nodeScene;
 	public static PackedScene separatorScene;
@@ -75,6 +76,7 @@ public class JsonBuilder : Control
 	public static PackedScene timeSpanScene;
 
 	public static Texture nodeBackgroundTexture;
+	public static Texture nodeBackgroundSelectedTexture;
 	#endregion
 
 	#region Variables
@@ -84,18 +86,23 @@ public class JsonBuilder : Control
 	private MenuButton _fileMenuButton;
 	[Export] private NodePath _editMenuButtonPath;
 	private MenuButton _editMenuButton;
+	[Export] private NodePath _settingsMenuButtonPath;
+	private MenuButton _settingsMenuButton;
+	[Export] private NodePath _searchBarPath;
+	private LineEdit _searchBar;
+	[Export] private NodePath _searchButtonPath;
+	private Button _searchButton;
 	[Export] private NodePath _filePopupPath;
 	private FileDialogExtended _filePopup;
+	[Export] private NodePath _colorPopupPath;
+	private Popup _colorPopup;
+	private ColorPicker _colorPicker;
 	[Export] private NodePath _errorPopupPath;
 	private AcceptDialog _errorPopup;
 	[Export] private NodePath _areYouSurePopupPath;
 	private AreYouSurePopup _areYouSurePopup;
 	[Export] private NodePath _helpInfoPopupPath;
 	private HelpPopup _helpInfoPopup;
-	[Export] private NodePath _nodeOptionPath;
-	private OptionButton _nodeOption;
-	[Export] private NodePath _nodeButtonPath;
-	private Button _nodeButton;
 
 	public Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
 	public List<string> _recentTemplates = new List<string>();
@@ -118,6 +125,7 @@ public class JsonBuilder : Control
 	private PopupMenu _recentSubmenu;
 	private string _defaultListing;
 	private string _explicitNode;
+	private Promise<Color> _pickingColor;
 
 	private string SaveFilePath
 	{
@@ -181,6 +189,7 @@ public class JsonBuilder : Control
 			timeSpanScene = GD.Load<PackedScene>(TIME_SPAN_SOURCE);
 
 			nodeBackgroundTexture = GD.Load<Texture>( NODE_BACKGROUND_SOURCE );
+			nodeBackgroundSelectedTexture = GD.Load<Texture>( NODE_BACKGROUND_SELECTED_SOURCE );
 			
 			_recentTemplateSubmenu = new PopupMenu();
 			_recentTemplateSubmenu.Name = "RecentTemplateMenu";
@@ -217,7 +226,6 @@ public class JsonBuilder : Control
 			menu.AddItem( "Export Data to JSON", 4 );
 			menu.AddItem( "Import Data from JSON", 5 );
 			menu.AddSeparator(  );
-			menu.AddItem( "Help and FAQ", 12 );
 			menu.AddItem( "Quit", 8 );
 			
 			_createSubmenu = new PopupMenu();
@@ -232,10 +240,27 @@ public class JsonBuilder : Control
 			_editMenu.AddItem( "Copy Downstream (CTRL+C)", 0 );
 			_editMenu.AddItem( "Paste Nodes (CTRL+V)", 1 );
 			_editMenu.AddItem( "Delete Node (DEL)", 2 );
+			
+			_settingsMenuButton = this.GetNodeFromPath<MenuButton>( _settingsMenuButtonPath );
+			PopupMenu settingsMenu = _settingsMenuButton.GetPopup();
+			settingsMenu.Connect( "id_pressed", this, nameof(OnSettingsMenuSelection));
+			settingsMenu.AddItem( "Change Background Color", 0 );
+			settingsMenu.AddItem( "Change Grid Major Color", 1 );
+			settingsMenu.AddItem( "Change Grid Minor Color", 2 );
+			settingsMenu.AddSeparator(  );
+			settingsMenu.AddItem( "Help and FAQ", 3 );
+			
+			_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
+			_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
+			_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
 
 			_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
 			_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
 			_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
+			
+			_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
+			_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
+			_colorPopup.Connect( "popup_hide", this, nameof(SelectColor) );
 
 			string version = LoadJsonFile( VERSION );
 			_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
@@ -254,14 +279,9 @@ public class JsonBuilder : Control
 			_graph.Connect( "delete_nodes_request", this, nameof(RequestDeleteNode) );
 			_graph.Connect( "gui_input", this, nameof(GraphClick) );
 			
-			_nodeOption = this.GetNodeFromPath<OptionButton>( _nodeOptionPath );
-			
-			_nodeButton = this.GetNodeFromPath<Button>( _nodeButtonPath );
-			_nodeButton.Connect( "pressed", this, nameof(CreateNode) );
-			
 			GetTree().SetAutoAcceptQuit(false);
 			
-			LoadRecents();
+			LoadSettings();
 			LoadDefaultTemplate();
 		}
 		catch( Exception e )
@@ -310,13 +330,20 @@ public class JsonBuilder : Control
 		}
 	}
 
-	private void LoadRecents()
+	private void LoadSettings()
 	{
 		File file = new File();
-		if( !file.FileExists( RESENT_SOURCE ) ) return;
+		if( !file.FileExists( SETTINGS_SOURCE ) )return;
 
 		GenericDataArray gda = new GenericDataArray();
-		gda.FromJson( LoadJsonFile( RESENT_SOURCE ) );
+		gda.FromJson( LoadJsonFile( SETTINGS_SOURCE ) );
+		
+		gda.GetValue( "backgroundColor", out Color background );
+		Color = background;
+		gda.GetValue( "gridMajorColor", out Color gridMajor );
+		_graph.Set( "custom_colors/grid_major", gridMajor );
+		gda.GetValue( "gridMinorColor", out Color gridMinor );
+		_graph.Set( "custom_colors/grid_minor", gridMinor );
 
 		gda.GetValue( "RecentFiles", out _recentFiles );
 
@@ -350,31 +377,20 @@ public class JsonBuilder : Control
 		AddRecentTemplateFile( _recentTemplates[0] );
 	}
 
-	private void SaveRecents()
+	private void SaveSettings()
 	{
 		GenericDataArray gda = new GenericDataArray();
 		gda.AddValue( "RecentFiles", _recentFiles );
 		gda.AddValue( "RecentTemplates", _recentTemplates );
+		gda.AddValue( "backgroundColor", Color );
+		gda.AddValue( "gridMajorColor", (Color)_graph.Get( "custom_colors/grid_major" ) );
+		gda.AddValue( "gridMinorColor", (Color)_graph.Get( "custom_colors/grid_minor" ) );
 		
-		SaveJsonFile( RESENT_SOURCE, gda.ToJson() );
+		SaveJsonFile( SETTINGS_SOURCE, gda.ToJson() );
 	}
 	#endregion
 
 	#region Buttons
-	private void CreateNode()
-	{
-		try
-		{
-			if( _nodeData.Count <= 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
-
-			CreateNode( _nodeData[_nodeOption.GetItemText(_nodeOption.Selected)] );
-		}
-		catch( Exception e )
-		{
-			CatchException( e );
-		}
-	}
-
 	private void OnFileMenuSelection( int id )
 	{
 		try
@@ -432,6 +448,63 @@ public class JsonBuilder : Control
 		{
 			CatchException( e );
 		}
+	}
+	
+	private void OnSettingsMenuSelection( int id )
+	{
+		try
+		{
+			switch(id)
+			{
+				case 0 :  
+					GetColorFromUser( Color )
+						.Then( color =>
+						{
+							Color = color;
+							SaveSettings();
+						}); 
+						break;
+				case 1 :  
+					GetColorFromUser( Color )
+						.Then( color =>
+						{
+							_graph.Set( "custom_colors/grid_major", color );
+							SaveSettings();
+						}); 
+					break;
+				case 2 :  
+					GetColorFromUser( Color )
+						.Then( color =>
+						{
+							_graph.Set( "custom_colors/grid_minor", color );
+							SaveSettings();
+						}); 
+					break;
+				case 3 :  OpenHelpPopup(); break;
+			}
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void OnSearchPress()
+	{
+		if(string.IsNullOrEmpty(_searchBar.Text)) return;
+
+		if( !generatedKeys.ContainsKey( _searchBar.Text ) )
+		{
+			string partial = PartialFindKey( _searchBar.Text );
+			
+			if( string.IsNullOrEmpty( partial ) ) return;
+			
+			CenterViewOnKeyedNode( partial );
+			
+			return;
+		}
+		
+		CenterViewOnKeyedNode( _searchBar.Text );
 	}
 
 	private void OnRecentTemplateMenuSelection( int id )
@@ -674,7 +747,7 @@ public class JsonBuilder : Control
 
 	private void RequestQuit()
 	{
-		SaveRecents();
+		SaveSettings();
 		CheckIfSavedFirst()
 			.Then( ()=> GetTree().Quit() );
 	}
@@ -826,7 +899,6 @@ public class JsonBuilder : Control
 		}
 		
 		ClearData();
-		_nodeOption.Clear();
 		_nodeData.Clear();
 		_createSubmenu.Clear();
 		_createSubmenu.RectSize = Vector2.Zero;
@@ -841,7 +913,6 @@ public class JsonBuilder : Control
 
 		foreach( KeyValuePair<string,GenericDataArray> dataPair in _nodeData )
 		{
-			_nodeOption.AddItem( dataPair.Key );
 			_createSubmenu.AddItem( dataPair.Key );
 		}
 	}
@@ -1037,6 +1108,52 @@ public class JsonBuilder : Control
 	{
 		return _keyColors[slotType % _keyColors.Length];
 	}
+
+	public IPromise<Color> GetColorFromUser(Color original)
+	{
+		_colorPicker.Color = original;
+		_colorPopup.Popup_();
+		_colorPopup.RectPosition = GetGlobalMousePosition();
+
+		_pickingColor = new Promise<Color>();
+		return _pickingColor;
+	}
+
+	private void SelectColor()
+	{
+		if( _pickingColor )
+		{
+			_pickingColor.Resolve( _colorPicker.Color );
+			_pickingColor = null;
+		}
+	}
+
+	public void CenterViewOnKeyedNode(string key)
+	{
+		CenterViewOnNode(generatedKeys[key].GetParent<SlottedGraphNode>());
+	}
+	
+	public void CenterViewOnNode(SlottedGraphNode node)
+	{
+		CenterView( node.Offset + node.RectSize * 0.5f );
+	}
+
+	public void CenterView( Vector2 position )
+	{
+		_graph.ScrollOffset = position * _graph.Zoom - _graph.RectSize * 0.5f;
+	}
+
+	private string PartialFindKey( string partial )
+	{
+		if( string.IsNullOrEmpty( partial ) ) return null;
+		
+		foreach( string key in generatedKeys.Keys )
+		{
+			if( key.Contains( partial ) ) return key;
+		}
+		
+		return null;
+	}
 	#endregion
 
 	#region Connections
@@ -1114,7 +1231,7 @@ public class JsonBuilder : Control
 
 		_nodes.Remove( graphNode );
 	}
-
+	
 	public List<GraphConnection> GetConnectionsToNode(SlottedGraphNode graphNode)
 	{
 		Godot.Collections.Array fullList = _graph.GetConnectionList();

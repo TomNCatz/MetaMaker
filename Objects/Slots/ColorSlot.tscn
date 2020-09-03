@@ -12,8 +12,6 @@ __meta__ = {
 }
 _labelPath = NodePath("../ColorSlot/HBoxContainer/Label")
 _colorRectPath = NodePath("../ColorSlot/HBoxContainer/TextureRect/ColorRect")
-_popupPath = NodePath("../ColorSlot/Control/PopupPanel")
-_pickerPath = NodePath("../ColorSlot/Control/PopupPanel/ColorPicker")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 153.0
@@ -43,31 +41,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 color = Color( 1, 1, 1, 0 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control" type="Control" parent="."]
-margin_top = 22.0
-margin_right = 153.0
-margin_bottom = 22.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PopupPanel" type="PopupPanel" parent="Control"]
-margin_top = -8.0
-margin_right = 316.0
-margin_bottom = 462.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorPicker" type="ColorPicker" parent="Control/PopupPanel"]
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 312.0
-margin_bottom = 466.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

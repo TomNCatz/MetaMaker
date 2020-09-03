@@ -68,7 +68,7 @@
     },
     "ngMapNodeSize": {
       "x": 242.0,
-      "y": 125.0
+      "y": 140.0
     },
     "helpInfo": [
       {
@@ -78,7 +78,7 @@
           "y": -520.0
         },
         "ngMapNodeSize": {
-          "x": 248.000122,
+          "x": 248.0,
           "y": 358.0
         },
         "Entry": "File",
@@ -91,7 +91,7 @@
               "y": -740.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Build Template (CTRL+N)",
@@ -147,7 +147,7 @@
               "y": -520.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Save Graph (CTRL+S)",
@@ -189,7 +189,7 @@
               "y": -280.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Clear Data",
@@ -245,7 +245,7 @@
               "y": -60.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Help and FAQ",
@@ -275,7 +275,7 @@
           "y": 180.0
         },
         "ngMapNodeSize": {
-          "x": 248.000122,
+          "x": 248.0,
           "y": 223.0
         },
         "Entry": "Edit",
@@ -288,7 +288,7 @@
               "y": 200.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Create",
@@ -346,7 +346,7 @@
           "y": 480.0
         },
         "ngMapNodeSize": {
-          "x": 247.999878,
+          "x": 248.0,
           "y": 558.0
         },
         "Entry": "Nodes",
@@ -1742,10 +1742,179 @@
         "ngMapNodeName": "Branch",
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 580.0
+          "y": 660.0
         },
         "ngMapNodeSize": {
-          "x": 248.000122,
+          "x": 248.0,
+          "y": 314.0
+        },
+        "Entry": "Mouse and Keyboard",
+        "Info": "Basic application controls",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 149.0
+            },
+            "Entry": "Left Click",
+            "Info": "Select a node\nSelect a field",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 240.0,
+              "y": 149.0
+            },
+            "Entry": "Left Drag",
+            "Info": "Select a box of nodes",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Left Drag Selected Node",
+            "Info": "Moves all currently highlighted nodes",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL Left Click Node",
+            "Info": "Toggles the node selected and unselected",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Middle Drag",
+            "Info": "Pan view",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Right Click",
+            "Info": "Open Edit window",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Scroll Wheel",
+            "Info": "Pans the view vertically",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Shift Scroll Wheel",
+            "Info": "Pans the view horizontally",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL C",
+            "Info": "Copy selected node and it's children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL V",
+            "Info": "Paste selected node and it's children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "DEL",
+            "Info": "Delete selected node",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1180.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
           "y": 183.0
         },
         "Entry": "FAQ",
@@ -1755,10 +1924,10 @@
             "ngMapNodeName": "Branch",
             "ngMapNodePosition": {
               "x": 700.0,
-              "y": 580.0
+              "y": 1180.0
             },
             "ngMapNodeSize": {
-              "x": 248.000122,
+              "x": 248.0,
               "y": 163.0
             },
             "Entry": "Multi-select behaves oddly",
@@ -1769,7 +1938,7 @@
             "ngMapNodeName": "Branch",
             "ngMapNodePosition": {
               "x": 980.0,
-              "y": 580.0
+              "y": 1180.0
             },
             "ngMapNodeSize": {
               "x": 248.0,
@@ -1784,8 +1953,8 @@
       {
         "ngMapNodeName": "Branch",
         "ngMapNodePosition": {
-          "x": 420.952026,
-          "y": 818.3948
+          "x": 400.0,
+          "y": 1440.0
         },
         "ngMapNodeSize": {
           "x": 614.0,

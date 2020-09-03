@@ -1,6 +1,7 @@
 using Godot;
 using LibT;
 using LibT.Serialization;
+using LibT.Services;
 
 public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
 {
@@ -8,10 +9,8 @@ public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
 	private Label _label;
 	[Export] private NodePath _colorRectPath;
 	private ColorRect _colorRect;
-	[Export] private NodePath _popupPath;
-	private Popup _popup;
-	[Export] private NodePath _pickerPath;
-	private ColorPicker _picker;
+	
+	private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
 
 	private bool asHtml;
 
@@ -21,11 +20,6 @@ public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
 	    
 	    _colorRect = this.GetNodeFromPath<ColorRect>( _colorRectPath );
 	    _colorRect.Connect( "gui_input", this, nameof(_GuiInput) );
-	    
-	    _popup = this.GetNodeFromPath<Popup>( _popupPath );
-	    _popup.Connect( "popup_hide", this, nameof(SelectColor) );
-	    
-	    _picker = this.GetNodeFromPath<ColorPicker>( _pickerPath );
     }
 
     public override void _GuiInput( InputEvent @event )
@@ -34,15 +28,9 @@ public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
 	    
 	    if( mouseButton != null && !mouseButton.Pressed )
 	    {
-		    _picker.Color = _colorRect.Color;
-		    _popup.Popup_();
-		    _popup.RectPosition = GetGlobalMousePosition();
+		    _builder.Get.GetColorFromUser( _colorRect.Color )
+			    .Then( color => { _colorRect.Color = color; } );
 	    }
-    }
-
-    private void SelectColor()
-    {
-	    _colorRect.Color = _picker.Color;
     }
 
     public void LoadFromGda( GenericDataArray data )
