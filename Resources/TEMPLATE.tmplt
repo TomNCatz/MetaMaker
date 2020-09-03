@@ -30,6 +30,36 @@
             "slotType": 0,
             "explicitNode": "Node"
           }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "nestingColors",
+          "field": {
+            "fieldType": "COLOR",
+            "label": "Color",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "keyColors",
+          "field": {
+            "fieldType": "COLOR",
+            "label": "Color",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false
+          }
         }
       ]
     },
@@ -1061,6 +1091,40 @@
           "defaultValue": 0
         }
       ]
+    }
+  ],
+  "nestingColors": [
+    {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.84375,
+      "g": 0.84375,
+      "b": 0.84375,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.64794004,
+      "g": 0.295880139,
+      "b": 1.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 1.0,
+      "b": 0.0625,
+      "a": 1.0
     }
   ]
 }

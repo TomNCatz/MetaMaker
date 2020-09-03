@@ -105,8 +105,6 @@ public class JsonBuilder : ColorRect
 	private HelpPopup _helpInfoPopup;
 
 	public Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
-	public List<string> _recentTemplates = new List<string>();
-	public List<string> _recentFiles = new List<string>();
 	public readonly List<Tuple<KeyLinkSlot, string>> _loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 	public bool includeNodeData = true;
 	public bool includeGraphData = true;
@@ -114,6 +112,8 @@ public class JsonBuilder : ColorRect
 	
 	private Vector2 _offset = new Vector2(50,100);
 	private Vector2 _buffer = new Vector2(40,10);
+	private List<string> _recentTemplates = new List<string>();
+	private List<string> _recentFiles = new List<string>();
 	private Dictionary<string,GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
 	private List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
 	private SlottedGraphNode _lastSelection;
@@ -138,8 +138,8 @@ public class JsonBuilder : ColorRect
 	}
 	private string _saveFilePath;
 
-	private static readonly Color[] _parentChildColors = {Colors.Aquamarine,Colors.Beige,Colors.Gold,Colors.Black,Colors.Firebrick};
-	private static readonly Color[] _keyColors = {Colors.Chartreuse,Colors.Cornflower,Colors.Cornsilk,Colors.Indigo,Colors.HotPink};
+	private static List<Color> _parentChildColors = new List<Color> ();
+	private static List<Color> _keyColors = new List<Color>();
 
 
 	public bool HasUnsavedChanges
@@ -157,6 +157,8 @@ public class JsonBuilder : ColorRect
 	#region Setup
 	public override void _Ready()
 	{
+		OS.LowProcessorUsageMode = true;
+		
 		try
 		{
 			ServiceProvider.Add( this );
@@ -645,6 +647,8 @@ public class JsonBuilder : ColorRect
 			graph.AddValue( "explicitNode", _explicitNode );
 			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
 			graph.AddValue( "nodeList", nodeList );
+			graph.AddValue( "nestingColors", _parentChildColors );
+			graph.AddValue( "keyColors", _keyColors );
 					
 			// save data
 			graph.AddValue( "data", SaveData() );
@@ -894,10 +898,13 @@ public class JsonBuilder : ColorRect
 		}
 		GenericDataArray listing = gda.GetGdo( "nodeList" ) as GenericDataArray;
 
-		LoadTemplate( listing.values.Values.ToList() );
+		gda.GetValue( "nestingColors", out List<Color> nestingColors );
+		gda.GetValue( "keyColors", out List<Color> keyColors );
+		
+		LoadTemplate( listing.values.Values.ToList(), nestingColors, keyColors );
 	}
 
-	private void LoadTemplate(List<GenericDataObject> dataList)
+	private void LoadTemplate(List<GenericDataObject> dataList, List<Color> nestingColors, List<Color> keyColors )
 	{
 		if( dataList == null )
 		{
@@ -908,6 +915,36 @@ public class JsonBuilder : ColorRect
 		_nodeData.Clear();
 		_createSubmenu.Clear();
 		_createSubmenu.RectSize = Vector2.Zero;
+
+		if( nestingColors != null && nestingColors.Count > 0 )
+		{
+			_parentChildColors.Clear();
+			_parentChildColors.AddRange( nestingColors );
+		}
+		else
+		{
+			_parentChildColors.Clear();
+			_parentChildColors.Add( Colors.Aquamarine );
+			_parentChildColors.Add( Colors.Beige );
+			_parentChildColors.Add( Colors.Gold );
+			_parentChildColors.Add( Colors.Black );
+			_parentChildColors.Add( Colors.Firebrick );
+		}
+
+		if( keyColors != null && keyColors.Count > 0 )
+		{
+			_keyColors.Clear();
+			_keyColors.AddRange( keyColors );
+		}
+		else
+		{
+			_keyColors.Clear();
+			_keyColors.Add( Colors.Chartreuse );
+			_keyColors.Add( Colors.Cornflower );
+			_keyColors.Add( Colors.Cornsilk );
+			_keyColors.Add( Colors.Indigo );
+			_keyColors.Add( Colors.HotPink );
+		}
 		
 		foreach( GenericDataObject gdo in dataList )
 		{
@@ -1107,12 +1144,12 @@ public class JsonBuilder : ColorRect
 
 	public static Color GetParentChildColor( int slotType )
 	{
-		return _parentChildColors[slotType % _parentChildColors.Length];
+		return _parentChildColors[slotType % _parentChildColors.Count];
 	}
 
 	public static Color GetKeyColor( int slotType )
 	{
-		return _keyColors[slotType % _keyColors.Length];
+		return _keyColors[slotType % _keyColors.Count];
 	}
 
 	public IPromise<Color> GetColorFromUser(Color original)
