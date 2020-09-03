@@ -251,6 +251,7 @@ public class JsonBuilder : ColorRect
 			settingsMenu.AddItem( "Help and FAQ", 3 );
 			
 			_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
+			_searchBar.Connect( "text_entered", this, nameof(OnSearch) );
 			_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
 			_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
 
@@ -491,11 +492,16 @@ public class JsonBuilder : ColorRect
 
 	private void OnSearchPress()
 	{
-		if(string.IsNullOrEmpty(_searchBar.Text)) return;
+		OnSearch(_searchBar.Text);
+	}
 
-		if( !generatedKeys.ContainsKey( _searchBar.Text ) )
+	private void OnSearch( string text )
+	{
+		if(string.IsNullOrEmpty(text)) return;
+
+		if( !generatedKeys.ContainsKey( text ) )
 		{
-			string partial = PartialFindKey( _searchBar.Text );
+			string partial = PartialFindKey( text );
 			
 			if( string.IsNullOrEmpty( partial ) ) return;
 			
@@ -504,7 +510,7 @@ public class JsonBuilder : ColorRect
 			return;
 		}
 		
-		CenterViewOnKeyedNode( _searchBar.Text );
+		CenterViewOnKeyedNode( text );
 	}
 
 	private void OnRecentTemplateMenuSelection( int id )

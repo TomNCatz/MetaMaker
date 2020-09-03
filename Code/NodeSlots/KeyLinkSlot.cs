@@ -25,7 +25,7 @@ namespace LibT
 		{
 			InputEventMouseButton mouseButton = @event as InputEventMouseButton;
 	    
-			if( mouseButton != null && !mouseButton.Pressed )
+			if( mouseButton != null && mouseButton.Doubleclick )
 			{
 				if( string.IsNullOrEmpty( _field.Text ) ) return;
 

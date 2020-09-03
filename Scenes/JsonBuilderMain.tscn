@@ -46,7 +46,6 @@ custom_styles/bg = SubResource( 1 )
 custom_colors/grid_major = Color( 1, 1, 1, 0.392157 )
 custom_colors/grid_minor = Color( 1, 1, 1, 0.0980392 )
 right_disconnects = true
-scroll_offset = Vector2( 0, -21 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
