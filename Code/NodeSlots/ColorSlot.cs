@@ -26,7 +26,7 @@ public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
     {
 	    InputEventMouseButton mouseButton = @event as InputEventMouseButton;
 	    
-	    if( mouseButton != null && !mouseButton.Pressed )
+	    if( mouseButton != null && mouseButton.ButtonIndex == 1 && !mouseButton.Pressed )
 	    {
 		    _builder.Get.GetColorFromUser( _colorRect.Color )
 			    .Then( color => { _colorRect.Color = color; } );

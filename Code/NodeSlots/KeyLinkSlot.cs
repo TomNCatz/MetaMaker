@@ -11,8 +11,13 @@ namespace LibT
 		private Label _title;
 		[Export] private NodePath _fieldPath;
 		private Label _field;
+		private EmptyHandling emptyHandling;
 		private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
-
+		private enum EmptyHandling
+		{
+			EMPTY_STRING,
+			SKIP
+		}
 		
 		public override void _Ready()
 		{
@@ -55,11 +60,31 @@ namespace LibT
 		{
 			data.GetValue( "label", out string label );
 			_title.Text = label;
+			
+			if( data.values.ContainsKey( "emptyHandling" ) )
+			{
+				data.GetValue( "emptyHandling", out emptyHandling );
+			}
 		}
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( _title.Text, _field.Text );
+			if( string.IsNullOrEmpty( _field.Text ) )
+			{
+				switch(emptyHandling)
+				{
+					case EmptyHandling.EMPTY_STRING :
+						objData.AddValue( _title.Text, _field.Text );
+						break;
+					case EmptyHandling.SKIP : 
+						break;
+					default : throw new ArgumentOutOfRangeException();
+				}
+			}
+			else
+			{
+				objData.AddValue( _title.Text, _field.Text );
+			}
 		}
 
 		public void SetObjectData( GenericDataArray objData )

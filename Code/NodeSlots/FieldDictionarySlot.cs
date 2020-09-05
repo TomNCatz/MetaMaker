@@ -58,16 +58,20 @@ namespace LibT
 					throw new Exception($"Child item '{child.Value.Name}' is not an IGdoConvertible");
 				}
 
-				items[child.Key] = convertible;
+				GenericDataArray gda = convertible.GetObjectData();
+				if( gda.values.Count > 0 )
+				{
+					items[child.Key] = convertible;
+				}
 			}
 			objData.AddValue( _title.Text, items );
 		}
 
 		public void SetObjectData( GenericDataArray objData )
 		{
-			objData.GetValue( _title.Text, out GenericDataArray childSlots );
-
-			foreach( var dataArray in childSlots.values )
+			objData.GetValue( _title.Text, out Dictionary<string,GenericDataArray> childSlots );
+			
+			foreach( var dataArray in childSlots )
 			{
 				_selector.Text = dataArray.Key;
 				Add();
@@ -77,7 +81,7 @@ namespace LibT
 					throw new Exception($"Child item '{_children[dataArray.Key].Name}' is not an IGdoConvertible");
 				}
 
-				convertible.SetObjectData( childSlots );
+				convertible.SetObjectData( dataArray.Value );
 			}
 		}
 

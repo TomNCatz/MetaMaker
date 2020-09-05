@@ -28,7 +28,8 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "-",
             "slotType": 0,
-            "explicitNode": "Node"
+            "explicitNode": "Node",
+            "emptyHandling": "SKIP"
           }
         },
         "3": {
@@ -99,7 +100,8 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "-",
             "slotType": 1,
-            "explicitNode": ""
+            "explicitNode": "",
+            "emptyHandling": "SKIP"
           }
         }
       }
@@ -203,6 +205,14 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0
+        },
+        "4": {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": {
+            "0": "EMPTY_OBJECT",
+            "1": "SKIP"
+          }
         }
       }
     },
@@ -271,6 +281,14 @@
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
           "defaultValue": ""
+        },
+        "5": {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": {
+            "0": "EMPTY_OBJECT",
+            "1": "SKIP"
+          }
         }
       }
     },
@@ -301,7 +319,8 @@
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
-          "explicitNode": ""
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
         }
       }
     },
@@ -332,7 +351,8 @@
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
-          "explicitNode": ""
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
         }
       }
     },
@@ -820,7 +840,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "true when true",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "EMPTY_OBJECT"
           }
         },
         "6": {
@@ -829,7 +850,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "false when true",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "EMPTY_OBJECT"
           }
         },
         "7": {
@@ -838,7 +860,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "false when false",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "EMPTY_OBJECT"
           }
         },
         "8": {
@@ -847,7 +870,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "true when false",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "EMPTY_OBJECT"
           }
         }
       }
@@ -1177,13 +1201,14 @@
                 "y": 100.0
               },
               "ngMapNodeSize": {
-                "x": 194.0,
-                "y": 134.0
+                "x": 230.0,
+                "y": 151.0
               },
               "fieldType": "LINK_TO_CHILD",
               "label": "Branch",
               "slotType": 0,
-              "explicitNode": "Branch"
+              "explicitNode": "Branch",
+              "emptyHandling": "SKIP"
             }
           }
         ]
@@ -1267,13 +1292,14 @@
                 "y": 440.0
               },
               "ngMapNodeSize": {
-                "x": 194.0,
-                "y": 134.0
+                "x": 230.0,
+                "y": 151.0
               },
               "fieldType": "LINK_TO_CHILD",
               "label": "Branch",
               "slotType": 0,
-              "explicitNode": "Branch"
+              "explicitNode": "Branch",
+              "emptyHandling": "SKIP"
             }
           }
         ]

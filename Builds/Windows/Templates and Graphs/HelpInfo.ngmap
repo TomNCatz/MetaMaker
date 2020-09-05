@@ -18,7 +18,8 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "Branch",
             "slotType": 0,
-            "explicitNode": "Branch"
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
           }
         }
       }
@@ -54,10 +55,75 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "Branch",
             "slotType": 0,
-            "explicitNode": "Branch"
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
           }
         }
       }
+    }
+  ],
+  "nestingColors": [
+    {
+      "r": 0.5,
+      "g": 1.0,
+      "b": 0.83,
+      "a": 1.0
+    },
+    {
+      "r": 0.96,
+      "g": 0.96,
+      "b": 0.86,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.84,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.7,
+      "g": 0.13,
+      "b": 0.13,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.5,
+      "g": 1.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.39,
+      "g": 0.58,
+      "b": 0.93,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.97,
+      "b": 0.86,
+      "a": 1.0
+    },
+    {
+      "r": 0.29,
+      "g": 0.0,
+      "b": 0.51,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.41,
+      "b": 0.71,
+      "a": 1.0
     }
   ],
   "data": {

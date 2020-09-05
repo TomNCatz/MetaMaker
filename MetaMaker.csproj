@@ -77,6 +77,7 @@
     <Compile Include="Code\NodeSlots\BooleanSlot.cs" />
     <Compile Include="Code\NodeSlots\ColorSlot.cs" />
     <Compile Include="Code\NodeSlots\DateTimeOffsetSlot.cs" />
+    <Compile Include="Code\NodeSlots\DoubleSlot.cs" />
     <Compile Include="Code\NodeSlots\EnumSlot.cs" />
     <Compile Include="Code\NodeSlots\FieldDictionarySlot.cs" />
     <Compile Include="Code\NodeSlots\FieldListSlot.cs" />

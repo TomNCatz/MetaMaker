@@ -18,70 +18,49 @@ public class JsonBuilder : ColorRect
 	private const string DEFAULT_TEMPLATE_SOURCE = "res://Resources/TEMPLATE.tmplt";
 	private const string HELP_INFO_SOURCE = "res://Resources/HelpInfo.json";
 	private const string VERSION = "res://Resources/Version.txt";
-	private const string NODE_SOURCE = "res://Objects/SlottedGraphNode.tscn";
-	
-	private const string SEPARATOR_SOURCE = "res://Objects/Slots/SeparatorSlot.tscn";
-	private const string KEY_SOURCE = "res://Objects/Slots/KeySlot.tscn";
-	private const string KEY_LINK_SOURCE = "res://Objects/Slots/KeyLinkSlot.tscn";
-	private const string LINK_TO_PARENT_SOURCE = "res://Objects/Slots/LinkToParentSlot.tscn";
-	private const string LINK_TO_CHILD_SOURCE = "res://Objects/Slots/LinkToChildSlot.tscn";
-	private const string FIELD_LIST_SOURCE = "res://Objects/Slots/FieldListSlot.tscn";
-	private const string FIELD_DICTIONARY_SOURCE = "res://Objects/Slots/FieldDictionarySlot.tscn";
-	private const string INFO_SOURCE = "res://Objects/Slots/InfoSlot.tscn";
-	private const string AUTO_SOURCE = "res://Objects/Slots/AutoSlot.tscn";
-	private const string TYPE_SOURCE = "res://Objects/Slots/TypeSlot.tscn";
-	private const string ENUM_SOURCE = "res://Objects/Slots/EnumSlot.tscn";
-	private const string TEXT_LINE_SOURCE = "res://Objects/Slots/TextLineSlot.tscn";
-	private const string TEXT_AREA_SOURCE = "res://Objects/Slots/TextAreaSlot.tscn";
-	private const string TEXT_AREA_RICH_SOURCE = "res://Objects/Slots/TextAreaRichSlot.tscn";
-	private const string BOOLEAN_SOURCE = "res://Objects/Slots/BooleanSlot.tscn";
-	private const string INT_SOURCE = "res://Objects/Slots/IntSlot.tscn";
-	private const string FLOAT_SOURCE = "res://Objects/Slots/FloatSlot.tscn";
-	private const string LONG_SOURCE = "res://Objects/Slots/LongSlot.tscn";
-	private const string COLOR_SOURCE = "res://Objects/Slots/ColorSlot.tscn";
-	private const string VECTOR2_SOURCE = "res://Objects/Slots/Vector2Slot.tscn";
-	private const string VECTOR3_SOURCE = "res://Objects/Slots/Vector3Slot.tscn";
-	private const string VECTOR4_SOURCE = "res://Objects/Slots/Vector4Slot.tscn";
-	private const string DATETIME_OFFSET_SOURCE = "res://Objects/Slots/DateTimeOffsetSlot.tscn";
-	private const string DATETIME_SOURCE = "res://Objects/Slots/DateTimeSlot.tscn";
-	private const string TIME_SPAN_SOURCE = "res://Objects/Slots/TimeSpanSlot.tscn";
-	private const string NODE_BACKGROUND_SOURCE = "res://Textures/NodeBackground.png";
-	private const string NODE_BACKGROUND_SELECTED_SOURCE = "res://Textures/NodeBackgroundSelected.png";
 
-	private static PackedScene nodeScene;
-	public static PackedScene separatorScene;
-	public static PackedScene keyScene;
-	public static PackedScene keyLinkScene;
-	public static PackedScene linkToParentScene;
-	public static PackedScene linkToChildScene;
-	public static PackedScene fieldListScene;
-	public static PackedScene fieldDictionaryScene;
-	public static PackedScene infoScene;
-	public static PackedScene autoScene;
-	public static PackedScene typeScene;
-	public static PackedScene enumScene;
-	public static PackedScene textLineScene;
-	public static PackedScene textAreaScene;
-	public static PackedScene textAreaRichScene;
-	public static PackedScene booleanScene;
-	public static PackedScene intScene;
-	public static PackedScene floatScene;
-	public static PackedScene longScene;
-	public static PackedScene colorScene;
-	public static PackedScene vector3Scene;
-	public static PackedScene vector4Scene;
-	public static PackedScene vector2Scene;
-	public static PackedScene dateTimeOffsetScene;
-	public static PackedScene dateTimeScene;
-	public static PackedScene timeSpanScene;
-
-	public static Texture nodeBackgroundTexture;
-	public static Texture nodeBackgroundSelectedTexture;
+	[Export] public PackedScene nodeScene;
+	[Export] public PackedScene separatorScene;
+	[Export] public PackedScene keyScene;
+	[Export] public PackedScene keyLinkScene;
+	[Export] public PackedScene linkToParentScene;
+	[Export] public PackedScene linkToChildScene;
+	[Export] public PackedScene fieldListScene;
+	[Export] public PackedScene fieldDictionaryScene;
+	[Export] public PackedScene infoScene;
+	[Export] public PackedScene autoScene;
+	[Export] public PackedScene typeScene;
+	[Export] public PackedScene enumScene;
+	[Export] public PackedScene textLineScene;
+	[Export] public PackedScene textAreaScene;
+	[Export] public PackedScene textAreaRichScene;
+	[Export] public PackedScene booleanScene;
+	[Export] public PackedScene intScene;
+	[Export] public PackedScene floatScene;
+	[Export] public PackedScene doubleScene;
+	[Export] public PackedScene longScene;
+	[Export] public PackedScene colorScene;
+	[Export] public PackedScene vector3Scene;
+	[Export] public PackedScene vector4Scene;
+	[Export] public PackedScene vector2Scene;
+	[Export] public PackedScene dateTimeOffsetScene;
+	[Export] public PackedScene dateTimeScene;
+	[Export] public PackedScene timeSpanScene;
 	#endregion
 
 	#region Variables
 	[Export] private NodePath _graphPath;
 	private GraphEdit _graph;
+	[Export] private NodePath _zoomOutPath;
+	private Button _zoomOutButton;
+	[Export] private NodePath _zoomNormalPath;
+	private Button _zoomNormalButton;
+	[Export] private NodePath _zoomInPath;
+	private Button _zoomInButton;
+	[Export] private NodePath _snapPath;
+	private Button _snapButton;
+	[Export] private NodePath _snapSizePath;
+	private SpinBox _snapSizeField;
 	[Export] private NodePath _fileMenuButtonPath;
 	private MenuButton _fileMenuButton;
 	[Export] private NodePath _editMenuButtonPath;
@@ -126,6 +105,7 @@ public class JsonBuilder : ColorRect
 	private string _defaultListing;
 	private string _explicitNode;
 	private Promise<Color> _pickingColor;
+	private Tween _tween;
 
 	private string SaveFilePath
 	{
@@ -138,8 +118,8 @@ public class JsonBuilder : ColorRect
 	}
 	private string _saveFilePath;
 
-	private static List<Color> _parentChildColors = new List<Color> ();
-	private static List<Color> _keyColors = new List<Color>();
+	private List<Color> _parentChildColors = new List<Color> ();
+	private List<Color> _keyColors = new List<Color>();
 
 
 	public bool HasUnsavedChanges
@@ -162,37 +142,7 @@ public class JsonBuilder : ColorRect
 		try
 		{
 			ServiceProvider.Add( this );
-			
-			nodeScene = GD.Load<PackedScene>(NODE_SOURCE);
-			separatorScene = GD.Load<PackedScene>(SEPARATOR_SOURCE);
-			keyScene = GD.Load<PackedScene>(KEY_SOURCE);
-			keyLinkScene = GD.Load<PackedScene>(KEY_LINK_SOURCE);
-			linkToParentScene = GD.Load<PackedScene>(LINK_TO_PARENT_SOURCE);
-			linkToChildScene = GD.Load<PackedScene>(LINK_TO_CHILD_SOURCE);
-			fieldListScene = GD.Load<PackedScene>(FIELD_LIST_SOURCE);
-			fieldDictionaryScene = GD.Load<PackedScene>(FIELD_DICTIONARY_SOURCE);
-			infoScene = GD.Load<PackedScene>(INFO_SOURCE);
-			autoScene = GD.Load<PackedScene>(AUTO_SOURCE);
-			typeScene = GD.Load<PackedScene>(TYPE_SOURCE);
-			enumScene = GD.Load<PackedScene>(ENUM_SOURCE);
-			textLineScene = GD.Load<PackedScene>(TEXT_LINE_SOURCE);
-			textAreaScene = GD.Load<PackedScene>(TEXT_AREA_SOURCE);
-			textAreaRichScene = GD.Load<PackedScene>(TEXT_AREA_RICH_SOURCE);
-			booleanScene = GD.Load<PackedScene>(BOOLEAN_SOURCE);
-			intScene = GD.Load<PackedScene>(INT_SOURCE);
-			floatScene = GD.Load<PackedScene>(FLOAT_SOURCE);
-			longScene = GD.Load<PackedScene>(LONG_SOURCE);
-			colorScene = GD.Load<PackedScene>(COLOR_SOURCE);
-			vector2Scene = GD.Load<PackedScene>(VECTOR2_SOURCE);
-			vector3Scene = GD.Load<PackedScene>(VECTOR3_SOURCE);
-			vector4Scene = GD.Load<PackedScene>(VECTOR4_SOURCE);
-			dateTimeOffsetScene = GD.Load<PackedScene>(DATETIME_OFFSET_SOURCE);
-			dateTimeScene = GD.Load<PackedScene>(DATETIME_SOURCE);
-			timeSpanScene = GD.Load<PackedScene>(TIME_SPAN_SOURCE);
 
-			nodeBackgroundTexture = GD.Load<Texture>( NODE_BACKGROUND_SOURCE );
-			nodeBackgroundSelectedTexture = GD.Load<Texture>( NODE_BACKGROUND_SELECTED_SOURCE );
-			
 			_recentTemplateSubmenu = new PopupMenu();
 			_recentTemplateSubmenu.Name = "RecentTemplateMenu";
 			_recentTemplateSubmenu.Connect( "id_pressed", this, nameof(OnRecentTemplateMenuSelection));
@@ -281,6 +231,21 @@ public class JsonBuilder : ColorRect
 			_graph.Connect( "paste_nodes_request", this, nameof(RequestPasteNode) );
 			_graph.Connect( "delete_nodes_request", this, nameof(RequestDeleteNode) );
 			_graph.Connect( "gui_input", this, nameof(GraphClick) );
+			_graph.GetZoomHbox().Visible = false;
+			
+			_zoomOutButton = this.GetNodeFromPath<Button>( _zoomOutPath );
+			_zoomOutButton.Connect( "pressed", this, nameof(ZoomOutPress) );
+			_zoomNormalButton = this.GetNodeFromPath<Button>( _zoomNormalPath );
+			_zoomNormalButton.Connect( "pressed", this, nameof(ZoomNormalPress) );
+			_zoomInButton = this.GetNodeFromPath<Button>( _zoomInPath );
+			_zoomInButton.Connect( "pressed", this, nameof(ZoomInPress) );
+			_snapButton = this.GetNodeFromPath<Button>( _snapPath );
+			_snapButton.Connect( "pressed", this, nameof(SnapPress) );
+			_snapSizeField = this.GetNodeFromPath<SpinBox>( _snapSizePath );
+			_snapSizeField.Connect( "changed", this, nameof(SnapChanged) );
+			
+			_tween = new Tween();
+			AddChild( _tween );
 			
 			GetTree().SetAutoAcceptQuit(false);
 			
@@ -513,6 +478,33 @@ public class JsonBuilder : ColorRect
 		}
 		
 		CenterViewOnKeyedNode( text );
+	}
+
+	private void ZoomOutPress()
+	{
+		_graph.Zoom -= 0.1f;
+	}
+
+	private void ZoomInPress()
+	{
+		_graph.Zoom += 0.1f;
+	}
+
+	private void ZoomNormalPress()
+	{
+		_graph.Zoom = 1;
+	}
+
+	private void SnapPress()
+	{
+		_graph.UseSnap = !_graph.UseSnap;
+
+		_snapSizeField.Visible = _graph.UseSnap;
+	}
+
+	private void SnapChanged()
+	{
+		_graph.SnapDistance = (int)_snapSizeField.Value;
 	}
 
 	private void OnRecentTemplateMenuSelection( int id )
@@ -1142,12 +1134,12 @@ public class JsonBuilder : ColorRect
 		return CreateNode(nodeData, nodeContent);
 	}
 
-	public static Color GetParentChildColor( int slotType )
+	public Color GetParentChildColor( int slotType )
 	{
 		return _parentChildColors[slotType % _parentChildColors.Count];
 	}
 
-	public static Color GetKeyColor( int slotType )
+	public Color GetKeyColor( int slotType )
 	{
 		return _keyColors[slotType % _keyColors.Count];
 	}
@@ -1183,7 +1175,13 @@ public class JsonBuilder : ColorRect
 
 	public void CenterView( Vector2 position )
 	{
-		_graph.ScrollOffset = position * _graph.Zoom - _graph.RectSize * 0.5f;
+		_tween.Remove( _graph, "scroll_offset" );
+		_tween.InterpolateProperty( _graph,
+			"scroll_offset",
+			_graph.ScrollOffset,
+			position * _graph.Zoom - _graph.RectSize * 0.5f,
+			0.3f );
+		_tween.Start();
 	}
 
 	private string PartialFindKey( string partial )

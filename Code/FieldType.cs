@@ -17,6 +17,7 @@ namespace LibT
 		TEXT_AREA,
 		TEXT_AREA_RICH,
 		FLOAT,
+		DOUBLE,
 		INT,
 		LONG,
 		BOOLEAN,

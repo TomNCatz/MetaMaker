@@ -18,7 +18,8 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "Branch",
             "slotType": 0,
-            "explicitNode": "Branch"
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
           }
         }
       ]
@@ -54,10 +55,13 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "Branch",
             "slotType": 0,
-            "explicitNode": "Branch"
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
           }
         }
       ]
     }
-  ]
+  ],
+  "nestingColors": [],
+  "keyColors": []
 }

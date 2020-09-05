@@ -10,7 +10,14 @@ namespace LibT
 		private ServiceInjection<JsonBuilder> _builderInjection = new ServiceInjection<JsonBuilder>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
+		private EmptyHandling emptyHandling;
 		private SlottedGraphNode _parent;
+
+		private enum EmptyHandling
+		{
+			EMPTY_OBJECT,
+			SKIP
+		}
 		
 		public override void _Ready()
 		{
@@ -25,6 +32,11 @@ namespace LibT
 			if( data.values.ContainsKey( "explicitNode" ) )
 			{
 				data.GetValue( "explicitNode", out _explicitNode );
+			}
+			
+			if( data.values.ContainsKey( "emptyHandling" ) )
+			{
+				data.GetValue( "emptyHandling", out emptyHandling );
 			}
 		}
 
@@ -50,7 +62,15 @@ namespace LibT
 		{
 			if( _child == null )
 			{
-				objData.AddValue( Text, new GenericDataArray() );
+				switch(emptyHandling)
+				{
+					case EmptyHandling.EMPTY_OBJECT :
+						objData.AddValue( Text, new GenericDataArray() );
+						break;
+					case EmptyHandling.SKIP : 
+						break;
+					default : throw new ArgumentOutOfRangeException();
+				}
 			}
 			else
 			{

@@ -28,7 +28,8 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "-",
             "slotType": 0,
-            "explicitNode": "Node"
+            "explicitNode": "Node",
+            "emptyHandling": "SKIP"
           }
         },
         {
@@ -99,7 +100,8 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "-",
             "slotType": 1,
-            "explicitNode": ""
+            "explicitNode": "",
+            "emptyHandling": "SKIP"
           }
         }
       ]
@@ -203,6 +205,14 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_STRING",
+            "SKIP"
+          ]
         }
       ]
     },
@@ -271,6 +281,14 @@
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
           "defaultValue": ""
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_OBJECT",
+            "SKIP"
+          ]
         }
       ]
     },
@@ -301,7 +319,8 @@
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
-          "explicitNode": ""
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
         }
       ]
     },
@@ -332,7 +351,8 @@
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
-          "explicitNode": ""
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
         }
       ]
     },
@@ -640,6 +660,70 @@
       ]
     },
     {
+      "title": "Double Slot",
+      "color": {
+        "r": 0.515625,
+        "g": 0.252984554,
+        "b": 0.351474732,
+        "a": 1.0
+      },
+      "fields": [
+        {
+          "fieldType": "LINK_TO_PARENT",
+          "slotType": 1
+        },
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DOUBLE"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "BOOL-uGT"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "max",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "BOOL-yIn"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "min",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "defaultValue",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        }
+      ]
+    },
+    {
       "title": "Int Slot",
       "color": {
         "r": 0.8117647,
@@ -820,7 +904,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "true when true",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "SKIP"
           }
         },
         {
@@ -829,7 +914,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "false when true",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "SKIP"
           }
         },
         {
@@ -838,7 +924,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "false when false",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "SKIP"
           }
         },
         {
@@ -847,7 +934,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "true when false",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "SKIP"
           }
         }
       ]
