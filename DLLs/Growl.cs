@@ -8,9 +8,17 @@ public class Growl : Node
 	[Export]private Log.LogLevel _lowestLogLevel = Log.LogLevel.WARNINGS;
 	[Export]private string _logFile = string.Empty;
 
+	private static bool isLoaded;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// todo find out why when I load certain files this script gets started over with no settings applied
+		if(isLoaded) return;
+		isLoaded = true; 
+		GD.Print( "Growl Ready" );
+		
+		
 		Log.lowestDebug = _lowestLogLevel;
 		Log.PassLogs += LogOnPassLogs;
 		
