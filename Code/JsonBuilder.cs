@@ -95,7 +95,7 @@ public class JsonBuilder : ColorRect
 	private List<string> _recentFiles = new List<string>();
 	private Dictionary<string,GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
 	private List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
-	private SlottedGraphNode _lastSelection;
+	private List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
 	private GenericDataArray _copied;
 	private PopupMenu _editMenu;
 	private PopupMenu _createSubmenu;
@@ -773,12 +773,12 @@ public class JsonBuilder : ColorRect
 
 	private void RequestCopyNode()
 	{
-		if( _lastSelection == null ) return;
+		if( _selection.Count > 0 ) return;
 
 		includeNodeData = true;
 		includeGraphData = true;
 	
-		_copied = _lastSelection.GetObjectData();
+		_copied = _selection[0].GetObjectData();
 	}
 
 	private void RequestPasteNode()
@@ -803,25 +803,38 @@ public class JsonBuilder : ColorRect
 
 	private void RequestDeleteNode()
 	{
-		if( _lastSelection == null ) return;
+		for( int i = _selection.Count-1; i >= 0; i-- )
+		{
+			if(_selection[i] == null) return;
+			
+			_selection[i].CloseRequest();
+		}
 		
-		_lastSelection.CloseRequest();
+		_selection.Clear();
 		
 		HasUnsavedChanges = true;
 	}
 
 	private void SelectNode(Node node)
 	{
-		//Log.LogL( $"Selected {node.Name}" );
-		_lastSelection = node as SlottedGraphNode;
+		SlottedGraphNode graphNode = node as SlottedGraphNode;
+		
+		if( _selection.Contains( graphNode ) ) return;
+		
+		Log.LogL( $"Selected {node.Name}" );
+		_selection.Add( graphNode );
 		
 		HasUnsavedChanges = true;
 	}
 
 	private void DeselectNode(Node node)
 	{
-		//Log.LogL( $"Deselected {node.Name}" );
-		//_lastSelection = null;
+		SlottedGraphNode graphNode = node as SlottedGraphNode;
+		
+		if( !_selection.Contains( graphNode ) ) return;
+		
+		Log.LogL( $"Deselected {node.Name}" );
+		_selection.Remove( graphNode );
 	}
 	#endregion
 
@@ -1252,9 +1265,9 @@ public class JsonBuilder : ColorRect
 
 	public void FreeNode( SlottedGraphNode graphNode )
 	{
-		if( _lastSelection == graphNode )
+		if( _selection.Contains( graphNode ) )
 		{
-			_lastSelection = null;
+			_selection.Remove( graphNode );
 		}
 		
 		Godot.Collections.Array connections = _graph.GetConnectionList();
