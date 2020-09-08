@@ -1,7 +1,16 @@
 {
+  "defaultListing": "",
+  "explicitNode": "",
   "nodeList": [
     {
       "title": "Mission Container",
+      "color": {
+        "r": 0.298039228,
+        "g": 0.298039228,
+        "b": 0.298039228,
+        "a": 1.0
+      },
+      "parentType": -1,
       "fields": [
         {
           "fieldType": "FIELD_LIST",
@@ -10,18 +19,22 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "children",
             "slotType": 0,
-            "explicitNode": ""
+            "explicitNode": "",
+            "emptyHandling": "EMPTY_OBJECT"
           }
         }
       ]
     },
     {
       "title": "Mission",
+      "color": {
+        "r": 0.2801966,
+        "g": 0.4375,
+        "b": 0.37851125,
+        "a": 1.0
+      },
+      "parentType": 0,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 0
-        },
         {
           "fieldType": "KEY",
           "label": "missionId",
@@ -62,7 +75,8 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "Mission",
-            "slotType": 0
+            "slotType": 0,
+            "emptyHandling": "EMPTY_STRING"
           }
         },
         {
@@ -72,24 +86,29 @@
             "fieldType": "LINK_TO_CHILD",
             "label": "Objective",
             "slotType": 1,
-            "explicitNode": ""
+            "explicitNode": "",
+            "emptyHandling": "EMPTY_OBJECT"
           }
         },
         {
           "fieldType": "LINK_TO_CHILD",
           "label": "displayData",
           "slotType": 2,
-          "explicitNode": ""
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
         }
       ]
     },
     {
       "title": "Objective",
+      "color": {
+        "r": 0.2233146,
+        "g": 0.375,
+        "b": 0.375,
+        "a": 1.0
+      },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "KEY",
           "label": "objectiveId",
@@ -196,34 +215,42 @@
           "field": {
             "fieldType": "KEY_TRACKER",
             "label": "Objective",
-            "slotType": 1
+            "slotType": 1,
+            "emptyHandling": "EMPTY_STRING"
           }
         },
         {
           "fieldType": "LINK_TO_CHILD",
           "label": "displayData",
           "slotType": 3,
-          "explicitNode": ""
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
         }
       ]
     },
     {
       "title": "Mission Display Data",
-      "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 2
-        }
-      ]
+      "color": {
+        "r": 0.494117647,
+        "g": 0.56078434,
+        "b": 0.5058824,
+        "a": 1.0
+      },
+      "parentType": 2,
+      "fields": []
     },
     {
       "title": "Objective Display Data",
-      "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 3
-        }
-      ]
+      "color": {
+        "r": 0.6313726,
+        "g": 0.7254902,
+        "b": 0.7411765,
+        "a": 1.0
+      },
+      "parentType": 3,
+      "fields": []
     }
-  ]
+  ],
+  "nestingColors": [],
+  "keyColors": []
 }

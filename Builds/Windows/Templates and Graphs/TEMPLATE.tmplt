@@ -10,6 +10,7 @@
         "b": 0.328125,
         "a": 1.0
       },
+      "parentType": -1,
       "fields": [
         {
           "fieldType": "TEXT_LINE",
@@ -72,11 +73,8 @@
         "b": 0.6862745,
         "a": 1.0
       },
+      "parentType": 0,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 0
-        },
         {
           "fieldType": "TEXT_LINE",
           "label": "title",
@@ -92,6 +90,15 @@
             "a": 1.0
           },
           "asHtml": false
+        },
+        {
+          "fieldType": "INT",
+          "label": "parentType",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": -1,
+          "defaultValue": -1
         },
         {
           "fieldType": "FIELD_LIST",
@@ -114,11 +121,8 @@
         "b": 0.828125,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -134,11 +138,8 @@
         "b": 0.333333343,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -182,11 +183,8 @@
         "b": 0.299449921,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -219,20 +217,22 @@
     {
       "title": "Link To Parent Slot",
       "color": {
-        "r": 0.333333343,
-        "g": 0.8117647,
-        "b": 0.6313726,
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "LINK_TO_PARENT"
+        },
+        {
+          "fieldType": "INFO",
+          "label": "NODE TYPE IS DEPRICATED\nAs of 0.3.0 this node type is depricated and should be replaced by the parent typ listed in the node itself",
+          "minHeight": 100.0
         },
         {
           "fieldType": "INT",
@@ -240,8 +240,8 @@
           "hasMax": false,
           "max": 0,
           "hasMin": true,
-          "min": 0,
-          "defaultValue": 0
+          "min": -1,
+          "defaultValue": -1
         }
       ]
     },
@@ -253,11 +253,8 @@
         "b": 0.5476952,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -300,11 +297,8 @@
         "b": 0.19212313,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -332,11 +326,8 @@
         "b": 0.267146528,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -364,11 +355,8 @@
         "b": 0.882352948,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -399,11 +387,8 @@
         "b": 0.53125,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -429,11 +414,8 @@
         "b": 0.625,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -459,11 +441,8 @@
         "b": 0.260943323,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -493,11 +472,8 @@
         "b": 0.921875,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -523,11 +499,8 @@
         "b": 0.703125,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -563,11 +536,8 @@
         "b": 0.609375,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -603,11 +573,8 @@
         "b": 0.5127451,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -667,11 +634,8 @@
         "b": 0.351474732,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -731,11 +695,8 @@
         "b": 0.333333343,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -795,11 +756,8 @@
         "b": 0.0378042981,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -832,11 +790,8 @@
         "b": 0.8117647,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -870,11 +825,8 @@
         "b": 0.7647059,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -948,11 +900,8 @@
         "b": 0.8117647,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -981,11 +930,8 @@
         "b": 0.623529434,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -1015,11 +961,8 @@
         "b": 0.423529416,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -1050,11 +993,8 @@
         "b": 0.9375,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -1092,11 +1032,8 @@
         "b": 0.58431375,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -1125,11 +1062,8 @@
         "b": 0.423529416,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",
@@ -1158,11 +1092,8 @@
         "b": 0.298418134,
         "a": 1.0
       },
+      "parentType": 1,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 1
-        },
         {
           "fieldType": "AUTO",
           "label": "fieldType",

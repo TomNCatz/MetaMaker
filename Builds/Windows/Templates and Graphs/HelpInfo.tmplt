@@ -10,6 +10,7 @@
         "b": 0.40625,
         "a": 1.0
       },
+      "parentType": -1,
       "fields": [
         {
           "fieldType": "FIELD_LIST",
@@ -32,11 +33,8 @@
         "b": 0.7050562,
         "a": 1.0
       },
+      "parentType": 0,
       "fields": [
-        {
-          "fieldType": "LINK_TO_PARENT",
-          "slotType": 0
-        },
         {
           "fieldType": "TEXT_LINE",
           "label": "Entry",
