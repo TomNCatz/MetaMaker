@@ -60,7 +60,9 @@ namespace LibT
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			if( _child == null )
+			if( _child == null ||
+			    ( _builderInjection.Get.copyingData && 
+			                       !_builderInjection.Get.IsSelected( _child )))
 			{
 				switch(emptyHandling)
 				{
