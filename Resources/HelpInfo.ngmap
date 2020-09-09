@@ -1,4 +1,5 @@
 {
+  "targetVersion": "0.3.1",
   "defaultListing": "listing",
   "explicitNode": "",
   "nodeList": [

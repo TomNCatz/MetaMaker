@@ -1,0 +1,700 @@
+{
+  "helpInfo": [
+    {
+      "Entry": "File",
+      "Info": "File operations are accessed under this menu",
+      "Branches": [
+        {
+          "Entry": "Build Template (CTRL+N)",
+          "Info": "Loads a template for authoring templates",
+          "Branches": []
+        },
+        {
+          "Entry": "Load Template",
+          "Info": "Load a specific template",
+          "Branches": []
+        },
+        {
+          "Entry": "Export as Template",
+          "Info": "Creates a template from the data in this graph\nThis only creates a usable template if you are using the basic template",
+          "Branches": []
+        },
+        {
+          "Entry": "Shift Template Under Data",
+          "Info": "Attempts to load a different template under the current data\nUseful for when a template has changed and you want to update your graph",
+          "Branches": []
+        },
+        {
+          "Entry": "Save Graph (CTRL+S)",
+          "Info": "Saves a graph file that contains it's own template and data\nThis can be easily loaded back up to edit and re-export data",
+          "Branches": []
+        },
+        {
+          "Entry": "Save Graph As",
+          "Info": "Saves a graph into a new file you specify",
+          "Branches": []
+        },
+        {
+          "Entry": "Load Graph",
+          "Info": "Loaded a the template and data stored in a graph file",
+          "Branches": []
+        },
+        {
+          "Entry": "Clear Data",
+          "Info": "Clears the data out of a graph, but keeps the current template open",
+          "Branches": []
+        },
+        {
+          "Entry": "Export Slim JSON",
+          "Info": "Export data as JSON that leaves out metadata \nCannot be imported",
+          "Branches": []
+        },
+        {
+          "Entry": "Export Data to JSON",
+          "Info": "Export data as JSON\nIncludes some metadata to allow it to be imported",
+          "Branches": []
+        },
+        {
+          "Entry": "Import Data from JSON",
+          "Info": "Attempts to import a JSON into the currently loaded template\nDoes not  work on JSONs generated outside this tool or Slim jSONs",
+          "Branches": []
+        },
+        {
+          "Entry": "Help and FAQ",
+          "Info": "Opens this help window",
+          "Branches": []
+        },
+        {
+          "Entry": "Quit",
+          "Info": "Exits the application\nIf unsaved edits have been detected you will be promted to save",
+          "Branches": []
+        }
+      ]
+    },
+    {
+      "Entry": "Edit",
+      "Info": "Menu for editing nodes\nCan also be brought up by right clicking",
+      "Branches": [
+        {
+          "Entry": "Create",
+          "Info": "A submenu that creates the node selected at the last clicked position\nWill be filled with node options based on the loaded template",
+          "Branches": []
+        },
+        {
+          "Entry": "Copy Downstream (CTRL+C)",
+          "Info": "Copies the selected node and its children",
+          "Branches": []
+        },
+        {
+          "Entry": "Paste Nodes (CTRL+V)",
+          "Info": "Will attempt to paste copied data at the last clicked postion\nThis can be used even after changing templates",
+          "Branches": []
+        },
+        {
+          "Entry": "Delete Node (DEL)",
+          "Info": "Deletes the selected node",
+          "Branches": []
+        }
+      ]
+    },
+    {
+      "Entry": "Nodes",
+      "Info": "Descriptions of the different Template nodes \nand their purpose",
+      "Branches": [
+        {
+          "Entry": "Graph",
+          "Info": "Base used to create a collection of nodes\nThere should be only one",
+          "Branches": [
+            {
+              "Entry": "nodeList",
+              "Info": "list of connections to nodes\nnodes will apear in the order conencted\n",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Node",
+          "Info": "This defines an actual node that\nwill be available in your template",
+          "Branches": [
+            {
+              "Entry": "title",
+              "Info": "Human readable name of node\nNot actually relavent to the eventual JSON",
+              "Branches": []
+            },
+            {
+              "Entry": "fields",
+              "Info": "List of connection the fields this node will have defined",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Separator Slot",
+          "Info": "Creates a line seperator between slots",
+          "Branches": []
+        },
+        {
+          "Entry": "Key Slot",
+          "Info": "Unique ID generator\nCan be linked to with a Key Tracker Slot",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "slotType",
+              "Info": "Can only be matched to the same slotType",
+              "Branches": []
+            },
+            {
+              "Entry": "keyPrefix",
+              "Info": "All keys in this slot will be generated having this prefix",
+              "Branches": []
+            },
+            {
+              "Entry": "keySize",
+              "Info": "how many characters to generate after the prefix",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Key Tracker Slot",
+          "Info": "Links the field to a key in another node\nThis type of link only stores a string value of the linked key",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "slotType",
+              "Info": "Can only be matched to the same slotType",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Link To Parent Slot",
+          "Info": "Where a child gets linked to a parent\nThis slot does not actually export data",
+          "Branches": [
+            {
+              "Entry": "slotType",
+              "Info": "Can only be matched to the same slotType",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Link To Child Slot",
+          "Info": "Links another node as its child\nThis exports as the entire child being stored in the slot",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "slotType",
+              "Info": "Can only be matched to the same slotType",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Field List Slot",
+          "Info": "List of another slot type",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "field",
+              "Info": "Link the type of fields that will fill this list",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Field Dictionary Slot",
+          "Info": "Dictionary of another slot type",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "field",
+              "Info": "Link the type of fields that will fill this dictionary",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Info Slot",
+          "Info": "Displays info that is not exported",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "The text to be displayed as info in this slot",
+              "Branches": []
+            },
+            {
+              "Entry": "minHeight",
+              "Info": "How tall this slot should display",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Auto Slot",
+          "Info": "Stores a string that is not editable in the final graph",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Value this slot will be locked to",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Enum Slot",
+          "Info": "Stores an Enum value",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "values",
+              "Info": "List of strings that will be options for this enum type",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Text Line Slot",
+          "Info": "Stores a string",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Text Area Slot",
+          "Info": "Stores a string meant to be multiline",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "minHeight",
+              "Info": "How tall this slot should display",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Rich Text Slot",
+          "Info": "Stores a string that is meant to be displayed as rich text\nhas a label demo of what the text should look like",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "minHeight",
+              "Info": "How tall this slot should display\nboth the text area and the rich text display will be this height,\neffectively making the height double this",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Int Slot",
+          "Info": "Stores an Int",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "hasMax",
+              "Info": "should there be an upper bounds on the value",
+              "Branches": []
+            },
+            {
+              "Entry": "max",
+              "Info": "If hasMax is true, this is the highest value allowed",
+              "Branches": []
+            },
+            {
+              "Entry": "hasMin",
+              "Info": "should there be a lower bounds on the value",
+              "Branches": []
+            },
+            {
+              "Entry": "min",
+              "Info": "If hasMin is true, this is the lowest value allowed",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Float Slot",
+          "Info": "Stores a Float",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "hasMax",
+              "Info": "should there be an upper bounds on the value",
+              "Branches": []
+            },
+            {
+              "Entry": "max",
+              "Info": "If hasMax is true, this is the highest value allowed",
+              "Branches": []
+            },
+            {
+              "Entry": "hasMin",
+              "Info": "should there be a lower bounds on the value",
+              "Branches": []
+            },
+            {
+              "Entry": "min",
+              "Info": "If hasMin is true, this is the lowest value allowed",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Long Slot",
+          "Info": "Stores a Long",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "allowNegative",
+              "Info": "When true allows negative values",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Boolean Slot",
+          "Info": "Bare bones boolean",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            },
+            {
+              "Entry": "id",
+              "Info": "Used for linked boolean behavior",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Linked Boolean Slot",
+          "Info": "Boolean designed to change other booleans when it is toggled",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            },
+            {
+              "Entry": "id",
+              "Info": "Used for linked boolean behavior",
+              "Branches": []
+            },
+            {
+              "Entry": "matchTrue",
+              "Info": "Bools linked in this list will turn true when this bool is turned true",
+              "Branches": []
+            },
+            {
+              "Entry": "invertTrue",
+              "Info": "Bools linked in this list will turn false when this bool is turned true",
+              "Branches": []
+            },
+            {
+              "Entry": "matchFalse",
+              "Info": "Bools linked in this list will turn false when this bool is turned false",
+              "Branches": []
+            },
+            {
+              "Entry": "invertFalse",
+              "Info": "Bools linked in this list will turn true when this bool is turned false",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Vector2 Slot",
+          "Info": "Stores two decimal values as a vector",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Vector3 Slot",
+          "Info": "Stores three decimal values as a vector",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Vector4 Slot",
+          "Info": "Stores four decimal values as a vector",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Color Slot",
+          "Info": "Stores a color",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            },
+            {
+              "Entry": "asHtml",
+              "Info": "If false will save as an object with RGBA values between 0 and 1\nIf true will save as an html string in the format #AARRGGBB",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Date Time Offset Slot",
+          "Info": "Stores a DateTimeOffset",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Date Time Slot",
+          "Info": "Stores a DateTime without offset",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        },
+        {
+          "Entry": "Time Span Slot",
+          "Info": "Stores a span of time as ticks\nThere are 10,000,000 in a second",
+          "Branches": [
+            {
+              "Entry": "label",
+              "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+              "Branches": []
+            },
+            {
+              "Entry": "defaultValue",
+              "Info": "Starting value for this slot",
+              "Branches": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Entry": "Mouse and Keyboard",
+      "Info": "Basic application controls",
+      "Branches": [
+        {
+          "Entry": "Left Click",
+          "Info": "Select a node\nSelect a field",
+          "Branches": []
+        },
+        {
+          "Entry": "Left Drag",
+          "Info": "Select a box of nodes",
+          "Branches": []
+        },
+        {
+          "Entry": "Left Drag Selected Node",
+          "Info": "Moves all currently highlighted nodes",
+          "Branches": []
+        },
+        {
+          "Entry": "CTRL Left Click Node",
+          "Info": "Toggles the node selected and unselected",
+          "Branches": []
+        },
+        {
+          "Entry": "Middle Drag",
+          "Info": "Pan view",
+          "Branches": []
+        },
+        {
+          "Entry": "Right Click",
+          "Info": "Open Edit window",
+          "Branches": []
+        },
+        {
+          "Entry": "Scroll Wheel",
+          "Info": "Pans the view vertically",
+          "Branches": []
+        },
+        {
+          "Entry": "Shift Scroll Wheel",
+          "Info": "Pans the view horizontally",
+          "Branches": []
+        },
+        {
+          "Entry": "CTRL C",
+          "Info": "Copy selected node and it's children",
+          "Branches": []
+        },
+        {
+          "Entry": "CTRL V",
+          "Info": "Paste selected node and it's children",
+          "Branches": []
+        },
+        {
+          "Entry": "DEL",
+          "Info": "Delete selected node",
+          "Branches": []
+        }
+      ]
+    },
+    {
+      "Entry": "FAQ",
+      "Info": "Frequently asked questions, or at least questions I think will be asked\nif something behaves oddly it might be explained here\nIf you have a question not answered here, you can ask\nat D.Tom.Norris@gmail.com",
+      "Branches": [
+        {
+          "Entry": "Multi-select behaves oddly",
+          "Info": "Engine limitations make currently prevent detecting mulitselect\nAs a result, multiselect cannot be used for Copy, Paste, or Delete",
+          "Branches": []
+        },
+        {
+          "Entry": "Nulls saving poorly",
+          "Info": "Currently a NULL saves as an empty object instead of a NULL litteral\nIf this functionality causes issues I may create another export option for it",
+          "Branches": []
+        }
+      ]
+    },
+    {
+      "Entry": "License Info",
+      "Info": "The MIT License (MIT)\n\nCopyright (c) 2020 Blade End\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+      "Branches": []
+    }
+  ]
+}
