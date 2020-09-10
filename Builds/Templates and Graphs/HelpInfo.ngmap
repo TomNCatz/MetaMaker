@@ -1,0 +1,2034 @@
+{
+  "targetVersion": "0.3.1",
+  "defaultListing": "listing",
+  "explicitNode": "",
+  "nodeList": [
+    {
+      "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": {
+        "0": {
+          "fieldType": "FIELD_LIST",
+          "label": "helpInfo",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Branch",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      }
+    },
+    {
+      "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": {
+        "0": {
+          "fieldType": "TEXT_LINE",
+          "label": "Entry",
+          "defaultValue": "Action"
+        },
+        "1": {
+          "fieldType": "TEXT_AREA",
+          "label": "Info",
+          "minHeight": 40.0,
+          "defaultValue": "Detailed description"
+        },
+        "2": {
+          "fieldType": "FIELD_LIST",
+          "label": "Branches",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Branch",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      }
+    }
+  ],
+  "nestingColors": [
+    {
+      "r": 0.5,
+      "g": 1.0,
+      "b": 0.83,
+      "a": 1.0
+    },
+    {
+      "r": 0.96,
+      "g": 0.96,
+      "b": 0.86,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.84,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.7,
+      "g": 0.13,
+      "b": 0.13,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.5,
+      "g": 1.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.39,
+      "g": 0.58,
+      "b": 0.93,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.97,
+      "b": 0.86,
+      "a": 1.0
+    },
+    {
+      "r": 0.29,
+      "g": 0.0,
+      "b": 0.51,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.41,
+      "b": 0.71,
+      "a": 1.0
+    }
+  ],
+  "data": {
+    "ngMapNodeName": "HelpInfo",
+    "ngMapNodePosition": {
+      "x": 20.0,
+      "y": 420.0
+    },
+    "ngMapNodeSize": {
+      "x": 242.0,
+      "y": 140.0
+    },
+    "helpInfo": [
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": -520.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 358.0
+        },
+        "Entry": "File",
+        "Info": "File operations are accessed under this menu",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Build Template (CTRL+N)",
+            "Info": "Loads a template for authoring templates",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Load Template",
+            "Info": "Load a specific template",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Export as Template",
+            "Info": "Creates a template from the data in this graph\nThis only creates a usable template if you are using the basic template",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1540.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Shift Template Under Data",
+            "Info": "Attempts to load a different template under the current data\nUseful for when a template has changed and you want to update your graph",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -520.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Save Graph (CTRL+S)",
+            "Info": "Saves a graph file that contains it's own template and data\nThis can be easily loaded back up to edit and re-export data",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -520.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Save Graph As",
+            "Info": "Saves a graph into a new file you specify",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": -520.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Load Graph",
+            "Info": "Loaded a the template and data stored in a graph file",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Clear Data",
+            "Info": "Clears the data out of a graph, but keeps the current template open",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Export Slim JSON",
+            "Info": "Export data as JSON that leaves out metadata \nCannot be imported",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Export Data to JSON",
+            "Info": "Export data as JSON\nIncludes some metadata to allow it to be imported",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1540.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Import Data from JSON",
+            "Info": "Attempts to import a JSON into the currently loaded template\nDoes not  work on JSONs generated outside this tool or Slim jSONs",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -60.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Help and FAQ",
+            "Info": "Opens this help window",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -60.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Quit",
+            "Info": "Exits the application\nIf unsaved edits have been detected you will be promted to save",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 180.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 223.0
+        },
+        "Entry": "Edit",
+        "Info": "Menu for editing nodes\nCan also be brought up by right clicking",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Create",
+            "Info": "A submenu that creates the node selected at the last clicked position\nWill be filled with node options based on the loaded template",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Copy Downstream (CTRL+C)",
+            "Info": "Copies the selected node and its children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Paste Nodes (CTRL+V)",
+            "Info": "Will attempt to paste copied data at the last clicked postion\nThis can be used even after changing templates",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1540.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Delete Node (DEL)",
+            "Info": "Deletes the selected node",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 1980.0,
+          "y": 480.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 558.0
+        },
+        "Entry": "Nodes",
+        "Info": "Descriptions of the different Template nodes \nand their purpose",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -1400.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 178.0
+            },
+            "Entry": "Graph",
+            "Info": "Base used to create a collection of nodes\nThere should be only one",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": -1400.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "nodeList",
+                "Info": "list of connections to nodes\nnodes will apear in the order conencted\n",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Node",
+            "Info": "This defines an actual node that\nwill be available in your template",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": -1180.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "title",
+                "Info": "Human readable name of node\nNot actually relavent to the eventual JSON",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": -1180.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "fields",
+                "Info": "List of connection the fields this node will have defined",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -940.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 178.0
+            },
+            "Entry": "Separator Slot",
+            "Info": "Creates a line seperator between slots",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -720.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 223.0
+            },
+            "Entry": "Key Slot",
+            "Info": "Unique ID generator\nCan be linked to with a Key Tracker Slot",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": -720.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": -720.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "slotType",
+                "Info": "Can only be matched to the same slotType",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": -720.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "keyPrefix",
+                "Info": "All keys in this slot will be generated having this prefix",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3640.0,
+                  "y": -720.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "keySize",
+                "Info": "how many characters to generate after the prefix",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -460.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Key Tracker Slot",
+            "Info": "Links the field to a key in another node\nThis type of link only stores a string value of the linked key",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": -460.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": -460.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "slotType",
+                "Info": "Can only be matched to the same slotType",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -240.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 178.0
+            },
+            "Entry": "Link To Parent Slot",
+            "Info": "Where a child gets linked to a parent\nThis slot does not actually export data",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": -240.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "slotType",
+                "Info": "Can only be matched to the same slotType",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": -20.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Link To Child Slot",
+            "Info": "Links another node as its child\nThis exports as the entire child being stored in the slot",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": -20.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": -20.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "slotType",
+                "Info": "Can only be matched to the same slotType",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 220.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Field List Slot",
+            "Info": "List of another slot type",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 220.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 220.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "field",
+                "Info": "Link the type of fields that will fill this list",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 460.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Field Dictionary Slot",
+            "Info": "Dictionary of another slot type",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 460.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 460.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "field",
+                "Info": "Link the type of fields that will fill this dictionary",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 700.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Info Slot",
+            "Info": "Displays info that is not exported",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 700.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "The text to be displayed as info in this slot",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 700.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "minHeight",
+                "Info": "How tall this slot should display",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Auto Slot",
+            "Info": "Stores a string that is not editable in the final graph",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 920.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 920.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Value this slot will be locked to",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 1140.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Enum Slot",
+            "Info": "Stores an Enum value",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 1140.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 1140.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "values",
+                "Info": "List of strings that will be options for this enum type",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 1360.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 193.0
+            },
+            "Entry": "Text Line Slot",
+            "Info": "Stores a string",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 1360.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 1360.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 1580.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 208.0
+            },
+            "Entry": "Text Area Slot",
+            "Info": "Stores a string meant to be multiline",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 1580.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 1580.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "minHeight",
+                "Info": "How tall this slot should display",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3400.0,
+                  "y": 1580.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 1820.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 208.0
+            },
+            "Entry": "Rich Text Slot",
+            "Info": "Stores a string that is meant to be displayed as rich text\nhas a label demo of what the text should look like",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 1820.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 1820.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "minHeight",
+                "Info": "How tall this slot should display\nboth the text area and the rich text display will be this height,\neffectively making the height double this",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3400.0,
+                  "y": 1820.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 2060.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 253.0
+            },
+            "Entry": "Int Slot",
+            "Info": "Stores an Int",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 2060.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 2060.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "hasMax",
+                "Info": "should there be an upper bounds on the value",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 2060.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "max",
+                "Info": "If hasMax is true, this is the highest value allowed",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 2240.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "hasMin",
+                "Info": "should there be a lower bounds on the value",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 2240.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "min",
+                "Info": "If hasMin is true, this is the lowest value allowed",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 2240.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 2440.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 253.0
+            },
+            "Entry": "Float Slot",
+            "Info": "Stores a Float",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 2440.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 2440.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "hasMax",
+                "Info": "should there be an upper bounds on the value",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 2440.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "max",
+                "Info": "If hasMax is true, this is the highest value allowed",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 2620.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "hasMin",
+                "Info": "should there be a lower bounds on the value",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 2620.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "min",
+                "Info": "If hasMin is true, this is the lowest value allowed",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 2620.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 2820.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 198.0
+            },
+            "Entry": "Long Slot",
+            "Info": "Stores a Long",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 2820.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 153.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 2820.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 153.0
+                },
+                "Entry": "allowNegative",
+                "Info": "When true allows negative values",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 2820.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 153.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 3060.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 208.0
+            },
+            "Entry": "Boolean Slot",
+            "Info": "Bare bones boolean",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 3060.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 3060.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 3060.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "id",
+                "Info": "Used for linked boolean behavior",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 3320.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 268.0
+            },
+            "Entry": "Linked Boolean Slot",
+            "Info": "Boolean designed to change other booleans when it is toggled",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 3300.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 3300.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 3300.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "id",
+                "Info": "Used for linked boolean behavior",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 3480.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "matchTrue",
+                "Info": "Bools linked in this list will turn true when this bool is turned true",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 3480.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "invertTrue",
+                "Info": "Bools linked in this list will turn false when this bool is turned true",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 3480.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "matchFalse",
+                "Info": "Bools linked in this list will turn false when this bool is turned false",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3640.0,
+                  "y": 3480.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "invertFalse",
+                "Info": "Bools linked in this list will turn true when this bool is turned false",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 3700.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Vector2 Slot",
+            "Info": "Stores two decimal values as a vector",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 3700.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 3700.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 3940.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Vector3 Slot",
+            "Info": "Stores three decimal values as a vector",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 3940.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 3940.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 4180.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Vector4 Slot",
+            "Info": "Stores four decimal values as a vector",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 4180.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 4180.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 4420.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 208.0
+            },
+            "Entry": "Color Slot",
+            "Info": "Stores a color",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 4420.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 4420.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3380.0,
+                  "y": 4420.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "asHtml",
+                "Info": "If false will save as an object with RGBA values between 0 and 1\nIf true will save as an html string in the format #AARRGGBB",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 4680.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Date Time Offset Slot",
+            "Info": "Stores a DateTimeOffset",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 4680.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 4680.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 4920.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Date Time Slot",
+            "Info": "Stores a DateTime without offset",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 4920.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 4920.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 2600.0,
+              "y": 5160.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 183.0
+            },
+            "Entry": "Time Span Slot",
+            "Info": "Stores a span of time as ticks\nThere are 10,000,000 in a second",
+            "Branches": [
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 2860.0,
+                  "y": 5160.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "label",
+                "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
+                "Branches": []
+              },
+              {
+                "ngMapNodeName": "Branch",
+                "ngMapNodePosition": {
+                  "x": 3120.0,
+                  "y": 5160.0
+                },
+                "ngMapNodeSize": {
+                  "x": 248.0,
+                  "y": 163.0
+                },
+                "Entry": "defaultValue",
+                "Info": "Starting value for this slot",
+                "Branches": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 660.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 314.0
+        },
+        "Entry": "Mouse and Keyboard",
+        "Info": "Basic application controls",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 149.0
+            },
+            "Entry": "Left Click",
+            "Info": "Select a node\nSelect a field",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 240.0,
+              "y": 149.0
+            },
+            "Entry": "Left Drag",
+            "Info": "Select a box of nodes",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Left Drag Selected Node",
+            "Info": "Moves all currently highlighted nodes",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL Left Click Node",
+            "Info": "Toggles the node selected and unselected",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Middle Drag",
+            "Info": "Pan view",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Right Click",
+            "Info": "Open Edit window",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Scroll Wheel",
+            "Info": "Pans the view vertically",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Shift Scroll Wheel",
+            "Info": "Pans the view horizontally",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL C",
+            "Info": "Copy selected node and it's children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL V",
+            "Info": "Paste selected node and it's children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "DEL",
+            "Info": "Delete selected node",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1180.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 183.0
+        },
+        "Entry": "FAQ",
+        "Info": "Frequently asked questions, or at least questions I think will be asked\nif something behaves oddly it might be explained here\nIf you have a question not answered here, you can ask\nat D.Tom.Norris@gmail.com",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Multi-select behaves oddly",
+            "Info": "Engine limitations make currently prevent detecting mulitselect\nAs a result, multiselect cannot be used for Copy, Paste, or Delete",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 153.0
+            },
+            "Entry": "Nulls saving poorly",
+            "Info": "Currently a NULL saves as an empty object instead of a NULL litteral\nIf this functionality causes issues I may create another export option for it",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1440.0
+        },
+        "ngMapNodeSize": {
+          "x": 614.0,
+          "y": 149.0
+        },
+        "Entry": "License Info",
+        "Info": "The MIT License (MIT)\n\nCopyright (c) 2020 Blade End\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+        "Branches": []
+      }
+    ]
+  }
+}

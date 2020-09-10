@@ -10,10 +10,10 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 	[Export] public StyleBoxTexture normalStyle;
 	[Export] public StyleBoxTexture selectedStyle;
 
-	public bool LinkedToParent { get; private set; }
+	public bool LinkedToParent => ParentType >= 0;
+	public int ParentType { get; private set; } = -1;
 	public readonly List<SlottedGraphNode> children = new List<SlottedGraphNode>();
 	public readonly Dictionary<string,BooleanSlot> booleanLookup = new Dictionary<string, BooleanSlot>();
-	
 	private List<Node> slots = new List<Node>();
 	private JsonBuilder _builder;
 	
@@ -99,12 +99,24 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 			definition.GetValue( "color", out Color color );
 			if(color.a > 0.01f)
 			{
-				normalStyle.ModulateColor = color;
-				Set( "custom_styles/frame", normalStyle.Duplicate() );
-
-				selectedStyle.ModulateColor = color;
-				Set( "custom_styles/selectedframe", selectedStyle.Duplicate() );
+				StyleBoxTexture style = normalStyle.Duplicate() as StyleBoxTexture;
+				style.ModulateColor = color;
+				Set( "custom_styles/frame", style );
+				
+				style = selectedStyle.Duplicate() as StyleBoxTexture;
+				style.ModulateColor = color;
+				Set( "custom_styles/selectedframe", style );
 			}
+		}
+		
+		if( definition.values.ContainsKey( "parentType" ) )
+		{
+			definition.GetValue( "parentType", out int parentType );
+			ParentType = parentType;
+			GenericDataArray gda = new GenericDataArray();
+			gda.AddValue( "fieldType", FieldType.LINK_TO_PARENT );
+			gda.AddValue( "slotType", ParentType );
+			AddChildField( gda );
 		}
 
 		GenericDataArray listing = definition.GetGdo( "fields" ) as GenericDataArray;
@@ -155,14 +167,11 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 				leftColor = _builder.GetKeyColor( leftType );
 				break;
 			case FieldType.LINK_TO_PARENT :
-				if( LinkedToParent )
-				{
-					throw new Exception( $"Node '{Title}' has more than one parent link defined!" );
-				}
-				LinkedToParent = true;
+				field.GetValue( "slotType", out leftType );
+				
+				if( leftType < 0 ) return null;
 				
 				child = _builder.linkToParentScene.Instance();
-				field.GetValue( "slotType", out leftType );
 				leftColor = _builder.GetParentChildColor( leftType );
 				break;
 			case FieldType.LINK_TO_CHILD : 

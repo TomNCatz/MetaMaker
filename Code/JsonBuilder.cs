@@ -115,7 +115,8 @@ public class JsonBuilder : ColorRect
 	private string _explicitNode;
 	private Promise<Color> _pickingColor;
 	private Tween _tween;
-
+	private string _version;
+	
 	private string SaveFilePath
 	{
 		set
@@ -221,9 +222,9 @@ public class JsonBuilder : ColorRect
 			_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
 			_colorPopup.Connect( "popup_hide", this, nameof(SelectColor) );
 
-			string version = LoadJsonFile( VERSION );
+			_version = LoadJsonFile( VERSION );
 			_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
-			_helpInfoPopup.Version = version;
+			_helpInfoPopup.Version = _version;
 			GenericDataArray helpData = new GenericDataArray();
 			helpData.FromJson( LoadJsonFile( HELP_INFO_SOURCE ) );
 			_helpInfoPopup.LoadFromGda( helpData );
@@ -641,6 +642,7 @@ public class JsonBuilder : ColorRect
 			var graph = new GenericDataArray();
 
 			// save template
+			graph.AddValue( "targetVersion", _version );
 			graph.AddValue( "defaultListing", _defaultListing );
 			graph.AddValue( "explicitNode", _explicitNode );
 			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
@@ -706,7 +708,17 @@ public class JsonBuilder : ColorRect
 			{
 				includeNodeData = false;
 				includeGraphData = false;
-				SaveJsonFile( path, SaveData().ToJson() );
+				
+				GenericDataArray gda = new GenericDataArray();
+				gda.AddValue( "targetVersion", _version );
+
+				GenericDataArray data = SaveData();
+				foreach( KeyValuePair<string,GenericDataObject> keyValuePair in data.values )
+				{
+					gda.AddValue( keyValuePair.Key, keyValuePair.Value );
+				}
+				
+				SaveJsonFile( path, gda.ToJson() );
 				AddRecentTemplateFile( path );
 			} )
 			.Catch( CatchException );
@@ -937,6 +949,13 @@ public class JsonBuilder : ColorRect
 		GenericDataArray gda = new GenericDataArray();
 		gda.FromJson( json );
 
+		gda.GetValue( "targetVersion", out string targetVersion );
+
+		if( targetVersion != _version )
+		{
+			ShowNotice($"File version is '{targetVersion}' which does not match app version '{_version}'");
+		}
+
 		gda.GetValue( "defaultListing", out _defaultListing );
 		gda.GetValue( "explicitNode", out _explicitNode );
 		
@@ -1027,7 +1046,7 @@ public class JsonBuilder : ColorRect
 		
 		GenericDataArray gda = new GenericDataArray();
 
-		gda.AddValue( _defaultListing,parentSlots );
+		gda.AddValue( _defaultListing, parentSlots );
 
 		return gda;
 	}
@@ -1079,6 +1098,14 @@ public class JsonBuilder : ColorRect
 			_errorPopup.DialogText = $"{ex.Message} \n\n{ex.StackTrace}";
 		#endif
 		
+		_errorPopup.PopupCentered();
+	}
+	
+	
+	private void ShowNotice( string notice )
+	{
+		Log.LogL( notice );
+		_errorPopup.DialogText = notice;
 		_errorPopup.PopupCentered();
 	}
 	

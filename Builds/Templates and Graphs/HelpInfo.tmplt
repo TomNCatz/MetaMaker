@@ -1,0 +1,66 @@
+{
+  "targetVersion": "0.3.1",
+  "defaultListing": "",
+  "explicitNode": "",
+  "nodeList": [
+    {
+      "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "helpInfo",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Branch",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Entry",
+          "defaultValue": "Action"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "Info",
+          "minHeight": 40.0,
+          "defaultValue": "Detailed description"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Branches",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "Branch",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    }
+  ],
+  "nestingColors": [],
+  "keyColors": []
+}
