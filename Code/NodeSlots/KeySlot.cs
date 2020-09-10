@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace LibT
 {
-	public class KeySlot : Container, IGdaLoadable, IGdoConvertible
+	public class KeySlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _labelPath;
 		private Label _label;
@@ -80,6 +80,11 @@ namespace LibT
 			objData.GetValue( _label.Text, out string key );
 			
 			SetKey( key );
+		}
+
+		public string GetString()
+		{
+			return _field.Text;
 		}
 	}
 }

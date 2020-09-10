@@ -2,7 +2,7 @@ using Godot;
 using LibT;
 using LibT.Serialization;
 
-public class Vector2Slot : Container, IGdaLoadable, IGdoConvertible
+public class Vector2Slot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -41,5 +41,10 @@ public class Vector2Slot : Container, IGdaLoadable, IGdoConvertible
 
 		_x.Value = vector.x;
 		_y.Value = vector.y;
+	}
+	
+	public string GetString()
+	{
+		return $"({(float)_x.Value},{(float)_y.Value})";
 	}
 }

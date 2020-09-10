@@ -3,7 +3,7 @@ using LibT.Serialization;
 
 namespace LibT
 {
-	public class IntSlot : Container, IGdaLoadable, IGdoConvertible
+	public class IntSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _labelPath;
 		private Label _label;
@@ -38,6 +38,12 @@ namespace LibT
 				_field.MinValue = min;
 			}
 			
+			if( data.values.ContainsKey( "minStepSize" ) )
+			{
+				data.GetValue( "minStepSize", out double minStepSize );
+				_field.Step = minStepSize;
+			}
+			
 			data.GetValue( "defaultValue", out int value );
 			_field.Value = value;
 		}
@@ -51,6 +57,11 @@ namespace LibT
 		{
 			objData.GetValue( _label.Text, out int value );
 			_field.Value = value;
+		}
+
+		public string GetString()
+		{
+			return ((int)_field.Value).ToString();
 		}
 	}
 }

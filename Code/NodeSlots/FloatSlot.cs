@@ -3,7 +3,7 @@ using LibT.Serialization;
 
 namespace LibT
 {
-	public class FloatSlot : Container, IGdaLoadable, IGdoConvertible
+	public class FloatSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _labelPath;
 		private Label _label;
@@ -38,19 +38,36 @@ namespace LibT
 				_field.MinValue = min;
 			}
 			
+			if( data.values.ContainsKey( "minStepSize" ) )
+			{
+				data.GetValue( "minStepSize", out double minStepSize );
+				_field.Step = minStepSize;
+			}
+			
 			data.GetValue( "defaultValue", out float value );
 			_field.Value = value;
 		}
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( _label.Text, (float)_field.Value );
+			objData.AddValue( _label.Text, GetFloat() );
 		}
 
 		public void SetObjectData( GenericDataArray objData )
 		{
 			objData.GetValue( _label.Text, out float value );
 			_field.Value = value;
+		}
+
+		private float GetFloat()
+		{
+			Log.LogL( $"value : {(float)_field.Value}" );
+			return (float)_field.Value;
+		}
+
+		public string GetString()
+		{
+			return GetFloat().ToString();
 		}
 	}
 }
