@@ -95,6 +95,7 @@
         "2": {
           "fieldType": "INT",
           "label": "parentType",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -154,6 +155,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -168,6 +170,7 @@
         "4": {
           "fieldType": "INT",
           "label": "keySize",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -199,6 +202,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -238,6 +242,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -269,6 +274,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -372,6 +378,7 @@
         "2": {
           "fieldType": "FLOAT",
           "label": "minHeight",
+          "minStepSize": 0.1,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -466,6 +473,41 @@
       }
     },
     {
+      "title": "Validate String Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.40288505,
+        "b": 0.260943323,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": {
+        "0": {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VALIDATE_STRING"
+        },
+        "1": {
+          "fieldType": "TEXT_LINE",
+          "label": "saveName",
+          "defaultValue": "validatedString"
+        },
+        "2": {
+          "fieldType": "BOOLEAN",
+          "label": "asList",
+          "defaultValue": false,
+          "id": "BOOL-eNx"
+        },
+        "3": {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "validation",
+          "slotType": 1,
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
+        }
+      }
+    },
+    {
       "title": "Text Line Slot",
       "color": {
         "r": 0.383251429,
@@ -515,6 +557,7 @@
         "2": {
           "fieldType": "FLOAT",
           "label": "minHeight",
+          "minStepSize": 0.1,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -552,6 +595,7 @@
         "2": {
           "fieldType": "FLOAT",
           "label": "minHeight",
+          "minStepSize": 0.1,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -587,38 +631,51 @@
           "defaultValue": "Value"
         },
         "2": {
+          "fieldType": "DOUBLE",
+          "label": "minStepSize",
+          "minStepSize": 1E-05,
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 0.0,
+          "defaultValue": 1E-05
+        },
+        "3": {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
           "id": "B-aH6"
         },
-        "3": {
+        "4": {
           "fieldType": "FLOAT",
           "label": "max",
+          "minStepSize": 1E-05,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0
         },
-        "4": {
+        "5": {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
           "id": "B-2hF"
         },
-        "5": {
+        "6": {
           "fieldType": "FLOAT",
           "label": "min",
+          "minStepSize": 1E-05,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0
         },
-        "6": {
+        "7": {
           "fieldType": "FLOAT",
           "label": "defaultValue",
+          "minStepSize": 1E-05,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -648,38 +705,51 @@
           "defaultValue": "Value"
         },
         "2": {
+          "fieldType": "DOUBLE",
+          "label": "minStepSize",
+          "minStepSize": 1E-13,
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 0.0,
+          "defaultValue": 1E-13
+        },
+        "3": {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
           "id": "BOOL-uGT"
         },
-        "3": {
+        "4": {
           "fieldType": "DOUBLE",
           "label": "max",
+          "minStepSize": 1E-13,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0
         },
-        "4": {
+        "5": {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
           "id": "BOOL-yIn"
         },
-        "5": {
+        "6": {
           "fieldType": "DOUBLE",
           "label": "min",
+          "minStepSize": 1E-13,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0
         },
-        "6": {
+        "7": {
           "fieldType": "DOUBLE",
           "label": "defaultValue",
+          "minStepSize": 1E-13,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -709,38 +779,51 @@
           "defaultValue": "Value"
         },
         "2": {
+          "fieldType": "DOUBLE",
+          "label": "minStepSize",
+          "minStepSize": 1.0,
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 0.0,
+          "defaultValue": 1.0
+        },
+        "3": {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
           "id": "B-zqM"
         },
-        "3": {
+        "4": {
           "fieldType": "INT",
           "label": "max",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
           "defaultValue": 0
         },
-        "4": {
+        "5": {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
           "id": "B-Y2e"
         },
-        "5": {
+        "6": {
           "fieldType": "INT",
           "label": "min",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
           "defaultValue": 0
         },
-        "6": {
+        "7": {
           "fieldType": "INT",
           "label": "defaultValue",
+          "minStepSize": 1.0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -1365,10 +1448,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "parentType",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1496,10 +1580,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1528,10 +1613,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "keySize",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1595,10 +1681,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1679,10 +1766,11 @@
             },
             "ngMapNodeSize": {
               "x": 202.000122,
-              "y": 205.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1746,10 +1834,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1975,10 +2064,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "minHeight",
+            "minStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2387,10 +2477,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "minHeight",
+            "minStepSize": 0.1,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2469,10 +2560,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "minHeight",
+            "minStepSize": 0.1,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2544,6 +2636,25 @@
             "defaultValue": "Value"
           },
           {
+            "ngMapNodeName": "Double Slot",
+            "ngMapNodePosition": {
+              "x": 1300.0,
+              "y": 4480.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.000122,
+              "y": 230.0
+            },
+            "fieldType": "DOUBLE",
+            "label": "MinStepSize",
+            "minStepSize": 1E-06,
+            "hasMax": false,
+            "max": 0.0,
+            "hasMin": true,
+            "min": 0.0,
+            "defaultValue": 1E-06
+          },
+          {
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodePosition": {
               "x": 1100.0,
@@ -2566,10 +2677,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.000488
+              "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "max",
+            "minStepSize": 1E-06,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2599,10 +2711,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "min",
+            "minStepSize": 1E-06,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2617,10 +2730,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.000488
+              "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "defaultValue",
+            "minStepSize": 1E-06,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2677,6 +2791,25 @@
             "defaultValue": "Value"
           },
           {
+            "ngMapNodeName": "Double Slot",
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 5020.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.000122,
+              "y": 230.0
+            },
+            "fieldType": "DOUBLE",
+            "label": "MinStepSize",
+            "minStepSize": 1E-15,
+            "hasMax": false,
+            "max": 0.0,
+            "hasMin": true,
+            "min": 0.0,
+            "defaultValue": 1E-15
+          },
+          {
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodePosition": {
               "x": 1120.0,
@@ -2699,10 +2832,11 @@
             },
             "ngMapNodeSize": {
               "x": 202.000122,
-              "y": 205.0
+              "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "max",
+            "minStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2732,10 +2866,11 @@
             },
             "ngMapNodeSize": {
               "x": 202.000122,
-              "y": 205.0
+              "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "min",
+            "minStepSize": 1E-15,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2750,10 +2885,11 @@
             },
             "ngMapNodeSize": {
               "x": 202.000122,
-              "y": 205.0
+              "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "defaultValue",
+            "minStepSize": 1E-15,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2770,7 +2906,7 @@
         },
         "ngMapNodeSize": {
           "x": 224.0,
-          "y": 253.999512
+          "y": 254.0
         },
         "title": "Int Slot",
         "color": {
@@ -2810,6 +2946,25 @@
             "defaultValue": "Value"
           },
           {
+            "ngMapNodeName": "Double Slot",
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 5600.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.000122,
+              "y": 230.0
+            },
+            "fieldType": "DOUBLE",
+            "label": "MinStepSize",
+            "minStepSize": 1.0,
+            "hasMax": false,
+            "max": 0.0,
+            "hasMin": true,
+            "min": 0.0,
+            "defaultValue": 1.0
+          },
+          {
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodePosition": {
               "x": 1120.0,
@@ -2832,10 +2987,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "max",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
@@ -2865,10 +3021,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.000488
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "min",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
@@ -2883,10 +3040,11 @@
             },
             "ngMapNodeSize": {
               "x": 189.000122,
-              "y": 209.0
+              "y": 230.0
             },
             "fieldType": "INT",
             "label": "defaultValue",
+            "minStepSize": 1.0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,

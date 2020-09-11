@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace LibT
 {
-	public class KeyLinkSlot : Container, IGdaLoadable, IGdoConvertible
+	public class KeyLinkSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _titlePath;
 		private Label _title;
@@ -94,6 +94,11 @@ namespace LibT
 			if( string.IsNullOrEmpty( key ) ) return;
 			
 			_builder.Get._loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
+		}
+
+		public string GetString()
+		{
+			return _field.Text;
 		}
 	}
 }

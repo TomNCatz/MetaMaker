@@ -4,7 +4,7 @@ using Godot;
 using LibT;
 using LibT.Serialization;
 
-public class DateTimeOffsetSlot : Container, IGdaLoadable, IGdoConvertible
+public class DateTimeOffsetSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -251,5 +251,15 @@ public class DateTimeOffsetSlot : Container, IGdaLoadable, IGdoConvertible
 	    }
 
 	    UpdateDisplay();
+    }
+
+    public string GetString()
+    {
+	    if( isOffset )
+	    {
+		    return dtOffset.ToString("yyyy-MM-dd HH:mm:ss zz");
+	    }
+
+	    return dtOffset.ToString("yyyy-MM-dd HH:mm:ss");
     }
 }

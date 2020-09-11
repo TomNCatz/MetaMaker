@@ -3,7 +3,7 @@ using LibT.Serialization;
 
 namespace LibT
 {
-	public class TextAreaRichSlot : Container, IGdaLoadable, IGdoConvertible
+	public class TextAreaRichSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _labelPath;
 		private Label _label;
@@ -50,6 +50,11 @@ namespace LibT
 		private void OnTextChanged()
 		{
 			_display.BbcodeText = _field.Text;
+		}
+
+		public string GetString()
+		{
+			return _field.Text;
 		}
 	}
 }

@@ -4,7 +4,7 @@ using LibT.Maths;
 using LibT.Serialization;
 using Color = Godot.Color;
 
-public class Vector4Slot : Container, IGdaLoadable, IGdoConvertible
+public class Vector4Slot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -53,5 +53,10 @@ public class Vector4Slot : Container, IGdaLoadable, IGdoConvertible
 		_y.Value = vector.y;
 		_z.Value = vector.z;
 		_w.Value = vector.w;
+	}
+	
+	public string GetString()
+	{
+		return $"({(float)_x.Value},{(float)_y.Value},{(float)_z.Value},{(float)_w.Value})";
 	}
 }

@@ -3,7 +3,7 @@ using Godot;
 using LibT;
 using LibT.Serialization;
 
-public class TimeSpanSlot : Container, IGdaLoadable, IGdoConvertible
+public class TimeSpanSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -113,5 +113,10 @@ public class TimeSpanSlot : Container, IGdaLoadable, IGdoConvertible
     {
 	    objData.GetValue( _label.Text, out span );
 	    UpdateDisplay();
+    }
+
+    public string GetString()
+    {
+	    return span.ToString();
     }
 }

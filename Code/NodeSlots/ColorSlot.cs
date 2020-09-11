@@ -3,7 +3,7 @@ using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
-public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
+public class ColorSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 {
 	[Export] private NodePath _labelPath;
 	private Label _label;
@@ -70,5 +70,15 @@ public class ColorSlot : Container, IGdaLoadable, IGdoConvertible
 	    }
 
 	    _colorRect.Color = color;
+    }
+
+    public string GetString()
+    {
+	    if( asHtml )
+	    {
+		    return _colorRect.Color.ToHtml();
+	    }
+
+	    return _colorRect.Color.ToString();
     }
 }

@@ -27,6 +27,7 @@ public class JsonBuilder : ColorRect
 	[Export] public PackedScene linkToChildScene;
 	[Export] public PackedScene fieldListScene;
 	[Export] public PackedScene fieldDictionaryScene;
+	[Export] public PackedScene validateStringScene;
 	[Export] public PackedScene infoScene;
 	[Export] public PackedScene autoScene;
 	[Export] public PackedScene typeScene;
