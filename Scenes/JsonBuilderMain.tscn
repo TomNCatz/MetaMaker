@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Code/JsonBuilder.cs" type="Script" id=1]
 [ext_resource path="res://DLLs/Growl.cs" type="Script" id=2]
@@ -34,7 +34,6 @@
 [ext_resource path="res://Objects/Slots/Vector4Slot.tscn" type="PackedScene" id=32]
 [ext_resource path="res://Objects/Slots/TimeSpanSlot.tscn" type="PackedScene" id=33]
 [ext_resource path="res://Objects/Slots/DoubleSlot.tscn" type="PackedScene" id=34]
-[ext_resource path="res://Objects/Slots/ValidateStringSlot.tscn" type="PackedScene" id=35]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -85,7 +84,6 @@ linkToParentScene = ExtResource( 11 )
 linkToChildScene = ExtResource( 12 )
 fieldListScene = ExtResource( 13 )
 fieldDictionaryScene = ExtResource( 14 )
-validateStringScene = ExtResource( 35 )
 infoScene = ExtResource( 15 )
 autoScene = ExtResource( 22 )
 typeScene = ExtResource( 23 )
