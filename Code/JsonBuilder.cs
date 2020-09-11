@@ -1030,9 +1030,8 @@ public class JsonBuilder : ColorRect
 		
 		_loadingLinks.Clear();
 	}
-
-
-	private void CatchException( Exception ex )
+	
+	public void CatchException( Exception ex )
 	{
 		if(ex is PromiseExpectedError) return;
 		

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using LibT.Serialization;
+using LibT.Services;
 
 namespace LibT
 {
@@ -19,6 +20,8 @@ namespace LibT
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
 		private Dictionary<string,Node> _children = new Dictionary<string, Node>();
+		private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+
 
 		public int Count => _children.Count;
 
@@ -87,20 +90,27 @@ namespace LibT
 
 		public void Add()
 		{
-			if( string.IsNullOrEmpty( _selector.Text ) )
+			try
 			{
-				throw new NullReferenceException("Must specify a key to add");
-			}
+				if( string.IsNullOrEmpty( _selector.Text ) )
+				{
+					throw new NullReferenceException( "Must specify a key to add" );
+				}
 
-			if( _children.ContainsKey( _selector.Text ) )
-			{
-				throw new ArgumentException("That key already exists in the dictionary");
+				if( _children.ContainsKey( _selector.Text ) )
+				{
+					throw new ArgumentException( "That key already exists in the dictionary" );
+				}
+
+				_field.AddValue( "label", _selector.Text );
+				int index = _graphNode.GetChildIndex( this ) + 1;
+				Node child = _graphNode.AddChildField( _field, index );
+				_children[_selector.Text] = child;
 			}
-			
-			_field.AddValue( "label", _selector.Text );
-			int index = _graphNode.GetChildIndex( this )+1;
-			Node child = _graphNode.AddChildField( _field, index );
-			_children[_selector.Text] = child;
+			catch( Exception e )
+			{
+				_builder.Get.CatchException( e );
+			}
 		}
 
 		public void Delete()
