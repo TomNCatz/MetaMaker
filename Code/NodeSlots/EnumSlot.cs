@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace LibT
 {
-	public class EnumSlot : Container, IGdaLoadable, IGdoConvertible
+	public class EnumSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _labelPath;
 		private Label _label;
@@ -47,6 +47,11 @@ namespace LibT
 					_field.Select( i );
 				}	
 			}
+		}
+
+		public string GetString()
+		{
+			return _field.GetItemText( _field.Selected );
 		}
 	}
 }

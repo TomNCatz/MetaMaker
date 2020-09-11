@@ -14,7 +14,9 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 	public int ParentType { get; private set; } = -1;
 	public readonly List<SlottedGraphNode> children = new List<SlottedGraphNode>();
 	public readonly Dictionary<string,BooleanSlot> booleanLookup = new Dictionary<string, BooleanSlot>();
+	
 	private List<Node> slots = new List<Node>();
+	private Dictionary<string,List<string>> _validatedLists = new Dictionary<string, List<string>>();
 	private JsonBuilder _builder;
 	
 	public override void _Ready()
@@ -39,9 +41,9 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 		
 		for( int i = 0; i < slots.Count; i++ )
 		{
-			if( slots[i] is IGdoConvertible convertable )
+			if( slots[i] is IGdoConvertible convertible )
 			{
-				convertable.GetObjectData( objData );
+				convertible.GetObjectData( objData );
 			}
 
 			if( slots[i] is FieldListSlot listSlot)
@@ -53,7 +55,18 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 			{
 				i += dictionarySlot.Count;
 			}
+
+			if( slots[i] is ValidateStringSlot)
+			{
+				i++;
+			}
 		}
+
+		foreach( KeyValuePair<string,List<string>> validatedList in _validatedLists )
+		{
+			objData.AddValue( validatedList.Key, validatedList.Value );
+		}
+		_validatedLists.Clear();
 	}
 
 	public void SetObjectData( GenericDataArray objData )
@@ -185,6 +198,9 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 			case FieldType.FIELD_DICTIONARY : 
 				child = _builder.fieldDictionaryScene.Instance();
 				break;
+			case FieldType.VALIDATE_STRING : 
+				child = _builder.validateStringScene.Instance();
+				break;
 			case FieldType.INFO : 
 				child = _builder.infoScene.Instance();
 				break;
@@ -277,6 +293,16 @@ public class SlottedGraphNode : GraphNode, IGdoConvertible
 		}
 
 		return child;
+	}
+	
+	public void AddValidatedToList(string list, string validated)
+	{
+		if( !_validatedLists.ContainsKey( list ) )
+		{
+			_validatedLists[list] = new List<string>();
+		}
+		
+		_validatedLists[list].Add( validated );
 	}
 
 	public void RemoveChild( Node child )

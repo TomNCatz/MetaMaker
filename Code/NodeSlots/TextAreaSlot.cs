@@ -3,7 +3,7 @@ using LibT.Serialization;
 
 namespace LibT
 {
-	public class TextAreaSlot : Container, IGdaLoadable, IGdoConvertible
+	public class TextAreaSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
 	{
 		[Export] private NodePath _labelPath;
 		private Label _label;
@@ -38,6 +38,11 @@ namespace LibT
 		{
 			objData.GetValue( _label.Text, out string text );
 			_field.Text = text;
+		}
+
+		public string GetString()
+		{
+			return _field.Text;
 		}
 	}
 }
