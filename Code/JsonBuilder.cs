@@ -640,10 +640,10 @@ public class JsonBuilder : ColorRect
 			graph.AddValue( "targetVersion", _version );
 			graph.AddValue( "defaultListing", _defaultListing );
 			graph.AddValue( "explicitNode", _explicitNode );
-			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
-			graph.AddValue( "nodeList", nodeList );
 			graph.AddValue( "nestingColors", _parentChildColors );
 			graph.AddValue( "keyColors", _keyColors );
+			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
+			graph.AddValue( "nodeList", nodeList );
 					
 			// save data
 			graph.AddValue( "data", SaveData() );

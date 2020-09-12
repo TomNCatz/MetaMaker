@@ -1,7 +1,41 @@
 {
-  "targetVersion": "0.4.0",
+  "targetVersion": "0.4.1",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
+  "nestingColors": [
+    {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.84375,
+      "g": 0.84375,
+      "b": 0.84375,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.64794004,
+      "g": 0.295880139,
+      "b": 1.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 1.0,
+      "b": 0.0625,
+      "a": 1.0
+    }
+  ],
   "nodeList": [
     {
       "title": "Graph",
@@ -25,18 +59,22 @@
         },
         "2": {
           "fieldType": "FIELD_LIST",
-          "label": "nodeList",
+          "label": "nestingColors",
           "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "-",
-            "slotType": 0,
-            "explicitNode": "Node",
-            "emptyHandling": "SKIP"
+            "fieldType": "COLOR",
+            "label": "Color",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false
           }
         },
         "3": {
           "fieldType": "FIELD_LIST",
-          "label": "nestingColors",
+          "label": "keyColors",
           "field": {
             "fieldType": "COLOR",
             "label": "Color",
@@ -51,17 +89,13 @@
         },
         "4": {
           "fieldType": "FIELD_LIST",
-          "label": "keyColors",
+          "label": "nodeList",
           "field": {
-            "fieldType": "COLOR",
-            "label": "Color",
-            "defaultValue": {
-              "r": 1.0,
-              "g": 1.0,
-              "b": 1.0,
-              "a": 1.0
-            },
-            "asHtml": false
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 0,
+            "explicitNode": "Node",
+            "emptyHandling": "SKIP"
           }
         }
       }
@@ -95,7 +129,7 @@
         "2": {
           "fieldType": "INT",
           "label": "parentType",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -155,7 +189,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -170,7 +204,7 @@
         "4": {
           "fieldType": "INT",
           "label": "keySize",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -202,7 +236,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -242,7 +276,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -274,7 +308,7 @@
         "2": {
           "fieldType": "INT",
           "label": "slotType",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -378,7 +412,7 @@
         "2": {
           "fieldType": "FLOAT",
           "label": "minHeight",
-          "minStepSize": 0.1,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -557,7 +591,7 @@
         "2": {
           "fieldType": "FLOAT",
           "label": "minHeight",
-          "minStepSize": 0.1,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -595,7 +629,7 @@
         "2": {
           "fieldType": "FLOAT",
           "label": "minHeight",
-          "minStepSize": 0.1,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -632,13 +666,13 @@
         },
         "2": {
           "fieldType": "DOUBLE",
-          "label": "minStepSize",
-          "minStepSize": 1E-05,
+          "label": "MinStepSize",
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
           "min": 0.0,
-          "defaultValue": 1E-05
+          "defaultValue": 0.0
         },
         "3": {
           "fieldType": "BOOLEAN",
@@ -649,7 +683,7 @@
         "4": {
           "fieldType": "FLOAT",
           "label": "max",
-          "minStepSize": 1E-05,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -665,7 +699,7 @@
         "6": {
           "fieldType": "FLOAT",
           "label": "min",
-          "minStepSize": 1E-05,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -675,7 +709,7 @@
         "7": {
           "fieldType": "FLOAT",
           "label": "defaultValue",
-          "minStepSize": 1E-05,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -706,13 +740,13 @@
         },
         "2": {
           "fieldType": "DOUBLE",
-          "label": "minStepSize",
-          "minStepSize": 1E-13,
+          "label": "MinStepSize",
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
           "min": 0.0,
-          "defaultValue": 1E-13
+          "defaultValue": 0.0
         },
         "3": {
           "fieldType": "BOOLEAN",
@@ -723,7 +757,7 @@
         "4": {
           "fieldType": "DOUBLE",
           "label": "max",
-          "minStepSize": 1E-13,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -739,7 +773,7 @@
         "6": {
           "fieldType": "DOUBLE",
           "label": "min",
-          "minStepSize": 1E-13,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -749,7 +783,7 @@
         "7": {
           "fieldType": "DOUBLE",
           "label": "defaultValue",
-          "minStepSize": 1E-13,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -780,13 +814,13 @@
         },
         "2": {
           "fieldType": "DOUBLE",
-          "label": "minStepSize",
-          "minStepSize": 1.0,
+          "label": "MinStepSize",
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
           "min": 0.0,
-          "defaultValue": 1.0
+          "defaultValue": 0.0
         },
         "3": {
           "fieldType": "BOOLEAN",
@@ -797,7 +831,7 @@
         "4": {
           "fieldType": "INT",
           "label": "max",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -813,7 +847,7 @@
         "6": {
           "fieldType": "INT",
           "label": "min",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -823,7 +857,7 @@
         "7": {
           "fieldType": "INT",
           "label": "defaultValue",
-          "minStepSize": 1.0,
+          "MinStepSize": 0.0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -1196,40 +1230,6 @@
       }
     }
   ],
-  "nestingColors": [
-    {
-      "r": 0.0,
-      "g": 0.0,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.84375,
-      "g": 0.84375,
-      "b": 0.84375,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.0,
-      "b": 0.0,
-      "a": 1.0
-    }
-  ],
-  "keyColors": [
-    {
-      "r": 0.64794004,
-      "g": 0.295880139,
-      "b": 1.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.0,
-      "g": 1.0,
-      "b": 0.0625,
-      "a": 1.0
-    }
-  ],
   "data": {
     "ngMapNodeName": "Graph",
     "ngMapNodePosition": {
@@ -1242,6 +1242,40 @@
     },
     "defaultListing": "nodeList",
     "explicitNode": "Graph",
+    "nestingColors": [
+      {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      {
+        "r": 0.84375,
+        "g": 0.84375,
+        "b": 0.84375,
+        "a": 1.0
+      },
+      {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      }
+    ],
+    "keyColors": [
+      {
+        "r": 0.64794004,
+        "g": 0.295880139,
+        "b": 1.0,
+        "a": 1.0
+      },
+      {
+        "r": 0.0,
+        "g": 1.0,
+        "b": 0.0625,
+        "a": 1.0
+      }
+    ],
     "nodeList": [
       {
         "ngMapNodeName": "Node",
@@ -1279,11 +1313,11 @@
           {
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodePosition": {
-              "x": 860.0,
+              "x": 900.0,
               "y": -900.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1293,37 +1327,8 @@
           {
             "ngMapNodeName": "Field List Slot",
             "ngMapNodePosition": {
-              "x": 1060.0,
+              "x": 1140.0,
               "y": -900.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.00061,
-              "y": 99.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "nodeList",
-            "field": {
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodePosition": {
-                "x": 1260.0,
-                "y": -900.0
-              },
-              "ngMapNodeSize": {
-                "x": 230.000122,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "-",
-              "slotType": 0,
-              "explicitNode": "Node",
-              "emptyHandling": "SKIP"
-            }
-          },
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 660.0,
-              "y": -740.0
             },
             "ngMapNodeSize": {
               "x": 188.0,
@@ -1334,11 +1339,11 @@
             "field": {
               "ngMapNodeName": "Color Slot",
               "ngMapNodePosition": {
-                "x": 860.0,
-                "y": -720.0
+                "x": 1380.0,
+                "y": -900.0
               },
               "ngMapNodeSize": {
-                "x": 202.000122,
+                "x": 202.0,
                 "y": 124.0
               },
               "fieldType": "COLOR",
@@ -1355,11 +1360,11 @@
           {
             "ngMapNodeName": "Field List Slot",
             "ngMapNodePosition": {
-              "x": 1100.0,
-              "y": -740.0
+              "x": 1140.0,
+              "y": -780.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -1367,11 +1372,11 @@
             "field": {
               "ngMapNodeName": "Color Slot",
               "ngMapNodePosition": {
-                "x": 1300.0,
-                "y": -720.0
+                "x": 1380.0,
+                "y": -760.0
               },
               "ngMapNodeSize": {
-                "x": 202.000122,
+                "x": 202.0,
                 "y": 124.0
               },
               "fieldType": "COLOR",
@@ -1383,6 +1388,35 @@
                 "a": 1.0
               },
               "asHtml": false
+            }
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 660.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.000488,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "nodeList",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 880.0,
+                "y": -740.0
+              },
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "-",
+              "slotType": 0,
+              "explicitNode": "Node",
+              "emptyHandling": "SKIP"
             }
           }
         ]
@@ -1413,7 +1447,7 @@
               "y": -520.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1427,7 +1461,7 @@
               "y": -520.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 132.0
             },
             "fieldType": "COLOR",
@@ -1447,12 +1481,12 @@
               "y": -520.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "parentType",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1466,7 +1500,7 @@
               "y": -400.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -1478,7 +1512,7 @@
                 "y": -380.0
               },
               "ngMapNodeSize": {
-                "x": 230.000122,
+                "x": 230.0,
                 "y": 151.0
               },
               "fieldType": "LINK_TO_CHILD",
@@ -1516,7 +1550,7 @@
               "y": -180.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1551,7 +1585,7 @@
               "y": 0.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1565,7 +1599,7 @@
               "y": 0.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1579,12 +1613,12 @@
               "y": 120.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1598,7 +1632,7 @@
               "y": 120.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1612,12 +1646,12 @@
               "y": 120.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "keySize",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1680,12 +1714,12 @@
               "y": 420.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1699,7 +1733,7 @@
               "y": 400.0
             },
             "ngMapNodeSize": {
-              "x": 270.000122,
+              "x": 270.0,
               "y": 180.0
             },
             "fieldType": "ENUM",
@@ -1751,7 +1785,7 @@
               "y": 660.0
             },
             "ngMapNodeSize": {
-              "x": 322.000122,
+              "x": 322.0,
               "y": 183.0
             },
             "fieldType": "INFO",
@@ -1765,12 +1799,12 @@
               "y": 660.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1805,7 +1839,7 @@
               "y": 920.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1819,7 +1853,7 @@
               "y": 920.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1833,12 +1867,12 @@
               "y": 920.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "slotType",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
@@ -1852,7 +1886,7 @@
               "y": 1060.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1866,7 +1900,7 @@
               "y": 920.0
             },
             "ngMapNodeSize": {
-              "x": 270.000122,
+              "x": 270.0,
               "y": 180.0
             },
             "fieldType": "ENUM",
@@ -1904,7 +1938,7 @@
               "y": 1200.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1918,7 +1952,7 @@
               "y": 1200.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1932,7 +1966,7 @@
               "y": 1320.0
             },
             "ngMapNodeSize": {
-              "x": 230.000122,
+              "x": 230.0,
               "y": 151.0
             },
             "fieldType": "LINK_TO_CHILD",
@@ -1969,7 +2003,7 @@
               "y": 1540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -1983,7 +2017,7 @@
               "y": 1540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -1997,7 +2031,7 @@
               "y": 1540.0
             },
             "ngMapNodeSize": {
-              "x": 230.000122,
+              "x": 230.0,
               "y": 151.0
             },
             "fieldType": "LINK_TO_CHILD",
@@ -2048,7 +2082,7 @@
               "y": 1820.0
             },
             "ngMapNodeSize": {
-              "x": 199.000122,
+              "x": 199.0,
               "y": 212.0
             },
             "fieldType": "TEXT_AREA_RICH",
@@ -2063,12 +2097,12 @@
               "y": 1820.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "minHeight",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2103,7 +2137,7 @@
               "y": 2100.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2117,7 +2151,7 @@
               "y": 2100.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2131,7 +2165,7 @@
               "y": 2100.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2166,7 +2200,7 @@
               "y": 2320.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2180,7 +2214,7 @@
               "y": 2320.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2194,7 +2228,7 @@
               "y": 2320.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2229,7 +2263,7 @@
               "y": 2540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2243,7 +2277,7 @@
               "y": 2540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2257,7 +2291,7 @@
               "y": 2660.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -2269,7 +2303,7 @@
                 "y": 2660.0
               },
               "ngMapNodeSize": {
-                "x": 188.000122,
+                "x": 188.0,
                 "y": 109.0
               },
               "fieldType": "TEXT_LINE",
@@ -2289,7 +2323,7 @@
           "x": 224.0,
           "y": 194.0
         },
-        "title": "String Validation Slot",
+        "title": "Validate String Slot",
         "color": {
           "r": 0.765625,
           "g": 0.40288505,
@@ -2305,12 +2339,12 @@
               "y": 2860.0
             },
             "ngMapNodeSize": {
-              "x": 292.000122,
+              "x": 292.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "STRING_VALIDATION"
+            "defaultValue": "VALIDATE_STRING"
           },
           {
             "ngMapNodeName": "Text Line Slot",
@@ -2319,7 +2353,7 @@
               "y": 2860.0
             },
             "ngMapNodeSize": {
-              "x": 232.000122,
+              "x": 232.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2333,7 +2367,7 @@
               "y": 2980.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 120.0
             },
             "fieldType": "BOOLEAN",
@@ -2348,11 +2382,11 @@
               "y": 2980.0
             },
             "ngMapNodeSize": {
-              "x": 230.000122,
+              "x": 230.0,
               "y": 151.0
             },
             "fieldType": "LINK_TO_CHILD",
-            "label": "Validation",
+            "label": "validation",
             "slotType": 1,
             "explicitNode": "",
             "emptyHandling": "EMPTY_OBJECT"
@@ -2385,7 +2419,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2399,7 +2433,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2413,7 +2447,7 @@
               "y": 3240.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2448,7 +2482,7 @@
               "y": 3480.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2476,12 +2510,12 @@
               "y": 3500.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "minHeight",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2495,7 +2529,7 @@
               "y": 3500.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 212.0
             },
             "fieldType": "TEXT_AREA",
@@ -2531,7 +2565,7 @@
               "y": 3860.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2545,7 +2579,7 @@
               "y": 3980.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2559,12 +2593,12 @@
               "y": 3880.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "minHeight",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2578,7 +2612,7 @@
               "y": 3880.0
             },
             "ngMapNodeSize": {
-              "x": 199.000122,
+              "x": 199.0,
               "y": 212.0
             },
             "fieldType": "TEXT_AREA_RICH",
@@ -2614,7 +2648,7 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2628,7 +2662,7 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2642,12 +2676,12 @@
               "y": 4480.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "MinStepSize",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2661,7 +2695,7 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2676,12 +2710,12 @@
               "y": 4240.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "max",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2695,7 +2729,7 @@
               "y": 4400.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2710,12 +2744,12 @@
               "y": 4400.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "min",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2729,12 +2763,12 @@
               "y": 4400.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "FLOAT",
             "label": "defaultValue",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2769,7 +2803,7 @@
               "y": 4780.0
             },
             "ngMapNodeSize": {
-              "x": 188.000366,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -2783,7 +2817,7 @@
               "y": 4780.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -2797,12 +2831,12 @@
               "y": 5020.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "MinStepSize",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2816,7 +2850,7 @@
               "y": 4780.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2831,12 +2865,12 @@
               "y": 4780.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "max",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2850,7 +2884,7 @@
               "y": 4940.0
             },
             "ngMapNodeSize": {
-              "x": 187.999634,
+              "x": 187.999512,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2865,12 +2899,12 @@
               "y": 4940.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "min",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2884,12 +2918,12 @@
               "y": 4940.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "defaultValue",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": false,
@@ -2924,7 +2958,7 @@
               "y": 5360.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 108.999512
             },
             "fieldType": "AUTO",
@@ -2938,7 +2972,7 @@
               "y": 5360.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 108.999512
             },
             "fieldType": "TEXT_LINE",
@@ -2952,12 +2986,12 @@
               "y": 5600.0
             },
             "ngMapNodeSize": {
-              "x": 202.000122,
+              "x": 202.0,
               "y": 230.0
             },
             "fieldType": "DOUBLE",
             "label": "MinStepSize",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0.0,
             "hasMin": true,
@@ -2971,7 +3005,7 @@
               "y": 5360.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -2986,12 +3020,12 @@
               "y": 5360.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "max",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
@@ -3005,7 +3039,7 @@
               "y": 5520.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -3020,12 +3054,12 @@
               "y": 5520.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "min",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
@@ -3039,12 +3073,12 @@
               "y": 5520.0
             },
             "ngMapNodeSize": {
-              "x": 189.000122,
+              "x": 189.0,
               "y": 230.0
             },
             "fieldType": "INT",
             "label": "defaultValue",
-            "minStepSize": 0.0,
+            "MinStepSize": 0.0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
@@ -3079,7 +3113,7 @@
               "y": 5900.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3093,7 +3127,7 @@
               "y": 5900.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3107,7 +3141,7 @@
               "y": 5900.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -3122,7 +3156,7 @@
               "y": 6020.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 134.0
             },
             "fieldType": "LONG",
@@ -3158,7 +3192,7 @@
               "y": 6240.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3172,7 +3206,7 @@
               "y": 6240.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3186,7 +3220,7 @@
               "y": 6360.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -3201,7 +3235,7 @@
               "y": 6280.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 159.0
             },
             "fieldType": "KEY",
@@ -3238,7 +3272,7 @@
               "y": 6540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3252,7 +3286,7 @@
               "y": 6540.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3266,7 +3300,7 @@
               "y": 6540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -3281,7 +3315,7 @@
               "y": 6680.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 159.0
             },
             "fieldType": "KEY",
@@ -3297,7 +3331,7 @@
               "y": 6680.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -3309,7 +3343,7 @@
                 "y": 6680.0
               },
               "ngMapNodeSize": {
-                "x": 232.000122,
+                "x": 232.0,
                 "y": 126.0
               },
               "fieldType": "KEY_TRACKER",
@@ -3325,7 +3359,7 @@
               "y": 6800.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.00195
             },
             "fieldType": "FIELD_LIST",
@@ -3337,7 +3371,7 @@
                 "y": 6800.0
               },
               "ngMapNodeSize": {
-                "x": 232.000122,
+                "x": 232.0,
                 "y": 126.001953
               },
               "fieldType": "KEY_TRACKER",
@@ -3353,7 +3387,7 @@
               "y": 6680.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.0
             },
             "fieldType": "FIELD_LIST",
@@ -3381,7 +3415,7 @@
               "y": 6800.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 99.00195
             },
             "fieldType": "FIELD_LIST",
@@ -3430,7 +3464,7 @@
               "y": 7000.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3444,7 +3478,7 @@
               "y": 7000.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3458,7 +3492,7 @@
               "y": 7000.0
             },
             "ngMapNodeSize": {
-              "x": 290.000122,
+              "x": 290.0,
               "y": 109.0
             },
             "fieldType": "VECTOR2",
@@ -3496,7 +3530,7 @@
               "y": 7280.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3510,7 +3544,7 @@
               "y": 7280.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3524,7 +3558,7 @@
               "y": 7280.0
             },
             "ngMapNodeSize": {
-              "x": 297.000122,
+              "x": 297.0,
               "y": 127.0
             },
             "fieldType": "VECTOR3",
@@ -3563,7 +3597,7 @@
               "y": 7600.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3577,7 +3611,7 @@
               "y": 7600.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3591,7 +3625,7 @@
               "y": 7600.0
             },
             "ngMapNodeSize": {
-              "x": 290.000122,
+              "x": 290.0,
               "y": 137.0
             },
             "fieldType": "VECTOR4",
@@ -3631,7 +3665,7 @@
               "y": 7940.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3645,7 +3679,7 @@
               "y": 7940.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3659,7 +3693,7 @@
               "y": 7940.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 132.0
             },
             "fieldType": "COLOR",
@@ -3679,7 +3713,7 @@
               "y": 7940.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 124.0
             },
             "fieldType": "BOOLEAN",
@@ -3715,7 +3749,7 @@
               "y": 8240.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3729,7 +3763,7 @@
               "y": 8240.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3743,7 +3777,7 @@
               "y": 8240.0
             },
             "ngMapNodeSize": {
-              "x": 277.000122,
+              "x": 277.0,
               "y": 103.0
             },
             "fieldType": "DATE_TIME_OFFSET",
@@ -3781,7 +3815,7 @@
               "y": 8540.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3795,7 +3829,7 @@
               "y": 8540.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3809,7 +3843,7 @@
               "y": 8540.0
             },
             "ngMapNodeSize": {
-              "x": 249.000122,
+              "x": 249.0,
               "y": 103.0
             },
             "fieldType": "DATE_TIME",
@@ -3847,7 +3881,7 @@
               "y": 8840.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 109.0
             },
             "fieldType": "AUTO",
@@ -3861,7 +3895,7 @@
               "y": 8840.0
             },
             "ngMapNodeSize": {
-              "x": 188.00061,
+              "x": 188.000488,
               "y": 109.0
             },
             "fieldType": "TEXT_LINE",
@@ -3875,7 +3909,7 @@
               "y": 8840.0
             },
             "ngMapNodeSize": {
-              "x": 188.000122,
+              "x": 188.0,
               "y": 103.0
             },
             "fieldType": "TIME_SPAN",
@@ -3883,40 +3917,6 @@
             "defaultValue": 0
           }
         ]
-      }
-    ],
-    "nestingColors": [
-      {
-        "r": 0.0,
-        "g": 0.0,
-        "b": 0.0,
-        "a": 1.0
-      },
-      {
-        "r": 0.84375,
-        "g": 0.84375,
-        "b": 0.84375,
-        "a": 1.0
-      },
-      {
-        "r": 1.0,
-        "g": 0.0,
-        "b": 0.0,
-        "a": 1.0
-      }
-    ],
-    "keyColors": [
-      {
-        "r": 0.64794004,
-        "g": 0.295880139,
-        "b": 1.0,
-        "a": 1.0
-      },
-      {
-        "r": 0.0,
-        "g": 1.0,
-        "b": 0.0625,
-        "a": 1.0
       }
     ]
   }

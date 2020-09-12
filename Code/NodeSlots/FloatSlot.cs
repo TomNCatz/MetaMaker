@@ -61,7 +61,6 @@ namespace LibT
 
 		private float GetFloat()
 		{
-			Log.LogL( $"value : {(float)_field.Value}" );
 			return (float)_field.Value;
 		}
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -25,8 +26,12 @@ namespace LibT
 			data.GetValue( "saveName", out _saveName );
 			data.GetValue( "asList", out _asList );
 			data.GetValue( "validation", out _field );
-			
-			if( _field == null ) return;
+
+			if( _field == null )
+			{
+				throw new Exception("Validation has no field");
+				return;
+			}
 			
 			int index = _graphNode.GetChildIndex( this )+1;
 			_child = _graphNode.AddChildField( _field, index );
@@ -59,6 +64,23 @@ namespace LibT
 				else
 				{
 					objData.AddValue( _saveName, retriever.GetString() );
+				}
+			}
+			else if( _child is FieldListSlot listed )
+			{
+				List<string> strings = listed.GetStrings();
+				
+				if( _asList )
+				{
+					foreach( string s in strings )
+					{
+						_graphNode.AddValidatedToList( _saveName, s );
+					}
+					
+				}
+				else
+				{
+					objData.AddValue( _saveName, strings );
 				}
 			}
 		}

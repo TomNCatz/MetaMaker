@@ -103,5 +103,21 @@ namespace LibT
 			_graphNode.RemoveChild( child );
 			_selector.MaxValue = _children.Count;
 		}
+
+		public List<string> GetStrings()
+		{
+			List<string> strings = new List<string>();
+			
+			foreach( Node child in _children )
+			{
+
+				if( child is StringRetriever retriever )
+				{
+					strings.Add( retriever.GetString() );
+				}
+			}
+
+			return strings;
+		}
 	}
 }
