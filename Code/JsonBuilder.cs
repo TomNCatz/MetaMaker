@@ -963,7 +963,15 @@ public class JsonBuilder : ColorRect
 			GenericDataArray item = gdo as GenericDataArray;
 			
 			item.GetValue( "title", out string title );
-			_nodeData.Add( title, item );
+
+			if( _nodeData.ContainsKey( title ) )
+			{
+				ShowNotice( $"Duplicate node title '{title}' found in the template.\nNodes must all have unique titles" );
+			}
+			else
+			{
+				_nodeData[title] = item;
+			}
 		}
 
 		foreach( KeyValuePair<string,GenericDataArray> dataPair in _nodeData )
