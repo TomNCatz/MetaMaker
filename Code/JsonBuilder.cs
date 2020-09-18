@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using Godot;
 using LibT;
+using LibT.Maths;
 using LibT.Serialization;
 using LibT.Services;
 using RSG;
 using RSG.Exceptions;
+using Color = Godot.Color;
 using File = Godot.File;
+using Vector2 = Godot.Vector2;
 
 public class JsonBuilder : ColorRect
 {
@@ -84,20 +87,26 @@ public class JsonBuilder : ColorRect
 	[Export] private NodePath _helpInfoPopupPath;
 	private HelpPopup _helpInfoPopup;
 
-	public Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
-	public readonly List<Tuple<KeyLinkSlot, string>> _loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
+	public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
+	public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
+	
+	private readonly Dictionary<string,GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
+	private readonly List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
+	private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
+	private readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
+	private readonly List<GenericDataArray> _duplicates = new List<GenericDataArray>();
+	private readonly List<Color> _parentChildColors = new List<Color> ();
+	private readonly List<Color> _keyColors = new List<Color>();
 	public bool includeNodeData = true;
 	public bool includeGraphData = true;
-	public bool pastingData = false;
-	
+	public bool copyingData;
+	public bool pastingData;
+		
+	private Vector2 _copiedCorner = new Vector2(50,100);
 	private Vector2 _offset = new Vector2(50,100);
 	private Vector2 _buffer = new Vector2(40,10);
 	private List<string> _recentTemplates = new List<string>();
 	private List<string> _recentFiles = new List<string>();
-	private Dictionary<string,GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
-	private List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
-	private SlottedGraphNode _lastSelection;
-	private GenericDataArray _copied;
 	private PopupMenu _editMenu;
 	private PopupMenu _createSubmenu;
 	private PopupMenu _recentTemplateSubmenu;
@@ -119,9 +128,6 @@ public class JsonBuilder : ColorRect
 		get => _saveFilePath;
 	}
 	private string _saveFilePath;
-
-	private List<Color> _parentChildColors = new List<Color> ();
-	private List<Color> _keyColors = new List<Color>();
 
 
 	public bool HasUnsavedChanges
@@ -786,55 +792,105 @@ public class JsonBuilder : ColorRect
 
 	private void RequestCopyNode()
 	{
-		if( _lastSelection == null ) return;
-
+		if(_selection.Count <= 0) return;
+		
+		_copied.Clear();
+		_duplicates.Clear();
 		includeNodeData = true;
 		includeGraphData = true;
-	
-		_copied = _lastSelection.GetObjectData();
+		copyingData = true;
+
+		_copiedCorner = _selection[0].Offset;
+		
+		foreach( SlottedGraphNode node in _selection )
+		{
+			_copiedCorner.x = Maths.Min( node.Offset.x, _copiedCorner.x );
+			_copiedCorner.y = Maths.Min( node.Offset.y, _copiedCorner.y );
+
+			_copied.Add( node.GetObjectData() );
+		}
+
+		for( int i = _copied.Count-1; i >=0; i-- )
+		{
+			GenericDataArray copied = _copied[i];
+			for( int k = _duplicates.Count-1; k >=0; k-- )
+			{
+				if( !copied.DeepEquals( _duplicates[k] ) ) continue;
+
+				_copied.RemoveAt( i );
+				_duplicates.RemoveAt( k );
+				break;
+			}
+		}
+
+		copyingData = false;
+	}
+
+	public bool IsSelected( SlottedGraphNode node )
+	{
+		if(_selection.Contains( node ))
+		{
+			_duplicates.Add( node.GetObjectData() );
+			return true;
+		}
+
+		return false;
 	}
 
 	private void RequestPasteNode()
 	{
-		if( _copied == null ) return;
+		if( _copied.Count <= 0 ) return;
 
 		pastingData = true;
-		
 		int start = _nodes.Count;
-		LoadNode( _copied );
-
-		Vector2 startOffset = _offset - _nodes[start].Offset;
+		Vector2 startOffset = _offset - _copiedCorner;
+		
+		for( int i = 0; i < _copied.Count; i++ )
+		{
+			LoadNode(  _copied[i] );
+		}
 
 		for( int i = start; i < _nodes.Count; i++ )
 		{
 			_nodes[i].Offset = _nodes[i].Offset + startOffset;
-			_graph.SetSelected( _nodes[i] );
+			//_graph.SetSelected( _nodes[i] );
 		}
-
-		pastingData = false;
 	}
 
 	private void RequestDeleteNode()
 	{
-		if( _lastSelection == null ) return;
+		for( int i = _selection.Count-1; i >= 0; i-- )
+		{
+			if(_selection[i] == null) return;
+			
+			_selection[i].CloseRequest();
+		}
 		
-		_lastSelection.CloseRequest();
+		_selection.Clear();
 		
 		HasUnsavedChanges = true;
 	}
 
 	private void SelectNode(Node node)
 	{
-		//Log.LogL( $"Selected {node.Name}" );
-		_lastSelection = node as SlottedGraphNode;
+		SlottedGraphNode graphNode = node as SlottedGraphNode;
+		
+		if( _selection.Contains( graphNode ) ) return;
+		
+		Log.LogL( $"Selected {node.Name}" );
+		_selection.Add( graphNode );
 		
 		HasUnsavedChanges = true;
 	}
 
 	private void DeselectNode(Node node)
 	{
-		//Log.LogL( $"Deselected {node.Name}" );
-		//_lastSelection = null;
+		SlottedGraphNode graphNode = node as SlottedGraphNode;
+		
+		if( !_selection.Contains( graphNode ) ) return;
+		
+		Log.LogL( $"Deselected {node.Name}" );
+		_selection.Remove( graphNode );
 	}
 	#endregion
 
@@ -1031,12 +1087,12 @@ public class JsonBuilder : ColorRect
 			LoadNode( data );
 		}
 
-		foreach( Tuple<KeyLinkSlot,string> loadingLink in _loadingLinks )
+		foreach( Tuple<KeyLinkSlot,string> loadingLink in loadingLinks )
 		{
 			LinkToKey( loadingLink.Item1, loadingLink.Item2 );
 		}
 		
-		_loadingLinks.Clear();
+		loadingLinks.Clear();
 	}
 	
 	public void CatchException( Exception ex )
@@ -1287,9 +1343,9 @@ public class JsonBuilder : ColorRect
 
 	public void FreeNode( SlottedGraphNode graphNode )
 	{
-		if( _lastSelection == graphNode )
+		if( _selection.Contains( graphNode ) )
 		{
-			_lastSelection = null;
+			_selection.Remove( graphNode );
 		}
 		
 		Godot.Collections.Array connections = _graph.GetConnectionList();

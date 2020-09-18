@@ -93,7 +93,7 @@ namespace LibT
 
 			if( string.IsNullOrEmpty( key ) ) return;
 			
-			_builder.Get._loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
+			_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
 		}
 
 		public string GetString()

@@ -50,6 +50,7 @@ namespace LibT
 			{
 				force = null;
 			}
+			
 			if(string.IsNullOrEmpty( force ))
 			{
 				force = Tool.GetUniqueKey( _keySize, builder.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
