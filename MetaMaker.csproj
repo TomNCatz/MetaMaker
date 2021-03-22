@@ -1,16 +1,6 @@
-﻿<Project Sdk="Godot.NET.Sdk/3.2.3">
+﻿<Project Sdk="Godot.NET.Sdk/3.3.0">
   <PropertyGroup>
-    <ProjectGuid>{EF4BBC8F-A1BF-4ADF-9A6D-BD13953C047A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>MetaMaker</RootNamespace>
-    <AssemblyName>MetaMaker</AssemblyName>
-    <GodotProjectGeneratorVersion>1.0.0.0</GodotProjectGeneratorVersion>
     <TargetFramework>net472</TargetFramework>
-    <!--The following properties were overriden during migration to prevent errors.
-    Enabling them may require other manual changes to the project and its files.-->
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibT, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -23,44 +13,5 @@
       <HintPath>DLLs\RSG.Promises.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Code\AreYouSurePopup.cs" />
-    <Compile Include="Code\FieldType.cs" />
-    <Compile Include="Code\FileDialogExtended.cs" />
-    <Compile Include="Code\GraphConnection.cs" />
-    <Compile Include="Code\HelpPopup.cs" />
-    <Compile Include="Code\IGdaLoadable.cs" />
-    <Compile Include="Code\JsonBuilder.cs" />
-    <Compile Include="Code\NodeSlots\AutoSlot.cs" />
-    <Compile Include="Code\NodeSlots\BooleanSlot.cs" />
-    <Compile Include="Code\NodeSlots\ColorSlot.cs" />
-    <Compile Include="Code\NodeSlots\DateTimeOffsetSlot.cs" />
-    <Compile Include="Code\NodeSlots\DoubleSlot.cs" />
-    <Compile Include="Code\NodeSlots\EnumSlot.cs" />
-    <Compile Include="Code\NodeSlots\FieldDictionarySlot.cs" />
-    <Compile Include="Code\NodeSlots\FieldListSlot.cs" />
-    <Compile Include="Code\NodeSlots\FloatSlot.cs" />
-    <Compile Include="Code\NodeSlots\InfoSlot.cs" />
-    <Compile Include="Code\NodeSlots\IntSlot.cs" />
-    <Compile Include="Code\NodeSlots\KeyLinkSlot.cs" />
-    <Compile Include="Code\NodeSlots\KeySlot.cs" />
-    <Compile Include="Code\NodeSlots\LinkToChildSlot.cs" />
-    <Compile Include="Code\NodeSlots\LinkToParentSlot.cs" />
-    <Compile Include="Code\NodeSlots\LongSlot.cs" />
-    <Compile Include="Code\NodeSlots\TextAreaRichSlot.cs" />
-    <Compile Include="Code\NodeSlots\TextAreaSlot.cs" />
-    <Compile Include="Code\NodeSlots\TextLineSlot.cs" />
-    <Compile Include="Code\NodeSlots\TimeSpanSlot.cs" />
-    <Compile Include="Code\NodeSlots\TypeSlot.cs" />
-    <Compile Include="Code\NodeSlots\ValidateStringSlot.cs" />
-    <Compile Include="Code\NodeSlots\Vector2Slot.cs" />
-    <Compile Include="Code\NodeSlots\Vector3Slot.cs" />
-    <Compile Include="Code\NodeSlots\Vector4Slot.cs" />
-    <Compile Include="Code\SlottedGraphNode.cs" />
-    <Compile Include="Code\StringRetriever.cs" />
-    <Compile Include="DLLs\Growl.cs" />
-    <Compile Include="DLLs\NodeExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 </Project>

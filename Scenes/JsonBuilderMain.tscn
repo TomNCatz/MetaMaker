@@ -289,6 +289,8 @@ margin_bottom = 747.993
 
 [node name="FileDialog" parent="." instance=ExtResource( 5 )]
 visible = false
+current_dir = "/Users/tomnc/Dev/Godot/MetaMaker"
+current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
 
 [node name="AreYouSurePopup" parent="." instance=ExtResource( 6 )]
 visible = false
