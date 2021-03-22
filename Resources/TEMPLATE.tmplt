@@ -1,5 +1,5 @@
 {
-  "targetVersion": "0.4.2",
+  "targetVersion": "0.5.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "nestingColors": [
@@ -129,7 +129,7 @@
         {
           "fieldType": "INT",
           "label": "parentType",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -189,7 +189,7 @@
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -204,7 +204,7 @@
         {
           "fieldType": "INT",
           "label": "keySize",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -236,7 +236,7 @@
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -276,7 +276,7 @@
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -308,7 +308,7 @@
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
@@ -412,7 +412,7 @@
         {
           "fieldType": "FLOAT",
           "label": "minHeight",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -591,7 +591,7 @@
         {
           "fieldType": "FLOAT",
           "label": "minHeight",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -629,7 +629,7 @@
         {
           "fieldType": "FLOAT",
           "label": "minHeight",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0.0,
           "hasMin": true,
@@ -667,12 +667,12 @@
         {
           "fieldType": "DOUBLE",
           "label": "MinStepSize",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
-          "max": 0.0,
+          "max": "0",
           "hasMin": true,
-          "min": 0.0,
-          "defaultValue": 0.0
+          "min": "0",
+          "defaultValue": "0"
         },
         {
           "fieldType": "BOOLEAN",
@@ -683,7 +683,7 @@
         {
           "fieldType": "FLOAT",
           "label": "max",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -699,7 +699,7 @@
         {
           "fieldType": "FLOAT",
           "label": "min",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -709,7 +709,7 @@
         {
           "fieldType": "FLOAT",
           "label": "defaultValue",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0.0,
           "hasMin": false,
@@ -741,12 +741,12 @@
         {
           "fieldType": "DOUBLE",
           "label": "MinStepSize",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
-          "max": 0.0,
+          "max": "0",
           "hasMin": true,
-          "min": 0.0,
-          "defaultValue": 0.0
+          "min": "0",
+          "defaultValue": "0"
         },
         {
           "fieldType": "BOOLEAN",
@@ -757,12 +757,12 @@
         {
           "fieldType": "DOUBLE",
           "label": "max",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
-          "max": 0.0,
+          "max": "0",
           "hasMin": false,
-          "min": 0.0,
-          "defaultValue": 0.0
+          "min": "0",
+          "defaultValue": "0"
         },
         {
           "fieldType": "BOOLEAN",
@@ -773,22 +773,22 @@
         {
           "fieldType": "DOUBLE",
           "label": "min",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
-          "max": 0.0,
+          "max": "0",
           "hasMin": false,
-          "min": 0.0,
-          "defaultValue": 0.0
+          "min": "0",
+          "defaultValue": "0"
         },
         {
           "fieldType": "DOUBLE",
           "label": "defaultValue",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
-          "max": 0.0,
+          "max": "0",
           "hasMin": false,
-          "min": 0.0,
-          "defaultValue": 0.0
+          "min": "0",
+          "defaultValue": "0"
         }
       ]
     },
@@ -815,12 +815,12 @@
         {
           "fieldType": "DOUBLE",
           "label": "MinStepSize",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
-          "max": 0.0,
+          "max": "0",
           "hasMin": true,
-          "min": 0.0,
-          "defaultValue": 0.0
+          "min": "0",
+          "defaultValue": "0"
         },
         {
           "fieldType": "BOOLEAN",
@@ -831,7 +831,7 @@
         {
           "fieldType": "INT",
           "label": "max",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -847,7 +847,7 @@
         {
           "fieldType": "INT",
           "label": "min",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -857,7 +857,7 @@
         {
           "fieldType": "INT",
           "label": "defaultValue",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": false,
@@ -896,7 +896,7 @@
           "fieldType": "LONG",
           "label": "defaultValue",
           "allowNegative": true,
-          "defaultValue": 0
+          "defaultValue": "0"
         }
       ]
     },
@@ -1225,7 +1225,7 @@
         {
           "fieldType": "TIME_SPAN",
           "label": "defaultValue",
-          "defaultValue": 0
+          "defaultValue": "0"
         }
       ]
     }

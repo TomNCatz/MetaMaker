@@ -1,5 +1,5 @@
 {
-  "targetVersion": "0.4.2",
+  "targetVersion": "0.5.0",
   "defaultListing": "listing",
   "explicitNode": "",
   "nestingColors": [
@@ -654,7 +654,7 @@
             },
             "ngMapNodeSize": {
               "x": 248.0,
-              "y": 193.0
+              "y": 192.999878
             },
             "Entry": "Link To Child Slot",
             "Info": "Links another node as its child\nThis exports as the entire child being stored in the slot",
@@ -667,7 +667,7 @@
                 },
                 "ngMapNodeSize": {
                   "x": 248.0,
-                  "y": 163.0
+                  "y": 162.999878
                 },
                 "Entry": "label",
                 "Info": "Field name\nThis is displayed on the slot, but also is what the slot is saved as",
@@ -681,7 +681,7 @@
                 },
                 "ngMapNodeSize": {
                   "x": 248.0,
-                  "y": 163.0
+                  "y": 162.999878
                 },
                 "Entry": "slotType",
                 "Info": "Can only be matched to the same slotType",

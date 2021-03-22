@@ -1,0 +1,298 @@
+[gd_scene load_steps=45 format=2]
+
+[ext_resource path="res://Code/NodeCode/JsonBuilder.cs" type="Script" id=1]
+[ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
+[ext_resource path="res://Nodes/Objects/ColorPickerPopup.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Objects/ErrorPopup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Objects/FileDialog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Nodes/Objects/AreYouSurePopup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Nodes/Objects/HelpPopup.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Nodes/Objects/SlottedGraphNode.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Nodes/Objects/Slots/KeyLinkSlot.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Nodes/Objects/Slots/KeySlot.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Nodes/Objects/Slots/LinkToParentSlot.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Nodes/Objects/Slots/LinkToChildSlot.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Nodes/Objects/Slots/FieldListSlot.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Nodes/Objects/Slots/FieldDictionarySlot.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Nodes/Objects/Slots/InfoSlot.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Nodes/Objects/Slots/SeparatorSlot.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Nodes/Objects/Slots/EnumSlot.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Nodes/Objects/Slots/BooleanSlot.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Nodes/Objects/Slots/ColorSlot.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Nodes/Objects/Slots/DateTimeOffsetSlot.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Nodes/Objects/Slots/DateTimeSlot.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Nodes/Objects/Slots/AutoSlot.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Nodes/Objects/Slots/TypeSlot.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Nodes/Objects/Slots/Vector2Slot.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Nodes/Objects/Slots/Vector3Slot.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Nodes/Objects/Slots/FloatSlot.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Nodes/Objects/Slots/IntSlot.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Nodes/Objects/Slots/LongSlot.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Nodes/Objects/Slots/TextAreaRichSlot.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Nodes/Objects/Slots/TextAreaSlot.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Nodes/Objects/Slots/TextLineSlot.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Nodes/Objects/Slots/Vector4Slot.tscn" type="PackedScene" id=32]
+[ext_resource path="res://Nodes/Objects/Slots/TimeSpanSlot.tscn" type="PackedScene" id=33]
+[ext_resource path="res://Nodes/Objects/Slots/DoubleSlot.tscn" type="PackedScene" id=34]
+[ext_resource path="res://Nodes/Objects/Slots/ValidateStringSlot.tscn" type="PackedScene" id=35]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.27451 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.803922, 0.803922, 0.803922, 0.768627 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.803922, 0.803922, 0.803922, 0.929412 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.65098, 0.65098, 0.65098, 0.768627 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+content_margin_left = 0.0
+content_margin_right = 0.0
+bg_color = Color( 0.803922, 0.803922, 0.803922, 0.537255 )
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 0.392157 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.639216, 0.639216, 0.639216, 0.768627 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.545098, 0.545098, 0.545098, 0.607843 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0, 0, 0.588235 )
+
+[node name="JsonBuilderMain" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 2.10522
+margin_bottom = 2.10522
+color = Color( 0.27451, 0.262745, 0.290196, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+nodeScene = ExtResource( 8 )
+separatorScene = ExtResource( 16 )
+keyScene = ExtResource( 10 )
+keyLinkScene = ExtResource( 9 )
+linkToParentScene = ExtResource( 11 )
+linkToChildScene = ExtResource( 12 )
+fieldListScene = ExtResource( 13 )
+fieldDictionaryScene = ExtResource( 14 )
+validateStringScene = ExtResource( 35 )
+infoScene = ExtResource( 15 )
+autoScene = ExtResource( 22 )
+typeScene = ExtResource( 23 )
+enumScene = ExtResource( 17 )
+textLineScene = ExtResource( 31 )
+textAreaScene = ExtResource( 30 )
+textAreaRichScene = ExtResource( 29 )
+booleanScene = ExtResource( 18 )
+intScene = ExtResource( 27 )
+floatScene = ExtResource( 26 )
+doubleScene = ExtResource( 34 )
+longScene = ExtResource( 28 )
+colorScene = ExtResource( 19 )
+vector3Scene = ExtResource( 25 )
+vector4Scene = ExtResource( 32 )
+vector2Scene = ExtResource( 24 )
+dateTimeOffsetScene = ExtResource( 20 )
+dateTimeScene = ExtResource( 21 )
+timeSpanScene = ExtResource( 33 )
+_graphPath = NodePath("GraphEdit")
+_zoomOutPath = NodePath("HBoxContainer/ZoomOutButton")
+_zoomNormalPath = NodePath("HBoxContainer/ZoomNormalButton")
+_zoomInPath = NodePath("HBoxContainer/ZoomInButton")
+_snapPath = NodePath("HBoxContainer/SnapButton")
+_snapSizePath = NodePath("HBoxContainer/SnapBox")
+_fileMenuButtonPath = NodePath("HBoxContainer/FileMenu")
+_editMenuButtonPath = NodePath("HBoxContainer/EditMenu")
+_settingsMenuButtonPath = NodePath("HBoxContainer/Settings")
+_searchBarPath = NodePath("HBoxContainer/SearchBar")
+_searchButtonPath = NodePath("HBoxContainer/SearchButton")
+_filePopupPath = NodePath("FileDialog")
+_colorPopupPath = NodePath("ColorPopup")
+_errorPopupPath = NodePath("ErrorPopup")
+_areYouSurePopupPath = NodePath("AreYouSurePopup")
+_helpInfoPopupPath = NodePath("HelpPopup")
+
+[node name="Growl" type="Node" parent="."]
+script = ExtResource( 2 )
+_lowestLogLevel = 7
+_logFile = "LogData"
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 26.0
+custom_styles/bg = SubResource( 1 )
+custom_colors/grid_major = Color( 1, 1, 1, 0.392157 )
+custom_colors/grid_minor = Color( 1, 1, 1, 0.0980392 )
+right_disconnects = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileMenu" type="MenuButton" parent="HBoxContainer"]
+margin_right = 23.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "File"
+flat = false
+switch_on_hover = true
+
+[node name="EditMenu" type="MenuButton" parent="HBoxContainer"]
+margin_left = 27.0
+margin_right = 51.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Edit"
+flat = false
+switch_on_hover = true
+
+[node name="Settings" type="MenuButton" parent="HBoxContainer"]
+margin_left = 55.0
+margin_right = 106.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Settings"
+flat = false
+switch_on_hover = true
+
+[node name="ColorRect" type="Control" parent="HBoxContainer"]
+margin_left = 110.0
+margin_right = 130.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 0 )
+
+[node name="ZoomOutButton" type="Button" parent="HBoxContainer"]
+margin_left = 134.0
+margin_right = 154.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 0 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+text = "-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZoomNormalButton" type="Button" parent="HBoxContainer"]
+margin_left = 158.0
+margin_right = 178.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 0 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+text = "1:1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ZoomInButton" type="Button" parent="HBoxContainer"]
+margin_left = 182.0
+margin_right = 202.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 0 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+text = "+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SnapButton" type="Button" parent="HBoxContainer"]
+margin_left = 206.0
+margin_right = 236.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 0 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+text = "snap"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SnapBox" type="SpinBox" parent="HBoxContainer"]
+margin_left = 240.0
+margin_right = 314.0
+margin_bottom = 25.0
+min_value = 5.0
+value = 20.0
+rounded = true
+
+[node name="ColorRect2" type="Control" parent="HBoxContainer"]
+margin_left = 318.0
+margin_right = 877.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 0 )
+size_flags_horizontal = 3
+
+[node name="SearchBar" type="LineEdit" parent="HBoxContainer"]
+margin_left = 881.0
+margin_right = 981.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="SearchButton" type="Button" parent="HBoxContainer"]
+margin_left = 985.0
+margin_right = 1024.0
+margin_bottom = 25.0
+text = "Find"
+
+[node name="ErrorPopup" parent="." instance=ExtResource( 4 )]
+
+[node name="ColorPopup" parent="." instance=ExtResource( 3 )]
+margin_left = 213.312
+margin_top = 277.993
+margin_right = 529.312
+margin_bottom = 747.993
+
+[node name="FileDialog" parent="." instance=ExtResource( 5 )]
+visible = false
+current_dir = "/Users/tomnc/Dev/Godot/MetaMaker"
+current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
+
+[node name="AreYouSurePopup" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[node name="HelpPopup" parent="." instance=ExtResource( 7 )]

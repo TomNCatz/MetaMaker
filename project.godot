@@ -10,13 +10,12 @@ config_version=4
 
 _global_script_classes=[  ]
 _global_script_class_icons={
-
 }
 
 [application]
 
 config/name="MetaMaker"
-run/main_scene="res://Scenes/JsonBuilderMain.tscn"
+run/main_scene="res://Nodes/Scenes/JsonBuilderMain.tscn"
 config/icon="res://icon.png"
 
 [display]

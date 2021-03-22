@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nodes/Scenes/SerializationTest.cs" type="Script" id=1]
+[ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
+
+[node name="Node" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_displayButtonPath = NodePath("VBoxContainer/HBoxContainer/DIsplay")
+_saveButtonPath = NodePath("VBoxContainer/HBoxContainer/Save")
+_clearButtonPath = NodePath("VBoxContainer/HBoxContainer/Clear")
+_loadButtonPath = NodePath("VBoxContainer/HBoxContainer/Load")
+_textPath = NodePath("VBoxContainer/ScrollContainer/HBoxContainer/Label")
+_originPath = NodePath("VBoxContainer/ScrollContainer/HBoxContainer/Label2")
+id = "id data"
+count = 5
+value = 645.243
+isThing = true
+kind = 2
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource( 2 )
+_lowestLogLevel = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 20.0
+
+[node name="DIsplay" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 253.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Display"
+
+[node name="Save" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 257.0
+margin_right = 510.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="Clear" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 514.0
+margin_right = 767.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Clear"
+
+[node name="Load" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 771.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 576.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+margin_right = 510.0
+margin_bottom = 576.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+margin_left = 514.0
+margin_right = 1024.0
+margin_bottom = 576.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

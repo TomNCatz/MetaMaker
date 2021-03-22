@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/FieldDictionarySlot.cs" type="Script" id=1]
+
+
+[node name="FieldListSlot" type="HBoxContainer"]
+margin_right = 180.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 12
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_titlePath = NodePath("Label")
+_selectorPath = NodePath("SpinBox")
+_addButtonPath = NodePath("Button")
+_deleteButtonPath = NodePath("Button2")
+
+[node name="Label" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 39.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "List"
+
+[node name="Button" type="Button" parent="."]
+margin_left = 43.0
+margin_right = 80.0
+margin_bottom = 24.0
+text = "Add"
+
+[node name="SpinBox" type="LineEdit" parent="."]
+margin_left = 84.0
+margin_right = 142.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 146.0
+margin_right = 180.0
+margin_bottom = 24.0
+text = "Del"
