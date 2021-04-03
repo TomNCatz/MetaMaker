@@ -1,30 +1,35 @@
-using System.Linq;
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class TextLineSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class TextLineSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private LineEdit _field;
+		private GenericDataArray _parentModel;
 		
 		
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<LineEdit>( _fieldPath );
+			_field.Connect("text_changed",this,nameof(OnChanged));
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
+
+			_parentModel = parentModel;
 			
-			data.GetValue( "defaultValue", out string text );
+			template.GetValue( "defaultValue", out string text );
 			_field.Text = text;
+			_parentModel.AddValue(_label.Text, _field.Text);
 		}
 
 		public void GetObjectData( GenericDataArray objData )
@@ -36,6 +41,12 @@ namespace LibT
 		{
 			objData.GetValue( _label.Text, out string text );
 			_field.Text = text;
+			OnChanged( text );
+		}
+
+		private void OnChanged( string text )
+		{
+			_parentModel.AddValue(_label.Text, text);
 		}
 
 		public string GetString()

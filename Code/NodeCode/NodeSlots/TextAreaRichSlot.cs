@@ -1,16 +1,18 @@
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class TextAreaRichSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class TextAreaRichSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private TextEdit _field;
-		[Export] private NodePath _displayPath;
+		[Export] private readonly NodePath _displayPath;
 		private RichTextLabel _display;
+		private GenericDataArray _parentModel;
 		
 		
 		public override void _Ready()
@@ -22,16 +24,18 @@ namespace LibT
 			_field.Connect( "text_changed", this, nameof(OnTextChanged) );
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
+
+			_parentModel = parentModel;
 			
-			data.GetValue( "minHeight", out float height );
+			template.GetValue( "minHeight", out float height );
 			_field.RectMinSize = new Vector2(0,height);
 			_display.RectMinSize = new Vector2(0,height);
 			
-			data.GetValue( "defaultValue", out string text );
+			template.GetValue( "defaultValue", out string text );
 			_field.Text = text;
 			OnTextChanged();
 		}
@@ -50,6 +54,7 @@ namespace LibT
 		private void OnTextChanged()
 		{
 			_display.BbcodeText = _field.Text;
+			_parentModel.AddValue(_label.Text, _field.Text);
 		}
 
 		public string GetString()

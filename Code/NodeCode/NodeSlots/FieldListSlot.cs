@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
 	public class FieldListSlot : Container, IGdaLoadable, IGdoConvertible
 	{
-		[Export] private NodePath _titlePath;
+		[Export] private readonly NodePath _titlePath;
 		private Label _title;
-		[Export] private NodePath _selectorPath;
+		[Export] private readonly NodePath _selectorPath;
 		private SpinBox _selector;
-		[Export] private NodePath _addButtonPath;
+		[Export] private readonly NodePath _addButtonPath;
 		private Button _addButton;
-		[Export] private NodePath _deleteButtonPath;
+		[Export] private readonly NodePath _deleteButtonPath;
 		private Button _deleteButton;
 		
 		private SlottedGraphNode _graphNode;
@@ -110,8 +111,7 @@ namespace LibT
 			
 			foreach( Node child in _children )
 			{
-
-				if( child is StringRetriever retriever )
+				if( child is IStringRetriever retriever )
 				{
 					strings.Add( retriever.GetString() );
 				}

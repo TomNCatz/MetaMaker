@@ -1,27 +1,27 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
-namespace LibT
+namespace MetaMaker
 {
 	public class FieldDictionarySlot : Container, IGdaLoadable, IGdoConvertible
 	{
-		[Export] private NodePath _titlePath;
+		[Export] private readonly NodePath _titlePath;
 		private Label _title;
-		[Export] private NodePath _selectorPath;
+		[Export] private readonly NodePath _selectorPath;
 		private LineEdit _selector;
-		[Export] private NodePath _addButtonPath;
+		[Export] private readonly NodePath _addButtonPath;
 		private Button _addButton;
-		[Export] private NodePath _deleteButtonPath;
+		[Export] private readonly NodePath _deleteButtonPath;
 		private Button _deleteButton;
 		
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
-		private Dictionary<string,Node> _children = new Dictionary<string, Node>();
-		private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
-
+		private readonly Dictionary<string,Node> _children = new Dictionary<string, Node>();
+		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
 
 		public int Count => _children.Count;
 

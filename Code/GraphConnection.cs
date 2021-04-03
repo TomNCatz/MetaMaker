@@ -1,4 +1,4 @@
-namespace LibT
+namespace MetaMaker
 {
 	public class GraphConnection
 	{

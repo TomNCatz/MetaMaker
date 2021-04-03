@@ -1,13 +1,14 @@
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class AutoSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class AutoSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private Label _field;
 
 		public override void _Ready()
@@ -16,13 +17,15 @@ namespace LibT
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 		
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			data.GetValue( "defaultValue", out string text );
+			template.GetValue( "defaultValue", out string text );
 			_field.Text = text;
+			
+			parentModel.AddValue(_label.Text, text);
 		}
 
 		public void GetObjectData( GenericDataArray objData )

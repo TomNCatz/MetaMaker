@@ -1,50 +1,58 @@
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class DoubleSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class DoubleSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private SpinBox _field;
 		
+		private GenericDataArray _parentModel;
+
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<SpinBox>( _fieldPath );
+
+			_field.Connect("value_changed",this,nameof(OnChanged));
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			data.GetValue( "hasMax", out bool hasMax );
-			data.GetValue( "hasMin", out bool hasMin );
+			template.GetValue( "hasMax", out bool hasMax );
+			template.GetValue( "hasMin", out bool hasMin );
+			
+			_parentModel = parentModel;
+			_parentModel.AddValue(_label.Text, _field.Value);
 
 			_field.AllowGreater = !hasMax;
 			if( hasMax )
 			{
-				data.GetValue( "max", out double max );
+				template.GetValue( "max", out double max );
 				_field.MaxValue = max;
 			}
 
 			_field.AllowLesser = !hasMin;
 			if( hasMin )
 			{
-				data.GetValue( "min", out double min );
+				template.GetValue( "min", out double min );
 				_field.MinValue = min;
 			}
 			
-			if( data.values.ContainsKey( "minStepSize" ) )
+			if( template.values.ContainsKey( "minStepSize" ) )
 			{
-				data.GetValue( "minStepSize", out double minStepSize );
+				template.GetValue( "minStepSize", out double minStepSize );
 				_field.Step = minStepSize;
 			}
-			
-			data.GetValue( "defaultValue", out double value );
+
+			template.GetValue( "defaultValue", out double value );
 			_field.Value = value;
 		}
 
@@ -57,6 +65,11 @@ namespace LibT
 		{
 			objData.GetValue( _label.Text, out double value );
 			_field.Value = value;
+		}
+
+		private void OnChanged(double value)
+		{
+			_parentModel.AddValue(_label.Text, value);
 		}
 
 		public string GetString()

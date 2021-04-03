@@ -1,4 +1,5 @@
 syntax: glob
 .mono
+.vscode
 .idea
 Builds

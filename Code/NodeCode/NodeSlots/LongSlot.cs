@@ -1,16 +1,18 @@
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class LongSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class LongSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private LineEdit _field;
 		private long _value;
 		private bool _allowNegative;
+		private GenericDataArray _parentModel;
 		
 		public override void _Ready()
 		{
@@ -45,6 +47,8 @@ namespace LibT
 			{
 				_field.Text = _value.ToString();
 			}
+			
+			_parentModel.AddValue(_label.Text, _value);
 		}
 		
 		private void OnTextEnter( string text )
@@ -52,15 +56,19 @@ namespace LibT
 			_field.Text = _value.ToString();
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			data.GetValue( "allowNegative", out _allowNegative );
+			_parentModel = parentModel;
+			_parentModel.AddValue(_label.Text, _value);
 			
-			data.GetValue( "defaultValue", out _value );
+			template.GetValue( "allowNegative", out _allowNegative );
+			
+			template.GetValue( "defaultValue", out _value );
 			_field.Text = _value.ToString();
+			OnTextChange( _field.Text );
 		}
 
 		public void GetObjectData( GenericDataArray objData )
@@ -72,6 +80,7 @@ namespace LibT
 		{
 			objData.GetValue( _label.Text, out _value );
 			_field.Text = _value.ToString();
+			OnTextChange( _field.Text );
 		}
 
 		public string GetString()

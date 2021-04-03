@@ -2,49 +2,66 @@ using Godot;
 using LibT;
 using LibT.Serialization;
 
-public class Vector2Slot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+namespace MetaMaker
 {
-	[Export] private NodePath _labelPath;
-	private Label _label;
-	[Export] private NodePath _xPath;
-	private SpinBox _x;
-	[Export] private NodePath _yPath;
-	private SpinBox _y;
-
-	public override void _Ready()
+	public class Vector2Slot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		_label = this.GetNodeFromPath<Label>( _labelPath );
+		[Export] private readonly NodePath _labelPath;
+		private Label _label;
+		[Export] private readonly NodePath _xPath;
+		private SpinBox _x;
+		[Export] private readonly NodePath _yPath;
+		private SpinBox _y;
+		private GenericDataArray _parentModel;
+
+		public override void _Ready()
+		{
+			_label = this.GetNodeFromPath<Label>( _labelPath );
+			
+			_x = this.GetNodeFromPath<SpinBox>( _xPath );
+			_y = this.GetNodeFromPath<SpinBox>( _yPath );
+			
+			_x.Connect("value_changed",this,nameof(OnChanged));
+			_y.Connect("value_changed",this,nameof(OnChanged));
+		}
 		
-		_x = this.GetNodeFromPath<SpinBox>( _xPath );
-		_y = this.GetNodeFromPath<SpinBox>( _yPath );
-	}
-	
-	public void LoadFromGda( GenericDataArray data )
-	{
-		data.GetValue( "label", out string label );
-		_label.Text = label;
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		{
+			template.GetValue( "label", out string label );
+			_label.Text = label;
 
-		data.GetValue( "defaultValue", out Vector2 vector );
-		_x.Value = vector.x;
-		_y.Value = vector.y;
-	}
+			_parentModel = parentModel;
 
-	public void GetObjectData( GenericDataArray objData )
-	{
-		LibT.Maths.Vector2 vector = new Vector2((float)_x.Value,(float)_y.Value);
-		objData.AddValue( _label.Text, vector );
-	}
+			template.GetValue( "defaultValue", out Vector2 vector );
+			_x.Value = vector.x;
+			_y.Value = vector.y;
 
-	public void SetObjectData( GenericDataArray objData )
-	{
-		objData.GetValue( _label.Text, out Vector2 vector );
+			_parentModel.AddValue( _label.Text, vector );
+		}
 
-		_x.Value = vector.x;
-		_y.Value = vector.y;
-	}
-	
-	public string GetString()
-	{
-		return $"({(float)_x.Value},{(float)_y.Value})";
+		public void GetObjectData( GenericDataArray objData )
+		{
+			LibT.Maths.Vector2 vector = new Vector2((float)_x.Value,(float)_y.Value);
+			objData.AddValue( _label.Text, vector );
+		}
+
+		public void SetObjectData( GenericDataArray objData )
+		{
+			objData.GetValue( _label.Text, out Vector2 vector );
+
+			_x.Value = vector.x;
+			_y.Value = vector.y;
+		}
+		
+		private void OnChanged(float value)
+		{
+			LibT.Maths.Vector2 vector = new Vector2((float)_x.Value,(float)_y.Value);
+			_parentModel.AddValue( _label.Text, vector );
+		}
+		
+		public string GetString()
+		{
+			return $"({(float)_x.Value},{(float)_y.Value})";
+		}
 	}
 }

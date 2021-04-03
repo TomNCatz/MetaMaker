@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
-namespace LibT
+namespace MetaMaker
 {
 	public class ValidateStringSlot : Container, IGdaLoadable, IGdoConvertible
 	{
-		private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
 		private Node _child;
@@ -55,7 +56,7 @@ namespace LibT
 				convertible.GetObjectData( objData );
 			}
 
-			if( _child is StringRetriever retriever )
+			if( _child is IStringRetriever retriever )
 			{
 				if( _asList )
 				{
@@ -76,7 +77,6 @@ namespace LibT
 					{
 						_graphNode.AddValidatedToList( _saveName, s );
 					}
-					
 				}
 				else
 				{

@@ -1,18 +1,19 @@
 using System;
 using Godot;
+using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class KeyLinkSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class KeyLinkSlot : Container, IGdaLoadable, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _titlePath;
+		[Export] private readonly NodePath _titlePath;
 		private Label _title;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private Label _field;
 		private EmptyHandling emptyHandling;
-		private ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
 		private enum EmptyHandling
 		{
 			EMPTY_STRING,
@@ -28,13 +29,11 @@ namespace LibT
 
 		public override void _GuiInput( InputEvent @event )
 		{
-			InputEventMouseButton mouseButton = @event as InputEventMouseButton;
-	    
-			if( mouseButton != null && mouseButton.Doubleclick )
+			if (@event is InputEventMouseButton mouseButton && mouseButton.Doubleclick)
 			{
-				if( string.IsNullOrEmpty( _field.Text ) ) return;
+				if (string.IsNullOrEmpty(_field.Text)) return;
 
-				_builder.Get.CenterViewOnKeyedNode( _field.Text );
+				_builder.Get.CenterViewOnKeyedNode(_field.Text);
 			}
 		}
 

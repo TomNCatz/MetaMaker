@@ -1,6 +1,6 @@
-namespace LibT
+namespace MetaMaker
 {
-	public interface StringRetriever
+	public interface IStringRetriever
 	{
 		string GetString();
 	}

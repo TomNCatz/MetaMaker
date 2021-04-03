@@ -1,6 +1,6 @@
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
 	public interface IGdaLoadable
 	{

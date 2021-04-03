@@ -1,56 +1,63 @@
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class FloatSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class FloatSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private SpinBox _field;
-		
+		private GenericDataArray _parentModel;
+
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<SpinBox>( _fieldPath );
+
+			_field.Connect("value_changed",this,nameof(OnChanged));
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			data.GetValue( "hasMax", out bool hasMax );
-			data.GetValue( "hasMin", out bool hasMin );
+			template.GetValue( "hasMax", out bool hasMax );
+			template.GetValue( "hasMin", out bool hasMin );
+
+			_parentModel = parentModel;
+			_parentModel.AddValue(_label.Text, (float)_field.Value);
 
 			_field.AllowGreater = !hasMax;
 			if( hasMax )
 			{
-				data.GetValue( "max", out float max );
+				template.GetValue( "max", out float max );
 				_field.MaxValue = max;
 			}
 
 			_field.AllowLesser = !hasMin;
 			if( hasMin )
 			{
-				data.GetValue( "min", out float min );
+				template.GetValue( "min", out float min );
 				_field.MinValue = min;
 			}
 			
-			if( data.values.ContainsKey( "minStepSize" ) )
+			if( template.values.ContainsKey( "minStepSize" ) )
 			{
-				data.GetValue( "minStepSize", out double minStepSize );
+				template.GetValue( "minStepSize", out double minStepSize );
 				_field.Step = minStepSize;
 			}
-			
-			data.GetValue( "defaultValue", out float value );
+
+			template.GetValue( "defaultValue", out float value );
 			_field.Value = value;
 		}
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( _label.Text, GetFloat() );
+			objData.AddValue( _label.Text, (float)_field.Value );
 		}
 
 		public void SetObjectData( GenericDataArray objData )
@@ -59,14 +66,14 @@ namespace LibT
 			_field.Value = value;
 		}
 
-		private float GetFloat()
+		private void OnChanged(float value)
 		{
-			return (float)_field.Value;
+			_parentModel.AddValue(_label.Text, (float)value);
 		}
 
 		public string GetString()
 		{
-			return GetFloat().ToString();
+			return ((float)_field.Value).ToString();
 		}
 	}
 }

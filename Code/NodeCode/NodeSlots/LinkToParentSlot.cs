@@ -1,6 +1,6 @@
 using Godot;
 
-namespace LibT
+namespace MetaMaker
 {
 	public class LinkToParentSlot : Label
 	{

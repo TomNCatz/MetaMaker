@@ -1,13 +1,14 @@
 using System;
 using Godot;
+using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
-namespace LibT
+namespace MetaMaker
 {
 	public class LinkToChildSlot : Label, IGdaLoadable, IGdoConvertible
 	{
-		private ServiceInjection<JsonBuilder> _builderInjection = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<JsonBuilder> _builderInjection = new ServiceInjection<JsonBuilder>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
 		private EmptyHandling emptyHandling;

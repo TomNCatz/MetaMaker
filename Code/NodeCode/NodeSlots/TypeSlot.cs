@@ -1,19 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class TypeSlot : Container, IGdaLoadable, IGdoConvertible
+	public class TypeSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private Label _field;
-		[Export] private NodePath _popupPath;
+		[Export] private readonly NodePath _popupPath;
 		private PopupDialog _popup;
-		[Export] private NodePath _assemblyLabelPath;
+		[Export] private readonly NodePath _assemblyLabelPath;
 		private Label _assemblyLabel;
-		[Export] private NodePath _typeLabelPath;
+		[Export] private readonly NodePath _typeLabelPath;
 		private Label _typeLabel;
 
 		private string assembly;
@@ -33,24 +32,25 @@ namespace LibT
 
 		public override void _GuiInput( InputEvent @event )
 		{
-			InputEventMouseButton mouseButton = @event as InputEventMouseButton;
-	    
-			if( mouseButton != null && !mouseButton.Pressed )
+			if (@event is InputEventMouseButton mouseButton && !mouseButton.Pressed)
 			{
 				_popup.Popup_();
 				_popup.RectPosition = GetGlobalMousePosition();
 			}
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "Class Assembly", out assembly );
+			template.GetValue( "Class Assembly", out assembly );
 			_assemblyLabel.Text = assembly;
 			
-			data.GetValue( "Class Type", out type );
+			template.GetValue( "Class Type", out type );
 			
 			_field.Text = type.Substring( type.LastIndexOf( '.' ) + 1 );
 			_typeLabel.Text = type;
+
+			parentModel.AddValue( "Class Assembly", assembly );
+			parentModel.AddValue( "Class Type", type );
 		}
 
 		public void GetObjectData( GenericDataArray objData )

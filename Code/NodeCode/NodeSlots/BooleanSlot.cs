@@ -1,15 +1,15 @@
-using System;
 using System.Collections.Generic;
 using Godot;
+using LibT;
 using LibT.Serialization;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class BooleanSlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class BooleanSlot : Container, IField, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private CheckBox _field;
 		
 		private List<string> _matchTrue = new List<string>();
@@ -19,6 +19,7 @@ namespace LibT
 
 		private SlottedGraphNode _parent;
 		private bool _toggling;
+		private GenericDataArray _parentModel;
 
 		public override void _Ready()
 		{
@@ -30,26 +31,29 @@ namespace LibT
 			_parent = GetParent<SlottedGraphNode>();
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
+
+			_parentModel = parentModel;
+			_parentModel.AddValue(_label.Text, _field.Pressed);
 			
-			data.GetValue( "defaultValue", out bool value );
+			template.GetValue( "defaultValue", out bool value );
 			_field.Pressed = value;
 
-			if( data.values.ContainsKey( "id" ) )
+			if( template.values.ContainsKey( "id" ) )
 			{
-				data.GetValue( "id", out string id );
+				template.GetValue( "id", out string id );
 				_parent.booleanLookup[id] = this;
 			}
 			
-			if( data.values.ContainsKey( "matchTrue" ) )
+			if( template.values.ContainsKey( "matchTrue" ) )
 			{
-				data.GetValue( "matchTrue", out _matchTrue );
-				data.GetValue( "invertTrue", out _invertTrue );
-				data.GetValue( "matchFalse", out _matchFalse );
-				data.GetValue( "invertFalse", out _invertFalse );
+				template.GetValue( "matchTrue", out _matchTrue );
+				template.GetValue( "invertTrue", out _invertTrue );
+				template.GetValue( "matchFalse", out _matchFalse );
+				template.GetValue( "invertFalse", out _invertFalse );
 			}
 		}
 
@@ -106,6 +110,7 @@ namespace LibT
 			}
 
 			_field.Pressed = buttonPressed;
+			_parentModel.AddValue(_label.Text, buttonPressed);
 			_toggling = false;
 		}
 

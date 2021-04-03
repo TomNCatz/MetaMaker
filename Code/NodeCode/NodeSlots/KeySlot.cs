@@ -1,22 +1,23 @@
 using System;
 using Godot;
+using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
-namespace LibT
+namespace MetaMaker
 {
-	public class KeySlot : Container, IGdaLoadable, IGdoConvertible, StringRetriever
+	public class KeySlot : Container, IGdaLoadable, IGdoConvertible, IStringRetriever
 	{
-		[Export] private NodePath _labelPath;
+		[Export] private readonly NodePath _labelPath;
 		private Label _label;
-		[Export] private NodePath _fieldPath;
+		[Export] private readonly NodePath _fieldPath;
 		private Label _field;
 
 		public string GetKey => _field.Text;
 		
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
-		private ServiceInjection<JsonBuilder> builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<JsonBuilder> builder = new ServiceInjection<JsonBuilder>();
 		
 		public override void _Ready()
 		{
