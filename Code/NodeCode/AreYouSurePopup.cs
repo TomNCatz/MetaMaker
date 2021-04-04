@@ -17,6 +17,23 @@ public class AreYouSurePopup : WindowDialog
 	private event Action MiddlePressed;
 	private event Action RightPressed;
 
+	public class AreYouSureArgs
+	{
+		public string title = "Proceed?";
+		public string info = "Are You Sure?";
+		public int width = 270;
+		public int height = 100;
+		public bool showLeft = false;
+		public bool showMiddle = false;
+		public bool showRight = false;
+		public string leftText = "OK";
+		public string middleText = "No";
+		public string rightText = "Cancel";
+		public Action leftPress = null;
+		public Action middlePress = null; 
+		public Action rightPress = null;
+	}
+
 	public override void _Ready()
     {
 	    _infoLabel = this.GetNodeFromPath<Label>( _infoLabelPath );
@@ -31,17 +48,20 @@ public class AreYouSurePopup : WindowDialog
 	    _rightButton.Connect( "pressed", this, nameof(RightPress) );
     }
 
-	public void Display( string title, string info, bool showLeft = true, bool showMiddle = true, bool showRight = true, Action leftPress = null, Action middlePress = null, Action rightPress = null )
+	public void Display( AreYouSureArgs args )
 	{
-		WindowTitle = title;
-		_infoLabel.Text = info;
+		SetSize(new Vector2(args.width, args.height));
+		
+		WindowTitle = args.title;
+		_infoLabel.Text = args.info;
 
-		LeftPressed = leftPress;
-		MiddlePressed = middlePress;
-		RightPressed = rightPress;
+		LeftPressed = args.leftPress;
+		MiddlePressed = args.middlePress;
+		RightPressed = args.rightPress;
 
-		if( showLeft )
+		if( args.showLeft )
 		{
+			_leftButton.Text = args.leftText;
 			_leftButton.Show();
 		}
 		else
@@ -49,8 +69,9 @@ public class AreYouSurePopup : WindowDialog
 			_leftButton.Hide();
 		}
 		
-		if( showMiddle )
+		if( args.showMiddle )
 		{
+			_middleButton.Text = args.middleText;
 			_middleButton.Show();
 		}
 		else
@@ -58,8 +79,9 @@ public class AreYouSurePopup : WindowDialog
 			_middleButton.Hide();
 		}
 		
-		if( showRight )
+		if( args.showRight )
 		{
+			_rightButton.Text = args.rightText;
 			_rightButton.Show();
 		}
 		else
@@ -72,20 +94,23 @@ public class AreYouSurePopup : WindowDialog
 
 	private void LeftPress()
     {
-	    LeftPressed?.Invoke();
+		Action current = LeftPressed;
 	    Clear();
+		current?.Invoke();
     }
     
     private void MiddlePress()
     {
-	    MiddlePressed?.Invoke();
+		Action current = MiddlePressed;
 	    Clear();
+		current?.Invoke();
     }
     
     private void RightPress()
     {
-	    RightPressed?.Invoke();
+		Action current = RightPressed;
 	    Clear();
+		current?.Invoke();
     }
 
     private void Clear()

@@ -628,13 +628,72 @@ public class JsonBuilder : ColorRect
 		
 		Promise promise = new Promise();
 
-		_areYouSurePopup.Display( 
-			"Save?",
-			"Some unsaved changes might be lost\nwould you like to save first?",
-			leftPress: () => { SaveGraph().Then( promise.Resolve ); },
-			middlePress: promise.Resolve,
-			rightPress: () => { promise.Reject( new PromiseExpectedError( "cancel" ) ); } 
-			);
+		_areYouSurePopup.Display( new AreYouSurePopup.AreYouSureArgs(){
+			title = "Save?",
+			info = "Some unsaved changes might be lost\nwould you like to save first?",
+			showLeft = true,
+			leftText = "Save",
+			leftPress = () => { SaveGraph().Then( promise.Resolve ); },
+			showMiddle = true,
+			middleText = "Continue",
+			middlePress = () => { 
+				ClearData();
+				promise.Resolve();
+				},
+			showRight = true,
+			rightText = "Cancel",
+			rightPress = () => { promise.Reject( new PromiseExpectedError( "cancel" ) ); } 
+		});
+		
+		return promise;
+	}
+
+	private IPromise CheckIfShouldRestoreFirst(string path)
+	{
+		File file = new File();
+		if( !file.FileExists( path + ".back" ) ) return Promise.Resolved();
+		
+		Promise promise = new Promise();
+
+		_areYouSurePopup.Display( new AreYouSurePopup.AreYouSureArgs(){
+			title = "Restore?",
+			info = $"A backup of was detected for\n{path}\nwould you like to load it or discard it?",
+			width = 600,
+			showLeft = true,
+			leftText = "Restore",
+			leftPress = () => { 
+					try
+					{
+						ClearData();
+						string json = LoadJsonFile( path + ".back" );
+
+						LoadTemplate( json );
+
+						var graph = new GenericDataArray();
+						graph.FromJson( json );
+						graph.GetValue( "data", out GenericDataArray data );
+						LoadData( data );
+
+						HasUnsavedChanges = true;
+						SaveFilePath = path;
+						AddRecentFile( path );
+					}
+					catch( Exception e )
+					{
+						CatchException( e );
+					}
+				},
+			showMiddle = true,
+			middleText = "Discard",
+			middlePress = () => { 
+				SaveFilePath = path;
+				ClearData();
+				promise.Resolve();
+				},
+			showRight = true,
+			rightText = "Cancel",
+			rightPress = () => { promise.Reject( new PromiseExpectedError( "cancel" ) ); } 
+		});
 		
 		return promise;
 	}
@@ -742,19 +801,22 @@ public class JsonBuilder : ColorRect
 	{
 		CheckIfSavedFirst()
 		.Then(() => {
-			ClearData();
-			string json = LoadJsonFile( path );
+			CheckIfShouldRestoreFirst(path)
+			.Then(() =>{
+				ClearData();
+				string json = LoadJsonFile( path );
 
-			LoadTemplate( json );
+				LoadTemplate( json );
 
-			var graph = new GenericDataArray();
-			graph.FromJson( json );
-			graph.GetValue( "data", out GenericDataArray data );
-			LoadData( data );
+				var graph = new GenericDataArray();
+				graph.FromJson( json );
+				graph.GetValue( "data", out GenericDataArray data );
+				LoadData( data );
 
-			HasUnsavedChanges = false;
-			SaveFilePath = path;
-			AddRecentFile( path );
+				HasUnsavedChanges = false;
+				SaveFilePath = path;
+				AddRecentFile( path );
+			});
 		});
 	}
 
