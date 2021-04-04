@@ -1007,7 +1007,6 @@ public class JsonBuilder : ColorRect
 		
 		if( _selection.Contains( graphNode ) ) return;
 		
-		Log.LogL( $"Selected {node.Name}" );
 		_selection.Add( graphNode );
 		
 		HasUnsavedChanges = true;
@@ -1019,7 +1018,6 @@ public class JsonBuilder : ColorRect
 		
 		if( !_selection.Contains( graphNode ) ) return;
 		
-		Log.LogL( $"Deselected {node.Name}" );
 		_selection.Remove( graphNode );
 	}
 	#endregion
