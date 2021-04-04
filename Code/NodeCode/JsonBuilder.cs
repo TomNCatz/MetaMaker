@@ -480,7 +480,6 @@ public class JsonBuilder : ColorRect
 				case 3 :  OpenHelpPopup(); break;
 				case 4 :  
 					_autoBackup = !_autoBackup;
-					Log.Error($"Clicked {_autoBackup}");
 					_settingsMenuButton.GetPopup().SetItemChecked(3,_autoBackup);
 					SaveSettings();
 				break;
