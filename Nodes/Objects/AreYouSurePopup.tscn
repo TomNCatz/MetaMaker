@@ -3,7 +3,6 @@
 [ext_resource path="res://Code/NodeCode/AreYouSurePopup.cs" type="Script" id=6]
 
 [node name="AreYouSurePopup" type="WindowDialog"]
-visible = true
 margin_right = 250.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 270, 100 )
@@ -12,6 +11,7 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+_infoLabelPath = NodePath("VBoxContainer/Label")
 _leftButtonPath = NodePath("VBoxContainer/HBoxContainer/SaveButton")
 _middleButtonPath = NodePath("VBoxContainer/HBoxContainer/ContinueButton")
 _rightButtonPath = NodePath("VBoxContainer/HBoxContainer/CancelButton")
@@ -56,32 +56,32 @@ text = "Save"
 
 [node name="ColorRect4" type="Control" parent="VBoxContainer/HBoxContainer"]
 margin_left = 69.0
-margin_right = 89.0
+margin_right = 90.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 5 )
 size_flags_horizontal = 3
 
 [node name="ContinueButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 93.0
-margin_right = 162.0
+margin_left = 94.0
+margin_right = 163.0
 margin_bottom = 20.0
 text = "Continue"
 
 [node name="ColorRect3" type="Control" parent="VBoxContainer/HBoxContainer"]
-margin_left = 166.0
-margin_right = 186.0
+margin_left = 167.0
+margin_right = 187.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 5 )
 size_flags_horizontal = 3
 
 [node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 190.0
-margin_right = 244.0
+margin_left = 191.0
+margin_right = 245.0
 margin_bottom = 20.0
 text = "Cancel"
 
 [node name="ColorRect5" type="Control" parent="VBoxContainer/HBoxContainer"]
-margin_left = 248.0
+margin_left = 249.0
 margin_right = 270.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 5 )
