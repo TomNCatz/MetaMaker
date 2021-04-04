@@ -75,6 +75,8 @@ public class JsonBuilder : ColorRect
 	private LineEdit _searchBar;
 	[Export] private NodePath _searchButtonPath;
 	private Button _searchButton;
+	[Export] private NodePath _backupTimerPath;
+	private Timer _backupTimer;
 	[Export] private NodePath _filePopupPath;
 	private FileDialogExtended _filePopup;
 	[Export] private NodePath _colorPopupPath;
@@ -117,6 +119,9 @@ public class JsonBuilder : ColorRect
 	private Promise<Color> _pickingColor;
 	private Tween _tween;
 	private string _version;
+	private bool _autoBackup;
+	private float _backupFrequency = 10;
+	private bool _hasUnbackedChanges;
 	
 	private string SaveFilePath
 	{
@@ -135,6 +140,7 @@ public class JsonBuilder : ColorRect
 		set
 		{
 			_hasUnsavedChanges = value;
+			_hasUnbackedChanges = _hasUnsavedChanges;
 			UpdateTitle();
 		}
 		get => _hasUnsavedChanges;
@@ -207,6 +213,7 @@ public class JsonBuilder : ColorRect
 			settingsMenu.AddItem( "Change Background Color", 0 );
 			settingsMenu.AddItem( "Change Grid Major Color", 1 );
 			settingsMenu.AddItem( "Change Grid Minor Color", 2 );
+			settingsMenu.AddCheckItem( "Auto Backup", 4 );
 			settingsMenu.AddSeparator(  );
 			settingsMenu.AddItem( "Help and FAQ", 3 );
 			
@@ -215,6 +222,11 @@ public class JsonBuilder : ColorRect
 			_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
 			_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
 
+			_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
+			_backupTimer.WaitTime = _backupFrequency;
+			_backupTimer.Connect( "timeout", this, nameof(SaveBackup) );
+			_backupTimer.Start();
+			
 			_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
 			_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
 			_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
@@ -321,6 +333,13 @@ public class JsonBuilder : ColorRect
 		gda.GetValue( "gridMinorColor", out Color gridMinor );
 		_graph.Set( "custom_colors/grid_minor", gridMinor );
 
+		gda.GetValue( "autoBackup", out bool autoBackup );
+		_autoBackup = autoBackup;
+		_settingsMenuButton.GetPopup().SetItemChecked(3,_autoBackup);
+
+		gda.GetValue( "backupFrequency", out float backupFrequency );
+		//_backupFrequency = backupFrequency;
+
 		gda.GetValue( "RecentFiles", out _recentFiles );
 
 		if( _recentFiles.Count > 0 )
@@ -339,7 +358,7 @@ public class JsonBuilder : ColorRect
 		
 		gda.GetValue( "RecentTemplates", out _recentTemplates );
 
-		if( _recentTemplates.Count <= 0 ) return;
+		if( _recentTemplates.Count == 0 ) return;
 
 		for( int i = 0; i < _recentTemplates.Count; i++ )
 		{
@@ -361,6 +380,8 @@ public class JsonBuilder : ColorRect
 		gda.AddValue( "backgroundColor", Color );
 		gda.AddValue( "gridMajorColor", (Color)_graph.Get( "custom_colors/grid_major" ) );
 		gda.AddValue( "gridMinorColor", (Color)_graph.Get( "custom_colors/grid_minor" ) );
+		gda.AddValue( "autoBackup", _autoBackup );
+		gda.AddValue( "backupFrequency", _backupFrequency );
 		
 		SaveJsonFile( SETTINGS_SOURCE, gda.ToJson() );
 	}
@@ -457,6 +478,12 @@ public class JsonBuilder : ColorRect
 						}); 
 					break;
 				case 3 :  OpenHelpPopup(); break;
+				case 4 :  
+					_autoBackup = !_autoBackup;
+					Log.Error($"Clicked {_autoBackup}");
+					_settingsMenuButton.GetPopup().SetItemChecked(3,_autoBackup);
+					SaveSettings();
+				break;
 			}
 		}
 		catch( Exception e )
@@ -602,6 +629,8 @@ public class JsonBuilder : ColorRect
 		Promise promise = new Promise();
 
 		_areYouSurePopup.Display( 
+			"Save?",
+			"Some unsaved changes might be lost\nwould you like to save first?",
 			leftPress: () => { SaveGraph().Then( promise.Resolve ); },
 			middlePress: promise.Resolve,
 			rightPress: () => { promise.Reject( new PromiseExpectedError( "cancel" ) ); } 
@@ -622,6 +651,26 @@ public class JsonBuilder : ColorRect
 		return Promise.Resolved();
 	}
 
+	private void SaveBackup()
+	{
+		if( !_autoBackup ) return;
+		if( !_hasUnbackedChanges ) return;
+		if( string.IsNullOrEmpty( SaveFilePath ) ) return;
+		
+		_hasUnbackedChanges = false;
+		SaveGraphFile( SaveFilePath + ".back" );
+	}
+
+	private void ClearBackup()
+	{
+		if( string.IsNullOrEmpty( SaveFilePath ) ) return;
+		
+		File file = new File();
+		if( !file.FileExists( SaveFilePath + ".back" ) ) return;
+
+		System.IO.File.Delete(SaveFilePath + ".back");
+	}
+
 	private IPromise SaveGraphAs()
 	{
 		IPromise promise =
@@ -638,6 +687,24 @@ public class JsonBuilder : ColorRect
 		try
 		{
 			SaveFilePath = path;
+			
+			SaveGraphFile(path);
+
+			HasUnsavedChanges = false;
+			ClearBackup();
+			
+			AddRecentFile( path );
+		}
+		catch( Exception e )
+		{
+			CatchException( e );
+		}
+	}
+
+	private void SaveGraphFile( string path )
+	{
+		try
+		{
 			includeNodeData = true;
 			includeGraphData = true;
 			var graph = new GenericDataArray();
@@ -657,10 +724,6 @@ public class JsonBuilder : ColorRect
 			string json = graph.ToJson();
 					
 			SaveJsonFile( path, json );
-
-			HasUnsavedChanges = false;
-			
-			AddRecentFile( path );
 		}
 		catch( Exception e )
 		{
@@ -677,18 +740,22 @@ public class JsonBuilder : ColorRect
 
 	private void LoadGraph( string path )
 	{
-		string json = LoadJsonFile( path );
+		CheckIfSavedFirst()
+		.Then(() => {
+			ClearData();
+			string json = LoadJsonFile( path );
 
-		LoadTemplate( json );
+			LoadTemplate( json );
 
-		var graph = new GenericDataArray();
-		graph.FromJson( json );
-		graph.GetValue( "data", out GenericDataArray data );
-		LoadData( data );
+			var graph = new GenericDataArray();
+			graph.FromJson( json );
+			graph.GetValue( "data", out GenericDataArray data );
+			LoadData( data );
 
-		HasUnsavedChanges = false;
-		SaveFilePath = path;
-		AddRecentFile( path );
+			HasUnsavedChanges = false;
+			SaveFilePath = path;
+			AddRecentFile( path );
+		});
 	}
 
 	private void ExportDataJson()
@@ -781,6 +848,7 @@ public class JsonBuilder : ColorRect
 			_nodes[i].CloseRequest();
 		}
 		
+		ClearBackup();
 		HasUnsavedChanges = false;
 		SaveFilePath = null;
 	}
@@ -947,29 +1015,32 @@ public class JsonBuilder : ColorRect
 
 	private void LoadTemplate( string json )
 	{
-		GenericDataArray gda = new GenericDataArray();
-		gda.FromJson( json );
+		CheckIfSavedFirst()
+		.Then(() => {
+			GenericDataArray gda = new GenericDataArray();
+			gda.FromJson( json );
 
-		gda.GetValue( "targetVersion", out string targetVersion );
+			gda.GetValue( "targetVersion", out string targetVersion );
 
-		if( targetVersion != _version )
-		{
-			ShowNotice($"File version is '{targetVersion}' which does not match app version '{_version}'");
-		}
+			if( targetVersion != _version )
+			{
+				ShowNotice($"File version is '{targetVersion}' which does not match app version '{_version}'");
+			}
 
-		gda.GetValue( "defaultListing", out _defaultListing );
-		gda.GetValue( "explicitNode", out _explicitNode );
-		
-		if( string.IsNullOrEmpty( _defaultListing ) )
-		{
-			_defaultListing = "listing";
-		}
-		GenericDataArray listing = gda.GetGdo( "nodeList" ) as GenericDataArray;
+			gda.GetValue( "defaultListing", out _defaultListing );
+			gda.GetValue( "explicitNode", out _explicitNode );
+			
+			if( string.IsNullOrEmpty( _defaultListing ) )
+			{
+				_defaultListing = "listing";
+			}
+			GenericDataArray listing = gda.GetGdo( "nodeList" ) as GenericDataArray;
 
-		gda.GetValue( "nestingColors", out List<Color> nestingColors );
-		gda.GetValue( "keyColors", out List<Color> keyColors );
-		
-		LoadTemplate( listing.values.Values.ToList(), nestingColors, keyColors );
+			gda.GetValue( "nestingColors", out List<Color> nestingColors );
+			gda.GetValue( "keyColors", out List<Color> keyColors );
+			
+			LoadTemplate( listing.values.Values.ToList(), nestingColors, keyColors );
+		});
 	}
 
 	private void LoadTemplate(List<GenericDataObject> dataList, List<Color> nestingColors, List<Color> keyColors )

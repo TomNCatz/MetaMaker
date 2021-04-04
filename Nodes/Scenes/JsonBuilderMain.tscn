@@ -116,6 +116,7 @@ _editMenuButtonPath = NodePath("HBoxContainer/EditMenu")
 _settingsMenuButtonPath = NodePath("HBoxContainer/Settings")
 _searchBarPath = NodePath("HBoxContainer/SearchBar")
 _searchButtonPath = NodePath("HBoxContainer/SearchButton")
+_backupTimerPath = NodePath("Timer")
 _filePopupPath = NodePath("FileDialog")
 _colorPopupPath = NodePath("ColorPopup")
 _errorPopupPath = NodePath("ErrorPopup")
@@ -293,6 +294,8 @@ current_dir = "/Users/tomnc/Dev/Godot/MetaMaker"
 current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
 
 [node name="AreYouSurePopup" parent="." instance=ExtResource( 6 )]
-visible = false
 
 [node name="HelpPopup" parent="." instance=ExtResource( 7 )]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 12.341

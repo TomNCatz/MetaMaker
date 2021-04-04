@@ -4,6 +4,8 @@ using LibT;
 
 public class AreYouSurePopup : WindowDialog
 {
+	[Export] private NodePath _infoLabelPath;
+	private Label _infoLabel;
 	[Export] private NodePath _leftButtonPath;
 	private Button _leftButton;
 	[Export] private NodePath _middleButtonPath;
@@ -17,6 +19,8 @@ public class AreYouSurePopup : WindowDialog
 
 	public override void _Ready()
     {
+	    _infoLabel = this.GetNodeFromPath<Label>( _infoLabelPath );
+
 	    _leftButton = this.GetNodeFromPath<Button>( _leftButtonPath );
 	    _leftButton.Connect( "pressed", this, nameof(LeftPress) );
 	    
@@ -27,8 +31,11 @@ public class AreYouSurePopup : WindowDialog
 	    _rightButton.Connect( "pressed", this, nameof(RightPress) );
     }
 
-	public void Display( bool showLeft = true, bool showMiddle = true, bool showRight = true, Action leftPress = null, Action middlePress = null, Action rightPress = null )
+	public void Display( string title, string info, bool showLeft = true, bool showMiddle = true, bool showRight = true, Action leftPress = null, Action middlePress = null, Action rightPress = null )
 	{
+		WindowTitle = title;
+		_infoLabel.Text = info;
+
 		LeftPressed = leftPress;
 		MiddlePressed = middlePress;
 		RightPressed = rightPress;
