@@ -21,7 +21,7 @@ namespace MetaMaker
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
 		private readonly Dictionary<string,Node> _children = new Dictionary<string, Node>();
-		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
 
 		public int Count => _children.Count;
 

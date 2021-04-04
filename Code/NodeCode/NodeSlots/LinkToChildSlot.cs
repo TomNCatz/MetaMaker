@@ -8,7 +8,7 @@ namespace MetaMaker
 {
 	public class LinkToChildSlot : Label, IGdaLoadable, IGdoConvertible
 	{
-		private readonly ServiceInjection<JsonBuilder> _builderInjection = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<MainView> _builderInjection = new ServiceInjection<MainView>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
 		private EmptyHandling emptyHandling;

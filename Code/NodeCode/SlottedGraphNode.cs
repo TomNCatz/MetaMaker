@@ -18,13 +18,13 @@ namespace MetaMaker
 		
 		private readonly List<Node> slots = new List<Node>();
 		private readonly Dictionary<string,List<string>> _validatedLists = new Dictionary<string, List<string>>();
-		private JsonBuilder _builder;
+		private MainView _builder;
 		
 		private GenericDataArray _model;
 
 		public override void _Ready()
 		{
-			_builder = GetParent().GetParent<JsonBuilder>();
+			_builder = GetParent().GetParent<MainView>();
 			
 			Connect( "close_request", this, nameof(CloseRequest) );
 			Connect( "resize_request", this, nameof(OnResizeRequest) );

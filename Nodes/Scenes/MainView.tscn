@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=2]
 
-[ext_resource path="res://Code/NodeCode/JsonBuilder.cs" type="Script" id=1]
+[ext_resource path="res://Code/NodeCode/MainView.cs" type="Script" id=1]
 [ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
 [ext_resource path="res://Nodes/Objects/ColorPickerPopup.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Nodes/Objects/ErrorPopup.tscn" type="PackedScene" id=4]
@@ -67,7 +67,7 @@ bg_color = Color( 0.545098, 0.545098, 0.545098, 0.607843 )
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0, 0, 0, 0.588235 )
 
-[node name="JsonBuilderMain" type="ColorRect"]
+[node name="MainView" type="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 2.10522
@@ -116,7 +116,7 @@ _editMenuButtonPath = NodePath("HBoxContainer/EditMenu")
 _settingsMenuButtonPath = NodePath("HBoxContainer/Settings")
 _searchBarPath = NodePath("HBoxContainer/SearchBar")
 _searchButtonPath = NodePath("HBoxContainer/SearchButton")
-_backupTimerPath = NodePath("Timer")
+_backupTimerPath = NodePath("BackupTimer")
 _filePopupPath = NodePath("FileDialog")
 _colorPopupPath = NodePath("ColorPopup")
 _errorPopupPath = NodePath("ErrorPopup")
@@ -297,5 +297,5 @@ current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
 
 [node name="HelpPopup" parent="." instance=ExtResource( 7 )]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="BackupTimer" type="Timer" parent="."]
 wait_time = 12.341

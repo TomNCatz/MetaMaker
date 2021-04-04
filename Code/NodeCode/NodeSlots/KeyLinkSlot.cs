@@ -13,7 +13,7 @@ namespace MetaMaker
 		[Export] private readonly NodePath _fieldPath;
 		private Label _field;
 		private EmptyHandling emptyHandling;
-		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
 		private enum EmptyHandling
 		{
 			EMPTY_STRING,

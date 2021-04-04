@@ -10,7 +10,7 @@ namespace MetaMaker
 {
 	public class ValidateStringSlot : Container, IGdaLoadable, IGdoConvertible
 	{
-		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
 		private Node _child;

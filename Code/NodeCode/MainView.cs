@@ -15,7 +15,7 @@ using Vector2 = Godot.Vector2;
 
 namespace MetaMaker
 {
-	public class JsonBuilder : ColorRect
+	public class MainView : ColorRect
 	{
 		#region Resources
 		private const string SETTINGS_SOURCE = "user://Settings.json";

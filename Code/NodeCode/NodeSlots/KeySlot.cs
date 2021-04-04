@@ -17,7 +17,7 @@ namespace MetaMaker
 		
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
-		private readonly ServiceInjection<JsonBuilder> builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<MainView> builder = new ServiceInjection<MainView>();
 		
 		public override void _Ready()
 		{

@@ -12,7 +12,7 @@ namespace MetaMaker
 		[Export] private readonly NodePath _colorRectPath;
 		private ColorRect _colorRect;
 		
-		private readonly ServiceInjection<JsonBuilder> _builder = new ServiceInjection<JsonBuilder>();
+		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
 
 		private bool asHtml;
 
