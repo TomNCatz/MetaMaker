@@ -17,7 +17,7 @@ namespace MetaMaker
 		
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
-		private readonly ServiceInjection<MainView> builder = new ServiceInjection<MainView>();
+		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		
 		public override void _Ready()
 		{
@@ -38,38 +38,38 @@ namespace MetaMaker
 
 		public override void _ExitTree()
 		{
-			if( builder.Get.generatedKeys.ContainsKey( _field.Text ) )
+			if( _app.Get.generatedKeys.ContainsKey( _field.Text ) )
 			{
-				builder.Get.generatedKeys.Remove( _field.Text );
+				_app.Get.generatedKeys.Remove( _field.Text );
 			}
 			base._ExitTree();
 		}
 
 		private void SetKey( string force = null )
 		{
-			if( builder.Get.pastingData )
+			if( _app.Get.pastingData )
 			{
 				force = null;
 			}
 			
 			if(string.IsNullOrEmpty( force ))
 			{
-				force = Tool.GetUniqueKey( _keySize, builder.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
+				force = Tool.GetUniqueKey( _keySize, _app.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
 			}
-			else if( builder.Get.generatedKeys.ContainsKey( force ) )
+			else if( _app.Get.generatedKeys.ContainsKey( force ) )
 			{
-				string alt = Tool.GetUniqueKey( _keySize, builder.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
+				string alt = Tool.GetUniqueKey( _keySize, _app.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
 
-				builder.Get.generatedKeys[alt] = builder.Get.generatedKeys[force];
+				_app.Get.generatedKeys[alt] = _app.Get.generatedKeys[force];
 			}
 
-			if( builder.Get.generatedKeys.ContainsKey( _field.Text ) )
+			if( _app.Get.generatedKeys.ContainsKey( _field.Text ) )
 			{
-				builder.Get.generatedKeys.Remove( _field.Text );
+				_app.Get.generatedKeys.Remove( _field.Text );
 			}
 			
 			_field.Text = force;
-			builder.Get.generatedKeys[_field.Text] = this;
+			_app.Get.generatedKeys[_field.Text] = this;
 		}
 
 		public void GetObjectData( GenericDataArray objData )

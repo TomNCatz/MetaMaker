@@ -21,7 +21,7 @@ namespace MetaMaker
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
 		private readonly Dictionary<string,Node> _children = new Dictionary<string, Node>();
-		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
+		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 
 		public int Count => _children.Count;
 
@@ -109,7 +109,7 @@ namespace MetaMaker
 			}
 			catch( Exception e )
 			{
-				_builder.Get.CatchException( e );
+				_app.Get.CatchException( e );
 			}
 		}
 

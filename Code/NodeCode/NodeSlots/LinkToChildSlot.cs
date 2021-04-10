@@ -8,7 +8,8 @@ namespace MetaMaker
 {
 	public class LinkToChildSlot : Label, IGdaLoadable, IGdoConvertible
 	{
-		private readonly ServiceInjection<MainView> _builderInjection = new ServiceInjection<MainView>();
+		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
+		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
 		private EmptyHandling emptyHandling;
@@ -62,8 +63,8 @@ namespace MetaMaker
 		public void GetObjectData( GenericDataArray objData )
 		{
 			if( _child == null ||
-			    ( _builderInjection.Get.copyingData && 
-			                       !_builderInjection.Get.IsSelected( _child )))
+			    ( _mainView.Get.copyingData && 
+			                       !_mainView.Get.IsSelected( _child )))
 			{
 				switch(emptyHandling)
 				{
@@ -97,9 +98,9 @@ namespace MetaMaker
 				data.AddValue( "ngMapNodeName", _explicitNode );
 			}
 
-			SlottedGraphNode node = _builderInjection.Get.LoadNode( data );
+			SlottedGraphNode node = _app.Get.LoadNode( data );
 
-			_builderInjection.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
+			_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
 		}
 	}
 }

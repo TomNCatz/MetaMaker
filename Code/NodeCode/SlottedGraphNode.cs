@@ -3,6 +3,7 @@ using Godot;
 using System.Collections.Generic;
 using LibT;
 using LibT.Serialization;
+using LibT.Services;
 
 namespace MetaMaker
 {
@@ -19,6 +20,7 @@ namespace MetaMaker
 		private readonly List<Node> slots = new List<Node>();
 		private readonly Dictionary<string,List<string>> _validatedLists = new Dictionary<string, List<string>>();
 		private MainView _builder;
+		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		
 		private GenericDataArray _model;
 
@@ -36,7 +38,7 @@ namespace MetaMaker
 		public void GetObjectData( GenericDataArray objData )
 		{
 			Log.Error(_model.ToString());
-			if(_builder.includeNodeData)
+			if(_app.Get.includeNodeData)
 			{
 				objData.AddValue( "ngMapNodeName", Title );
 				if( _builder.includeGraphData )
@@ -182,12 +184,12 @@ namespace MetaMaker
 				case FieldType.KEY : 
 					child = _builder.keyScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = _builder.GetKeyColor( rightType );
+					rightColor = _app.Get.GetKeyColor( rightType );
 					break;
 				case FieldType.KEY_TRACKER : 
 					child = _builder.keyLinkScene.Instance();
 					fieldData.GetValue( "slotType", out leftType );
-					leftColor = _builder.GetKeyColor( leftType );
+					leftColor = _app.Get.GetKeyColor( leftType );
 					break;
 				case FieldType.LINK_TO_PARENT :
 					fieldData.GetValue( "slotType", out leftType );
@@ -195,12 +197,12 @@ namespace MetaMaker
 					if( leftType < 0 ) return null;
 					
 					child = _builder.linkToParentScene.Instance();
-					leftColor = _builder.GetParentChildColor( leftType );
+					leftColor = _app.Get.GetParentChildColor( leftType );
 					break;
 				case FieldType.LINK_TO_CHILD : 
 					child = _builder.linkToChildScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = _builder.GetParentChildColor( rightType );
+					rightColor = _app.Get.GetParentChildColor( rightType );
 					break;
 				case FieldType.FIELD_LIST : 
 					child = _builder.fieldListScene.Instance();

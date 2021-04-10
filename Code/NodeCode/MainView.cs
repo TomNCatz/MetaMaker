@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Godot;
 using LibT;
@@ -18,11 +17,6 @@ namespace MetaMaker
 	public class MainView : ColorRect
 	{
 		#region Resources
-		private const string SETTINGS_SOURCE = "user://Settings.json";
-		
-		private const string DEFAULT_TEMPLATE_SOURCE = "res://Resources/TEMPLATE.tmplt";
-		private const string HELP_INFO_SOURCE = "res://Resources/HelpInfo.json";
-		private const string VERSION = "res://Resources/Version.txt";
 
 		[Export] public PackedScene nodeScene;
 		[Export] public PackedScene separatorScene;
@@ -92,15 +86,10 @@ namespace MetaMaker
 		private HelpPopup _helpInfoPopup;
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
-		public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
-		
-		private readonly Dictionary<string, GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
-		private readonly List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
-		private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
-		private readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
-		private readonly List<GenericDataArray> _duplicates = new List<GenericDataArray>();
-		private readonly List<Color> _parentChildColors = new List<Color> ();
-		private readonly List<Color> _keyColors = new List<Color>();
+		public readonly List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
+		public readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
+		public readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
+		public readonly List<GenericDataArray> _duplicates = new List<GenericDataArray>();
 		public bool includeNodeData = true;
 		public bool includeGraphData = true;
 		public bool copyingData;
@@ -109,66 +98,78 @@ namespace MetaMaker
 		private Vector2 _copiedCorner = new Vector2(50,100);
 		private Vector2 _offset = new Vector2(50,100);
 		private Vector2 _buffer = new Vector2(40,10);
-		private List<string> _recentTemplates = new List<string>();
-		private List<string> _recentFiles = new List<string>();
 		private PopupMenu _editMenu;
 		private PopupMenu _createSubmenu;
 		private PopupMenu _recentTemplateSubmenu;
 		private PopupMenu _recentShiftSubmenu;
 		private PopupMenu _recentSubmenu;
-		private string _defaultListing;
-		private string _explicitNode;
 		private Promise<Color> _pickingColor;
 		private Tween _tween;
-		private string _version;
-		private bool _autoBackup;
-		private float _backupFrequency = 10;
-		private bool _hasUnbackedChanges;
-		private GenericDataArray _model;
-		
-		private string SaveFilePath
-		{
-			set
-			{
-				_saveFilePath = value;
-				UpdateTitle();
-			}
-			get => _saveFilePath;
-		}
-		private string _saveFilePath;
 
-		public bool HasUnsavedChanges
+		private App _app;
+		
+		public Color GridMajorColor
 		{
 			set
 			{
-				_hasUnsavedChanges = value;
-				_hasUnbackedChanges = _hasUnsavedChanges;
-				UpdateTitle();
+				_graph.Set( "custom_colors/grid_major", value );
 			}
-			get => _hasUnsavedChanges;
+			get => (Color)_graph.Get( "custom_colors/grid_major" );
 		}
-		private bool _hasUnsavedChanges;
+		
+		public Color GridMinorColor
+		{
+			set
+			{
+				_graph.Set( "custom_colors/grid_minor", value );
+			}
+			get => (Color)_graph.Get( "custom_colors/grid_minor" );
+		}
+
+		public bool SettingAutoSave
+		{
+			set
+			{
+				_settingsMenuButton.GetPopup().SetItemChecked(3,value);
+				if(_app.AutoBackup != value)
+				{
+					_app.AutoBackup = value;
+				}
+			}
+			get => _app.AutoBackup;
+		}
 		#endregion
 
-		#region Setup
+		#region Godot and signal connectors
 		public override void _Ready()
 		{
-			OS.LowProcessorUsageMode = true;
-			
-			try
-			{
+			// try
+			// {
 				ServiceProvider.Add( this );
 
+				_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
+				_graph = this.GetNodeFromPath<GraphEdit>( _graphPath );
+				_fileMenuButton = this.GetNodeFromPath<MenuButton>( _fileMenuButtonPath );
+				_editMenuButton = this.GetNodeFromPath<MenuButton>( _editMenuButtonPath );
+				_settingsMenuButton = this.GetNodeFromPath<MenuButton>( _settingsMenuButtonPath );
+				_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
+				_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
+				_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
+				_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
+				_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
+				_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
+				_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
+				_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
+
 				_recentTemplateSubmenu = new PopupMenu { Name = "RecentTemplateMenu" };
-				_recentTemplateSubmenu.Connect( "id_pressed", this, nameof(OnRecentTemplateMenuSelection));
-
 				_recentShiftSubmenu = new PopupMenu { Name = "RecentShiftMenu" };
-				_recentShiftSubmenu.Connect( "id_pressed", this, nameof(OnRecentShiftMenuSelection));
-
 				_recentSubmenu = new PopupMenu { Name = "RecentMenu" };
+				_createSubmenu = new PopupMenu { Name = "CreateMenu" };
+
+				_recentTemplateSubmenu.Connect( "id_pressed", this, nameof(OnRecentTemplateMenuSelection));
+				_recentShiftSubmenu.Connect( "id_pressed", this, nameof(OnRecentShiftMenuSelection));
 				_recentSubmenu.Connect( "id_pressed", this, nameof(OnRecentMenuSelection));
 
-				_fileMenuButton = this.GetNodeFromPath<MenuButton>( _fileMenuButtonPath );
 				PopupMenu menu = _fileMenuButton.GetPopup();
 				menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
 				menu.AddItem( "Build Template (CTRL+N)", 0 );
@@ -193,19 +194,16 @@ namespace MetaMaker
 				menu.AddSeparator(  );
 				menu.AddItem( "Quit", 8 );
 
-				_createSubmenu = new PopupMenu { Name = "CreateMenu" };
 				_createSubmenu.Connect( "id_pressed", this, nameof(OnCreateMenuSelection));
 
-				_editMenuButton = this.GetNodeFromPath<MenuButton>( _editMenuButtonPath );
 				_editMenu = _editMenuButton.GetPopup();
 				_editMenu.Connect( "id_pressed", this, nameof(OnEditMenuSelection));
 				_editMenu.AddChild( _createSubmenu );
 				_editMenu.AddSubmenuItem( "Create", "CreateMenu" );
-				_editMenu.AddItem( "Copy Downstream (CTRL+C)", 0 );
+				_editMenu.AddItem( "Copy Nodes (CTRL+C)", 0 );
 				_editMenu.AddItem( "Paste Nodes (CTRL+V)", 1 );
-				_editMenu.AddItem( "Delete Node (DEL)", 2 );
+				_editMenu.AddItem( "Delete Nodes (DEL)", 2 );
 				
-				_settingsMenuButton = this.GetNodeFromPath<MenuButton>( _settingsMenuButtonPath );
 				PopupMenu settingsMenu = _settingsMenuButton.GetPopup();
 				settingsMenu.Connect( "id_pressed", this, nameof(OnSettingsMenuSelection));
 				settingsMenu.AddItem( "Change Background Color", 0 );
@@ -214,33 +212,13 @@ namespace MetaMaker
 				settingsMenu.AddCheckItem( "Auto Backup", 4 );
 				settingsMenu.AddSeparator(  );
 				settingsMenu.AddItem( "Help and FAQ", 3 );
-				
-				_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
-				_searchBar.Connect( "text_entered", this, nameof(OnSearch) );
-				_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
-				_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
 
-				_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
-				_backupTimer.WaitTime = _backupFrequency;
-				_backupTimer.Connect( "timeout", this, nameof(SaveBackup) );
-				_backupTimer.Start();
+				_searchBar.Connect( "text_entered", this, nameof(OnSearch) );
+				_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
 				
-				_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
-				_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
-				_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
-				
-				_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
-				_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
 				_colorPopup.Connect( "popup_hide", this, nameof(SelectColor) );
 
-				_version = LoadJsonFile( VERSION );
-				_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
-				_helpInfoPopup.Version = _version;
-				GenericDataArray helpData = new GenericDataArray();
-				helpData.FromJson( LoadJsonFile( HELP_INFO_SOURCE ) );
-				_helpInfoPopup.LoadFromGda( helpData );
 				
-				_graph = this.GetNodeFromPath<GraphEdit>( _graphPath );
 				_graph.Connect( "connection_request", this, nameof(OnConnectionRequest) );
 				_graph.Connect( "disconnection_request", this, nameof(OnDisconnectionRequest) );
 				_graph.Connect( "node_selected", this, nameof(SelectNode) );
@@ -267,13 +245,22 @@ namespace MetaMaker
 				
 				GetTree().SetAutoAcceptQuit(false);
 				
-				LoadSettings();
-				LoadDefaultTemplate();
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
+				_app = new App(this);
+				_app.Init();
+
+				_backupTimer.WaitTime = _app.BackupFrequency;
+				_backupTimer.Connect( "timeout", this, nameof(SaveBackup) );
+				_backupTimer.Start();
+
+				_helpInfoPopup.Version = _app.Version;
+				GenericDataArray helpData = new GenericDataArray();
+				helpData.FromJson( _app.LoadJsonFile( App.HELP_INFO_SOURCE ) );
+				_helpInfoPopup.LoadFromGda( helpData );
+			// }
+			// catch( Exception e )
+			// {
+			// 	_app.CatchException( e );
+			// }
 		}
 		
 		public override void _Notification(int what)
@@ -296,11 +283,11 @@ namespace MetaMaker
 						{
 							if( OS.GetScancodeString( eventKey.Scancode ).Equals( "S" ) )
 							{
-								SaveGraph();
+								_app.SaveGraph();
 							}
 							else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "N" ) )
 							{
-								LoadDefaultTemplate();
+								_app.LoadDefaultTemplate();
 							}
 							else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "P" ) )
 							{
@@ -312,93 +299,42 @@ namespace MetaMaker
 			}
 			catch( Exception e )
 			{
-				CatchException( e );
+				_app.CatchException( e );
 			}
 		}
 
-		private void LoadSettings()
+		public void OnRecentTemplateMenuSelection( int id )
 		{
-			File file = new File();
-			if( !file.FileExists( SETTINGS_SOURCE ) )return;
-
-			GenericDataArray gda = new GenericDataArray();
-			gda.FromJson( LoadJsonFile( SETTINGS_SOURCE ) );
-			
-			gda.GetValue( "backgroundColor", out Color background );
-			Color = background;
-			gda.GetValue( "gridMajorColor", out Color gridMajor );
-			_graph.Set( "custom_colors/grid_major", gridMajor );
-			gda.GetValue( "gridMinorColor", out Color gridMinor );
-			_graph.Set( "custom_colors/grid_minor", gridMinor );
-
-			gda.GetValue( "autoBackup", out bool autoBackup );
-			_autoBackup = autoBackup;
-			_settingsMenuButton.GetPopup().SetItemChecked(3,_autoBackup);
-
-			gda.GetValue( "backupFrequency", out float backupFrequency );
-			_backupFrequency = backupFrequency;
-
-			gda.GetValue( "RecentFiles", out _recentFiles );
-
-			if( _recentFiles.Count > 0 )
-			{
-				for( int i = 0; i < _recentFiles.Count; i++ )
-				{
-					if( !file.FileExists( _recentFiles[i] ) )
-					{
-						_recentFiles.RemoveAt( i );
-						i--;
-					}
-				}
-
-				AddRecentFile( _recentFiles[0] );
-			}
-			
-			gda.GetValue( "RecentTemplates", out _recentTemplates );
-
-			if( _recentTemplates.Count == 0 ) return;
-
-			for( int i = 0; i < _recentTemplates.Count; i++ )
-			{
-				if( !file.FileExists( _recentTemplates[i] ) )
-				{
-					_recentTemplates.RemoveAt( i );
-					i--;
-				}
-			}
-			
-			AddRecentTemplateFile( _recentTemplates[0] );
+			_app.OnRecentTemplateMenuSelection(id);
 		}
 
-		private void SaveSettings()
+		public void OnRecentShiftMenuSelection( int id )
 		{
-			GenericDataArray gda = new GenericDataArray();
-			gda.AddValue( "RecentFiles", _recentFiles );
-			gda.AddValue( "RecentTemplates", _recentTemplates );
-			gda.AddValue( "backgroundColor", Color );
-			gda.AddValue( "gridMajorColor", (Color)_graph.Get( "custom_colors/grid_major" ) );
-			gda.AddValue( "gridMinorColor", (Color)_graph.Get( "custom_colors/grid_minor" ) );
-			gda.AddValue( "autoBackup", _autoBackup );
-			gda.AddValue( "backupFrequency", _backupFrequency );
-			
-			SaveJsonFile( SETTINGS_SOURCE, gda.ToJson() );
+			_app.OnRecentShiftMenuSelection(id);
 		}
-		#endregion
 
-		#region Buttons
+		public void OnRecentMenuSelection( int id )
+		{
+			_app.OnRecentMenuSelection(id);
+		}
+
+		public void SaveBackup()
+		{
+			_app.SaveBackup();
+		}
 		private void OnFileMenuSelection( int id )
 		{
 			try
 			{
 				switch(id)
 				{
-					case 0 :  LoadDefaultTemplate(); break;
+					case 0 :  _app.LoadDefaultTemplate(); break;
 					case 1 :  PickTemplateToLoad(); break;
 					case 2 :  SaveGraphAs(); break;
 					case 3 :  LoadGraph(); break;
 					case 4 :  ExportDataJson(); break;
 					case 5 :  ImportDataJson(); break;
-					case 6 :  ClearData(); break;
+					case 6 :  _app.ClearData(); break;
 					case 7 :  ShiftTemplateUnderData(); break;
 					case 8 :  RequestQuit(); break;
 					case 9 :  ExportTemplateJson(); break;
@@ -406,13 +342,13 @@ namespace MetaMaker
 						includeNodeData = false;
 						ExportDataJson();
 						break;
-					case 11 :  SaveGraph(); break;
+					case 11 :  _app.SaveGraph(); break;
 					case 12 :  OpenHelpPopup(); break;
 				}
 			}
 			catch( Exception e )
 			{
-				CatchException( e );
+				_app.CatchException( e );
 			}
 		}
 
@@ -429,7 +365,7 @@ namespace MetaMaker
 			}
 			catch( Exception e )
 			{
-				CatchException( e );
+				_app.CatchException( e );
 			}
 		}
 		
@@ -437,11 +373,11 @@ namespace MetaMaker
 		{
 			try
 			{
-				CreateNode( _nodeData[_createSubmenu.GetItemText( id )] );
+				CreateNode( _app.GetNodeData(_createSubmenu.GetItemText( id )) );
 			}
 			catch( Exception e )
 			{
-				CatchException( e );
+				_app.CatchException( e );
 			}
 		}
 		
@@ -456,36 +392,35 @@ namespace MetaMaker
 							.Then( color =>
 							{
 								Color = color;
-								SaveSettings();
+								_app.SaveSettings();
 							}); 
 							break;
 					case 1 :  
 						GetColorFromUser( Color )
 							.Then( color =>
 							{
-								_graph.Set( "custom_colors/grid_major", color );
-								SaveSettings();
+								GridMajorColor = color;
+								_app.SaveSettings();
 							}); 
 						break;
 					case 2 :  
 						GetColorFromUser( Color )
 							.Then( color =>
 							{
-								_graph.Set( "custom_colors/grid_minor", color );
-								SaveSettings();
+								GridMinorColor = color;
+								_app.SaveSettings();
 							}); 
 						break;
 					case 3 :  OpenHelpPopup(); break;
 					case 4 :  
-						_autoBackup = !_autoBackup;
-						_settingsMenuButton.GetPopup().SetItemChecked(3,_autoBackup);
-						SaveSettings();
+						SettingAutoSave = !SettingAutoSave;
+						_app.SaveSettings();
 					break;
 				}
 			}
 			catch( Exception e )
 			{
-				CatchException( e );
+				_app.CatchException( e );
 			}
 		}
 
@@ -498,7 +433,7 @@ namespace MetaMaker
 		{
 			if(string.IsNullOrEmpty(text)) return;
 
-			if( !generatedKeys.ContainsKey( text ) )
+			if( !_app.generatedKeys.ContainsKey( text ) )
 			{
 				string partial = PartialFindKey( text );
 				
@@ -538,47 +473,6 @@ namespace MetaMaker
 		{
 			_graph.SnapDistance = (int)_snapSizeField.Value;
 		}
-
-		private void OnRecentTemplateMenuSelection( int id )
-		{
-			try
-			{
-				string path = _recentTemplateSubmenu.GetItemText( id );
-				LoadTemplate( LoadJsonFile( path ) );
-				AddRecentTemplateFile( path );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
-
-		private void OnRecentShiftMenuSelection( int id )
-		{
-			try
-			{
-				ShiftTemplateUnderData(_recentShiftSubmenu.GetItemText( id ));
-				string path = _recentShiftSubmenu.GetItemText( id );
-				ShiftTemplateUnderData( path );
-				AddRecentTemplateFile( path );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
-
-		private void OnRecentMenuSelection( int id )
-		{
-			try
-			{
-				LoadGraph( _recentSubmenu.GetItemText( id ) );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
 		
 		private void GraphClick( InputEvent @event )
 		{
@@ -597,224 +491,43 @@ namespace MetaMaker
 			}
 		}
 
-		private void LoadDefaultTemplate()
-		{
-			LoadTemplate( LoadJsonFile( DEFAULT_TEMPLATE_SOURCE ) );
-
-			HasUnsavedChanges = false;
-			SaveFilePath = null;
-		}
-
 		private void PickTemplateToLoad()
 		{
 			_filePopup.Show( new[] { "*.tmplt" }, false, "Open a Template file" )
 				.Then( path =>
 				{
-					LoadTemplate( LoadJsonFile( path ) );
+					_app.LoadTemplate( _app.LoadJsonFile( path ) );
 
-					AddRecentTemplateFile( path );
-					HasUnsavedChanges = false;
-					SaveFilePath = null;
+					_app.AddRecentTemplateFile( path );
+					_app.HasUnsavedChanges = false;
+					_app.SaveFilePath = null;
 				} )
-				.Catch( CatchException );
+				.Catch( _app.CatchException );
 		}
 
-		private IPromise CheckIfSavedFirst()
-		{
-			if(!HasUnsavedChanges) return Promise.Resolved();
-			
-			Promise promise = new Promise();
-
-			_areYouSurePopup.Display( new AreYouSurePopup.AreYouSureArgs(){
-				title = "Save?",
-				info = "Some unsaved changes might be lost\nwould you like to save first?",
-				showLeft = true,
-				leftText = "Save",
-				leftPress = () => SaveGraph().Then(promise.Resolve),
-				showMiddle = true,
-				middleText = "Continue",
-				middlePress = () => { 
-					ClearData();
-					promise.Resolve();
-					},
-				showRight = true,
-				rightText = "Cancel",
-				rightPress = () => promise.Reject(new PromiseExpectedError("cancel"))
-			});
-			
-			return promise;
-		}
-
-		private IPromise CheckIfShouldRestoreFirst(string path)
-		{
-			File file = new File();
-			if( !file.FileExists( path + ".back" ) ) return Promise.Resolved();
-			
-			Promise promise = new Promise();
-
-			_areYouSurePopup.Display( new AreYouSurePopup.AreYouSureArgs(){
-				title = "Restore?",
-				info = $"A backup of was detected for\n{path}\nwould you like to load it or discard it?",
-				width = 600,
-				showLeft = true,
-				leftText = "Restore",
-				leftPress = () => { 
-						try
-						{
-							ClearData();
-							string json = LoadJsonFile( path + ".back" );
-
-							LoadTemplate( json );
-
-							var graph = new GenericDataArray();
-							graph.FromJson( json );
-							graph.GetValue( "data", out GenericDataArray data );
-							LoadData( data );
-
-							HasUnsavedChanges = true;
-							SaveFilePath = path;
-							AddRecentFile( path );
-						}
-						catch( Exception e )
-						{
-							CatchException( e );
-						}
-					},
-				showMiddle = true,
-				middleText = "Discard",
-				middlePress = () => { 
-					SaveFilePath = path;
-					ClearData();
-					promise.Resolve();
-					},
-				showRight = true,
-				rightText = "Cancel",
-				rightPress = () => promise.Reject(new PromiseExpectedError("cancel"))
-			});
-			
-			return promise;
-		}
-		
-		private IPromise SaveGraph()
-		{
-			if( string.IsNullOrEmpty( SaveFilePath ) )
-			{
-				return SaveGraphAs();
-			}
-
-			SaveGraph( SaveFilePath );
-
-			return Promise.Resolved();
-		}
-
-		private void SaveBackup()
-		{
-			if( !_autoBackup ) return;
-			if( !_hasUnbackedChanges ) return;
-			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
-			
-			_hasUnbackedChanges = false;
-			SaveGraphFile( SaveFilePath + ".back" );
-		}
-
-		private void ClearBackup()
-		{
-			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
-			
-			File file = new File();
-			if( !file.FileExists( SaveFilePath + ".back" ) ) return;
-
-			System.IO.File.Delete(SaveFilePath + ".back");
-		}
-
-		private IPromise SaveGraphAs()
+		public IPromise SaveGraphAs()
 		{
 			IPromise promise =
 			_filePopup.Show( new[] { "*.ngmap" }, true, "Save Full Graph" )
-				.Then( SaveGraph );
+				.Then( _app.SaveGraph );
 			
-			promise.Catch( CatchException );
+			promise.Catch( _app.CatchException );
 			
 			return promise;
-		}
-
-		private void SaveGraph( string path )
-		{
-			try
-			{
-				SaveFilePath = path;
-				
-				SaveGraphFile(path);
-
-				HasUnsavedChanges = false;
-				ClearBackup();
-				
-				AddRecentFile( path );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
-
-		private void SaveGraphFile( string path )
-		{
-			try
-			{
-				includeNodeData = true;
-				includeGraphData = true;
-				var graph = new GenericDataArray();
-
-				// save template
-				graph.AddValue( "targetVersion", _version );
-				graph.AddValue( "defaultListing", _defaultListing );
-				graph.AddValue( "explicitNode", _explicitNode );
-				graph.AddValue( "nestingColors", _parentChildColors );
-				graph.AddValue( "keyColors", _keyColors );
-				List<GenericDataArray> nodeList = _nodeData.Values.ToList();
-				graph.AddValue( "nodeList", nodeList );
-						
-				// save data
-				graph.AddValue( "data", SaveData() );
-						
-				string json = graph.ToJson();
-						
-				SaveJsonFile( path, json );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
 		}
 
 		private void LoadGraph()
 		{
 			_filePopup.Show( new[] { "*.ngmap" }, false, "Load Full Graph" )
-				.Then( LoadGraph )
-				.Catch( CatchException );
+				.Then( _app.LoadGraph )
+				.Catch( _app.CatchException );
 		}
 
-		private void LoadGraph( string path )
+		private void ShiftTemplateUnderData()
 		{
-			CheckIfSavedFirst()
-			.Then(() => {
-				CheckIfShouldRestoreFirst(path)
-				.Then(() =>{
-					ClearData();
-					string json = LoadJsonFile( path );
-
-					LoadTemplate( json );
-
-					var graph = new GenericDataArray();
-					graph.FromJson( json );
-					graph.GetValue( "data", out GenericDataArray data );
-					LoadData( data );
-
-					HasUnsavedChanges = false;
-					SaveFilePath = path;
-					AddRecentFile( path );
-				});
-			});
+			_filePopup.Show( new[] { "*.tmplt" }, false, "Select Template File for Use" )
+				.Then( _app.ShiftTemplateUnderData )
+				.Catch( _app.CatchException );
 		}
 
 		private void ExportDataJson()
@@ -823,9 +536,9 @@ namespace MetaMaker
 				.Then( path =>
 				{
 					includeGraphData = false;
-					SaveJsonFile( path, SaveData().ToJson() );
+					_app.SaveJsonFile( path, _app.SaveData().ToJson() );
 				} )
-				.Catch( CatchException );
+				.Catch( _app.CatchException );
 		}
 
 		private void ExportTemplateJson()
@@ -837,18 +550,18 @@ namespace MetaMaker
 					includeGraphData = false;
 					
 					GenericDataArray gda = new GenericDataArray();
-					gda.AddValue( "targetVersion", _version );
+					gda.AddValue( "targetVersion", _app.Version );
 
-					GenericDataArray data = SaveData();
+					GenericDataArray data = _app.SaveData();
 					foreach( KeyValuePair<string,GenericDataObject> keyValuePair in data.values )
 					{
 						gda.AddValue( keyValuePair.Key, keyValuePair.Value );
 					}
 					
-					SaveJsonFile( path, gda.ToJson() );
-					AddRecentTemplateFile( path );
+					_app.SaveJsonFile( path, gda.ToJson() );
+					_app.AddRecentTemplateFile( path );
 				} )
-				.Catch( CatchException );
+				.Catch( _app.CatchException );
 		}
 		
 		private void ImportDataJson()
@@ -856,60 +569,23 @@ namespace MetaMaker
 			_filePopup.Show( new[] { "*.json" }, false, "Load Data from JSON" )
 				.Then( path =>
 				{
-					ClearData();
+					_app.ClearData();
 
-					string json = LoadJsonFile( path );
+					string json = _app.LoadJsonFile( path );
 					var data = new GenericDataArray();
 					data.FromJson( json );
-					LoadData( data );
+					_app.LoadData( data );
 
 					this.DelayedInvoke( 0.5f, SortNodes );
 				} )
-				.Catch( CatchException );
-		}
-
-		private void ShiftTemplateUnderData()
-		{
-			_filePopup.Show( new[] { "*.tmplt" }, false, "Select Template File for Use" )
-				.Then( ShiftTemplateUnderData )
-				.Catch( CatchException );
-		}
-
-		private void ShiftTemplateUnderData(string path)
-		{
-			try
-			{
-				includeNodeData = true;
-				includeGraphData = true;
-				GenericDataArray data = SaveData();
-				LoadTemplate( LoadJsonFile( path ) );
-				LoadData( data );
-				AddRecentTemplateFile( path );
-			}
-			catch( Exception ex )
-			{
-				CatchException( ex );
-			}
+				.Catch( _app.CatchException );
 		}
 
 		private void RequestQuit()
 		{
-			SaveSettings();
-			CheckIfSavedFirst()
+			_app.SaveSettings();
+			_app.CheckIfSavedFirst()
 				.Then( ()=> GetTree().Quit() );
-		}
-
-		private void ClearData()
-		{
-			generatedKeys.Clear();
-			for( int i = _nodes.Count-1; i >= 0; i-- )
-			{
-				_nodes[i].CloseRequest();
-			}
-			
-			ClearBackup();
-			HasUnsavedChanges = false;
-			SaveFilePath = null;
 		}
 
 		private void OpenHelpPopup()
@@ -974,7 +650,7 @@ namespace MetaMaker
 			
 			for( int i = 0; i < _copied.Count; i++ )
 			{
-				LoadNode(  _copied[i] );
+				_app.LoadNode(  _copied[i] );
 			}
 
 			for( int i = start; i < _nodes.Count; i++ )
@@ -994,7 +670,7 @@ namespace MetaMaker
 			
 			_selection.Clear();
 			
-			HasUnsavedChanges = true;
+			_app.HasUnsavedChanges = true;
 		}
 
 		private void SelectNode(Node node)
@@ -1005,7 +681,7 @@ namespace MetaMaker
 			
 			_selection.Add( graphNode );
 			
-			HasUnsavedChanges = true;
+			_app.HasUnsavedChanges = true;
 		}
 
 		private void DeselectNode(Node node)
@@ -1019,7 +695,28 @@ namespace MetaMaker
 		#endregion
 
 		#region Helper Functions
-		private SlottedGraphNode CreateNode(GenericDataArray nodeData, GenericDataArray nodeContent = null)
+		public void ResetCreateMenu(List<string> nodeNames)
+		{
+			_createSubmenu.Clear();
+			_createSubmenu.RectSize = Vector2.Zero;
+
+			foreach( string name in nodeNames )
+			{
+				_createSubmenu.AddItem( name );
+			}
+		}
+
+		public void UpdateBackupTimer()
+		{
+			_backupTimer.WaitTime = _app.BackupFrequency;
+		}
+
+		public void DisplayAreYouSurePopup(AreYouSurePopup.AreYouSureArgs args)
+		{
+			_areYouSurePopup.Display(args);
+		}
+
+		public SlottedGraphNode CreateNode(GenericDataArray nodeData, GenericDataArray nodeContent = null)
 		{
 			if( nodeData == null ) throw new ArgumentNullException("CreateNode passed NULL nodeData");
 
@@ -1033,7 +730,7 @@ namespace MetaMaker
 			_nodes.Add( node );
 
 			node.SetSlots( nodeData );
-			HasUnsavedChanges = true;
+			_app.HasUnsavedChanges = true;
 
 			if( nodeContent == null ) return node;
 			
@@ -1041,190 +738,9 @@ namespace MetaMaker
 
 			return node;
 		}
-
-		private string LoadJsonFile( string path )
-		{
-			File file = new File();
-			if( !file.FileExists( path ) )
-			{
-				throw new FileNotFoundException($"File '{path}' not found!");
-			}
-			
-			file.Open( path, File.ModeFlags.Read );
-			
-			string json = file.GetAsText();
-			file.Close();
-
-			return json;
-		}
-
-		private void SaveJsonFile( string path, string json )
-		{
-			File file = new File();
-			file.Open( path, File.ModeFlags.Write );
-			
-			file.StoreString( json );
-			file.Close();
-		}
-
-		private void LoadTemplate( string json )
-		{
-			CheckIfSavedFirst()
-			.Then(() => {
-				GenericDataArray gda = new GenericDataArray();
-				gda.FromJson( json );
-
-				gda.GetValue( "targetVersion", out string targetVersion );
-
-				if( targetVersion != _version )
-				{
-					ShowNotice($"File version is '{targetVersion}' which does not match app version '{_version}'");
-				}
-
-				gda.GetValue( "defaultListing", out _defaultListing );
-				gda.GetValue( "explicitNode", out _explicitNode );
-				
-				if( string.IsNullOrEmpty( _defaultListing ) )
-				{
-					_defaultListing = "listing";
-				}
-				GenericDataArray listing = gda.GetGdo( "nodeList" ) as GenericDataArray;
-
-				gda.GetValue( "nestingColors", out List<Color> nestingColors );
-				gda.GetValue( "keyColors", out List<Color> keyColors );
-				
-				LoadTemplate( listing.values.Values.ToList(), nestingColors, keyColors );
-			});
-		}
-
-		private void LoadTemplate(List<GenericDataObject> dataList, List<Color> nestingColors, List<Color> keyColors )
-		{
-			if( dataList == null )
-			{
-				throw new NullReferenceException("LoadTemplate does not accept a null dataList");
-			}
-			
-			ClearData();
-			_nodeData.Clear();
-			_createSubmenu.Clear();
-			_createSubmenu.RectSize = Vector2.Zero;
-
-			if(nestingColors?.Count > 0)
-			{
-				_parentChildColors.Clear();
-				_parentChildColors.AddRange( nestingColors );
-			}
-			else
-			{
-				_parentChildColors.Clear();
-				_parentChildColors.Add( Colors.Aquamarine );
-				_parentChildColors.Add( Colors.Beige );
-				_parentChildColors.Add( Colors.Gold );
-				_parentChildColors.Add( Colors.Black );
-				_parentChildColors.Add( Colors.Firebrick );
-			}
-
-			if(keyColors?.Count > 0)
-			{
-				_keyColors.Clear();
-				_keyColors.AddRange( keyColors );
-			}
-			else
-			{
-				_keyColors.Clear();
-				_keyColors.Add( Colors.Chartreuse );
-				_keyColors.Add( Colors.Cornflower );
-				_keyColors.Add( Colors.Cornsilk );
-				_keyColors.Add( Colors.Indigo );
-				_keyColors.Add( Colors.HotPink );
-			}
-			
-			foreach( GenericDataObject gdo in dataList )
-			{
-				GenericDataArray item = gdo as GenericDataArray;
-				
-				item.GetValue( "title", out string title );
-
-				if( _nodeData.ContainsKey( title ) )
-				{
-					ShowNotice( $"Duplicate node title '{title}' found in the template.\nNodes must all have unique titles" );
-				}
-				else
-				{
-					_nodeData[title] = item;
-				}
-			}
-
-			foreach( KeyValuePair<string,GenericDataArray> dataPair in _nodeData )
-			{
-				_createSubmenu.AddItem( dataPair.Key );
-			}
-		}
-
-		private GenericDataArray SaveData()
-		{
-			List<GenericDataArray> parentSlots = new List<GenericDataArray>();
-
-			foreach( SlottedGraphNode node in _nodes )
-			{
-				if( !node.LinkedToParent )
-				{
-					parentSlots.Add( node.GetObjectData() );
-				}
-			}
-
-			if( parentSlots.Count == 1 )
-			{
-				return parentSlots[0];
-			}
-			
-			GenericDataArray gda = new GenericDataArray();
-
-			gda.AddValue( _defaultListing, parentSlots );
-
-			return gda;
-		}
-
-		private void LoadData(GenericDataArray data)
-		{
-			if( data.values.ContainsKey( "ngMapNodeName" ) )
-			{
-				LoadNode( data );
-			}
-			else if(data.values.Count == 1)
-			{
-				string key = data.values.Keys.First();
-				
-				data.GetValue( key, out List<GenericDataArray> items );
-
-				foreach( GenericDataArray item in items )
-				{
-					if( !item.values.ContainsKey( "ngMapNodeName" ) )
-					{
-						item.AddValue( "ngMapNodeName", _explicitNode );
-					}
-					LoadNode( item );
-				}
-			}
-			else
-			{
-				data.AddValue( "ngMapNodeName", _explicitNode );
-				LoadNode( data );
-			}
-
-			foreach( Tuple<KeyLinkSlot,string> loadingLink in loadingLinks )
-			{
-				LinkToKey( loadingLink.Item1, loadingLink.Item2 );
-			}
-			
-			loadingLinks.Clear();
-		}
 		
-		public void CatchException( Exception ex )
+		public void DisplayErrorPopup( Exception ex )
 		{
-			if(ex is PromiseExpectedError) return;
-			
-			Log.Except( ex );
 			_errorPopup.DialogText = ex.Message;
 			
 			#if DEBUG
@@ -1235,44 +751,34 @@ namespace MetaMaker
 		}
 		
 		
-		private void ShowNotice( string notice )
+		public void ShowNotice( string notice )
 		{
 			Log.LogL( notice );
 			_errorPopup.DialogText = notice;
 			_errorPopup.PopupCentered();
 		}
 		
-		private void AddRecentFile( string path )
+		public void UpdateRecentMenu( List<string> recents )
 		{
-			if( _recentFiles.Contains( path ) )
-			{
-				_recentFiles.Remove( path );
-			}
-			_recentFiles.Insert( 0, path );
 			_recentSubmenu.Clear();
 
-			foreach( string file in _recentFiles )
+			foreach( string file in recents )
 			{
 				_recentSubmenu.AddItem( file );
 			}
 
-			if( _recentFiles.Count > 0 )
+			if( recents.Count > 0 )
 			{
-				_filePopup.CurrentDir = _recentFiles[0].Substring( 0, _recentFiles[0].LastIndexOf( '/' ));
+				_filePopup.CurrentDir = recents[0].Substring( 0, recents[0].LastIndexOf( '/' ));
 			}
 		}
 		
-		private void AddRecentTemplateFile( string path )
+		public void UpdateRecentTemplateMenu( List<string> recents )
 		{
-			if( _recentTemplates.Contains( path ) )
-			{
-				_recentTemplates.Remove( path );
-			}
-			_recentTemplates.Insert( 0, path );
 			_recentTemplateSubmenu.Clear();
 			_recentShiftSubmenu.Clear();
 
-			foreach( string file in _recentTemplates )
+			foreach( string file in recents )
 			{
 				_recentTemplateSubmenu.AddItem( file );
 				_recentShiftSubmenu.AddItem( file );
@@ -1291,22 +797,6 @@ namespace MetaMaker
 					currentPos += new Vector2(0, size.y);
 				}
 			}
-		}
-
-		private void UpdateTitle()
-		{
-			var title = "MetaMaker";
-			if( !string.IsNullOrEmpty( _saveFilePath ) )
-			{
-				title += " - " + _saveFilePath;
-			}
-
-			if( HasUnsavedChanges )
-			{
-				title += "*";
-			}
-			
-			OS.SetWindowTitle( title );
 		}
 
 		private Vector2 SortChild( SlottedGraphNode node, Vector2 corner )
@@ -1332,34 +822,6 @@ namespace MetaMaker
 			return new Vector2( x + _buffer.x, y );
 		}
 
-		public SlottedGraphNode LoadNode( GenericDataArray nodeContent )
-		{
-			if( _nodeData.Count == 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
-
-			nodeContent.GetValue( "ngMapNodeName", out string nodeName );
-
-			if( !_nodeData.ContainsKey( nodeName ) )
-			{
-				throw new ArgumentOutOfRangeException($"'{nodeName}' not found in loaded data");
-			}
-			
-			GenericDataArray nodeData = _nodeData[nodeName];
-			
-			if( nodeData == null ) throw new ArgumentNullException($"Data for '{nodeName}' was null");
-
-			return CreateNode(nodeData, nodeContent);
-		}
-
-		public Color GetParentChildColor( int slotType )
-		{
-			return _parentChildColors[slotType % _parentChildColors.Count];
-		}
-
-		public Color GetKeyColor( int slotType )
-		{
-			return _keyColors[slotType % _keyColors.Count];
-		}
-
 		public IPromise<Color> GetColorFromUser(Color original)
 		{
 			_colorPicker.Color = original;
@@ -1381,7 +843,7 @@ namespace MetaMaker
 
 		public void CenterViewOnKeyedNode(string key)
 		{
-			CenterViewOnNode(generatedKeys[key].GetParent<SlottedGraphNode>());
+			CenterViewOnNode(_app.generatedKeys[key].GetParent<SlottedGraphNode>());
 		}
 		
 		public void CenterViewOnNode(SlottedGraphNode node)
@@ -1404,7 +866,7 @@ namespace MetaMaker
 		{
 			if( string.IsNullOrEmpty( partial ) ) return null;
 			
-			foreach( string key in generatedKeys.Keys )
+			foreach( string key in _app.generatedKeys.Keys )
 			{
 				if( key.Contains( partial ) ) return key;
 			}
@@ -1533,9 +995,9 @@ namespace MetaMaker
 			}
 		}
 
-		private void LinkToKey( KeyLinkSlot link, string key )
+		public void LinkToKey( KeyLinkSlot link, string key )
 		{
-			if( !generatedKeys.ContainsKey( key ) )
+			if( !_app.generatedKeys.ContainsKey( key ) )
 			{
 				throw new ArgumentException("Attempting link to key not found",nameof(key));
 			}
@@ -1548,12 +1010,12 @@ namespace MetaMaker
 				throw new ArgumentException($"{link.Name} not found in {linkParent.Name}",nameof(link));
 			}
 			
-			SlottedGraphNode keyParent = generatedKeys[key].GetParent<SlottedGraphNode>();
-			int fromSlot = keyParent.GetChildIndex( generatedKeys[key] );
+			SlottedGraphNode keyParent = _app.generatedKeys[key].GetParent<SlottedGraphNode>();
+			int fromSlot = keyParent.GetChildIndex( _app.generatedKeys[key] );
 			
 			if( fromSlot < 0 )
 			{
-				throw new ArgumentException($"{generatedKeys[key].Name} not found in {keyParent.Name}",nameof(link));
+				throw new ArgumentException($"{_app.generatedKeys[key].Name} not found in {keyParent.Name}",nameof(link));
 			}
 			
 			OnConnectionRequest( keyParent.Name, fromSlot ,linkParent.Name, toSlot );
