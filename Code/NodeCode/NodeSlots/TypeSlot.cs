@@ -6,18 +6,18 @@ namespace MetaMaker
 {
 	public class TypeSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private Label _field;
-		[Export] private readonly NodePath _popupPath;
+		[Export] public NodePath _popupPath;
 		private PopupDialog _popup;
-		[Export] private readonly NodePath _assemblyLabelPath;
+		[Export] public NodePath _assemblyLabelPath;
 		private Label _assemblyLabel;
-		[Export] private readonly NodePath _typeLabelPath;
+		[Export] public NodePath _typeLabelPath;
 		private Label _typeLabel;
 
 		private string assembly;
 		private string type;
-		
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{

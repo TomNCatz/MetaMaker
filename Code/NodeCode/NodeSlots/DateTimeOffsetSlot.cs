@@ -5,37 +5,38 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class DateTimeOffsetSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class DateTimeOffsetSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private Label _field;
-		[Export] private readonly NodePath _popupPath;
+		[Export] public NodePath _popupPath;
 		private Popup _popup;
-		[Export] private readonly NodePath _yearPath;
+		[Export] public NodePath _yearPath;
 		private SpinBox _year;
-		[Export] private readonly NodePath _monthPath;
+		[Export] public NodePath _monthPath;
 		private OptionButton _month;
-		[Export] private readonly NodePath _dayPath;
+		[Export] public NodePath _dayPath;
 		private SpinBox _day;
-		[Export] private readonly NodePath _hourPath;
+		[Export] public NodePath _hourPath;
 		private OptionButton _hour;
-		[Export] private readonly NodePath _minutePath;
+		[Export] public NodePath _minutePath;
 		private SpinBox _minute;
-		[Export] private readonly NodePath _secondPath;
+		[Export] public NodePath _secondPath;
 		private SpinBox _second;
-		[Export] private readonly NodePath _timezonePath;
+		[Export] public NodePath _timezonePath;
 		private OptionButton _timezone;
-		[Export] private readonly NodePath _nowPath;
+		[Export] public NodePath _nowPath;
 		private Button _now;
-		[Export] private readonly NodePath _cancelPath;
+		[Export] public NodePath _cancelPath;
 		private Button _cancel;
 
 		private bool isOffset;
 		private DateTimeOffset dtOffset;
 
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -196,6 +197,7 @@ namespace MetaMaker
 			GetDateInPopup();
 			UpdateDisplay();
 			SetTime(_parentModel);
+			OnValueUpdated?.Invoke();
 		}
 
 		private void UpdateDisplay()
@@ -262,16 +264,6 @@ namespace MetaMaker
 			{
 				parent.AddValue( _label.Text, dtOffset.DateTime );
 			}
-		}
-
-		public string GetString()
-		{
-			if( isOffset )
-			{
-				return dtOffset.ToString("yyyy-MM-dd HH:mm:ss zz");
-			}
-
-			return dtOffset.ToString("yyyy-MM-dd HH:mm:ss");
 		}
 	}
 }

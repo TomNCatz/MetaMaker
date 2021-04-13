@@ -4,14 +4,12 @@ using System.IO;
 using System.Linq;
 using Godot;
 using LibT;
-using LibT.Maths;
 using LibT.Serialization;
 using LibT.Services;
 using RSG;
 using RSG.Exceptions;
 using Color = Godot.Color;
 using File = Godot.File;
-using Vector2 = Godot.Vector2;
 
 namespace MetaMaker
 {
@@ -31,7 +29,6 @@ namespace MetaMaker
 		public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
 		
 		private readonly Dictionary<string, GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
-		private readonly List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
 		private readonly List<Color> _parentChildColors = new List<Color> ();
 		private readonly List<Color> _keyColors = new List<Color>();
 		public bool includeNodeData = true;
@@ -45,6 +42,7 @@ namespace MetaMaker
 		private string _explicitNode;
 		private bool _hasUnbackedChanges;
 		private GenericDataArray _model;
+		private readonly List<GenericDataArray> _topModels = new List<GenericDataArray>();
 
 		public string Version => _version;
 		private string _version;
@@ -89,6 +87,10 @@ namespace MetaMaker
 				_hasUnsavedChanges = value;
 				_hasUnbackedChanges = _hasUnsavedChanges;
 				UpdateTitle();
+				if(!_hasUnsavedChanges)
+				{
+					_mainView.SetNodesClean();
+				}
 			}
 			get => _hasUnsavedChanges;
 		}
@@ -100,12 +102,12 @@ namespace MetaMaker
 			ServiceProvider.Add(this);
 
 			_mainView = mainView;
+			_model = new GenericDataArray();
+			OS.LowProcessorUsageMode = true;
 		}
 
 		public void Init()
 		{
-			OS.LowProcessorUsageMode = true;
-
 			_version = LoadJsonFile( VERSION );
 				
 			LoadSettings();
@@ -147,7 +149,10 @@ namespace MetaMaker
 					}
 				}
 
-				AddRecentFile( _recentFiles[0] );
+				if( _recentFiles.Count > 0)
+				{
+					AddRecentFile( _recentFiles[0] );
+				}
 			}
 			
 			gda.GetValue( "RecentTemplates", out _recentTemplates );
@@ -162,8 +167,11 @@ namespace MetaMaker
 					i--;
 				}
 			}
-			
-			AddRecentTemplateFile( _recentTemplates[0] );
+
+			if( _recentTemplates.Count > 0)
+			{
+				AddRecentTemplateFile( _recentTemplates[0] );
+			}
 		}
 		
 		public void UpdateTitle()
@@ -262,9 +270,9 @@ namespace MetaMaker
 		public void ClearData()
 		{
 			generatedKeys.Clear();
-			for( int i = _nodes.Count-1; i >= 0; i-- )
+			for( int i = _mainView.nodes.Count-1; i >= 0; i-- )
 			{
-				_nodes[i].CloseRequest();
+				_mainView.nodes[i].CloseRequest();
 			}
 			
 			ClearBackup();
@@ -277,6 +285,7 @@ namespace MetaMaker
 			if( _nodeData.Count == 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
 
 			nodeContent.GetValue( "ngMapNodeName", out string nodeName );
+			//Log.Error($"Node name {nodeName}");
 
 			if( !_nodeData.ContainsKey( nodeName ) )
 			{
@@ -314,10 +323,9 @@ namespace MetaMaker
 			SaveJsonFile( SETTINGS_SOURCE, gda.ToJson() );
 		}
 
-
 		public void LoadDefaultTemplate()
 		{
-			LoadTemplate( LoadJsonFile( App.DEFAULT_TEMPLATE_SOURCE ) );
+			LoadTemplate( LoadJsonFile( DEFAULT_TEMPLATE_SOURCE ) );
 
 			HasUnsavedChanges = false;
 			SaveFilePath = null;
@@ -342,11 +350,87 @@ namespace MetaMaker
 			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
 			
 			_hasUnbackedChanges = false;
-			SaveGraphFile( SaveFilePath + ".back" );
+			
+			SaveModel( SaveFilePath + ".back" );
+		}
+
+		public void SaveModel(string path)
+		{
+			try
+			{
+				var graph = _model.DataCopy();
+
+				List<string> keys = new List<string>();
+				keys.Add("ngMapNodeName");
+				keys.Add("ngMapNodePosition");
+				keys.Add("ngMapNodeSize");
+				RecursivelyRemoveKeys(graph, keys);
+
+				string json = graph.ToJson();
+						
+				SaveJsonFile( path, json );
+			}
+			catch( Exception e )
+			{
+				CatchException( e );
+			}
+		}
+
+		public void RecursivelyRemoveKeys(GenericDataArray gda, IEnumerable<string> keys)
+		{
+			foreach (string key in keys)
+			{
+				gda.RemoveValue(key);
+			}
+
+			foreach (var value in gda.values)
+			{
+				if(value.Value is GenericDataArray nested)
+				{
+					RecursivelyRemoveKeys(nested, keys);
+				}
+			}
+		}
+
+		public void AddNode(SlottedGraphNode node)
+		{
+			if( !node.LinkedToParent )
+			{
+				_topModels.Add( node.Model );
+				UpdateData();
+			}
+		}
+
+		public void RemoveNode(SlottedGraphNode node)
+		{
+			if(_topModels.Contains(node.Model))
+			{
+				_topModels.Remove(node.Model);
+				UpdateData();
+			}
+		}
+
+		private void UpdateData()
+		{
+			GenericDataArray gda;
+
+			if( _topModels.Count == 1 )
+			{
+				gda = _topModels[0];
+			}
+			else
+			{
+				gda = new GenericDataArray();
+
+				gda.AddValue( _defaultListing, _topModels );
+			}
+
+			_model.AddValue("data", gda);
 		}
 
 		public void ClearBackup()
 		{
+			return;
 			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
 			
 			File file = new File();
@@ -508,6 +592,12 @@ namespace MetaMaker
 			ClearData();
 			_nodeData.Clear();
 
+			_model.AddValue( "targetVersion", _version );
+			_model.AddValue( "defaultListing", _defaultListing );
+			_model.AddValue( "explicitNode", _explicitNode );
+			_model.AddValue( "nestingColors", _parentChildColors );
+			_model.AddValue( "keyColors", _keyColors );
+
 			if(nestingColors?.Count > 0)
 			{
 				_parentChildColors.Clear();
@@ -554,6 +644,9 @@ namespace MetaMaker
 				}
 			}
 
+			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
+			_model.AddValue( "nodeList", nodeList );
+
 			_mainView.ResetCreateMenu(_nodeData.Keys.ToList());
 		}
 
@@ -561,7 +654,7 @@ namespace MetaMaker
 		{
 			List<GenericDataArray> parentSlots = new List<GenericDataArray>();
 
-			foreach( SlottedGraphNode node in _nodes )
+			foreach( SlottedGraphNode node in _mainView.nodes )
 			{
 				if( !node.LinkedToParent )
 				{
@@ -583,6 +676,11 @@ namespace MetaMaker
 
 		public void LoadData(GenericDataArray data)
 		{
+			if(data == null)
+			{
+				throw new Exception("Data in file was corrupted or missing.");
+			}
+
 			if( data.values.ContainsKey( "ngMapNodeName" ) )
 			{
 				LoadNode( data );

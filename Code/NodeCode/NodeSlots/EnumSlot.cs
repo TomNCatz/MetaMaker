@@ -5,14 +5,14 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class EnumSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class EnumSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private OptionButton _field;
 		private GenericDataArray _parentModel;
-
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
@@ -45,12 +45,12 @@ namespace MetaMaker
 		{
 			objData.GetValue( _label.Text,out string choice );
 
-			_field.Clear();
 			for( int i = 0; i < _field.GetItemCount(); i++ )
 			{
 				if( _field.GetItemText( i ).Equals( choice ) )
 				{
 					_field.Select( i );
+					_parentModel.AddValue( _label.Text, GetSelection() );
 				}	
 			}
 		}
@@ -58,6 +58,7 @@ namespace MetaMaker
 		private void OnChanged(int value)
 		{
 			_parentModel.AddValue( _label.Text, GetSelection() );
+			OnValueUpdated?.Invoke();
 		}
 
 		private string GetSelection()
@@ -68,11 +69,6 @@ namespace MetaMaker
 			}
 
 			return _field.GetItemText(_field.Selected);
-		}
-
-		public string GetString()
-		{
-			return _field.GetItemText( _field.Selected );
 		}
 	}
 }

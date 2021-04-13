@@ -9,13 +9,13 @@ namespace MetaMaker
 {
 	public class FieldDictionarySlot : Container, IGdaLoadable, IGdoConvertible
 	{
-		[Export] private readonly NodePath _titlePath;
+		[Export] public NodePath _titlePath;
 		private Label _title;
-		[Export] private readonly NodePath _selectorPath;
+		[Export] public NodePath _selectorPath;
 		private LineEdit _selector;
-		[Export] private readonly NodePath _addButtonPath;
+		[Export] public NodePath _addButtonPath;
 		private Button _addButton;
-		[Export] private readonly NodePath _deleteButtonPath;
+		[Export] public NodePath _deleteButtonPath;
 		private Button _deleteButton;
 		
 		private SlottedGraphNode _graphNode;

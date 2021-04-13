@@ -9,17 +9,17 @@ public class SerializationTest : Node, IGdoConvertible
 	public enum Kind {UNKIND,MEAN,KIND,ASSHOLE}
 	
 	
-	[Export] private NodePath _displayButtonPath;
+	[Export] public NodePath _displayButtonPath;
 	private Button _displayButton;
-	[Export] private NodePath _saveButtonPath;
+	[Export] public NodePath _saveButtonPath;
 	private Button _saveButton;
-	[Export] private NodePath _clearButtonPath;
+	[Export] public NodePath _clearButtonPath;
 	private Button _clearButton;
-	[Export] private NodePath _loadButtonPath;
+	[Export] public NodePath _loadButtonPath;
 	private Button _loadButton;
-	[Export] private NodePath _textPath;
+	[Export] public NodePath _textPath;
 	private Label _text;
-	[Export] private NodePath _originPath;
+	[Export] public NodePath _originPath;
 	private Label _origin;
 	
 	[Export] public string id;

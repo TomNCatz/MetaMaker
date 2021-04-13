@@ -7,9 +7,9 @@ namespace MetaMaker
 {
 	public class HelpPopup : WindowDialog, IGdaLoadable
 	{
-		[Export] private readonly NodePath _treePath;
+		[Export] public NodePath _treePath;
 		private Tree _tree;
-		[Export] private readonly NodePath _infoPath;
+		[Export] public NodePath _infoPath;
 		private Label _info;
 
 		public string Version

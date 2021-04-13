@@ -6,13 +6,13 @@ namespace MetaMaker
 {
 	public class AreYouSurePopup : WindowDialog
 	{
-		[Export] private readonly NodePath _infoLabelPath;
+		[Export] public NodePath _infoLabelPath;
 		private Label _infoLabel;
-		[Export] private readonly NodePath _leftButtonPath;
+		[Export] public NodePath _leftButtonPath;
 		private Button _leftButton;
-		[Export] private readonly NodePath _middleButtonPath;
+		[Export] public NodePath _middleButtonPath;
 		private Button _middleButton;
-		[Export] private readonly NodePath _rightButtonPath;
+		[Export] public NodePath _rightButtonPath;
 		private Button _rightButton;
 
 		private event Action LeftPressed;

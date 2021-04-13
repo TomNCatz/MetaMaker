@@ -5,11 +5,11 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class ColorSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class ColorSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _colorRectPath;
+		[Export] public NodePath _colorRectPath;
 		private ColorRect _colorRect;
 		
 		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
@@ -17,6 +17,8 @@ namespace MetaMaker
 		private bool asHtml;
 
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
+
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
@@ -74,16 +76,6 @@ namespace MetaMaker
 			SetColor(_parentModel);
 		}
 
-		public string GetString()
-		{
-			if( asHtml )
-			{
-				return _colorRect.Color.ToHtml();
-			}
-
-			return _colorRect.Color.ToString();
-		}
-
 		private void SetColor(GenericDataArray parent)
 		{
 			if( asHtml )
@@ -94,6 +86,7 @@ namespace MetaMaker
 			{
 				parent.AddValue( _label.Text, _colorRect.Color );
 			}
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

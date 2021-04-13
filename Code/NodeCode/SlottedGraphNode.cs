@@ -18,11 +18,30 @@ namespace MetaMaker
 		public readonly Dictionary<string,BooleanSlot> booleanLookup = new Dictionary<string, BooleanSlot>();
 		
 		private readonly List<Node> slots = new List<Node>();
-		private readonly Dictionary<string,List<string>> _validatedLists = new Dictionary<string, List<string>>();
 		private MainView _builder;
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
-		
+		private string _title;
+
+		public GenericDataArray Model => _model;
 		private GenericDataArray _model;
+
+		public bool Dirty{
+			get => _dirty;
+			set
+			{
+				_dirty = value;
+				if(_dirty)
+				{
+					Title = _title + "*";
+					_app.Get.HasUnsavedChanges = true;
+				}
+				else
+				{
+					Title = _title;
+				}
+			}
+		}
+		private bool _dirty;
 
 		public override void _Ready()
 		{
@@ -37,10 +56,9 @@ namespace MetaMaker
 		
 		public void GetObjectData( GenericDataArray objData )
 		{
-			Log.Error(_model.ToString());
 			if(_app.Get.includeNodeData)
 			{
-				objData.AddValue( "ngMapNodeName", Title );
+				objData.AddValue( "ngMapNodeName", _title );
 				if( _builder.includeGraphData )
 				{
 					objData.AddValue( "ngMapNodePosition", Offset );
@@ -64,22 +82,12 @@ namespace MetaMaker
 				{
 					i += dictionarySlot.Count;
 				}
-
-				if( slots[i] is ValidateStringSlot)
-				{
-					i++;
-				}
 			}
-
-			foreach( KeyValuePair<string,List<string>> validatedList in _validatedLists )
-			{
-				objData.AddValue( validatedList.Key, validatedList.Value );
-			}
-			_validatedLists.Clear();
 		}
 
 		public void SetObjectData( GenericDataArray objData )
 		{
+			objData.GetValue( "ngMapNodeName", out _title );
 			if(objData.values.ContainsKey( "ngMapNodePosition" ))
 			{
 				objData.GetValue( "ngMapNodePosition", out Vector2 offset );
@@ -109,12 +117,13 @@ namespace MetaMaker
 					i += dictionarySlot.Count;
 				}
 			}
+			Dirty = false;
 		}
 
 		public void SetSlots(GenericDataArray definition)
 		{
-			definition.GetValue( "title", out string title );
-			Title = title;
+			definition.GetValue( "title", out _title );
+			Title = _title;
 			_model.AddValue( "ngMapNodeName", Title );
 			_model.AddValue( "ngMapNodePosition", Offset );
 			_model.AddValue( "ngMapNodeSize", RectSize );
@@ -149,6 +158,10 @@ namespace MetaMaker
 			foreach( GenericDataObject dataObject in listing.values.Values )
 			{
 				AddChildField( dataObject as GenericDataArray );
+				if (slots[slots.Count - 1] is IField field)
+				{
+					field.OnValueUpdated += OnSlotChange;
+				}
 			}
 		}
 
@@ -166,7 +179,7 @@ namespace MetaMaker
 			return slots[index];
 		}
 
-		public Node AddChildField( GenericDataArray fieldData, int insertIndex = -1)
+		public Node AddChildField( GenericDataArray fieldData, int insertIndex = -1, GenericDataArray parentOveride = null)
 		{
 			int leftType = -1;
 			Color leftColor = Colors.Transparent;
@@ -209,9 +222,6 @@ namespace MetaMaker
 					break;
 				case FieldType.FIELD_DICTIONARY : 
 					child = _builder.fieldDictionaryScene.Instance();
-					break;
-				case FieldType.VALIDATE_STRING : 
-					child = _builder.validateStringScene.Instance();
 					break;
 				case FieldType.INFO : 
 					child = _builder.infoScene.Instance();
@@ -306,20 +316,10 @@ namespace MetaMaker
 
 			if( child is IField field )
 			{
-				field.Init( fieldData, _model );
+				field.Init( fieldData, parentOveride ?? _model );
 			}
 
 			return child;
-		}
-		
-		public void AddValidatedToList(string list, string validated)
-		{
-			if( !_validatedLists.ContainsKey( list ) )
-			{
-				_validatedLists[list] = new List<string>();
-			}
-			
-			_validatedLists[list].Add( validated );
 		}
 
 		public void RemoveChild( Node child )
@@ -430,11 +430,18 @@ namespace MetaMaker
 		{
 			RectSize = new Vector2( newSize.x, newSize.y < RectSize.y ? newSize.y : RectSize.y );
 			_model.AddValue( "ngMapNodeSize", RectSize );
+			Dirty = true;
 		}
 
 		private void OnMove()
 		{
 			_model.AddValue( "ngMapNodePosition", Offset );
+			Dirty = true;
+		}
+
+		private void OnSlotChange()
+		{
+			Dirty = true;
 		}
 	}
 }

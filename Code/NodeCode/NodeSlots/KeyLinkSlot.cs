@@ -6,19 +6,22 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeyLinkSlot : Container, IGdaLoadable, IGdoConvertible, IStringRetriever
+	public class KeyLinkSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _titlePath;
-		private Label _title;
-		[Export] private readonly NodePath _fieldPath;
-		private Label _field;
-		private EmptyHandling emptyHandling;
-		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
 		private enum EmptyHandling
 		{
 			EMPTY_STRING,
 			SKIP
 		}
+
+		[Export] public NodePath _titlePath;
+		private Label _title;
+		[Export] public NodePath _fieldPath;
+		private Label _field;
+		private EmptyHandling emptyHandling;
+		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
+		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
@@ -42,7 +45,8 @@ namespace MetaMaker
 			if( !string.IsNullOrEmpty( _field.Text ) ) return false;
 
 			_field.Text = link;
-			
+			UpdateField(_parentModel);
+
 			return true;
 		}
 
@@ -51,39 +55,26 @@ namespace MetaMaker
 			if( string.IsNullOrEmpty( _field.Text ) ) return false;
 
 			_field.Text = string.Empty;
-			
+			UpdateField(_parentModel);
+
 			return true;
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_title.Text = label;
+			_parentModel = parentModel;
 			
-			if( data.values.ContainsKey( "emptyHandling" ) )
+			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
-				data.GetValue( "emptyHandling", out emptyHandling );
+				template.GetValue( "emptyHandling", out emptyHandling );
 			}
 		}
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			if( string.IsNullOrEmpty( _field.Text ) )
-			{
-				switch(emptyHandling)
-				{
-					case EmptyHandling.EMPTY_STRING :
-						objData.AddValue( _title.Text, _field.Text );
-						break;
-					case EmptyHandling.SKIP : 
-						break;
-					default : throw new ArgumentOutOfRangeException();
-				}
-			}
-			else
-			{
-				objData.AddValue( _title.Text, _field.Text );
-			}
+			UpdateField(objData);
 		}
 
 		public void SetObjectData( GenericDataArray objData )
@@ -95,9 +86,26 @@ namespace MetaMaker
 			_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
 		}
 
-		public string GetString()
+		private void UpdateField( GenericDataArray objData )
 		{
-			return _field.Text;
+			if( string.IsNullOrEmpty( _field.Text ) )
+			{
+				switch(emptyHandling)
+				{
+					case EmptyHandling.EMPTY_STRING :
+						objData.AddValue( _title.Text, _field.Text );
+						break;
+					case EmptyHandling.SKIP : 
+						objData.RemoveValue(_title.Text);
+						break;
+					default : throw new ArgumentOutOfRangeException();
+				}
+			}
+			else
+			{
+				objData.AddValue( _title.Text, _field.Text );
+			}
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

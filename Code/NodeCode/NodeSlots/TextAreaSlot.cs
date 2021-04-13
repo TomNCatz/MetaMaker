@@ -4,14 +4,14 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TextAreaSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class TextAreaSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private TextEdit _field;
 		private GenericDataArray _parentModel;
-		
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
@@ -49,11 +49,7 @@ namespace MetaMaker
 		private void OnChanged( string text )
 		{
 			_parentModel.AddValue(_label.Text, text);
-		}
-
-		public string GetString()
-		{
-			return _field.Text;
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

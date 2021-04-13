@@ -4,12 +4,13 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class AutoSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class AutoSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private Label _field;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -35,11 +36,6 @@ namespace MetaMaker
 
 		public void SetObjectData( GenericDataArray objData )
 		{
-		}
-
-		public string GetString()
-		{
-			return _field.Text;
 		}
 	}
 }

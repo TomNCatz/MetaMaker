@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class LinkToChildSlot : Label, IGdaLoadable, IGdoConvertible
+	public class LinkToChildSlot : Label, IField, IGdoConvertible
 	{
 		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
@@ -14,6 +14,8 @@ namespace MetaMaker
 		private string _explicitNode;
 		private EmptyHandling emptyHandling;
 		private SlottedGraphNode _parent;
+		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 
 		private enum EmptyHandling
 		{
@@ -26,20 +28,22 @@ namespace MetaMaker
 			_parent = GetParent<SlottedGraphNode>();
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			Text = label;
 
-			if( data.values.ContainsKey( "explicitNode" ) )
+			if( template.values.ContainsKey( "explicitNode" ) )
 			{
-				data.GetValue( "explicitNode", out _explicitNode );
+				template.GetValue( "explicitNode", out _explicitNode );
 			}
 			
-			if( data.values.ContainsKey( "emptyHandling" ) )
+			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
-				data.GetValue( "emptyHandling", out emptyHandling );
+				template.GetValue( "emptyHandling", out emptyHandling );
 			}
+
+			_parentModel = parentModel;
 		}
 
 		public bool LinkChild( SlottedGraphNode child )
@@ -48,6 +52,8 @@ namespace MetaMaker
 
 			_child = child;
 			_parent.children.Add( child );
+			UpdateField( _parentModel );
+
 			return true;
 		}
 
@@ -57,29 +63,14 @@ namespace MetaMaker
 
 			_child = null;
 			_parent.children.Remove( child );
+			UpdateField( _parentModel );
+
 			return true;
 		}
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			if( _child == null ||
-			    ( _mainView.Get.copyingData && 
-			                       !_mainView.Get.IsSelected( _child )))
-			{
-				switch(emptyHandling)
-				{
-					case EmptyHandling.EMPTY_OBJECT :
-						objData.AddValue( Text, new GenericDataArray() );
-						break;
-					case EmptyHandling.SKIP : 
-						break;
-					default : throw new ArgumentOutOfRangeException();
-				}
-			}
-			else
-			{
-				objData.AddValue( Text, _child.GetObjectData() );
-			}
+			UpdateField( objData );
 		}
 
 		public void SetObjectData( GenericDataArray objData )
@@ -101,6 +92,30 @@ namespace MetaMaker
 			SlottedGraphNode node = _app.Get.LoadNode( data );
 
 			_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
+		}
+
+		private void UpdateField( GenericDataArray objData )
+		{
+			if( _child == null ||
+			    ( _mainView.Get.copyingData && 
+			       !_mainView.Get.IsSelected( _child )))
+			{
+				switch(emptyHandling)
+				{
+					case EmptyHandling.EMPTY_OBJECT :
+						objData.AddValue( Text, new GenericDataArray() );
+						break;
+					case EmptyHandling.SKIP : 
+						objData.RemoveValue(Text);
+						break;
+					default : throw new ArgumentOutOfRangeException();
+				}
+			}
+			else
+			{
+				objData.AddValue( Text, _child.Model );
+			}
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

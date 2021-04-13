@@ -4,15 +4,16 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class LongSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class LongSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private LineEdit _field;
 		private long _value;
 		private bool _allowNegative;
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
@@ -49,6 +50,7 @@ namespace MetaMaker
 			}
 			
 			_parentModel.AddValue(_label.Text, _value);
+			OnValueUpdated?.Invoke();
 		}
 		
 		private void OnTextEnter( string text )
@@ -81,11 +83,6 @@ namespace MetaMaker
 			objData.GetValue( _label.Text, out _value );
 			_field.Text = _value.ToString();
 			OnTextChange( _field.Text );
-		}
-
-		public string GetString()
-		{
-			return _value.ToString();
 		}
 	}
 }

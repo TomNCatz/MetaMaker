@@ -4,16 +4,16 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TextAreaRichSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class TextAreaRichSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private TextEdit _field;
-		[Export] private readonly NodePath _displayPath;
+		[Export] public NodePath _displayPath;
 		private RichTextLabel _display;
 		private GenericDataArray _parentModel;
-		
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
@@ -49,17 +49,14 @@ namespace MetaMaker
 		{
 			objData.GetValue( _label.Text, out string text );
 			_field.Text = text;
+			OnTextChanged();
 		}
 
 		private void OnTextChanged()
 		{
 			_display.BbcodeText = _field.Text;
 			_parentModel.AddValue(_label.Text, _field.Text);
-		}
-
-		public string GetString()
-		{
-			return _field.Text;
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

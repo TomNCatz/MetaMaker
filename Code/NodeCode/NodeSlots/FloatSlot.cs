@@ -4,13 +4,14 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FloatSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class FloatSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private SpinBox _field;
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -69,11 +70,7 @@ namespace MetaMaker
 		private void OnChanged(float value)
 		{
 			_parentModel.AddValue(_label.Text, (float)value);
-		}
-
-		public string GetString()
-		{
-			return ((float)_field.Value).ToString();
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using LibT;
 using LibT.Maths;
 using LibT.Serialization;
 using LibT.Services;
 using RSG;
-using RSG.Exceptions;
 using Color = Godot.Color;
-using File = Godot.File;
 using Vector2 = Godot.Vector2;
 
 namespace MetaMaker
@@ -26,7 +23,6 @@ namespace MetaMaker
 		[Export] public PackedScene linkToChildScene;
 		[Export] public PackedScene fieldListScene;
 		[Export] public PackedScene fieldDictionaryScene;
-		[Export] public PackedScene validateStringScene;
 		[Export] public PackedScene infoScene;
 		[Export] public PackedScene autoScene;
 		[Export] public PackedScene typeScene;
@@ -49,44 +45,44 @@ namespace MetaMaker
 		#endregion
 
 		#region Variables
-		[Export] private readonly NodePath _graphPath;
+		[Export] public NodePath _graphPath;
 		private GraphEdit _graph;
-		[Export] private readonly NodePath _zoomOutPath;
+		[Export] public NodePath _zoomOutPath;
 		private Button _zoomOutButton;
-		[Export] private readonly NodePath _zoomNormalPath;
+		[Export] public NodePath _zoomNormalPath;
 		private Button _zoomNormalButton;
-		[Export] private readonly NodePath _zoomInPath;
+		[Export] public NodePath _zoomInPath;
 		private Button _zoomInButton;
-		[Export] private readonly NodePath _snapPath;
+		[Export] public NodePath _snapPath;
 		private Button _snapButton;
-		[Export] private readonly NodePath _snapSizePath;
+		[Export] public NodePath _snapSizePath;
 		private SpinBox _snapSizeField;
-		[Export] private readonly NodePath _fileMenuButtonPath;
+		[Export] public NodePath _fileMenuButtonPath;
 		private MenuButton _fileMenuButton;
-		[Export] private readonly NodePath _editMenuButtonPath;
+		[Export] public NodePath _editMenuButtonPath;
 		private MenuButton _editMenuButton;
-		[Export] private readonly NodePath _settingsMenuButtonPath;
+		[Export] public NodePath _settingsMenuButtonPath;
 		private MenuButton _settingsMenuButton;
-		[Export] private readonly NodePath _searchBarPath;
+		[Export] public NodePath _searchBarPath;
 		private LineEdit _searchBar;
-		[Export] private readonly NodePath _searchButtonPath;
+		[Export] public NodePath _searchButtonPath;
 		private Button _searchButton;
-		[Export] private readonly NodePath _backupTimerPath;
+		[Export] public NodePath _backupTimerPath;
 		private Timer _backupTimer;
-		[Export] private readonly NodePath _filePopupPath;
+		[Export] public NodePath _filePopupPath;
 		private FileDialogExtended _filePopup;
-		[Export] private readonly NodePath _colorPopupPath;
+		[Export] public NodePath _colorPopupPath;
 		private Popup _colorPopup;
 		private ColorPicker _colorPicker;
-		[Export] private readonly NodePath _errorPopupPath;
+		[Export] public NodePath _errorPopupPath;
 		private AcceptDialog _errorPopup;
-		[Export] private readonly NodePath _areYouSurePopupPath;
+		[Export] public NodePath _areYouSurePopupPath;
 		private AreYouSurePopup _areYouSurePopup;
-		[Export] private readonly NodePath _helpInfoPopupPath;
+		[Export] public NodePath _helpInfoPopupPath;
 		private HelpPopup _helpInfoPopup;
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
-		public readonly List<SlottedGraphNode> _nodes = new List<SlottedGraphNode>();
+		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
 		public readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
 		public readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
 		public readonly List<GenericDataArray> _duplicates = new List<GenericDataArray>();
@@ -143,8 +139,8 @@ namespace MetaMaker
 		#region Godot and signal connectors
 		public override void _Ready()
 		{
-			// try
-			// {
+			try
+			{
 				ServiceProvider.Add( this );
 
 				_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
@@ -256,11 +252,11 @@ namespace MetaMaker
 				GenericDataArray helpData = new GenericDataArray();
 				helpData.FromJson( _app.LoadJsonFile( App.HELP_INFO_SOURCE ) );
 				_helpInfoPopup.LoadFromGda( helpData );
-			// }
-			// catch( Exception e )
-			// {
-			// 	_app.CatchException( e );
-			// }
+			}
+			catch( Exception e )
+			{
+				_app.CatchException( e );
+			}
 		}
 		
 		public override void _Notification(int what)
@@ -645,7 +641,7 @@ namespace MetaMaker
 			if( _copied.Count == 0 ) return;
 
 			pastingData = true;
-			int start = _nodes.Count;
+			int start = nodes.Count;
 			Vector2 startOffset = _offset - _copiedCorner;
 			
 			for( int i = 0; i < _copied.Count; i++ )
@@ -653,9 +649,9 @@ namespace MetaMaker
 				_app.LoadNode(  _copied[i] );
 			}
 
-			for( int i = start; i < _nodes.Count; i++ )
+			for( int i = start; i < nodes.Count; i++ )
 			{
-				_nodes[i].Offset += startOffset;
+				nodes[i].Offset += startOffset;
 			}
 		}
 
@@ -727,7 +723,7 @@ namespace MetaMaker
 
 			node.Offset = _offset;
 			
-			_nodes.Add( node );
+			nodes.Add( node );
 
 			node.SetSlots( nodeData );
 			_app.HasUnsavedChanges = true;
@@ -736,6 +732,8 @@ namespace MetaMaker
 			
 			node.SetObjectData( nodeContent );
 
+			_app.AddNode(node);
+			
 			return node;
 		}
 		
@@ -789,7 +787,7 @@ namespace MetaMaker
 		{
 			Vector2 currentPos = Vector2.Zero;
 			
-			foreach( SlottedGraphNode node in _nodes )
+			foreach( SlottedGraphNode node in nodes )
 			{
 				if( !node.LinkedToParent )
 				{
@@ -873,6 +871,14 @@ namespace MetaMaker
 			
 			return null;
 		}
+
+		public void SetNodesClean()
+		{
+			foreach (var node in nodes)
+			{
+				node.Dirty = false;
+			}
+		}
 		#endregion
 
 		#region Connections
@@ -948,7 +954,8 @@ namespace MetaMaker
 				}
 			}
 
-			_nodes.Remove( graphNode );
+			nodes.Remove( graphNode );
+			_app.RemoveNode(graphNode);
 		}
 		
 		public List<GraphConnection> GetConnectionsToNode(SlottedGraphNode graphNode)

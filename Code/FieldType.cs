@@ -9,7 +9,6 @@ namespace MetaMaker
 		LINK_TO_CHILD,
 		FIELD_LIST,
 		FIELD_DICTIONARY,
-		VALIDATE_STRING,
 		INFO,
 		AUTO,
 		TYPE,

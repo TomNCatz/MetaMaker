@@ -4,17 +4,18 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class Vector3Slot : Container, IField, IGdoConvertible, IStringRetriever
+	public class Vector3Slot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _xPath;
+		[Export] public NodePath _xPath;
 		private SpinBox _x;
-		[Export] private readonly NodePath _yPath;
+		[Export] public NodePath _yPath;
 		private SpinBox _y;
-		[Export] private readonly NodePath _zPath;
+		[Export] public NodePath _zPath;
 		private SpinBox _z;
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -63,11 +64,7 @@ namespace MetaMaker
 		{
 			LibT.Maths.Vector3 vector = new Vector3((float)_x.Value,(float)_y.Value,(float)_z.Value);
 			_parentModel.AddValue( _label.Text, vector );
-		}
-		
-		public string GetString()
-		{
-			return $"({(float)_x.Value},{(float)_y.Value},{(float)_z.Value})";
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

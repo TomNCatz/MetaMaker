@@ -4,14 +4,15 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class DoubleSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class DoubleSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private SpinBox _field;
 		
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -70,11 +71,7 @@ namespace MetaMaker
 		private void OnChanged(double value)
 		{
 			_parentModel.AddValue(_label.Text, value);
-		}
-
-		public string GetString()
-		{
-			return _field.Value.ToString();
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

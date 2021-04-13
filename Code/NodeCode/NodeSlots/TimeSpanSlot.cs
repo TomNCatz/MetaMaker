@@ -5,29 +5,30 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TimeSpanSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class TimeSpanSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private Label _field;
-		[Export] private readonly NodePath _popupPath;
+		[Export] public NodePath _popupPath;
 		private Popup _popup;
-		[Export] private readonly NodePath _dayPath;
+		[Export] public NodePath _dayPath;
 		private SpinBox _day;
-		[Export] private readonly NodePath _hourPath;
+		[Export] public NodePath _hourPath;
 		private SpinBox _hour;
-		[Export] private readonly NodePath _minutePath;
+		[Export] public NodePath _minutePath;
 		private SpinBox _minute;
-		[Export] private readonly NodePath _secondPath;
+		[Export] public NodePath _secondPath;
 		private SpinBox _second;
-		[Export] private readonly NodePath _milisecondPath;
+		[Export] public NodePath _milisecondPath;
 		private SpinBox _milisecond;
-		[Export] private readonly NodePath _cancelPath;
+		[Export] public NodePath _cancelPath;
 		private Button _cancel;
 
 		private TimeSpan span;
 		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -93,6 +94,7 @@ namespace MetaMaker
 		private void UpdateDisplay()
 		{
 			_parentModel.AddValue( _label.Text, span );
+			OnValueUpdated?.Invoke();
 			_field.Text = span.ToString("c");
 		}
 
@@ -118,11 +120,6 @@ namespace MetaMaker
 		{
 			objData.GetValue( _label.Text, out span );
 			UpdateDisplay();
-		}
-
-		public string GetString()
-		{
-			return span.ToString();
 		}
 	}
 }

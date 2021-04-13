@@ -6,20 +6,23 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FieldListSlot : Container, IGdaLoadable, IGdoConvertible
+	public class FieldListSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _titlePath;
+		[Export] public NodePath _titlePath;
 		private Label _title;
-		[Export] private readonly NodePath _selectorPath;
+		[Export] public NodePath _selectorPath;
 		private SpinBox _selector;
-		[Export] private readonly NodePath _addButtonPath;
+		[Export] public NodePath _addButtonPath;
 		private Button _addButton;
-		[Export] private readonly NodePath _deleteButtonPath;
+		[Export] public NodePath _deleteButtonPath;
 		private Button _deleteButton;
 		
 		private SlottedGraphNode _graphNode;
 		private GenericDataArray _field;
 		private readonly List<Node> _children = new List<Node>();
+		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
+		private readonly List<GenericDataArray> _childData = new List<GenericDataArray>();
 
 		public int Count => _children.Count;
 
@@ -36,11 +39,13 @@ namespace MetaMaker
 			_deleteButton.Connect( "pressed", this, nameof(Delete) );
 		}
 		
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_title.Text = label;
-			data.GetValue( "field", out _field );
+			template.GetValue( "field", out _field );
+			
+			_parentModel = parentModel;
 		}
 
 		public void GetObjectData( GenericDataArray objData )
@@ -83,10 +88,14 @@ namespace MetaMaker
 		{
 			int index = _graphNode.GetChildIndex( this )+1;
 			index += (int)_selector.Value;
-			Node child = _graphNode.AddChildField( _field, index );
+			GenericDataArray childData = new GenericDataArray();
+			Node child = _graphNode.AddChildField( _field, index, childData );
 			_children.Insert( (int)_selector.Value, child );
+			_childData.Insert( (int)_selector.Value, childData );
 			_selector.MaxValue = _children.Count;
 			_selector.Value++;
+			(child as IField).OnValueUpdated += UpdateField;
+			UpdateField();
 		}
 
 		public void Delete()
@@ -101,23 +110,27 @@ namespace MetaMaker
 			
 			Node child = _children[target];
 			_children.Remove( child );
+			_childData.RemoveAt( target );
 			_graphNode.RemoveChild( child );
 			_selector.MaxValue = _children.Count;
+			UpdateField();
 		}
 
-		public List<string> GetStrings()
+		private void UpdateField()
 		{
-			List<string> strings = new List<string>();
-			
-			foreach( Node child in _children )
+			List<GenericDataObject> childSlots = new List<GenericDataObject>();
+
+			foreach(GenericDataArray gda in _childData)
 			{
-				if( child is IStringRetriever retriever )
+				if( gda == null ) continue;
+
+				if( gda.values.Count > 0 )
 				{
-					strings.Add( retriever.GetString() );
+					childSlots.Add( gda.values.Values.First() );
 				}
 			}
-
-			return strings;
+			_parentModel.AddValue( _title.Text, childSlots );
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

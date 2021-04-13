@@ -6,11 +6,11 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeySlot : Container, IGdaLoadable, IGdoConvertible, IStringRetriever
+	public class KeySlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private Label _field;
 
 		public string GetKey => _field.Text;
@@ -18,6 +18,8 @@ namespace MetaMaker
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
+		private GenericDataArray _parentModel;
+		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
@@ -25,13 +27,16 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			data.GetValue( "keyPrefix", out _keyPrefix );
-			data.GetValue( "keySize", out _keySize );
+			template.GetValue( "keyPrefix", out _keyPrefix );
+			template.GetValue( "keySize", out _keySize );
+
+			_parentModel = parentModel;
+			_parentModel.AddValue(_label.Text, _field.Text);
 
 			SetKey();
 		}
@@ -69,6 +74,8 @@ namespace MetaMaker
 			}
 			
 			_field.Text = force;
+			_parentModel.AddValue(_label.Text, _field.Text);
+			OnValueUpdated?.Invoke();
 			_app.Get.generatedKeys[_field.Text] = this;
 		}
 
@@ -82,11 +89,6 @@ namespace MetaMaker
 			objData.GetValue( _label.Text, out string key );
 			
 			SetKey( key );
-		}
-
-		public string GetString()
-		{
-			return _field.Text;
 		}
 	}
 }

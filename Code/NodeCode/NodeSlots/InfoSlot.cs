@@ -6,8 +6,9 @@ namespace MetaMaker
 {
 	public class InfoSlot : Container, IField
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private RichTextLabel _label;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{

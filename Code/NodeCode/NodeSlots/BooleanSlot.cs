@@ -5,11 +5,11 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class BooleanSlot : Container, IField, IGdoConvertible, IStringRetriever
+	public class BooleanSlot : Container, IField, IGdoConvertible
 	{
-		[Export] private readonly NodePath _labelPath;
+		[Export] public NodePath _labelPath;
 		private Label _label;
-		[Export] private readonly NodePath _fieldPath;
+		[Export] public NodePath _fieldPath;
 		private CheckBox _field;
 		
 		private List<string> _matchTrue = new List<string>();
@@ -18,6 +18,7 @@ namespace MetaMaker
 		private List<string> _invertFalse = new List<string>();
 
 		private SlottedGraphNode _parent;
+		public event System.Action OnValueUpdated;
 		private bool _toggling;
 		private GenericDataArray _parentModel;
 
@@ -112,11 +113,7 @@ namespace MetaMaker
 			_field.Pressed = buttonPressed;
 			_parentModel.AddValue(_label.Text, buttonPressed);
 			_toggling = false;
-		}
-
-		public string GetString()
-		{
-			return _field.Pressed.ToString();
+			OnValueUpdated?.Invoke();
 		}
 	}
 }
