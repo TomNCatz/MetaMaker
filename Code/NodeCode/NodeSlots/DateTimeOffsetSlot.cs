@@ -235,7 +235,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			SetTime(objData);
 		}
 
 		public void SetObjectData( GenericDataArray objData )

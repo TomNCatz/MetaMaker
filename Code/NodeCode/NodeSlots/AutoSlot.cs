@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class AutoSlot : Container, IField, IGdoConvertible
+	public class AutoSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -27,15 +27,6 @@ namespace MetaMaker
 			_field.Text = text;
 			
 			parentModel.AddValue(_label.Text, text);
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-			objData.AddValue( _label.Text, _field.Text );
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
 		}
 	}
 }

@@ -7,7 +7,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class FieldDictionarySlot : Container, IGdaLoadable, IGdoConvertible
+	public class FieldDictionarySlot : Container, IField, IGdoConvertible
 	{
 		[Export] public NodePath _titlePath;
 		private Label _title;
@@ -24,6 +24,9 @@ namespace MetaMaker
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 
 		public int Count => _children.Count;
+		private GenericDataArray _parentModel;
+		private GenericDataArray _model;
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -38,36 +41,20 @@ namespace MetaMaker
 			_deleteButton.Connect( "pressed", this, nameof(Delete) );
 		}
 		
-		public void LoadFromGda( GenericDataArray data )
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
-			data.GetValue( "label", out string label );
+			template.GetValue( "label", out string label );
 			_title.Text = label;
-			_field = data.GetGdo( "field" ) as GenericDataArray;
+			_parentModel = parentModel;
+			_field = template.GetGdo( "field" ) as GenericDataArray;
+			
+			_model = new GenericDataArray();
+			_parentModel.AddValue(_title.Text, _model);
+			OnValueUpdated?.Invoke();
 		}
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			Dictionary<string,IGdoConvertible> items = new Dictionary<string, IGdoConvertible>();
-			foreach( var child in _children )
-			{
-				if( child.Value == null )
-				{
-					items[child.Key] = null;
-					continue;
-				}
-
-				if( !( child.Value is IGdoConvertible convertible ) )
-				{
-					throw new Exception($"Child item '{child.Value.Name}' is not an IGdoConvertible");
-				}
-
-				GenericDataArray gda = convertible.GetObjectData();
-				if( gda.values.Count > 0 )
-				{
-					items[child.Key] = convertible;
-				}
-			}
-			objData.AddValue( _title.Text, items );
 		}
 
 		public void SetObjectData( GenericDataArray objData )
@@ -104,8 +91,9 @@ namespace MetaMaker
 
 				_field.AddValue( "label", _selector.Text );
 				int index = _graphNode.GetChildIndex( this ) + 1;
-				Node child = _graphNode.AddChildField( _field, index );
+				Node child = _graphNode.AddChildField( _field, index, _model );
 				_children[_selector.Text] = child;
+				OnValueUpdated?.Invoke();
 			}
 			catch( Exception e )
 			{
@@ -128,6 +116,8 @@ namespace MetaMaker
 			
 			_children.Remove( _selector.Text );
 			_graphNode.RemoveChild( child );
+			_model.RemoveValue(_selector.Text);
+			OnValueUpdated?.Invoke();
 		}
 	}
 }

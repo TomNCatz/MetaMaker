@@ -42,8 +42,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			LibT.Maths.Vector2 vector = new Vector2((float)_x.Value,(float)_y.Value);
-			objData.AddValue( _label.Text, vector );
 		}
 
 		public void SetObjectData( GenericDataArray objData )

@@ -37,7 +37,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( _label.Text, _field.Text );
 		}
 
 		public void SetObjectData( GenericDataArray objData )

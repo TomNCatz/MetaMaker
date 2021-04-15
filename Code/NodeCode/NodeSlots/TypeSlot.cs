@@ -55,8 +55,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( "Class Assembly", assembly );
-			objData.AddValue( "Class Type", type );
 		}
 
 		public void SetObjectData( GenericDataArray objData )

@@ -14,7 +14,6 @@ namespace MetaMaker
 	public class MainView : ColorRect
 	{
 		#region Resources
-
 		[Export] public PackedScene nodeScene;
 		[Export] public PackedScene separatorScene;
 		[Export] public PackedScene keyScene;
@@ -27,6 +26,7 @@ namespace MetaMaker
 		[Export] public PackedScene autoScene;
 		[Export] public PackedScene typeScene;
 		[Export] public PackedScene enumScene;
+		[Export] public PackedScene flagsScene;
 		[Export] public PackedScene textLineScene;
 		[Export] public PackedScene textAreaScene;
 		[Export] public PackedScene textAreaRichScene;
@@ -86,10 +86,6 @@ namespace MetaMaker
 		public readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
 		public readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
 		public readonly List<GenericDataArray> _duplicates = new List<GenericDataArray>();
-		public bool includeNodeData = true;
-		public bool includeGraphData = true;
-		public bool copyingData;
-		public bool pastingData;
 			
 		private Vector2 _copiedCorner = new Vector2(50,100);
 		private Vector2 _offset = new Vector2(50,100);
@@ -334,10 +330,7 @@ namespace MetaMaker
 					case 7 :  ShiftTemplateUnderData(); break;
 					case 8 :  RequestQuit(); break;
 					case 9 :  ExportTemplateJson(); break;
-					case 10 :  
-						includeNodeData = false;
-						ExportDataJson();
-						break;
+					case 10 : ExportDataJson(); break;
 					case 11 :  _app.SaveGraph(); break;
 					case 12 :  OpenHelpPopup(); break;
 				}
@@ -529,11 +522,7 @@ namespace MetaMaker
 		private void ExportDataJson()
 		{
 			_filePopup.Show( new[] { "*.json" }, true, "Save Data to JSON" )
-				.Then( path =>
-				{
-					includeGraphData = false;
-					_app.SaveJsonFile( path, _app.SaveData().ToJson() );
-				} )
+				.Then( _app.ExportData )
 				.Catch( _app.CatchException );
 		}
 
@@ -542,19 +531,7 @@ namespace MetaMaker
 			_filePopup.Show( new[] { "*.tmplt" }, true, "Save Data to Template" )
 				.Then( path =>
 				{
-					includeNodeData = false;
-					includeGraphData = false;
-					
-					GenericDataArray gda = new GenericDataArray();
-					gda.AddValue( "targetVersion", _app.Version );
-
-					GenericDataArray data = _app.SaveData();
-					foreach( KeyValuePair<string,GenericDataObject> keyValuePair in data.values )
-					{
-						gda.AddValue( keyValuePair.Key, keyValuePair.Value );
-					}
-					
-					_app.SaveJsonFile( path, gda.ToJson() );
+					_app.ExportData(path);
 					_app.AddRecentTemplateFile( path );
 				} )
 				.Catch( _app.CatchException );
@@ -595,9 +572,7 @@ namespace MetaMaker
 			
 			_copied.Clear();
 			_duplicates.Clear();
-			includeNodeData = true;
-			includeGraphData = true;
-			copyingData = true;
+			_app.copyingData = true;
 
 			_copiedCorner = _selection[0].Offset;
 			
@@ -622,7 +597,7 @@ namespace MetaMaker
 				}
 			}
 
-			copyingData = false;
+			_app.copyingData = false;
 		}
 
 		public bool IsSelected( SlottedGraphNode node )
@@ -640,7 +615,7 @@ namespace MetaMaker
 		{
 			if( _copied.Count == 0 ) return;
 
-			pastingData = true;
+			_app.pastingData = true;
 			int start = nodes.Count;
 			Vector2 startOffset = _offset - _copiedCorner;
 			
@@ -653,6 +628,7 @@ namespace MetaMaker
 			{
 				nodes[i].Offset += startOffset;
 			}
+			_app.pastingData = false;
 		}
 
 		private void RequestDeleteNode()
@@ -728,11 +704,11 @@ namespace MetaMaker
 			node.SetSlots( nodeData );
 			_app.HasUnsavedChanges = true;
 
+			_app.AddNode(node);
+
 			if( nodeContent == null ) return node;
 			
 			node.SetObjectData( nodeContent );
-
-			_app.AddNode(node);
 			
 			return node;
 		}

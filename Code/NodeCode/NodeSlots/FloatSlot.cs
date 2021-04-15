@@ -58,7 +58,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( _label.Text, (float)_field.Value );
 		}
 
 		public void SetObjectData( GenericDataArray objData )

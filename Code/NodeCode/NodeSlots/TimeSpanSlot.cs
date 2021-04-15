@@ -93,9 +93,9 @@ namespace MetaMaker
 
 		private void UpdateDisplay()
 		{
+			_field.Text = span.ToString("c");
 			_parentModel.AddValue( _label.Text, span );
 			OnValueUpdated?.Invoke();
-			_field.Text = span.ToString("c");
 		}
 
 		public void Init(GenericDataArray template, GenericDataArray parentModel)
@@ -113,7 +113,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			objData.AddValue( _label.Text, span );
 		}
 //TODO : timespan is not saving or loading correctly, fix this!
 		public void SetObjectData( GenericDataArray objData )

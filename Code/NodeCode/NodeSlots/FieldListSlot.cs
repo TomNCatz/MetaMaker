@@ -50,21 +50,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			List<GenericDataObject> childSlots = new List<GenericDataObject>();
-
-			foreach( Node node in _children )
-			{
-				if( node == null ) continue;
-
-				if( !( node is IGdoConvertible convertible ) ) continue;
-
-				GenericDataArray gda = convertible.GetObjectData();
-				if( gda.values.Count > 0 )
-				{
-					childSlots.Add( gda.values.Values.First() );
-				}
-			}
-			objData.AddValue( _title.Text, childSlots );
 		}
 
 		public void SetObjectData( GenericDataArray objData )

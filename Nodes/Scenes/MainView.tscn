@@ -34,7 +34,7 @@
 [ext_resource path="res://Nodes/Objects/Slots/Vector4Slot.tscn" type="PackedScene" id=32]
 [ext_resource path="res://Nodes/Objects/Slots/TimeSpanSlot.tscn" type="PackedScene" id=33]
 [ext_resource path="res://Nodes/Objects/Slots/DoubleSlot.tscn" type="PackedScene" id=34]
-[ext_resource path="res://Nodes/Objects/Slots/ValidateStringSlot.tscn" type="PackedScene" id=35]
+[ext_resource path="res://Nodes/Objects/Slots/FlagsSlot.tscn" type="PackedScene" id=35]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -85,11 +85,11 @@ linkToParentScene = ExtResource( 11 )
 linkToChildScene = ExtResource( 12 )
 fieldListScene = ExtResource( 13 )
 fieldDictionaryScene = ExtResource( 14 )
-validateStringScene = ExtResource( 35 )
 infoScene = ExtResource( 15 )
 autoScene = ExtResource( 22 )
 typeScene = ExtResource( 23 )
 enumScene = ExtResource( 17 )
+flagsScene = ExtResource( 35 )
 textLineScene = ExtResource( 31 )
 textAreaScene = ExtResource( 30 )
 textAreaRichScene = ExtResource( 29 )

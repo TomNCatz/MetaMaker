@@ -56,7 +56,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			SetColor(objData);
 		}
 
 		public void SetObjectData( GenericDataArray objData )

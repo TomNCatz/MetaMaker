@@ -15,24 +15,33 @@ namespace MetaMaker
 {
 	public class App
 	{
+		#region Const Values
 		public const string SETTINGS_SOURCE = "user://Settings.json";
-		
 		public const string DEFAULT_TEMPLATE_SOURCE = "res://Resources/TEMPLATE.tmplt";
 		public const string HELP_INFO_SOURCE = "res://Resources/HelpInfo.json";
 		public const string VERSION = "res://Resources/Version.txt";
 
+		public const string NODE_NAME_KEY = "ngMapNodeName";
+		public const string NODE_POSITION_KEY = "ngMapNodePosition";
+		public const string NODE_SIZE_KEY = "ngMapNodeSize";
+		
+		public const string GRAPH_VERSION_KEY = "metaMakerVersion";
+		public const string GRAPH_LISTING_KEY = "defaultListing";
+		public const string GRAPH_EXPLICIT_KEY = "explicitNode";
+		public const string GRAPH_NESTED_COLORS_KEY = "nestingColors";
+		public const string GRAPH_KEY_COLORs_KEY = "keyColors";
+		public const string GRAPH_NODE_LIST_KEY = "nodeList";
+		public const string GRAPH_DATA_KEY = "data";
+		#endregion
 		
 		#region Variables
 		private readonly MainView _mainView;
 
-		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 		public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
 		
 		private readonly Dictionary<string, GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
 		private readonly List<Color> _parentChildColors = new List<Color> ();
 		private readonly List<Color> _keyColors = new List<Color>();
-		public bool includeNodeData = true;
-		public bool includeGraphData = true;
 		public bool copyingData;
 		public bool pastingData;
 
@@ -97,6 +106,7 @@ namespace MetaMaker
 		private bool _hasUnsavedChanges;
 		#endregion
 
+		#region Setup
 		public App(MainView mainView)
 		{
 			ServiceProvider.Add(this);
@@ -173,7 +183,9 @@ namespace MetaMaker
 				AddRecentTemplateFile( _recentTemplates[0] );
 			}
 		}
-		
+		#endregion
+
+		#region Reactions
 		public void UpdateTitle()
 		{
 			var title = "MetaMaker";
@@ -189,8 +201,6 @@ namespace MetaMaker
 			
 			OS.SetWindowTitle( title );
 		}
-
-		
 		
 		public void AddRecentFile( string path )
 		{
@@ -253,22 +263,10 @@ namespace MetaMaker
 				CatchException( e );
 			}
 		}
-		
-		public void CatchException( Exception ex )
-		{
-			if(ex is PromiseExpectedError) return;
-			
-			Log.Except( ex );
-			_mainView.DisplayErrorPopup(ex);
-		}
-		
-		public GenericDataArray GetNodeData(string index)
-		{
-			return _nodeData[index];
-		}
 
 		public void ClearData()
 		{
+			_model.values.Clear();
 			generatedKeys.Clear();
 			for( int i = _mainView.nodes.Count-1; i >= 0; i-- )
 			{
@@ -278,35 +276,6 @@ namespace MetaMaker
 			ClearBackup();
 			HasUnsavedChanges = false;
 			SaveFilePath = null;
-		}
-
-		public SlottedGraphNode LoadNode( GenericDataArray nodeContent )
-		{
-			if( _nodeData.Count == 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
-
-			nodeContent.GetValue( "ngMapNodeName", out string nodeName );
-			//Log.Error($"Node name {nodeName}");
-
-			if( !_nodeData.ContainsKey( nodeName ) )
-			{
-				throw new ArgumentOutOfRangeException($"'{nodeName}' not found in loaded data");
-			}
-			
-			GenericDataArray nodeData = _nodeData[nodeName];
-			
-			if( nodeData == null ) throw new ArgumentNullException($"Data for '{nodeName}' was null");
-
-			return _mainView.CreateNode(nodeData, nodeContent);
-		}
-
-		public Color GetParentChildColor( int slotType )
-		{
-			return _parentChildColors[slotType % _parentChildColors.Count];
-		}
-
-		public Color GetKeyColor( int slotType )
-		{
-			return _keyColors[slotType % _keyColors.Count];
 		}
 
 		public void SaveSettings()
@@ -321,75 +290,6 @@ namespace MetaMaker
 			gda.AddValue( "backupFrequency", BackupFrequency );
 			
 			SaveJsonFile( SETTINGS_SOURCE, gda.ToJson() );
-		}
-
-		public void LoadDefaultTemplate()
-		{
-			LoadTemplate( LoadJsonFile( DEFAULT_TEMPLATE_SOURCE ) );
-
-			HasUnsavedChanges = false;
-			SaveFilePath = null;
-		}
-		
-		public IPromise SaveGraph()
-		{
-			if( string.IsNullOrEmpty( SaveFilePath ) )
-			{
-				return _mainView.SaveGraphAs();
-			}
-
-			SaveGraph( SaveFilePath );
-
-			return Promise.Resolved();
-		}
-
-		public void SaveBackup()
-		{
-			if( !_autoBackup ) return;
-			if( !_hasUnbackedChanges ) return;
-			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
-			
-			_hasUnbackedChanges = false;
-			
-			SaveModel( SaveFilePath + ".back" );
-		}
-
-		public void SaveModel(string path)
-		{
-			try
-			{
-				var graph = _model.DataCopy();
-
-				List<string> keys = new List<string>();
-				keys.Add("ngMapNodeName");
-				keys.Add("ngMapNodePosition");
-				keys.Add("ngMapNodeSize");
-				RecursivelyRemoveKeys(graph, keys);
-
-				string json = graph.ToJson();
-						
-				SaveJsonFile( path, json );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
-
-		public void RecursivelyRemoveKeys(GenericDataArray gda, IEnumerable<string> keys)
-		{
-			foreach (string key in keys)
-			{
-				gda.RemoveValue(key);
-			}
-
-			foreach (var value in gda.values)
-			{
-				if(value.Value is GenericDataArray nested)
-				{
-					RecursivelyRemoveKeys(nested, keys);
-				}
-			}
 		}
 
 		public void AddNode(SlottedGraphNode node)
@@ -409,7 +309,15 @@ namespace MetaMaker
 				UpdateData();
 			}
 		}
-
+		
+		public void CatchException( Exception ex )
+		{
+			if(ex is PromiseExpectedError) return;
+			
+			Log.Except( ex );
+			_mainView.DisplayErrorPopup(ex);
+		}
+		
 		private void UpdateData()
 		{
 			GenericDataArray gda;
@@ -425,7 +333,7 @@ namespace MetaMaker
 				gda.AddValue( _defaultListing, _topModels );
 			}
 
-			_model.AddValue("data", gda);
+			_model.AddValue(GRAPH_DATA_KEY, gda);
 		}
 
 		public void ClearBackup()
@@ -437,281 +345,6 @@ namespace MetaMaker
 			if( !file.FileExists( SaveFilePath + ".back" ) ) return;
 
 			System.IO.File.Delete(SaveFilePath + ".back");
-		}
-
-		public void SaveGraph( string path )
-		{
-			try
-			{
-				SaveFilePath = path;
-				
-				SaveGraphFile(path);
-
-				HasUnsavedChanges = false;
-				ClearBackup();
-				
-				AddRecentFile( path );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
-
-		public void SaveGraphFile( string path )
-		{
-			try
-			{
-				includeNodeData = true;
-				includeGraphData = true;
-				var graph = new GenericDataArray();
-
-				// save template
-				graph.AddValue( "targetVersion", _version );
-				graph.AddValue( "defaultListing", _defaultListing );
-				graph.AddValue( "explicitNode", _explicitNode );
-				graph.AddValue( "nestingColors", _parentChildColors );
-				graph.AddValue( "keyColors", _keyColors );
-				List<GenericDataArray> nodeList = _nodeData.Values.ToList();
-				graph.AddValue( "nodeList", nodeList );
-						
-				// save data
-				graph.AddValue( "data", SaveData() );
-						
-				string json = graph.ToJson();
-						
-				SaveJsonFile( path, json );
-			}
-			catch( Exception e )
-			{
-				CatchException( e );
-			}
-		}
-
-		public void LoadGraph( string path )
-		{
-			CheckIfSavedFirst()
-			.Then(() => {
-				CheckIfShouldRestoreFirst(path)
-				.Then(() =>{
-					ClearData();
-					string json = LoadJsonFile( path );
-
-					LoadTemplate( json );
-
-					var graph = new GenericDataArray();
-					graph.FromJson( json );
-					graph.GetValue( "data", out GenericDataArray data );
-					LoadData( data );
-
-					HasUnsavedChanges = false;
-					SaveFilePath = path;
-					AddRecentFile( path );
-				});
-			});
-		}
-
-		public void ShiftTemplateUnderData(string path)
-		{
-			try
-			{
-				includeNodeData = true;
-				includeGraphData = true;
-				GenericDataArray data = SaveData();
-				LoadTemplate( LoadJsonFile( path ) );
-				LoadData( data );
-				AddRecentTemplateFile( path );
-			}
-			catch( Exception ex )
-			{
-				CatchException( ex );
-			}
-		}
-		public string LoadJsonFile( string path )
-		{
-			File file = new File();
-			if( !file.FileExists( path ) )
-			{
-				throw new FileNotFoundException($"File '{path}' not found!");
-			}
-			
-			file.Open( path, File.ModeFlags.Read );
-			
-			string json = file.GetAsText();
-			file.Close();
-
-			return json;
-		}
-
-		public void SaveJsonFile( string path, string json )
-		{
-			File file = new File();
-			file.Open( path, File.ModeFlags.Write );
-			
-			file.StoreString( json );
-			file.Close();
-		}
-
-		public void LoadTemplate( string json )
-		{
-			CheckIfSavedFirst()
-			.Then(() => {
-				GenericDataArray gda = new GenericDataArray();
-				gda.FromJson( json );
-
-				gda.GetValue( "targetVersion", out string targetVersion );
-
-				if( targetVersion != _version )
-				{
-					_mainView.ShowNotice($"File version is '{targetVersion}' which does not match app version '{_version}'");
-				}
-
-				gda.GetValue( "defaultListing", out _defaultListing );
-				gda.GetValue( "explicitNode", out _explicitNode );
-				
-				if( string.IsNullOrEmpty( _defaultListing ) )
-				{
-					_defaultListing = "listing";
-				}
-				GenericDataArray listing = gda.GetGdo( "nodeList" ) as GenericDataArray;
-
-				gda.GetValue( "nestingColors", out List<Color> nestingColors );
-				gda.GetValue( "keyColors", out List<Color> keyColors );
-				
-				LoadTemplate( listing.values.Values.ToList(), nestingColors, keyColors );
-			});
-		}
-
-		public void LoadTemplate(List<GenericDataObject> dataList, List<Color> nestingColors, List<Color> keyColors )
-		{
-			if( dataList == null )
-			{
-				throw new NullReferenceException("LoadTemplate does not accept a null dataList");
-			}
-			
-			ClearData();
-			_nodeData.Clear();
-
-			_model.AddValue( "targetVersion", _version );
-			_model.AddValue( "defaultListing", _defaultListing );
-			_model.AddValue( "explicitNode", _explicitNode );
-			_model.AddValue( "nestingColors", _parentChildColors );
-			_model.AddValue( "keyColors", _keyColors );
-
-			if(nestingColors?.Count > 0)
-			{
-				_parentChildColors.Clear();
-				_parentChildColors.AddRange( nestingColors );
-			}
-			else
-			{
-				_parentChildColors.Clear();
-				_parentChildColors.Add( Colors.Aquamarine );
-				_parentChildColors.Add( Colors.Beige );
-				_parentChildColors.Add( Colors.Gold );
-				_parentChildColors.Add( Colors.Black );
-				_parentChildColors.Add( Colors.Firebrick );
-			}
-
-			if(keyColors?.Count > 0)
-			{
-				_keyColors.Clear();
-				_keyColors.AddRange( keyColors );
-			}
-			else
-			{
-				_keyColors.Clear();
-				_keyColors.Add( Colors.Chartreuse );
-				_keyColors.Add( Colors.Cornflower );
-				_keyColors.Add( Colors.Cornsilk );
-				_keyColors.Add( Colors.Indigo );
-				_keyColors.Add( Colors.HotPink );
-			}
-			
-			foreach( GenericDataObject gdo in dataList )
-			{
-				GenericDataArray item = gdo as GenericDataArray;
-				
-				item.GetValue( "title", out string title );
-
-				if( _nodeData.ContainsKey( title ) )
-				{
-					_mainView.ShowNotice( $"Duplicate node title '{title}' found in the template.\nNodes must all have unique titles" );
-				}
-				else
-				{
-					_nodeData[title] = item;
-				}
-			}
-
-			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
-			_model.AddValue( "nodeList", nodeList );
-
-			_mainView.ResetCreateMenu(_nodeData.Keys.ToList());
-		}
-
-		public GenericDataArray SaveData()
-		{
-			List<GenericDataArray> parentSlots = new List<GenericDataArray>();
-
-			foreach( SlottedGraphNode node in _mainView.nodes )
-			{
-				if( !node.LinkedToParent )
-				{
-					parentSlots.Add( node.GetObjectData() );
-				}
-			}
-
-			if( parentSlots.Count == 1 )
-			{
-				return parentSlots[0];
-			}
-			
-			GenericDataArray gda = new GenericDataArray();
-
-			gda.AddValue( _defaultListing, parentSlots );
-
-			return gda;
-		}
-
-		public void LoadData(GenericDataArray data)
-		{
-			if(data == null)
-			{
-				throw new Exception("Data in file was corrupted or missing.");
-			}
-
-			if( data.values.ContainsKey( "ngMapNodeName" ) )
-			{
-				LoadNode( data );
-			}
-			else if(data.values.Count == 1)
-			{
-				string key = data.values.Keys.First();
-				
-				data.GetValue( key, out List<GenericDataArray> items );
-
-				foreach( GenericDataArray item in items )
-				{
-					if( !item.values.ContainsKey( "ngMapNodeName" ) )
-					{
-						item.AddValue( "ngMapNodeName", _explicitNode );
-					}
-					LoadNode( item );
-				}
-			}
-			else
-			{
-				data.AddValue( "ngMapNodeName", _explicitNode );
-				LoadNode( data );
-			}
-
-			foreach( Tuple<KeyLinkSlot,string> loadingLink in loadingLinks )
-			{
-				_mainView.LinkToKey( loadingLink.Item1, loadingLink.Item2 );
-			}
-			
-			loadingLinks.Clear();
 		}
 		
 		public IPromise CheckIfSavedFirst()
@@ -763,7 +396,7 @@ namespace MetaMaker
 
 							var graph = new GenericDataArray();
 							graph.FromJson( json );
-							graph.GetValue( "data", out GenericDataArray data );
+							graph.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
 							LoadData( data );
 
 							HasUnsavedChanges = true;
@@ -789,5 +422,334 @@ namespace MetaMaker
 			
 			return promise;
 		}
+		#endregion
+
+		#region Get Data
+		public GenericDataArray GetNodeData(string index)
+		{
+			return _nodeData[index];
+		}
+
+		public SlottedGraphNode LoadNode( GenericDataArray nodeContent )
+		{
+			if( _nodeData.Count == 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
+
+			nodeContent.GetValue( NODE_NAME_KEY, out string nodeName );
+			//Log.Error($"Node name {nodeName}");
+
+			if( !_nodeData.ContainsKey( nodeName ) )
+			{
+				throw new ArgumentOutOfRangeException($"'{nodeName}' not found in loaded data");
+			}
+			
+			GenericDataArray nodeData = _nodeData[nodeName];
+			
+			if( nodeData == null ) throw new ArgumentNullException($"Data for '{nodeName}' was null");
+
+			return _mainView.CreateNode(nodeData, nodeContent);
+		}
+
+		public Color GetParentChildColor( int slotType )
+		{
+			return _parentChildColors[slotType % _parentChildColors.Count];
+		}
+
+		public Color GetKeyColor( int slotType )
+		{
+			return _keyColors[slotType % _keyColors.Count];
+		}
+		#endregion
+
+		#region Save Flow
+		public IPromise SaveGraph()
+		{
+			if( string.IsNullOrEmpty( SaveFilePath ) )
+			{
+				return _mainView.SaveGraphAs();
+			}
+
+			SaveGraph( SaveFilePath );
+
+			return Promise.Resolved();
+		}
+
+		public void SaveBackup()
+		{
+			if( !_autoBackup ) return;
+			if( !_hasUnbackedChanges ) return;
+			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
+			
+			_hasUnbackedChanges = false;
+						
+			SaveJsonFile( SaveFilePath + ".back", _model.DataCopy().ToJson() );
+		}
+
+		public void SaveGraph( string path )
+		{
+			try
+			{
+				SaveFilePath = path;
+				
+				SaveJsonFile( SaveFilePath, _model.DataCopy().ToJson() );
+
+				HasUnsavedChanges = false;
+				ClearBackup();
+				
+				AddRecentFile( path );
+			}
+			catch( Exception e )
+			{
+				CatchException( e );
+			}
+		}
+
+		public void ExportData(string path)
+		{
+			List<string> keys = new List<string>
+			{
+				NODE_NAME_KEY,
+				NODE_POSITION_KEY,
+				NODE_SIZE_KEY
+			};
+
+			_model.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+			var graph = data.DataCopy();
+			graph.AddValue( GRAPH_VERSION_KEY, Version );
+
+			if(keys != null)
+			{
+				graph.RecursivelyRemoveKeys(keys);
+			}
+
+			// TODO - GDA post export script runs here
+
+			string json = graph.ToJson();
+
+			// TODO - JSON post export script runs here
+					
+			SaveJsonFile( path, json );
+		}
+
+		public void SaveJsonFile( string path, string json )
+		{
+			File file = new File();
+			file.Open( path, File.ModeFlags.Write );
+			
+			file.StoreString( json );
+			file.Close();
+		}
+		#endregion
+
+		#region Load Flow
+		public void LoadDefaultTemplate()
+		{
+			LoadTemplate( LoadJsonFile( DEFAULT_TEMPLATE_SOURCE ) );
+
+			HasUnsavedChanges = false;
+			SaveFilePath = null;
+		}
+
+		public void LoadGraph( string path )
+		{
+			CheckIfSavedFirst()
+			.Then(() => {
+				CheckIfShouldRestoreFirst(path)
+				.Then(() =>{
+					ClearData();
+					string json = LoadJsonFile( path );
+
+					LoadTemplate( json );
+
+					var graph = new GenericDataArray();
+					graph.FromJson( json );
+					graph.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+					LoadData( data );
+
+					HasUnsavedChanges = false;
+					SaveFilePath = path;
+					AddRecentFile( path );
+				});
+			});
+		}
+
+		public void LoadData(GenericDataArray data)
+		{
+			if(data == null)
+			{
+				throw new Exception("Data in file was corrupted or missing.");
+			}
+
+			if( data.values.ContainsKey( NODE_NAME_KEY ) )
+			{
+				LoadNode( data );
+			}
+			else if(data.values.Count == 1)
+			{
+				string key = data.values.Keys.First();
+				
+				data.GetValue( key, out List<GenericDataArray> items );
+
+				foreach( GenericDataArray item in items )
+				{
+					if( !item.values.ContainsKey( NODE_NAME_KEY ) )
+					{
+						item.AddValue( NODE_NAME_KEY, _explicitNode );
+					}
+					LoadNode( item );
+				}
+			}
+			else
+			{
+				data.AddValue( NODE_NAME_KEY, _explicitNode );
+				LoadNode( data );
+			}
+
+			foreach( Tuple<KeyLinkSlot,string> loadingLink in _mainView.loadingLinks )
+			{
+				_mainView.LinkToKey( loadingLink.Item1, loadingLink.Item2 );
+			}
+			
+			_mainView.loadingLinks.Clear();
+		}
+
+		public void ShiftTemplateUnderData(string path)
+		{
+			try
+			{
+				_model.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+				data = data.DataCopy();
+				LoadTemplate( LoadJsonFile( path ) );
+				LoadData( data );
+				AddRecentTemplateFile( path );
+			}
+			catch( Exception ex )
+			{
+				CatchException( ex );
+			}
+		}
+		
+		public string LoadJsonFile( string path )
+		{
+			File file = new File();
+			if( !file.FileExists( path ) )
+			{
+				throw new FileNotFoundException($"File '{path}' not found!");
+			}
+			
+			file.Open( path, File.ModeFlags.Read );
+			
+			string json = file.GetAsText();
+			file.Close();
+
+			return json;
+		}
+
+		public void LoadTemplate( string json )
+		{
+			CheckIfSavedFirst()
+			.Then(() => {
+				try
+				{
+					LoadTemplateInternal(json);
+				}
+				catch(Exception ex)
+				{
+					CatchException(ex);
+				}
+			});
+		}
+
+		private void LoadTemplateInternal( string json )
+		{
+			GenericDataArray gda = new GenericDataArray();
+			gda.FromJson( json );
+
+			gda.GetValue( GRAPH_VERSION_KEY, out string targetVersion );
+
+			if( targetVersion != _version )
+			{
+				_mainView.ShowNotice($"File version is '{targetVersion}' which does not match app version '{_version}'");
+			}
+
+			gda.GetValue( GRAPH_LISTING_KEY, out _defaultListing );
+			gda.GetValue( GRAPH_EXPLICIT_KEY, out _explicitNode );
+			
+			if( string.IsNullOrEmpty( _defaultListing ) )
+			{
+				_defaultListing = "listing";
+			}
+			GenericDataArray listing = gda.GetGdo( GRAPH_NODE_LIST_KEY ) as GenericDataArray;
+
+			gda.GetValue( GRAPH_NESTED_COLORS_KEY, out List<Color> nestingColors );
+			gda.GetValue( GRAPH_KEY_COLORs_KEY, out List<Color> keyColors );
+			
+			List<GenericDataObject> dataList = listing.values.Values.ToList();
+			if( dataList == null )
+			{
+				throw new NullReferenceException("LoadTemplate does not accept a null dataList");
+			}
+			
+			ClearData();
+			_nodeData.Clear();
+
+			_model.AddValue( GRAPH_VERSION_KEY, _version );
+			_model.AddValue( GRAPH_LISTING_KEY, _defaultListing );
+			_model.AddValue( GRAPH_EXPLICIT_KEY, _explicitNode );
+			_model.AddValue( GRAPH_NESTED_COLORS_KEY, nestingColors );
+			_model.AddValue( GRAPH_KEY_COLORs_KEY, keyColors );
+
+			if(nestingColors?.Count > 0)
+			{
+				_parentChildColors.Clear();
+				_parentChildColors.AddRange( nestingColors );
+			}
+			else
+			{
+				_parentChildColors.Clear();
+				_parentChildColors.Add( Colors.Aquamarine );
+				_parentChildColors.Add( Colors.Beige );
+				_parentChildColors.Add( Colors.Gold );
+				_parentChildColors.Add( Colors.Black );
+				_parentChildColors.Add( Colors.Firebrick );
+			}
+
+			if(keyColors?.Count > 0)
+			{
+				_keyColors.Clear();
+				_keyColors.AddRange( keyColors );
+			}
+			else
+			{
+				_keyColors.Clear();
+				_keyColors.Add( Colors.Chartreuse );
+				_keyColors.Add( Colors.Cornflower );
+				_keyColors.Add( Colors.Cornsilk );
+				_keyColors.Add( Colors.Indigo );
+				_keyColors.Add( Colors.HotPink );
+			}
+			
+			foreach( GenericDataObject gdo in dataList )
+			{
+				GenericDataArray item = gdo as GenericDataArray;
+				
+				item.GetValue( "title", out string title );
+
+				if( _nodeData.ContainsKey( title ) )
+				{
+					_mainView.ShowNotice( $"Duplicate node title '{title}' found in the template.\nNodes must all have unique titles" );
+				}
+				else
+				{
+					_nodeData[title] = item;
+				}
+			}
+
+			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
+			_model.AddValue( GRAPH_NODE_LIST_KEY, nodeList );
+
+			_mainView.ResetCreateMenu(_nodeData.Keys.ToList());
+		}
+		#endregion
+
 	}
 }

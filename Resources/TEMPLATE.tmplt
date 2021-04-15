@@ -1,5 +1,4 @@
 {
-  "targetVersion": "0.5.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "nestingColors": [
@@ -507,7 +506,7 @@
       ]
     },
     {
-      "title": "Validate String Slot",
+      "title": "Flags Slot",
       "color": {
         "r": 0.765625,
         "g": 0.40288505,
@@ -519,25 +518,31 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VALIDATE_STRING"
+          "defaultValue": "FLAGS"
         },
         {
           "fieldType": "TEXT_LINE",
-          "label": "saveName",
-          "defaultValue": "validatedString"
+          "label": "label",
+          "defaultValue": "Flags"
         },
         {
-          "fieldType": "BOOLEAN",
-          "label": "asList",
-          "defaultValue": false,
-          "id": "BOOL-eNx"
+          "fieldType": "INT",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
         },
         {
-          "fieldType": "LINK_TO_CHILD",
-          "label": "validation",
-          "slotType": 1,
-          "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
+          "fieldType": "FIELD_LIST",
+          "label": "flags",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "Flag"
+          }
         }
       ]
     },
@@ -1229,5 +1234,6 @@
         }
       ]
     }
-  ]
+  ],
+  "metaMakerVersion": "0.5.0"
 }

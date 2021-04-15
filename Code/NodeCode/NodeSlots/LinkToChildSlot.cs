@@ -33,9 +33,9 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			Text = label;
 
-			if( template.values.ContainsKey( "explicitNode" ) )
+			if( template.values.ContainsKey( App.GRAPH_EXPLICIT_KEY ) )
 			{
-				template.GetValue( "explicitNode", out _explicitNode );
+				template.GetValue( App.GRAPH_EXPLICIT_KEY, out _explicitNode );
 			}
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
@@ -70,7 +70,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			UpdateField( objData );
 		}
 
 		public void SetObjectData( GenericDataArray objData )
@@ -79,14 +78,14 @@ namespace MetaMaker
 
 			if( data == null || data.values.Count == 0 ) return;
 
-			if( !data.values.ContainsKey( "ngMapNodeName" ) )
+			if( !data.values.ContainsKey( App.NODE_NAME_KEY ) )
 			{
 				if( string.IsNullOrEmpty( _explicitNode ) )
 				{
 					throw new InvalidCastException($"Type definition not determinate for node {objData}");
 				}
 				
-				data.AddValue( "ngMapNodeName", _explicitNode );
+				data.AddValue( App.NODE_NAME_KEY, _explicitNode );
 			}
 
 			SlottedGraphNode node = _app.Get.LoadNode( data );
@@ -97,7 +96,7 @@ namespace MetaMaker
 		private void UpdateField( GenericDataArray objData )
 		{
 			if( _child == null ||
-			    ( _mainView.Get.copyingData && 
+			    ( _app.Get.copyingData && 
 			       !_mainView.Get.IsSelected( _child )))
 			{
 				switch(emptyHandling)

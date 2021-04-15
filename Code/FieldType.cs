@@ -13,6 +13,7 @@ namespace MetaMaker
 		AUTO,
 		TYPE,
 		ENUM,
+		FLAGS,
 		TEXT_LINE,
 		TEXT_AREA,
 		TEXT_AREA_RICH,

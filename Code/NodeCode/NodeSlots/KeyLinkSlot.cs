@@ -74,7 +74,6 @@ namespace MetaMaker
 
 		public void GetObjectData( GenericDataArray objData )
 		{
-			UpdateField(objData);
 		}
 
 		public void SetObjectData( GenericDataArray objData )

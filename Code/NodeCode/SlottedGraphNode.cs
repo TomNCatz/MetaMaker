@@ -56,46 +56,19 @@ namespace MetaMaker
 		
 		public void GetObjectData( GenericDataArray objData )
 		{
-			if(_app.Get.includeNodeData)
-			{
-				objData.AddValue( "ngMapNodeName", _title );
-				if( _builder.includeGraphData )
-				{
-					objData.AddValue( "ngMapNodePosition", Offset );
-					objData.AddValue( "ngMapNodeSize", RectSize );
-				}
-			}
-			
-			for( int i = 0; i < slots.Count; i++ )
-			{
-				if( slots[i] is IGdoConvertible convertible )
-				{
-					convertible.GetObjectData( objData );
-				}
-
-				if( slots[i] is FieldListSlot listSlot)
-				{
-					i += listSlot.Count;
-				}
-
-				if( slots[i] is FieldDictionarySlot dictionarySlot)
-				{
-					i += dictionarySlot.Count;
-				}
-			}
 		}
 
 		public void SetObjectData( GenericDataArray objData )
 		{
-			objData.GetValue( "ngMapNodeName", out _title );
-			if(objData.values.ContainsKey( "ngMapNodePosition" ))
+			objData.GetValue( App.NODE_NAME_KEY, out _title );
+			if(objData.values.ContainsKey( App.NODE_POSITION_KEY ))
 			{
-				objData.GetValue( "ngMapNodePosition", out Vector2 offset );
+				objData.GetValue( App.NODE_POSITION_KEY, out Vector2 offset );
 				Offset = offset;
 			}
-			if(objData.values.ContainsKey( "ngMapNodeSize" ))
+			if(objData.values.ContainsKey( App.NODE_SIZE_KEY ))
 			{
-				objData.GetValue( "ngMapNodeSize", out Vector2 size );
+				objData.GetValue( App.NODE_SIZE_KEY, out Vector2 size );
 				RectSize = size;
 			}
 
@@ -124,9 +97,9 @@ namespace MetaMaker
 		{
 			definition.GetValue( "title", out _title );
 			Title = _title;
-			_model.AddValue( "ngMapNodeName", Title );
-			_model.AddValue( "ngMapNodePosition", Offset );
-			_model.AddValue( "ngMapNodeSize", RectSize );
+			_model.AddValue( App.NODE_NAME_KEY, Title );
+			_model.AddValue( App.NODE_POSITION_KEY, Offset );
+			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
 			
 			if(definition.values.ContainsKey( "color" ))
 			{
@@ -234,6 +207,9 @@ namespace MetaMaker
 					break;
 				case FieldType.ENUM : 
 					child = _builder.enumScene.Instance();
+					break;
+				case FieldType.FLAGS : 
+					child = _builder.flagsScene.Instance();
 					break;
 				case FieldType.TEXT_LINE : 
 					child = _builder.textLineScene.Instance();
@@ -429,13 +405,13 @@ namespace MetaMaker
 		private void OnResizeRequest(Vector2 newSize)
 		{
 			RectSize = new Vector2( newSize.x, newSize.y < RectSize.y ? newSize.y : RectSize.y );
-			_model.AddValue( "ngMapNodeSize", RectSize );
+			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
 			Dirty = true;
 		}
 
 		private void OnMove()
 		{
-			_model.AddValue( "ngMapNodePosition", Offset );
+			_model.AddValue( App.NODE_POSITION_KEY, Offset );
 			Dirty = true;
 		}
 
