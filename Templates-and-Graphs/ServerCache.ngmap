@@ -1,0 +1,308 @@
+{
+  "data": {
+    "ngMapNodePosition": {
+      "x": -480.1665,
+      "y": 236.894775
+    },
+    "ngMapNodeName": "Project",
+    "ngMapNodeSize": {
+      "x": 202.0,
+      "y": 66.0
+    },
+    "Quests": [
+      {
+        "ngMapNodePosition": {
+          "x": -200.0,
+          "y": 1000.0
+        },
+        "ngMapNodeName": "Quest",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "Id": "QT_Wch50",
+        "Name": "Talk to Janet",
+        "Description": "Janet has something for you",
+        "QuestGiver": "NPC_kMJgL",
+        "Reward": "IT_me5lw"
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": 1000.0
+        },
+        "ngMapNodeName": "Quest",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 293.0
+        },
+        "Id": "QT_6hA9u",
+        "Name": "Find Brad",
+        "Description": "Janet is looking for someone",
+        "QuestGiver": "NPC_kMJgL",
+        "Reward": "IT_KJrvU"
+      }
+    ],
+    "NPCs": [
+      {
+        "ngMapNodePosition": {
+          "x": -200.0,
+          "y": 400.0
+        },
+        "ngMapNodeName": "NPC",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "Id": "NPC_kMJgL",
+        "Name": "Janet",
+        "Description": "Player Facing Description",
+        "IconPath": "res:NPCIcons/"
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": 400.0
+        },
+        "ngMapNodeName": "NPC",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 288.0
+        },
+        "Id": "NPC_KPiZG",
+        "Name": "Brad",
+        "Description": "Great Scott",
+        "IconPath": "res:NPCIcons/"
+      }
+    ],
+    "Items": [
+      {
+        "ngMapNodePosition": {
+          "x": -200.0,
+          "y": 0.0
+        },
+        "ngMapNodeName": "Item",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "Id": "IT_me5lw",
+        "Name": "Jacket",
+        "Description": "Something to keep the chill off."
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": 0.0
+        },
+        "ngMapNodeName": "Item",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 263.0
+        },
+        "Id": "IT_KJrvU",
+        "Name": "Glasses",
+        "Description": "I can see clearly now"
+      }
+    ]
+  },
+  "metaMakerVersion": "0.5.0",
+  "defaultListing": "listing",
+  "explicitNode": "Project",
+  "reuseDll": true,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Quests\"] = new ExportSet(){relativeSavePath = \"Quests.json\", gdoExportTarget = \"data/Quests\" };\n\t\t\t_exportTargets[\"Items\"] = new ExportSet(){relativeSavePath = \"Items.json\", gdoExportTarget = \"data/Items\" };\n\t\t\t_exportTargets[\"NPCs\"] = new ExportSet(){relativeSavePath = \"NPCs.json\", gdoExportTarget = \"data/NPCs\" };\n\t\t}\n\t}\n}",
+  "nestingColors": [
+    {
+      "r": 0.240431875,
+      "g": 0.383290142,
+      "b": 0.38671875,
+      "a": 1.0
+    },
+    {
+      "r": 0.232985124,
+      "g": 0.237769663,
+      "b": 0.35546875,
+      "a": 1.0
+    },
+    {
+      "r": 0.31640625,
+      "g": 0.285946965,
+      "b": 0.205012277,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.0,
+      "g": 0.9765625,
+      "b": 1.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 0.0390625,
+      "b": 1.0,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.6796875,
+      "b": 0.0,
+      "a": 1.0
+    }
+  ],
+  "nodeList": [
+    {
+      "title": "Project",
+      "color": {
+        "r": 0.28125,
+        "g": 0.28125,
+        "b": 0.28125,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Items",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 0,
+            "explicitNode": "Item",
+            "emptyHandling": "SKIP"
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "NPCs",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 1,
+            "explicitNode": "NPC",
+            "emptyHandling": "SKIP"
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Quests",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 2,
+            "explicitNode": "Quest",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Item",
+      "color": {
+        "r": 0.215443581,
+        "g": 0.77734375,
+        "b": 0.77734375,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "Id",
+          "slotType": 0,
+          "keyPrefix": "IT_",
+          "keySize": 5
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Name",
+          "defaultValue": "Item"
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "Description",
+          "minHeight": 80.0,
+          "defaultValue": "Player Facing Description"
+        }
+      ]
+    },
+    {
+      "title": "NPC",
+      "color": {
+        "r": 0.1615315,
+        "g": 0.221195519,
+        "b": 0.70703125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "Id",
+          "slotType": 1,
+          "keyPrefix": "NPC_",
+          "keySize": 5
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Name",
+          "defaultValue": "Character"
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "Description",
+          "minHeight": 80.0,
+          "defaultValue": "Player Facing Description"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "IconPath",
+          "defaultValue": "res:NPCIcons/"
+        }
+      ]
+    },
+    {
+      "title": "Quest",
+      "color": {
+        "r": 0.765625,
+        "g": 0.5122089,
+        "b": 0.1863881,
+        "a": 1.0
+      },
+      "parentType": 2,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "Id",
+          "slotType": 2,
+          "keyPrefix": "QT_",
+          "keySize": 5
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Name",
+          "defaultValue": "Character"
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "Description",
+          "minHeight": 80.0,
+          "defaultValue": "Player Facing Description"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "QuestGiver",
+          "slotType": 1,
+          "emptyHandling": "EMPTY_STRING"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "Reward",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    }
+  ]
+}

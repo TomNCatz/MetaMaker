@@ -1,0 +1,343 @@
+{
+  "targetVersion": "0.4.1",
+  "defaultListing": "_commandHub",
+  "explicitNode": "Commands",
+  "nestingColors": [
+    {
+      "r": 0.21875,
+      "g": 1.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.5,
+      "g": 1.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.39,
+      "g": 0.58,
+      "b": 0.93,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.97,
+      "b": 0.86,
+      "a": 1.0
+    },
+    {
+      "r": 0.29,
+      "g": 0.0,
+      "b": 0.51,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.41,
+      "b": 0.71,
+      "a": 1.0
+    }
+  ],
+  "nodeList": [
+    {
+      "title": "Commands",
+      "color": {
+        "r": 0.234638348,
+        "g": 0.2578125,
+        "b": 0.248800322,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": {
+        "0": {
+          "fieldType": "FIELD_LIST",
+          "label": "_commandHub",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "CMD",
+            "slotType": 0,
+            "explicitNode": "",
+            "emptyHandling": "SKIP"
+          }
+        }
+      }
+    },
+    {
+      "title": "Command Set",
+      "color": {
+        "r": 0.431372553,
+        "g": 0.5019608,
+        "b": 0.4745098,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": {
+        "0": {
+          "fieldType": "TYPE",
+          "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Class Type": "CommandSet"
+        },
+        "1": {
+          "fieldType": "TEXT_LINE",
+          "label": "Id",
+          "defaultValue": "String"
+        },
+        "2": {
+          "fieldType": "TEXT_AREA",
+          "label": "Description",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        },
+        "3": {
+          "fieldType": "TEXT_LINE",
+          "label": "Format",
+          "defaultValue": "String"
+        },
+        "4": {
+          "fieldType": "FIELD_LIST",
+          "label": "SubCommands",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "children",
+            "slotType": 0,
+            "explicitNode": "",
+            "emptyHandling": "EMPTY_OBJECT"
+          }
+        }
+      }
+    },
+    {
+      "title": "Command",
+      "color": {
+        "r": 0.339946151,
+        "g": 0.578125,
+        "b": 0.5557957,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": {
+        "0": {
+          "fieldType": "TYPE",
+          "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Class Type": "CommandTerminal"
+        },
+        "1": {
+          "fieldType": "TEXT_LINE",
+          "label": "Id",
+          "defaultValue": "String"
+        },
+        "2": {
+          "fieldType": "TEXT_AREA",
+          "label": "Description",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        },
+        "3": {
+          "fieldType": "TEXT_LINE",
+          "label": "Format",
+          "defaultValue": "String"
+        },
+        "4": {
+          "fieldType": "TEXT_LINE",
+          "label": "EventId",
+          "defaultValue": "String"
+        },
+        "5": {
+          "fieldType": "INT",
+          "label": "ParameterCount",
+          "MinStepSize": 0.0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        }
+      }
+    }
+  ],
+  "data": {
+    "ngMapNodeName": "Commands",
+    "ngMapNodePosition": {
+      "x": 0.0,
+      "y": -400.0
+    },
+    "ngMapNodeSize": {
+      "x": 261.0,
+      "y": 95.0
+    },
+    "_commandHub": [
+      {
+        "ngMapNodeName": "Command Set",
+        "ngMapNodePosition": {
+          "x": 600.0,
+          "y": -600.0
+        },
+        "ngMapNodeSize": {
+          "x": 260.0,
+          "y": 219.0
+        },
+        "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "Class Type": "CommandSet",
+        "Id": "Test",
+        "Description": "A set of tests",
+        "Format": "Test <command>",
+        "SubCommands": [
+          {
+            "ngMapNodeName": "Command",
+            "ngMapNodePosition": {
+              "x": 1200.0,
+              "y": -600.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 214.0
+            },
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "Id": "A",
+            "Description": "This is a test",
+            "Format": "Test A",
+            "EventId": "TEST_A",
+            "ParameterCount": 0
+          },
+          {
+            "ngMapNodeName": "Command",
+            "ngMapNodePosition": {
+              "x": 1200.0,
+              "y": -360.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 214.0
+            },
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "Id": "B",
+            "Description": "This is a test",
+            "Format": "Test B",
+            "EventId": "TEST_B",
+            "ParameterCount": 0
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Command",
+        "ngMapNodePosition": {
+          "x": 600.0,
+          "y": -120.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 214.0
+        },
+        "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "Class Type": "CommandTerminal",
+        "Id": "Testing",
+        "Description": "This is a test",
+        "Format": "Testing <string>",
+        "EventId": "TEST_EVENT",
+        "ParameterCount": 1
+      },
+      {
+        "ngMapNodeName": "Command Set",
+        "ngMapNodePosition": {
+          "x": 600.0,
+          "y": 160.0
+        },
+        "ngMapNodeSize": {
+          "x": 260.0,
+          "y": 249.0
+        },
+        "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "Class Type": "CommandSet",
+        "Id": "get",
+        "Description": "Give something to the user",
+        "Format": "get <command>",
+        "SubCommands": [
+          {
+            "ngMapNodeName": "Command",
+            "ngMapNodePosition": {
+              "x": 1200.0,
+              "y": 160.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 214.0
+            },
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "Id": "gold",
+            "Description": "Give the user some amount of gold",
+            "Format": "get gold <int>",
+            "EventId": "givegold",
+            "ParameterCount": 1
+          },
+          {
+            "ngMapNodeName": "Command",
+            "ngMapNodePosition": {
+              "x": 1200.0,
+              "y": 400.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 214.0
+            },
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "Id": "life",
+            "Description": "give the user a life",
+            "Format": "get life",
+            "EventId": "1up",
+            "ParameterCount": 0
+          },
+          {
+            "ngMapNodeName": "Command",
+            "ngMapNodePosition": {
+              "x": 1200.0,
+              "y": 660.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 214.0
+            },
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "Id": "item",
+            "Description": "give some item",
+            "Format": "get item <item name> <count>",
+            "EventId": "getitem",
+            "ParameterCount": 2
+          },
+          {
+            "ngMapNodeName": "Command",
+            "ngMapNodePosition": {
+              "x": 1200.0,
+              "y": 900.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 214.0
+            },
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "Id": "good",
+            "Description": "levels up the user",
+            "Format": "get good",
+            "EventId": "levelUp",
+            "ParameterCount": 0
+          }
+        ]
+      }
+    ]
+  }
+}
