@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TypeSlot : Container, IField, IGdoConvertible
+	public class TypeSlot : Container, IField
 	{
 		[Export] public NodePath _fieldPath;
 		private Label _field;
@@ -51,14 +51,6 @@ namespace MetaMaker
 
 			parentModel.AddValue( "Class Assembly", assembly );
 			parentModel.AddValue( "Class Type", type );
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
 		}
 	}
 }

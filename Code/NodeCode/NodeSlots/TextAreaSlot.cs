@@ -43,11 +43,12 @@ namespace MetaMaker
 		{
 			objData.GetValue( _label.Text, out string text );
 			_field.Text = text;
+			_parentModel.AddValue(_label.Text, _field.Text);
 		}
 
-		private void OnChanged( string text )
+		private void OnChanged()
 		{
-			_parentModel.AddValue(_label.Text, text);
+			_parentModel.AddValue(_label.Text, _field.Text);
 			OnValueUpdated?.Invoke();
 		}
 	}

@@ -29,7 +29,9 @@ namespace MetaMaker
 		public const string GRAPH_LISTING_KEY = "defaultListing";
 		public const string GRAPH_EXPLICIT_KEY = "explicitNode";
 		public const string GRAPH_NESTED_COLORS_KEY = "nestingColors";
-		public const string GRAPH_KEY_COLORs_KEY = "keyColors";
+		public const string GRAPH_KEY_COLORS_KEY = "keyColors";
+		public const string GRAPH_EXPORT_DLL_KEY = "reuseDll";
+		public const string GRAPH_EXPORT_SCRIPT_KEY = "exportScript";
 		public const string GRAPH_NODE_LIST_KEY = "nodeList";
 		public const string GRAPH_DATA_KEY = "data";
 		#endregion
@@ -52,6 +54,8 @@ namespace MetaMaker
 		private bool _hasUnbackedChanges;
 		private GenericDataArray _model;
 		private readonly List<GenericDataArray> _topModels = new List<GenericDataArray>();
+		private ExportRules _exportRules;
+		private string _loadingPath;
 
 		public string Version => _version;
 		private string _version;
@@ -273,9 +277,11 @@ namespace MetaMaker
 				_mainView.nodes[i].CloseRequest();
 			}
 			
+			_nodeData.Clear();
 			ClearBackup();
 			HasUnsavedChanges = false;
 			SaveFilePath = null;
+			_exportRules = null;
 		}
 
 		public void SaveSettings()
@@ -338,7 +344,6 @@ namespace MetaMaker
 
 		public void ClearBackup()
 		{
-			return;
 			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
 			
 			File file = new File();
@@ -494,8 +499,6 @@ namespace MetaMaker
 
 				HasUnsavedChanges = false;
 				ClearBackup();
-				
-				AddRecentFile( path );
 			}
 			catch( Exception e )
 			{
@@ -503,8 +506,18 @@ namespace MetaMaker
 			}
 		}
 
-		public void ExportData(string path)
+		public void ExportAll()
 		{
+			foreach(string exportName in _exportRules.ExportTargets.Keys)
+			{
+				ExportSet(exportName);
+			}
+		}
+
+		public void ExportSet(string exportName)
+		{
+			if(string.IsNullOrEmpty(SaveFilePath)) throw new Exception("Relative export requires the graph to have been saved first.");
+
 			List<string> keys = new List<string>
 			{
 				NODE_NAME_KEY,
@@ -512,7 +525,13 @@ namespace MetaMaker
 				NODE_SIZE_KEY
 			};
 
-			_model.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+			ExportSet exportSet = _exportRules.ExportTargets[exportName];
+
+			if (!(_model.GetRelativeGDO(exportSet.gdoExportTarget) is GenericDataArray data)) 
+			{
+				throw new Exception($"Object at path {exportSet.gdoExportTarget} is not an array");
+			}
+
 			var graph = data.DataCopy();
 			graph.AddValue( GRAPH_VERSION_KEY, Version );
 
@@ -521,22 +540,74 @@ namespace MetaMaker
 				graph.RecursivelyRemoveKeys(keys);
 			}
 
-			// TODO - GDA post export script runs here
+			_exportRules.PreprocessExportGDA(graph, exportName);
 
 			string json = graph.ToJson();
 
-			// TODO - JSON post export script runs here
+			json = _exportRules.PostprocessExportJSON(json, exportName);
 					
+			// TODO : this path needs to be converted to an absolute path
+			string path = exportSet.relativeSavePath.Replace("$name",GetFileName(SaveFilePath));
+			path = path.Replace("$export",exportName);
+			path = GetContainingPath(SaveFilePath) + "/" + path;
+			// TODO : convert '../' to a navigate up one folder
+			path = System.IO.Path.GetFullPath(path);
+
 			SaveJsonFile( path, json );
+		}
+
+		private string GetContainingPath(string filePath)
+		{
+			int index = filePath.LastIndexOf('/');
+			if(index < 0)
+			{
+				index = filePath.LastIndexOf('\\');
+			}
+
+			return filePath.Substring(0,index) ;
+		}
+
+		private string GetFileName(string filePath)
+		{
+			int startIndex = filePath.LastIndexOf('/');
+			if(startIndex < 0)
+			{
+				startIndex = filePath.LastIndexOf('\\');
+			}
+			int endIndex = filePath.LastIndexOf('.');
+
+			return filePath.Substring(startIndex,endIndex - startIndex);
 		}
 
 		public void SaveJsonFile( string path, string json )
 		{
-			File file = new File();
-			file.Open( path, File.ModeFlags.Write );
-			
-			file.StoreString( json );
-			file.Close();
+			try
+			{
+				if(!path.Contains("user:")&&!path.Contains("res:"))
+				{
+					Serializer.CreatePathIfMissing( GetContainingPath(path) );
+				}
+
+				File file = new File();
+				file.Open( path, File.ModeFlags.Write );
+				
+				file.StoreString( json );
+				file.Close();
+
+				
+				if(path.Contains(".tmplt"))
+				{
+					AddRecentTemplateFile( path );
+				}
+				if(!path.Contains(".back") && path.Contains(".ngmap"))
+				{
+					AddRecentFile( path );
+				}
+			}
+			catch(Exception ex)
+			{
+				CatchException(ex);
+			}
 		}
 		#endregion
 
@@ -555,19 +626,26 @@ namespace MetaMaker
 			.Then(() => {
 				CheckIfShouldRestoreFirst(path)
 				.Then(() =>{
-					ClearData();
-					string json = LoadJsonFile( path );
+					try
+					{
+						ClearData();
+						string json = LoadJsonFile( path );
 
-					LoadTemplate( json );
+						LoadTemplateInternal(json);
 
-					var graph = new GenericDataArray();
-					graph.FromJson( json );
-					graph.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
-					LoadData( data );
+						var graph = new GenericDataArray();
+						graph.FromJson( json );
+						graph.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+						LoadData( data );
 
-					HasUnsavedChanges = false;
-					SaveFilePath = path;
-					AddRecentFile( path );
+						SaveFilePath = path;
+						HasUnsavedChanges = false;
+						AddRecentFile( path );
+					}
+					catch(Exception ex)
+					{
+						CatchException(ex);
+					}
 				});
 			});
 		}
@@ -614,18 +692,22 @@ namespace MetaMaker
 
 		public void ShiftTemplateUnderData(string path)
 		{
-			try
-			{
-				_model.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
-				data = data.DataCopy();
-				LoadTemplate( LoadJsonFile( path ) );
-				LoadData( data );
-				AddRecentTemplateFile( path );
-			}
-			catch( Exception ex )
-			{
-				CatchException( ex );
-			}
+			CheckIfSavedFirst()
+			.Then(() => {
+				try
+				{
+					_model.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+					data = data.DataCopy();
+					ClearData();
+					LoadTemplate( LoadJsonFile( path ) );
+					LoadData( data );
+					AddRecentTemplateFile( path );
+				}
+				catch( Exception ex )
+				{
+					CatchException( ex );
+				}
+			});
 		}
 		
 		public string LoadJsonFile( string path )
@@ -635,6 +717,8 @@ namespace MetaMaker
 			{
 				throw new FileNotFoundException($"File '{path}' not found!");
 			}
+
+			_loadingPath = path;
 			
 			file.Open( path, File.ModeFlags.Read );
 			
@@ -650,6 +734,7 @@ namespace MetaMaker
 			.Then(() => {
 				try
 				{
+					ClearData();
 					LoadTemplateInternal(json);
 				}
 				catch(Exception ex)
@@ -681,22 +766,37 @@ namespace MetaMaker
 			GenericDataArray listing = gda.GetGdo( GRAPH_NODE_LIST_KEY ) as GenericDataArray;
 
 			gda.GetValue( GRAPH_NESTED_COLORS_KEY, out List<Color> nestingColors );
-			gda.GetValue( GRAPH_KEY_COLORs_KEY, out List<Color> keyColors );
+			gda.GetValue( GRAPH_KEY_COLORS_KEY, out List<Color> keyColors );
+			gda.GetValue( GRAPH_EXPORT_DLL_KEY, out bool reuseDll );
+			gda.GetValue( GRAPH_EXPORT_SCRIPT_KEY, out string exportScript );
 			
 			List<GenericDataObject> dataList = listing.values.Values.ToList();
 			if( dataList == null )
 			{
 				throw new NullReferenceException("LoadTemplate does not accept a null dataList");
 			}
-			
-			ClearData();
-			_nodeData.Clear();
 
 			_model.AddValue( GRAPH_VERSION_KEY, _version );
 			_model.AddValue( GRAPH_LISTING_KEY, _defaultListing );
 			_model.AddValue( GRAPH_EXPLICIT_KEY, _explicitNode );
+			_model.AddValue( GRAPH_EXPORT_DLL_KEY, reuseDll );
+			_model.AddValue( GRAPH_EXPORT_SCRIPT_KEY, exportScript );
 			_model.AddValue( GRAPH_NESTED_COLORS_KEY, nestingColors );
-			_model.AddValue( GRAPH_KEY_COLORs_KEY, keyColors );
+			_model.AddValue( GRAPH_KEY_COLORS_KEY, keyColors );
+
+			if(_loadingPath.Contains("Resources/TEMPLATE.tmplt"))
+			{
+				_exportRules = new TemplateExportRules();
+			}
+			else
+			{
+				LoadAssembly(exportScript, reuseDll);
+			}
+
+			if(_exportRules == null)
+			{
+				_exportRules = new DefaultExportRules();
+			}
 
 			if(nestingColors?.Count > 0)
 			{
@@ -748,6 +848,56 @@ namespace MetaMaker
 			_model.AddValue( GRAPH_NODE_LIST_KEY, nodeList );
 
 			_mainView.ResetCreateMenu(_nodeData.Keys.ToList());
+			_mainView.ResetExportMenu(_exportRules.ExportTargets);
+		}
+
+		private void LoadAssembly(string exportScript, bool reuseDll)
+		{
+			System.Reflection.Assembly assembly = null;
+
+			string dllPath = _loadingPath.Substring(0,_loadingPath.LastIndexOf('.')) + ".dll";
+
+			File file = new File();
+			if(reuseDll && file.FileExists( dllPath ) )
+			{
+				try
+				{
+					assembly = System.Reflection.Assembly.LoadFile(dllPath);
+				}
+				catch(Exception ex)
+				{
+					CatchException(ex);
+				}
+			}
+
+			if(assembly == null && !string.IsNullOrEmpty(exportScript))
+			{
+				try
+				{
+					var args = new AssemblyCompileArgs();
+					if(reuseDll)
+					{
+						args.exportPath = dllPath;
+					}
+					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(Dictionary<,>)));
+					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(ExportRules)));
+					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(GenericDataArray)));
+					args.code = exportScript;
+					assembly = SharpMods.RoslynRuntimeCompile(args);
+				}
+				catch(Exception ex)
+				{
+					CatchException(ex);
+				}
+			}
+
+			if(assembly != null)
+			{
+				var type = assembly.GetType("Rules.ExportRules");
+
+				var obj = Activator.CreateInstance(type, null);
+				_exportRules = obj as ExportRules;
+			}
 		}
 		#endregion
 

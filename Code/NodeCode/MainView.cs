@@ -92,6 +92,7 @@ namespace MetaMaker
 		private Vector2 _buffer = new Vector2(40,10);
 		private PopupMenu _editMenu;
 		private PopupMenu _createSubmenu;
+		private PopupMenu _exportSubmenu;
 		private PopupMenu _recentTemplateSubmenu;
 		private PopupMenu _recentShiftSubmenu;
 		private PopupMenu _recentSubmenu;
@@ -157,6 +158,7 @@ namespace MetaMaker
 				_recentShiftSubmenu = new PopupMenu { Name = "RecentShiftMenu" };
 				_recentSubmenu = new PopupMenu { Name = "RecentMenu" };
 				_createSubmenu = new PopupMenu { Name = "CreateMenu" };
+				_exportSubmenu = new PopupMenu { Name = "ExportMenu" };
 
 				_recentTemplateSubmenu.Connect( "id_pressed", this, nameof(OnRecentTemplateMenuSelection));
 				_recentShiftSubmenu.Connect( "id_pressed", this, nameof(OnRecentShiftMenuSelection));
@@ -171,7 +173,6 @@ namespace MetaMaker
 				menu.AddItem( "Shift Template Under Data", 7 );
 				menu.AddChild( _recentShiftSubmenu );
 				menu.AddSubmenuItem( "Recent Template Under Data", "RecentShiftMenu" );
-				menu.AddItem( "Export as Template", 9 );
 				menu.AddSeparator(  );
 				menu.AddItem( "Save Graph (CTRL+S)", 11 );
 				menu.AddItem( "Save Graph As", 2 );
@@ -180,9 +181,11 @@ namespace MetaMaker
 				menu.AddSubmenuItem( "Recent Graph", "RecentMenu" );
 				menu.AddSeparator(  );
 				menu.AddItem( "Clear Data", 6 );
-				menu.AddItem( "Export Slim JSON", 10 );
-				menu.AddItem( "Export Data to JSON", 4 );
 				menu.AddItem( "Import Data from JSON", 5 );
+				menu.AddItem( "Export All", 4 );
+				_exportSubmenu.Connect( "id_pressed", this, nameof(OnExportMenuSelection));
+				menu.AddChild(_exportSubmenu);
+				menu.AddSubmenuItem( "Export", "ExportMenu" );
 				menu.AddSeparator(  );
 				menu.AddItem( "Quit", 8 );
 
@@ -324,13 +327,11 @@ namespace MetaMaker
 					case 1 :  PickTemplateToLoad(); break;
 					case 2 :  SaveGraphAs(); break;
 					case 3 :  LoadGraph(); break;
-					case 4 :  ExportDataJson(); break;
+					case 4 :  _app.ExportAll(); break;
 					case 5 :  ImportDataJson(); break;
 					case 6 :  _app.ClearData(); break;
 					case 7 :  ShiftTemplateUnderData(); break;
 					case 8 :  RequestQuit(); break;
-					case 9 :  ExportTemplateJson(); break;
-					case 10 : ExportDataJson(); break;
 					case 11 :  _app.SaveGraph(); break;
 					case 12 :  OpenHelpPopup(); break;
 				}
@@ -351,6 +352,18 @@ namespace MetaMaker
 					case 1 :  RequestPasteNode(); break;
 					case 2 :  RequestDeleteNode(); break;
 				}
+			}
+			catch( Exception e )
+			{
+				_app.CatchException( e );
+			}
+		}
+		
+		private void OnExportMenuSelection( int id )
+		{
+			try
+			{
+				_app.ExportSet(_exportSubmenu.GetItemText( id ));
 			}
 			catch( Exception e )
 			{
@@ -518,24 +531,6 @@ namespace MetaMaker
 				.Then( _app.ShiftTemplateUnderData )
 				.Catch( _app.CatchException );
 		}
-
-		private void ExportDataJson()
-		{
-			_filePopup.Show( new[] { "*.json" }, true, "Save Data to JSON" )
-				.Then( _app.ExportData )
-				.Catch( _app.CatchException );
-		}
-
-		private void ExportTemplateJson()
-		{
-			_filePopup.Show( new[] { "*.tmplt" }, true, "Save Data to Template" )
-				.Then( path =>
-				{
-					_app.ExportData(path);
-					_app.AddRecentTemplateFile( path );
-				} )
-				.Catch( _app.CatchException );
-		}
 		
 		private void ImportDataJson()
 		{
@@ -581,7 +576,7 @@ namespace MetaMaker
 				_copiedCorner.x = Maths.Min( node.Offset.x, _copiedCorner.x );
 				_copiedCorner.y = Maths.Min( node.Offset.y, _copiedCorner.y );
 
-				_copied.Add( node.GetObjectData() );
+				_copied.Add( node.Model );
 			}
 
 			for( int i = _copied.Count-1; i >=0; i-- )
@@ -675,6 +670,17 @@ namespace MetaMaker
 			foreach( string name in nodeNames )
 			{
 				_createSubmenu.AddItem( name );
+			}
+		}
+
+		public void ResetExportMenu(Dictionary<string, ExportSet> exports)
+		{
+			_exportSubmenu.Clear();
+			_exportSubmenu.RectSize = Vector2.Zero;
+
+			foreach( var export in exports )
+			{
+				_exportSubmenu.AddItem( export.Key );
 			}
 		}
 

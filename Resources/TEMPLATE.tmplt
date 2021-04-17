@@ -1,6 +1,8 @@
 {
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
+  "reuseDll": false,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,
@@ -85,6 +87,18 @@
             },
             "asHtml": false
           }
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "reuseDll",
+          "defaultValue": true,
+          "id": "BOOL-LYn"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "exportScript",
+          "minHeight": 200.0,
+          "defaultValue": ""
         },
         {
           "fieldType": "FIELD_LIST",
@@ -249,38 +263,6 @@
             "EMPTY_STRING",
             "SKIP"
           ]
-        }
-      ]
-    },
-    {
-      "title": "Link To Parent Slot",
-      "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "LINK_TO_PARENT"
-        },
-        {
-          "fieldType": "INFO",
-          "label": "NODE TYPE IS DEPRICATED\nAs of 0.3.0 this node type is depricated and should be replaced by the parent typ listed in the node itself",
-          "minHeight": 100.0
-        },
-        {
-          "fieldType": "INT",
-          "label": "slotType",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": -1,
-          "defaultValue": -1
         }
       ]
     },

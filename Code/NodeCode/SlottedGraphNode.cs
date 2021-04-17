@@ -90,14 +90,18 @@ namespace MetaMaker
 					i += dictionarySlot.Count;
 				}
 			}
+			
+			_model.AddValue( App.NODE_NAME_KEY, _title );
+			_model.AddValue( App.NODE_POSITION_KEY, Offset );
+			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
 			Dirty = false;
 		}
 
 		public void SetSlots(GenericDataArray definition)
 		{
 			definition.GetValue( "title", out _title );
-			Title = _title;
-			_model.AddValue( App.NODE_NAME_KEY, Title );
+			
+			_model.AddValue( App.NODE_NAME_KEY, _title );
 			_model.AddValue( App.NODE_POSITION_KEY, Offset );
 			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
 			
