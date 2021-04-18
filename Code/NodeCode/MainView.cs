@@ -83,10 +83,9 @@ namespace MetaMaker
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
-		public readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
-		public readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
-		public readonly List<GenericDataArray> _duplicates = new List<GenericDataArray>();
-			
+
+		private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
+		private readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
 		private Vector2 _copiedCorner = new Vector2(50,100);
 		private Vector2 _offset = new Vector2(50,100);
 		private Vector2 _buffer = new Vector2(40,10);
@@ -563,47 +562,103 @@ namespace MetaMaker
 
 		private void RequestCopyNode()
 		{
-			if(_selection.Count == 0) return;
-			
-			_copied.Clear();
-			_duplicates.Clear();
-			_app.copyingData = true;
-
-			_copiedCorner = _selection[0].Offset;
-			
-			foreach( SlottedGraphNode node in _selection )
+			try
 			{
-				_copiedCorner.x = Maths.Min( node.Offset.x, _copiedCorner.x );
-				_copiedCorner.y = Maths.Min( node.Offset.y, _copiedCorner.y );
+				if(_selection.Count == 0) return;
+				
+				_copied.Clear();
 
-				_copied.Add( node.Model );
-			}
+				_copiedCorner = _selection[0].Offset;
 
-			for( int i = _copied.Count-1; i >=0; i-- )
-			{
-				GenericDataArray copied = _copied[i];
-				for( int k = _duplicates.Count-1; k >=0; k-- )
+				foreach( SlottedGraphNode node in _selection )
 				{
-					if( !copied.DeepEquals( _duplicates[k] ) ) continue;
+					_copiedCorner.x = Maths.Min( node.Offset.x, _copiedCorner.x );
+					_copiedCorner.y = Maths.Min( node.Offset.y, _copiedCorner.y );
 
-					_copied.RemoveAt( i );
-					_duplicates.RemoveAt( k );
-					break;
+					_copied.Add( node.Model.DataCopy() );
+				}
+				
+				foreach( GenericDataArray node in _copied )
+				{
+					TrimToSelection(node);
+				}
+				List<GenericDataArray> toRemove = new List<GenericDataArray>();
+				foreach( GenericDataArray node in _copied )
+				{
+					FindDuplicates(node, toRemove);
+				}
+				
+				foreach (GenericDataArray item in toRemove)
+				{
+					_copied.Remove(item);
+				}
+			}
+			catch(Exception ex)
+			{
+				_app.CatchException(ex);
+			}
+		}
+
+		private void TrimToSelection( GenericDataArray target )
+		{
+			List<string> removeKeys = new List<string>();
+
+			foreach (var pair in target.values)
+			{
+				if(pair.Value is GenericDataArray subTarget)
+				{
+					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
+					{
+						bool isSelected = false;
+						foreach(SlottedGraphNode selected in _selection)
+						{
+							if(subTarget.DeepEquals(selected.Model))
+							{
+								isSelected = true;
+							}
+						}
+						if(isSelected)
+						{
+							TrimToSelection(subTarget);
+						}
+						else
+						{
+							removeKeys.Add(pair.Key);
+						}
+					}
+					else
+					{
+						TrimToSelection( subTarget );
+					}
 				}
 			}
 
-			_app.copyingData = false;
+			foreach(var key in removeKeys)
+			{
+				target.RemoveValue(key);
+			}
 		}
 
-		public bool IsSelected( SlottedGraphNode node )
+		private void FindDuplicates( GenericDataArray target, List<GenericDataArray> toRemove )
 		{
-			if(_selection.Contains( node ))
+			foreach (var pair in target.values)
 			{
-				_duplicates.Add( node.GetObjectData() );
-				return true;
-			}
+				if(pair.Value is GenericDataArray subTarget)
+				{
+					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
+					{
+						for (int i = _copied.Count-1; i >= 0; i--)
+						{
+							GenericDataArray copy = _copied[i];
+							if (!subTarget.DeepEquals(copy) || toRemove.Contains(copy)) continue;
 
-			return false;
+							toRemove.Add(copy);
+						}
+					}
+
+					FindDuplicates( subTarget, toRemove );
+				}
+			}
 		}
 
 		private void RequestPasteNode()

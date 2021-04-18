@@ -12,7 +12,7 @@ namespace MetaMaker
 		[Export] public NodePath _fieldPath;
 		private Label _field;
 		[Export] public NodePath _popupPath;
-		private Popup _popup;
+		private ConfirmationDialog _popup;
 		[Export] public NodePath _dayPath;
 		private SpinBox _day;
 		[Export] public NodePath _hourPath;
@@ -23,8 +23,6 @@ namespace MetaMaker
 		private SpinBox _second;
 		[Export] public NodePath _milisecondPath;
 		private SpinBox _milisecond;
-		[Export] public NodePath _cancelPath;
-		private Button _cancel;
 
 		private TimeSpan span;
 		private GenericDataArray _parentModel;
@@ -36,17 +34,14 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 			_field.Connect( "gui_input", this, nameof(_GuiInput) );
 
-			_popup = this.GetNodeFromPath<Popup>( _popupPath );
-			_popup.Connect( "popup_hide", this, nameof(UpdateDate) );
+			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
+			_popup.Connect( "confirmed", this, nameof(UpdateDate) );
 			
 			_day = this.GetNodeFromPath<SpinBox>( _dayPath );
 			_hour = this.GetNodeFromPath<SpinBox>( _hourPath );
 			_minute = this.GetNodeFromPath<SpinBox>( _minutePath );
 			_second = this.GetNodeFromPath<SpinBox>( _secondPath );
 			_milisecond = this.GetNodeFromPath<SpinBox>( _milisecondPath );
-			
-			_cancel = this.GetNodeFromPath<Button>( _cancelPath );
-			_cancel.Connect( "pressed", this, nameof(OnCancelButton) );
 		}
 
 		public override void _GuiInput( InputEvent @event )
@@ -114,7 +109,7 @@ namespace MetaMaker
 		public void GetObjectData( GenericDataArray objData )
 		{
 		}
-//TODO : timespan is not saving or loading correctly, fix this!
+		
 		public void SetObjectData( GenericDataArray objData )
 		{
 			objData.GetValue( _label.Text, out span );

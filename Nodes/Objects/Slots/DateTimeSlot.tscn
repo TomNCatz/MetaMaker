@@ -20,7 +20,6 @@ _minutePath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxCon
 _secondPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer2/Second")
 _timezonePath = NodePath("")
 _nowPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer4/Now")
-_cancelPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer4/Cancel")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 153.0
@@ -47,11 +46,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PopupPanel" type="PopupPanel" parent="Control"]
+[node name="PopupPanel" type="ConfirmationDialog" parent="Control"]
 visible = true
 margin_top = -8.0
-margin_right = 379.0
-margin_bottom = 76.0
+margin_right = 246.0
+margin_bottom = 112.0
+window_title = "Pick a Date and Time"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -59,61 +59,41 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PopupPanel"]
 anchor_left = 0.01
 anchor_right = 0.99
-margin_left = 0.21
-margin_top = 4.0
-margin_right = -0.209991
-margin_bottom = 80.0
+margin_left = 5.54
+margin_top = 8.0
+margin_right = -5.54001
+margin_bottom = 84.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
-margin_right = 371.0
+margin_right = 230.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_top = 5.0
-margin_right = 7.0
-margin_bottom = 19.0
-text = "Y"
-
 [node name="Year" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 11.0
-margin_right = 118.0
+margin_right = 74.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = 1900.0
 max_value = 2222.0
 value = 1900.0
+suffix = "AD"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 122.0
-margin_top = 5.0
-margin_right = 134.0
-margin_bottom = 19.0
-text = "M"
-
 [node name="Month" type="OptionButton" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 138.0
-margin_right = 245.0
+margin_left = 78.0
+margin_right = 152.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="Label3" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 249.0
-margin_top = 5.0
-margin_right = 259.0
-margin_bottom = 19.0
-text = "D"
-
 [node name="Day" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 263.0
-margin_right = 371.0
+margin_left = 156.0
+margin_right = 230.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 min_value = 1.0
@@ -125,77 +105,48 @@ __meta__ = {
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
 margin_top = 28.0
-margin_right = 371.0
+margin_right = 230.0
 margin_bottom = 52.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_top = 5.0
-margin_right = 10.0
-margin_bottom = 19.0
-text = "H"
-
 [node name="Hour" type="OptionButton" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 14.0
-margin_right = 121.0
+margin_right = 74.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 125.0
-margin_top = 5.0
-margin_right = 137.0
-margin_bottom = 19.0
-text = "M"
-
 [node name="Minute" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 141.0
-margin_right = 248.0
+margin_left = 78.0
+margin_right = 152.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 max_value = 59.0
+suffix = "M"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 252.0
-margin_top = 5.0
-margin_right = 259.0
-margin_bottom = 19.0
-text = "S"
-
 [node name="Second" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 263.0
-margin_right = 371.0
+margin_left = 156.0
+margin_right = 230.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 max_value = 59.0
+suffix = "S"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
 margin_top = 56.0
-margin_right = 371.0
+margin_right = 230.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
 
 [node name="Now" type="Button" parent="Control/PopupPanel/VBoxContainer/HBoxContainer4"]
-margin_right = 183.0
+margin_right = 230.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
-text = "Now"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cancel" type="Button" parent="Control/PopupPanel/VBoxContainer/HBoxContainer4"]
-margin_left = 187.0
-margin_right = 371.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Cancel"
+text = "Set to Now"
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -12,7 +12,7 @@ namespace MetaMaker
 		[Export] public NodePath _fieldPath;
 		private Label _field;
 		[Export] public NodePath _popupPath;
-		private Popup _popup;
+		private ConfirmationDialog _popup;
 		[Export] public NodePath _yearPath;
 		private SpinBox _year;
 		[Export] public NodePath _monthPath;
@@ -29,8 +29,6 @@ namespace MetaMaker
 		private OptionButton _timezone;
 		[Export] public NodePath _nowPath;
 		private Button _now;
-		[Export] public NodePath _cancelPath;
-		private Button _cancel;
 
 		private bool isOffset;
 		private DateTimeOffset dtOffset;
@@ -44,8 +42,8 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 			_field.Connect( "gui_input", this, nameof(_GuiInput) );
 
-			_popup = this.GetNodeFromPath<Popup>( _popupPath );
-			_popup.Connect( "popup_hide", this, nameof(UpdateDate) );
+			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
+			_popup.Connect( "confirmed", this, nameof(UpdateDate) );
 			
 			_year = this.GetNodeFromPath<SpinBox>( _yearPath );
 			_month = this.GetNodeFromPath<OptionButton>( _monthPath );
@@ -56,9 +54,6 @@ namespace MetaMaker
 			
 			_now = this.GetNodeFromPath<Button>( _nowPath );
 			_now.Connect( "pressed", this, nameof(OnNowButton) );
-			
-			_cancel = this.GetNodeFromPath<Button>( _cancelPath );
-			_cancel.Connect( "pressed", this, nameof(OnCancelButton) );
 
 			isOffset = !_timezonePath.IsEmpty();
 			if( isOffset )

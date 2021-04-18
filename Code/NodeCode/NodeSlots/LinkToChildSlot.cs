@@ -95,9 +95,7 @@ namespace MetaMaker
 
 		private void UpdateField( GenericDataArray objData )
 		{
-			if( _child == null ||
-			    ( _app.Get.copyingData && 
-			       !_mainView.Get.IsSelected( _child )))
+			if( _child == null )
 			{
 				switch(emptyHandling)
 				{

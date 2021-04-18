@@ -1620,6 +1620,20 @@
             "label": "Reward",
             "slotType": 0,
             "emptyHandling": "EMPTY_STRING"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 780.0,
+              "y": 1220.0
+            },
+            "ngMapNodeName": "Time Span Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "TIME_SPAN",
+            "label": "Timeout",
+            "defaultValue": "0"
           }
         ]
       }

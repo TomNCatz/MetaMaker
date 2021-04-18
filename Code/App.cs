@@ -527,7 +527,7 @@ namespace MetaMaker
 
 			ExportSet exportSet = _exportRules.ExportTargets[exportName];
 
-			if (!(_model.GetRelativeGDO(exportSet.gdoExportTarget) is GenericDataArray data)) 
+			if (!(_model.GetRelativeGdo(exportSet.gdoExportTarget) is GenericDataArray data)) 
 			{
 				throw new Exception($"Object at path {exportSet.gdoExportTarget} is not an array");
 			}
