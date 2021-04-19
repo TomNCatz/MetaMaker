@@ -150,12 +150,6 @@ namespace MetaMaker
 			SetDateInPopup(DateTimeOffset.Now);
 		}
 
-		private void OnCancelButton()
-		{
-			SetDateInPopup(dtOffset);
-			_popup.Hide();
-		}
-
 		private void SetDateInPopup(DateTimeOffset time)
 		{
 			_year.Value = time.Year;

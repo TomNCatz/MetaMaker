@@ -80,7 +80,7 @@ namespace MetaMaker
 			}
 			get => _backupFrequency;
 		}
-		private float _backupFrequency = 10;
+		private float _backupFrequency = 300;
 
 		public string SaveFilePath
 		{

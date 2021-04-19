@@ -80,6 +80,8 @@ namespace MetaMaker
 		private AreYouSurePopup _areYouSurePopup;
 		[Export] public NodePath _helpInfoPopupPath;
 		private HelpPopup _helpInfoPopup;
+		[Export] public NodePath _autoBackupSettingsPath;
+		private AutoBackupSettingsPopup _autoBackupSettingsPopup;
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
@@ -152,6 +154,7 @@ namespace MetaMaker
 				_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
 				_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
 				_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
+				_autoBackupSettingsPopup = this.GetNodeFromPath<AutoBackupSettingsPopup>( _autoBackupSettingsPath );
 
 				_recentTemplateSubmenu = new PopupMenu { Name = "RecentTemplateMenu" };
 				_recentShiftSubmenu = new PopupMenu { Name = "RecentShiftMenu" };
@@ -203,7 +206,7 @@ namespace MetaMaker
 				settingsMenu.AddItem( "Change Background Color", 0 );
 				settingsMenu.AddItem( "Change Grid Major Color", 1 );
 				settingsMenu.AddItem( "Change Grid Minor Color", 2 );
-				settingsMenu.AddCheckItem( "Auto Backup", 4 );
+				settingsMenu.AddItem( "Auto Backup...", 4 );
 				settingsMenu.AddSeparator(  );
 				settingsMenu.AddItem( "Help and FAQ", 3 );
 
@@ -413,10 +416,7 @@ namespace MetaMaker
 							}); 
 						break;
 					case 3 :  OpenHelpPopup(); break;
-					case 4 :  
-						SettingAutoSave = !SettingAutoSave;
-						_app.SaveSettings();
-					break;
+					case 4 :  _autoBackupSettingsPopup.PopupCentered(); break;
 				}
 			}
 			catch( Exception e )

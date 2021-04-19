@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Code/NodeCode/MainView.cs" type="Script" id=1]
 [ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
@@ -35,6 +35,7 @@
 [ext_resource path="res://Nodes/Objects/Slots/TimeSpanSlot.tscn" type="PackedScene" id=33]
 [ext_resource path="res://Nodes/Objects/Slots/DoubleSlot.tscn" type="PackedScene" id=34]
 [ext_resource path="res://Nodes/Objects/Slots/FlagsSlot.tscn" type="PackedScene" id=35]
+[ext_resource path="res://Nodes/Objects/AutoBackupSettingsPopup.tscn" type="PackedScene" id=36]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -122,6 +123,7 @@ _colorPopupPath = NodePath("ColorPopup")
 _errorPopupPath = NodePath("ErrorPopup")
 _areYouSurePopupPath = NodePath("AreYouSurePopup")
 _helpInfoPopupPath = NodePath("HelpPopup")
+_autoBackupSettingsPath = NodePath("AutoBackupSettingsPopup")
 
 [node name="Growl" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -296,6 +298,8 @@ current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
 [node name="AreYouSurePopup" parent="." instance=ExtResource( 6 )]
 
 [node name="HelpPopup" parent="." instance=ExtResource( 7 )]
+
+[node name="AutoBackupSettingsPopup" parent="." instance=ExtResource( 36 )]
 
 [node name="BackupTimer" type="Timer" parent="."]
 wait_time = 12.341

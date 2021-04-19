@@ -1210,6 +1210,12 @@
           "defaultValue": "Duration"
         },
         {
+          "fieldType": "BOOLEAN",
+          "label": "asSeconds",
+          "defaultValue": false,
+          "id": "BOOL-9KE"
+        },
+        {
           "fieldType": "TIME_SPAN",
           "label": "defaultValue",
           "defaultValue": "0"

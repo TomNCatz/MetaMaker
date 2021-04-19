@@ -302,7 +302,7 @@ namespace MetaMaker
 			return child;
 		}
 
-		public void RemoveChild( Node child )
+		public new void RemoveChild( Node child )
 		{
 			int index = GetChildIndex( child );
 

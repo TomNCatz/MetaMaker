@@ -26,6 +26,8 @@ namespace MetaMaker
 
 		private TimeSpan span;
 		private GenericDataArray _parentModel;
+		private bool asSeconds = false;
+
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -52,12 +54,6 @@ namespace MetaMaker
 				_popup.Popup_();
 				_popup.RectPosition = GetGlobalMousePosition();
 			}
-		}
-
-		private void OnCancelButton()
-		{
-			SetDateInPopup(span);
-			_popup.Hide();
 		}
 
 		private void SetDateInPopup(TimeSpan time)
@@ -89,7 +85,14 @@ namespace MetaMaker
 		private void UpdateDisplay()
 		{
 			_field.Text = span.ToString("c");
-			_parentModel.AddValue( _label.Text, span );
+			if(asSeconds)
+			{
+				_parentModel.AddValue( _label.Text, span.TotalSeconds );
+			}
+			else
+			{
+				_parentModel.AddValue( _label.Text, span );
+			}
 			OnValueUpdated?.Invoke();
 		}
 
@@ -99,9 +102,10 @@ namespace MetaMaker
 			_label.Text = label;
 
 			_parentModel = parentModel;
-			_parentModel.AddValue( _label.Text, span );
 
 			template.GetValue( "defaultValue", out span );
+
+			template.GetValue( "asSeconds", out asSeconds );
 
 			UpdateDisplay();
 		}
