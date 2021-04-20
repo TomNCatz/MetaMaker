@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class EnumSlot : Container, IField, IGdoConvertible
+	public class EnumSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -33,24 +33,22 @@ namespace MetaMaker
 			{
 				_field.AddItem( value );
 			}
-			_parentModel.AddValue( _label.Text, GetSelection() );
-		}
 
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text,out string choice );
-
-			for( int i = 0; i < _field.GetItemCount(); i++ )
+			if(parentModel.values.ContainsKey(_label.Text))
 			{
-				if( _field.GetItemText( i ).Equals( choice ) )
+				parentModel.GetValue( _label.Text, out string choice );
+
+				for( int i = 0; i < _field.GetItemCount(); i++ )
 				{
-					_field.Select( i );
-					_parentModel.AddValue( _label.Text, GetSelection() );
-				}	
+					if( _field.GetItemText( i ).Equals( choice ) )
+					{
+						_field.Select( i );
+					}	
+				}
+			}
+			else
+			{
+				_parentModel.AddValue( _label.Text, GetSelection() );
 			}
 		}
 

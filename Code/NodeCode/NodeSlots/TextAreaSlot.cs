@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TextAreaSlot : Container, IField, IGdoConvertible
+	public class TextAreaSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -26,24 +26,20 @@ namespace MetaMaker
 			_label.Text = label;
 
 			_parentModel = parentModel;
-			
-			template.GetValue( "defaultValue", out string text );
-			_field.Text = text;
-			_parentModel.AddValue(_label.Text, _field.Text);
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out string value );
+				_field.Text = value;
+			}
+			else
+			{
+				template.GetValue( "defaultValue", out string value );
+				_field.Text = value;
+				_parentModel.AddValue(_label.Text, value);
+			}
 			
 			template.GetValue( "minHeight", out float height );
 			_field.RectMinSize = new Vector2(0,height);
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out string text );
-			_field.Text = text;
-			_parentModel.AddValue(_label.Text, _field.Text);
 		}
 
 		private void OnChanged()

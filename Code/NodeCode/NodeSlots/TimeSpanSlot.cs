@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TimeSpanSlot : Container, IField, IGdoConvertible
+	public class TimeSpanSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -79,12 +79,12 @@ namespace MetaMaker
 		private void UpdateDate()
 		{
 			GetDateInPopup();
+			_field.Text = span.ToString("c");
 			UpdateDisplay();
 		}
 
 		private void UpdateDisplay()
 		{
-			_field.Text = span.ToString("c");
 			if(asSeconds)
 			{
 				_parentModel.AddValue( _label.Text, span.TotalSeconds );
@@ -101,23 +101,20 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
-			_parentModel = parentModel;
-
-			template.GetValue( "defaultValue", out span );
-
 			template.GetValue( "asSeconds", out asSeconds );
 
-			UpdateDisplay();
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-		
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out span );
-			UpdateDisplay();
+			_parentModel = parentModel;
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out span );
+				_field.Text = span.ToString("c");
+			}
+			else
+			{
+				template.GetValue( "defaultValue", out span );
+				_field.Text = span.ToString("c");
+				UpdateDisplay();
+			}
 		}
 	}
 }

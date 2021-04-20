@@ -6,7 +6,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FieldListSlot : Container, IField, IGdoConvertible
+	public class FieldListSlot : Container, IField
 	{
 		[Export] public NodePath _titlePath;
 		private Label _title;
@@ -21,6 +21,7 @@ namespace MetaMaker
 		private GenericDataArray _field;
 		private readonly List<Node> _children = new List<Node>();
 		private GenericDataArray _parentModel;
+		private GenericDataArray _model;
 		public event System.Action OnValueUpdated;
 		private readonly List<GenericDataArray> _childData = new List<GenericDataArray>();
 
@@ -46,27 +47,31 @@ namespace MetaMaker
 			template.GetValue( "field", out _field );
 			
 			_parentModel = parentModel;
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _title.Text, out List<GenericDataObject> childSlots );
-
-			foreach( GenericDataObject dataArray in childSlots )
+			if(parentModel.values.ContainsKey(label))
 			{
-				Add();
-				
-				if( !( _children[_children.Count - 1] is IGdoConvertible convertible ) ) continue;
+				parentModel.GetValue( _title.Text, out _model );
+				parentModel.GetValue( _title.Text, out List<GenericDataObject> childSlots );
 
-				GenericDataArray gda = new GenericDataArray();
 				_field.GetValue( "label", out string name );
-				gda.AddValue( name, dataArray );
-				convertible.SetObjectData( gda );
+				foreach( GenericDataObject item in childSlots )
+				{
+					int index = _graphNode.GetChildIndex( this )+1;
+					index += (int)_selector.Value;
+					GenericDataArray childData = new GenericDataArray();
+					childData.AddValue(name, item);
+					Node child = _graphNode.AddChildField( _field, index, childData );
+					_children.Insert( (int)_selector.Value, child );
+					_childData.Insert( (int)_selector.Value, childData );
+					_selector.MaxValue = _children.Count;
+					_selector.Value++;
+					if(child is IField childField)
+					{
+						childField.OnValueUpdated += UpdateField;
+					}
+				}
 			}
+
+			UpdateField();
 		}
 
 		public void Add()

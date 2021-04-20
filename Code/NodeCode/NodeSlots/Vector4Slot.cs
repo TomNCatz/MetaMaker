@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class Vector4Slot : Container, IField, IGdoConvertible
+	public class Vector4Slot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -41,28 +41,24 @@ namespace MetaMaker
 			_label.Text = label;
 
 			_parentModel = parentModel;
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out Vector4 vector );
+				_x.Value = vector.x;
+				_y.Value = vector.y;
+				_z.Value = vector.z;
+				_w.Value = vector.w;
+			}
+			else
+			{
 			
-			template.GetValue( "defaultValue", out Vector4 vector );
-			_x.Value = vector.x;
-			_y.Value = vector.y;
-			_z.Value = vector.z;
-			_w.Value = vector.w;
-			
-			_parentModel.AddValue( _label.Text, vector );
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out Vector4 vector );
-
-			_x.Value = vector.x;
-			_y.Value = vector.y;
-			_z.Value = vector.z;
-			_w.Value = vector.w;
+				template.GetValue( "defaultValue", out Vector4 vector );
+				_x.Value = vector.x;
+				_y.Value = vector.y;
+				_z.Value = vector.z;
+				_w.Value = vector.w;
+				_parentModel.AddValue(_label.Text, vector);
+			}
 		}
 		
 		private void OnChanged(float value)

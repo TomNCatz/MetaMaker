@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class BooleanSlot : Container, IField, IGdoConvertible
+	public class BooleanSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -38,10 +38,17 @@ namespace MetaMaker
 			_label.Text = label;
 
 			_parentModel = parentModel;
-			_parentModel.AddValue(_label.Text, _field.Pressed);
-			
-			template.GetValue( "defaultValue", out bool value );
-			_field.Pressed = value;
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out bool value );
+				_field.Pressed = value;
+			}
+			else
+			{
+				template.GetValue( "defaultValue", out bool value );
+				_field.Pressed = value;
+				_parentModel.AddValue(_label.Text, value);
+			}
 
 			if( template.values.ContainsKey( "id" ) )
 			{
@@ -56,16 +63,6 @@ namespace MetaMaker
 				template.GetValue( "matchFalse", out _matchFalse );
 				template.GetValue( "invertFalse", out _invertFalse );
 			}
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out bool value );
-			_field.Pressed = value;
 		}
 
 		private void OnToggled(bool buttonPressed)

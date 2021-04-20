@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class DateTimeOffsetSlot : Container, IField, IGdoConvertible
+	public class DateTimeOffsetSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -207,39 +207,33 @@ namespace MetaMaker
 			_label.Text = label;
 
 			_parentModel = parentModel;
-
-			if( isOffset )
+			if(parentModel.values.ContainsKey(_label.Text))
 			{
-				template.GetValue( "defaultValue", out dtOffset );
+				if( isOffset )
+				{
+					template.GetValue( _label.Text, out dtOffset );
+				}
+				else
+				{
+					template.GetValue( _label.Text, out DateTime dateTime );
+					dtOffset = new DateTimeOffset(dateTime);
+				}
 			}
 			else
 			{
-				template.GetValue( "defaultValue", out DateTime dateTime );
-				dtOffset = new DateTimeOffset(dateTime);
-			}
-			SetTime(_parentModel);
-
-			UpdateDisplay();
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			if( isOffset )
-			{
-				objData.GetValue( _label.Text, out dtOffset );
-			}
-			else
-			{
-				objData.GetValue( _label.Text, out DateTime dateTime );
-				dtOffset = new DateTimeOffset(dateTime);
+				if( isOffset )
+				{
+					template.GetValue( "defaultValue", out dtOffset );
+				}
+				else
+				{
+					template.GetValue( "defaultValue", out DateTime dateTime );
+					dtOffset = new DateTimeOffset(dateTime);
+				}
+				SetTime(_parentModel);
 			}
 
 			UpdateDisplay();
-			SetTime(_parentModel);
 		}
 
 		private void SetTime(GenericDataArray parent)

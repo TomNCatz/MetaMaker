@@ -762,14 +762,10 @@ namespace MetaMaker
 			
 			nodes.Add( node );
 
-			node.SetSlots( nodeData );
+			node.SetSlots( nodeData, nodeContent );
 			_app.HasUnsavedChanges = true;
 
 			_app.AddNode(node);
-
-			if( nodeContent == null ) return node;
-			
-			node.SetObjectData( nodeContent );
 			
 			return node;
 		}

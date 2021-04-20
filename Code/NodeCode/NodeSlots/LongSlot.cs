@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class LongSlot : Container, IField, IGdoConvertible
+	public class LongSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -64,24 +64,19 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			_parentModel = parentModel;
-			_parentModel.AddValue(_label.Text, _value);
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out _value );
+				_field.Text = _value.ToString();
+			}
+			else
+			{
+				template.GetValue( "defaultValue", out _value );
+				_field.Text = _value.ToString();
+				_parentModel.AddValue(_label.Text, _value);
+			}
 			
 			template.GetValue( "allowNegative", out _allowNegative );
-			
-			template.GetValue( "defaultValue", out _value );
-			_field.Text = _value.ToString();
-			OnTextChange( _field.Text );
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out _value );
-			_field.Text = _value.ToString();
-			OnTextChange( _field.Text );
 		}
 	}
 }

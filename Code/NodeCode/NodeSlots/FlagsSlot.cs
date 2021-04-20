@@ -7,11 +7,11 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FlagsSlot : Container, IField, IGdoConvertible
+	public class FlagsSlot : Container, IField
 	{
 		[Export] public PackedScene flagsScene;
 		[Export] public NodePath _titlePath;
-		private Label _title;
+		private Label _label;
 		[Export] public NodePath _currentPath;
 		private Label _current;
 
@@ -23,16 +23,14 @@ namespace MetaMaker
 
 		public override void _Ready()
 		{
-			_title = this.GetNodeFromPath<Label>( _titlePath );
+			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_current = this.GetNodeFromPath<Label>( _currentPath );
 		}
 
 		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
 			template.GetValue( "label", out string label );
-			_title.Text = label;
-
-			_parentModel = parentModel;
+			_label.Text = label;
 
 			template.GetValue("flags", out List<string> flags);
 			foreach(var flag in flags)
@@ -43,31 +41,24 @@ namespace MetaMaker
 				item.OnValueUpdated += OnValueChange;
 				items.Add(item);
 			}
-			
-			template.GetValue( "defaultValue", out Mask32 value );
-			_value = 0;
+
+			_parentModel = parentModel;
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out int value );
+				_value = value;
+			}
+			else
+			{
+				template.GetValue( "defaultValue", out int value );
+				_value = value;
+				_parentModel.AddValue(_label.Text, value);
+			}
 			for(int i = 0; i < items.Count; i++)
 			{
-				items[i].Value = value[i];
+				items[i].Value = _value[i];
 			}
-			_parentModel.AddValue(_title.Text, _value);
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _title.Text, out Mask32 value );
-			_value = 0;
-			for(int i = 0; i < items.Count; i++)
-			{
-				items[i].Value = value[i];
-			}
-
 			_current.Text = _value.flags.ToString();
-			_parentModel.AddValue(_title.Text, _value);
 		}
 
 		private void OnValueChange()
@@ -79,7 +70,7 @@ namespace MetaMaker
 			}
 
 			_current.Text = _value.flags.ToString();
-			_parentModel.AddValue(_title.Text, _value);
+			_parentModel.AddValue(_label.Text, _value);
 			OnValueUpdated?.Invoke();
 		}
 	}

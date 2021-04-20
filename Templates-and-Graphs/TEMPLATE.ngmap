@@ -3902,7 +3902,8 @@
             },
             "fieldType": "TIME_SPAN",
             "label": "defaultValue",
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "asSeconds": false
           }
         ]
       }

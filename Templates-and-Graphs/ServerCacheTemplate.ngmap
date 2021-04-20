@@ -1634,6 +1634,33 @@
             "fieldType": "TIME_SPAN",
             "label": "Timeout",
             "defaultValue": "0"
+          },
+          {
+            "ngMapNodeName": "Field Dictionary Slot",
+            "ngMapNodePosition": {
+              "x": 260.0,
+              "y": 1360.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "FIELD_DICTIONARY",
+            "label": "objectives",
+            "field": {
+              "ngMapNodeName": "Text Line Slot",
+              "ngMapNodePosition": {
+                "x": 545.0,
+                "y": 1401.64478
+              },
+              "ngMapNodeSize": {
+                "x": 202.0,
+                "y": 66.0
+              },
+              "fieldType": "TEXT_LINE",
+              "label": "-",
+              "defaultValue": "String"
+            }
           }
         ]
       }

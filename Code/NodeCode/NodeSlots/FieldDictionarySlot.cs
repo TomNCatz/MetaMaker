@@ -7,7 +7,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class FieldDictionarySlot : Container, IField, IGdoConvertible
+	public class FieldDictionarySlot : Container, IField
 	{
 		[Export] public NodePath _titlePath;
 		private Label _title;
@@ -48,30 +48,21 @@ namespace MetaMaker
 			_parentModel = parentModel;
 			_field = template.GetGdo( "field" ) as GenericDataArray;
 			
-			_model = new GenericDataArray();
-			_parentModel.AddValue(_title.Text, _model);
-			OnValueUpdated?.Invoke();
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _title.Text, out Dictionary<string,GenericDataArray> childSlots );
-			
-			foreach( var dataArray in childSlots )
+			if(parentModel.values.ContainsKey(_title.Text))
 			{
-				_selector.Text = dataArray.Key;
-				Add();
+				parentModel.GetValue( _title.Text, out _model );
+				parentModel.GetValue( _title.Text, out Dictionary<string,GenericDataObject> childSlots );
 				
-				if( !( _children[dataArray.Key] is IGdoConvertible convertible ) )
+				foreach( var dataArray in childSlots )
 				{
-					throw new Exception($"Child item '{_children[dataArray.Key].Name}' is not an IGdoConvertible");
+					_selector.Text = dataArray.Key;
+					Add();
 				}
-
-				convertible.SetObjectData( dataArray.Value );
+			}
+			else
+			{
+				_model = new GenericDataArray();
+				_parentModel.AddValue(_title.Text, _model);
 			}
 		}
 
@@ -79,45 +70,51 @@ namespace MetaMaker
 		{
 			try
 			{
-				if( string.IsNullOrEmpty( _selector.Text ) )
+				if (string.IsNullOrEmpty(_selector.Text))
 				{
-					throw new NullReferenceException( "Must specify a key to add" );
+					throw new NullReferenceException("Must specify a key to add");
 				}
 
-				if( _children.ContainsKey( _selector.Text ) )
+				if (_children.ContainsKey(_selector.Text))
 				{
-					throw new ArgumentException( "That key already exists in the dictionary" );
+					throw new ArgumentException("That key already exists in the dictionary");
 				}
 
-				_field.AddValue( "label", _selector.Text );
-				int index = _graphNode.GetChildIndex( this ) + 1;
-				Node child = _graphNode.AddChildField( _field, index, _model );
-				_children[_selector.Text] = child;
+				_field.AddValue("label", _selector.Text);
+				int index = _graphNode.GetChildIndex(this) + 1;
+				_children[_selector.Text] = _graphNode.AddChildField(_field, index, _model);
 				OnValueUpdated?.Invoke();
 			}
-			catch( Exception e )
+			catch(Exception ex)
 			{
-				_app.Get.CatchException( e );
+				_app.Get.CatchException(ex);
 			}
 		}
 
 		public void Delete()
 		{
-			if( string.IsNullOrEmpty( _selector.Text ) )
+			try
 			{
-				throw new NullReferenceException("Must specify a key to remove");
+				if( string.IsNullOrEmpty( _selector.Text ) )
+				{
+					throw new NullReferenceException("Must specify a key to remove");
+				}
+				if( !_children.ContainsKey( _selector.Text ) )
+				{
+					throw new ArgumentException("That key does not exist in the dictionary");
+				}
+				
+				Node child = _children[_selector.Text];
+				
+				_children.Remove( _selector.Text );
+				_graphNode.RemoveChild( child );
+				_model.RemoveValue(_selector.Text);
+				OnValueUpdated?.Invoke();
 			}
-			if( !_children.ContainsKey( _selector.Text ) )
+			catch(Exception ex)
 			{
-				throw new ArgumentException("That key does not exist in the dictionary");
+				_app.Get.CatchException(ex);
 			}
-			
-			Node child = _children[_selector.Text];
-			
-			_children.Remove( _selector.Text );
-			_graphNode.RemoveChild( child );
-			_model.RemoveValue(_selector.Text);
-			OnValueUpdated?.Invoke();
 		}
 	}
 }

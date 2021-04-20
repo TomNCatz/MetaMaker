@@ -7,7 +7,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class SlottedGraphNode : GraphNode, IGdoConvertible
+	public class SlottedGraphNode : GraphNode
 	{
 		[Export] public StyleBoxTexture normalStyle;
 		[Export] public StyleBoxTexture selectedStyle;
@@ -46,64 +46,39 @@ namespace MetaMaker
 		public override void _Ready()
 		{
 			_builder = GetParent().GetParent<MainView>();
+		}
+
+		public void SetSlots(GenericDataArray definition, GenericDataArray objData = null)
+		{
+			definition.GetValue( "title", out _title );
+
+			if(objData != null)
+			{
+				_model = objData;
+				objData.GetValue( App.NODE_NAME_KEY, out _title );
+				if(objData.values.ContainsKey( App.NODE_POSITION_KEY ))
+				{
+					objData.GetValue( App.NODE_POSITION_KEY, out Vector2 offset );
+					Offset = offset;
+				}
+				if(objData.values.ContainsKey( App.NODE_SIZE_KEY ))
+				{
+					objData.GetValue( App.NODE_SIZE_KEY, out Vector2 size );
+					RectSize = size;
+				}
+			}
+			else
+			{
+				_model = new GenericDataArray();
+
+				_model.AddValue( App.NODE_NAME_KEY, _title );
+				_model.AddValue( App.NODE_POSITION_KEY, Offset );
+				_model.AddValue( App.NODE_SIZE_KEY, RectSize );
+			}
 			
 			Connect( "close_request", this, nameof(CloseRequest) );
 			Connect( "resize_request", this, nameof(OnResizeRequest) );
 			Connect( "offset_changed", this, nameof(OnMove) );
-			
-			_model = new GenericDataArray();
-		}
-		
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( App.NODE_NAME_KEY, out _title );
-			if(objData.values.ContainsKey( App.NODE_POSITION_KEY ))
-			{
-				objData.GetValue( App.NODE_POSITION_KEY, out Vector2 offset );
-				Offset = offset;
-			}
-			if(objData.values.ContainsKey( App.NODE_SIZE_KEY ))
-			{
-				objData.GetValue( App.NODE_SIZE_KEY, out Vector2 size );
-				RectSize = size;
-			}
-
-			for( int i = 0; i < slots.Count; i++ )
-			{
-				var slot = slots[i];
-				if( slot is IGdoConvertible convertible )
-				{
-					convertible.SetObjectData( objData );
-				}
-
-				if( slot is FieldListSlot listSlot)
-				{
-					i += listSlot.Count;
-				}
-
-				if( slot is FieldDictionarySlot dictionarySlot)
-				{
-					i += dictionarySlot.Count;
-				}
-			}
-			
-			_model.AddValue( App.NODE_NAME_KEY, _title );
-			_model.AddValue( App.NODE_POSITION_KEY, Offset );
-			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
-			Dirty = false;
-		}
-
-		public void SetSlots(GenericDataArray definition)
-		{
-			definition.GetValue( "title", out _title );
-			
-			_model.AddValue( App.NODE_NAME_KEY, _title );
-			_model.AddValue( App.NODE_POSITION_KEY, Offset );
-			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
 			
 			if(definition.values.ContainsKey( "color" ))
 			{
@@ -140,6 +115,8 @@ namespace MetaMaker
 					field.OnValueUpdated += OnSlotChange;
 				}
 			}
+
+			if(objData != null) Dirty = false;
 		}
 
 		public Node GetSlot( int index )

@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeySlot : Container, IField, IGdoConvertible
+	public class KeySlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -36,9 +36,17 @@ namespace MetaMaker
 			template.GetValue( "keySize", out _keySize );
 
 			_parentModel = parentModel;
-			_parentModel.AddValue(_label.Text, _field.Text);
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out string value );
+				SetKey( value );
+			}
+			else
+			{
+				SetKey();
 
-			SetKey();
+				_parentModel.AddValue(_label.Text, _field.Text);
+			}
 		}
 
 		public override void _ExitTree()
@@ -74,20 +82,7 @@ namespace MetaMaker
 			}
 			
 			_field.Text = force;
-			_parentModel.AddValue(_label.Text, _field.Text);
-			OnValueUpdated?.Invoke();
 			_app.Get.generatedKeys[_field.Text] = this;
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out string key );
-			
-			SetKey( key );
 		}
 	}
 }

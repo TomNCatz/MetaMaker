@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeyLinkSlot : Container, IField, IGdoConvertible
+	public class KeyLinkSlot : Container, IField
 	{
 		private enum EmptyHandling
 		{
@@ -15,7 +15,7 @@ namespace MetaMaker
 		}
 
 		[Export] public NodePath _titlePath;
-		private Label _title;
+		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
 		private EmptyHandling emptyHandling;
@@ -25,7 +25,7 @@ namespace MetaMaker
 		
 		public override void _Ready()
 		{
-			_title = this.GetNodeFromPath<Label>( _titlePath );
+			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 			_field.Connect( "gui_input", this, nameof(_GuiInput) );
 		}
@@ -63,26 +63,22 @@ namespace MetaMaker
 		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
 			template.GetValue( "label", out string label );
-			_title.Text = label;
+			_label.Text = label;
 			_parentModel = parentModel;
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
 				template.GetValue( "emptyHandling", out emptyHandling );
 			}
-		}
 
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out string key );
 
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _title.Text, out string key );
-
-			if( string.IsNullOrEmpty( key ) ) return;
-			
-			_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
+				if( string.IsNullOrEmpty( key ) ) return;
+				
+				_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
+			}
 		}
 
 		private void UpdateField( GenericDataArray objData )
@@ -92,17 +88,17 @@ namespace MetaMaker
 				switch(emptyHandling)
 				{
 					case EmptyHandling.EMPTY_STRING :
-						objData.AddValue( _title.Text, _field.Text );
+						objData.AddValue( _label.Text, _field.Text );
 						break;
 					case EmptyHandling.SKIP : 
-						objData.RemoveValue(_title.Text);
+						objData.RemoveValue(_label.Text);
 						break;
 					default : throw new ArgumentOutOfRangeException();
 				}
 			}
 			else
 			{
-				objData.AddValue( _title.Text, _field.Text );
+				objData.AddValue( _label.Text, _field.Text );
 			}
 			OnValueUpdated?.Invoke();
 		}

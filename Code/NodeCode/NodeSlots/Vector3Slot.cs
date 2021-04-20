@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class Vector3Slot : Container, IField, IGdoConvertible
+	public class Vector3Slot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -36,28 +36,24 @@ namespace MetaMaker
 			_label.Text = label;
 
 			_parentModel = parentModel;
-
-			template.GetValue( "defaultValue", out Vector3 vector );
-			_x.Value = vector.x;
-			_y.Value = vector.y;
-			_z.Value = vector.z;
-
-			_parentModel.AddValue( _label.Text, vector );
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out Vector3 vector );
+				_x.Value = vector.x;
+				_y.Value = vector.y;
+				_z.Value = vector.z;
+			}
+			else
+			{
+			
+				template.GetValue( "defaultValue", out Vector3 vector );
+				_x.Value = vector.x;
+				_y.Value = vector.y;
+				_z.Value = vector.z;
+				_parentModel.AddValue(_label.Text, vector);
+			}
 		}
 
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out Vector3 vector );
-
-			_x.Value = vector.x;
-			_y.Value = vector.y;
-			_z.Value = vector.z;
-		}
-		
 		private void OnChanged(float value)
 		{
 			LibT.Maths.Vector3 vector = new Vector3((float)_x.Value,(float)_y.Value,(float)_z.Value);

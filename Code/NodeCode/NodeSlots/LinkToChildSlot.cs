@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class LinkToChildSlot : Label, IField, IGdoConvertible
+	public class LinkToChildSlot : Label, IField
 	{
 		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
@@ -44,6 +44,26 @@ namespace MetaMaker
 			}
 
 			_parentModel = parentModel;
+			if(parentModel.values.ContainsKey(Text))
+			{
+				parentModel.GetValue( Text, out GenericDataArray data );
+
+				if( data == null || data.values.Count == 0 ) return;
+
+				if( !data.values.ContainsKey( App.NODE_NAME_KEY ) )
+				{
+					if( string.IsNullOrEmpty( _explicitNode ) )
+					{
+						throw new InvalidCastException($"Type definition not determinate for node {_parentModel}");
+					}
+					
+					data.AddValue( App.NODE_NAME_KEY, _explicitNode );
+				}
+
+				SlottedGraphNode node = _app.Get.LoadNode( data );
+
+				_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
+			}
 		}
 
 		public bool LinkChild( SlottedGraphNode child )
@@ -66,31 +86,6 @@ namespace MetaMaker
 			UpdateField( _parentModel );
 
 			return true;
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( Text, out GenericDataArray data );
-
-			if( data == null || data.values.Count == 0 ) return;
-
-			if( !data.values.ContainsKey( App.NODE_NAME_KEY ) )
-			{
-				if( string.IsNullOrEmpty( _explicitNode ) )
-				{
-					throw new InvalidCastException($"Type definition not determinate for node {objData}");
-				}
-				
-				data.AddValue( App.NODE_NAME_KEY, _explicitNode );
-			}
-
-			SlottedGraphNode node = _app.Get.LoadNode( data );
-
-			_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
 		}
 
 		private void UpdateField( GenericDataArray objData )

@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FloatSlot : Container, IField, IGdoConvertible
+	public class FloatSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -30,7 +30,17 @@ namespace MetaMaker
 			template.GetValue( "hasMin", out bool hasMin );
 
 			_parentModel = parentModel;
-			_parentModel.AddValue(_label.Text, (float)_field.Value);
+			if(parentModel.values.ContainsKey(_label.Text))
+			{
+				parentModel.GetValue( _label.Text, out float value );
+				_field.Value = value;
+			}
+			else
+			{
+				template.GetValue( "defaultValue", out float value );
+				_field.Value = value;
+				_parentModel.AddValue(_label.Text, value);
+			}
 
 			_field.AllowGreater = !hasMax;
 			if( hasMax )
@@ -51,19 +61,6 @@ namespace MetaMaker
 				template.GetValue( "minStepSize", out double minStepSize );
 				_field.Step = minStepSize;
 			}
-
-			template.GetValue( "defaultValue", out float value );
-			_field.Value = value;
-		}
-
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			objData.GetValue( _label.Text, out float value );
-			_field.Value = value;
 		}
 
 		private void OnChanged(float value)

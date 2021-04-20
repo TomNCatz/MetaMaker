@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class ColorSlot : Container, IField, IGdoConvertible
+	public class ColorSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -45,34 +45,30 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
-			_parentModel = parentModel;
-
-			template.GetValue( "defaultValue", out Color color );
-			_colorRect.Color = color;
-
 			template.GetValue( "asHtml", out asHtml );
-			SetColor(_parentModel);
-		}
 
-		public void GetObjectData( GenericDataArray objData )
-		{
-		}
-
-		public void SetObjectData( GenericDataArray objData )
-		{
-			Color color;
-			if (asHtml)
+			_parentModel = parentModel;
+			if(parentModel.values.ContainsKey(_label.Text))
 			{
-				objData.GetValue(_label.Text, out string colorData);
-				color = new Color(colorData);
+				Color color;
+				if (asHtml)
+				{
+					parentModel.GetValue(_label.Text, out string colorData);
+					color = new Color(colorData);
+				}
+				else
+				{
+					parentModel.GetValue(_label.Text, out color);
+				}
+				_colorRect.Color = color;
 			}
 			else
 			{
-				objData.GetValue(_label.Text, out color);
+				template.GetValue( "defaultValue", out Color value );
+				_colorRect.Color = value;
+				_parentModel.AddValue(_label.Text, value);
+				SetColor(_parentModel);
 			}
-
-			_colorRect.Color = color;
-			SetColor(_parentModel);
 		}
 
 		private void SetColor(GenericDataArray parent)
