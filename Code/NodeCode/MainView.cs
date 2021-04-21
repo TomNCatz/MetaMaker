@@ -671,7 +671,7 @@ namespace MetaMaker
 			
 			for( int i = 0; i < _copied.Count; i++ )
 			{
-				_app.LoadNode(  _copied[i] );
+				_app.LoadNode(  _copied[i].DataCopy() );
 			}
 
 			for( int i = start; i < nodes.Count; i++ )

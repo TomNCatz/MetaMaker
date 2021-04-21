@@ -1,7 +1,546 @@
 {
-  "targetVersion": "0.4.2",
+  "data": {
+    "ngMapNodeName": "Graph",
+    "ngMapNodePosition": {
+      "x": -140.0,
+      "y": 680.0
+    },
+    "ngMapNodeSize": {
+      "x": 252.0,
+      "y": 305.0
+    },
+    "defaultListing": "missions",
+    "explicitNode": "Mission",
+    "nestingColors": [
+      {
+        "r": 0.0,
+        "g": 0.53125,
+        "b": 1.0,
+        "a": 1.0
+      },
+      {
+        "r": 1.0,
+        "g": 0.84375,
+        "b": 0.0,
+        "a": 1.0
+      },
+      {
+        "r": 0.875,
+        "g": 0.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    ],
+    "keyColors": [
+      {
+        "r": 0.40625,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      {
+        "r": 0.0,
+        "g": 1.0,
+        "b": 0.8125,
+        "a": 1.0
+      }
+    ],
+    "nodeList": [
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 200.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 269.0
+        },
+        "title": "Mission",
+        "color": {
+          "r": 0.2801966,
+          "g": 0.4375,
+          "b": 0.37851125,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodePosition": {
+              "x": 640.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 159.0
+            },
+            "fieldType": "KEY",
+            "label": "missionId",
+            "slotType": 0,
+            "keyPrefix": "Mis-",
+            "keySize": 6
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 860.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "name",
+            "defaultValue": "Mission Name"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 160.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "autoActivate",
+            "defaultValue": false,
+            "id": "BOOL-8oX"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 300.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "autoTurnIn",
+            "defaultValue": false,
+            "id": "BOOL-R1r"
+          },
+          {
+            "ngMapNodeName": "Enum Slot",
+            "ngMapNodePosition": {
+              "x": 820.0,
+              "y": 380.0
+            },
+            "ngMapNodeSize": {
+              "x": 230.0,
+              "y": 209.0
+            },
+            "fieldType": "ENUM",
+            "label": "visibility",
+            "values": [
+              "SHOWN",
+              "HIDDEN_UNTIL_AVAILABLE",
+              "HIDDEN_UNTIL_COMPLETE",
+              "HIDDEN"
+            ]
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 1060.0,
+              "y": 460.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "unlockDependencies",
+            "field": {
+              "ngMapNodeName": "Key Tracker Slot",
+              "ngMapNodePosition": {
+                "x": 1260.0,
+                "y": 440.0
+              },
+              "ngMapNodeSize": {
+                "x": 232.0,
+                "y": 126.0
+              },
+              "fieldType": "KEY_TRACKER",
+              "label": "Mission",
+              "slotType": 0,
+              "emptyHandling": "EMPTY_STRING"
+            }
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 1060.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "objectives",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 1260.0,
+                "y": 560.0
+              },
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "Objective",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "EMPTY_OBJECT"
+            }
+          },
+          {
+            "ngMapNodeName": "Link To Child Slot",
+            "ngMapNodePosition": {
+              "x": 1500.0,
+              "y": 440.0
+            },
+            "ngMapNodeSize": {
+              "x": 230.0,
+              "y": 151.0
+            },
+            "fieldType": "LINK_TO_CHILD",
+            "label": "displayData",
+            "slotType": 1,
+            "explicitNode": "",
+            "emptyHandling": "EMPTY_OBJECT"
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 720.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 359.0
+        },
+        "title": "Objective",
+        "color": {
+          "r": 0.2233146,
+          "g": 0.375,
+          "b": 0.375,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodePosition": {
+              "x": 680.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 159.0
+            },
+            "fieldType": "KEY",
+            "label": "objectiveId",
+            "slotType": 1,
+            "keyPrefix": "Obj-",
+            "keySize": 3
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 900.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 187.999878,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "name",
+            "defaultValue": "Objective Name"
+          },
+          {
+            "ngMapNodeName": "Linked Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 262.0,
+              "y": 239.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "required",
+            "defaultValue": false,
+            "id": "BOOL-0Lr",
+            "matchTrue": [],
+            "invertTrue": [],
+            "matchFalse": [
+              "BOOL-0Lr"
+            ],
+            "invertFalse": []
+          },
+          {
+            "ngMapNodeName": "Enum Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 230.000122,
+              "y": 209.0
+            },
+            "fieldType": "ENUM",
+            "label": "visibility",
+            "values": [
+              "SHOWN",
+              "HIDDEN_UNTIL_AVAILABLE",
+              "HIDDEN_UNTIL_COMPLETE",
+              "HIDDEN"
+            ]
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 900.0
+            },
+            "ngMapNodeSize": {
+              "x": 187.999878,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "actionId",
+            "defaultValue": ""
+          },
+          {
+            "ngMapNodeName": "Linked Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 960.0
+            },
+            "ngMapNodeSize": {
+              "x": 262.0,
+              "y": 254.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "canFail",
+            "defaultValue": false,
+            "id": "BOOL-0Lr",
+            "matchTrue": [
+              "BOOL-0Lr",
+              "BOOL-0Lr"
+            ],
+            "invertTrue": [],
+            "matchFalse": [],
+            "invertFalse": []
+          },
+          {
+            "ngMapNodeName": "Linked Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 1220.0
+            },
+            "ngMapNodeSize": {
+              "x": 262.0,
+              "y": 239.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "canUnComplete",
+            "defaultValue": false,
+            "id": "BOOL-0Lr",
+            "matchTrue": [],
+            "invertTrue": [],
+            "matchFalse": [
+              "BOOL-0Lr"
+            ],
+            "invertFalse": []
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 920.0,
+              "y": 1000.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "hideWhenComplete",
+            "defaultValue": true,
+            "id": "BOOL-6AS"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 1000.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "useTotal",
+            "defaultValue": true,
+            "id": "BOOL-P6x"
+          },
+          {
+            "ngMapNodeName": "Boolean Slot",
+            "ngMapNodePosition": {
+              "x": 1320.0,
+              "y": 1000.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 124.0
+            },
+            "fieldType": "BOOLEAN",
+            "label": "showAsTime",
+            "defaultValue": true,
+            "id": "BOOL-DUr"
+          },
+          {
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodePosition": {
+              "x": 860.0,
+              "y": 1160.0
+            },
+            "ngMapNodeSize": {
+              "x": 189.0,
+              "y": 230.0
+            },
+            "fieldType": "INT",
+            "label": "highValue",
+            "MinStepSize": 0.0,
+            "hasMax": false,
+            "max": 0,
+            "hasMin": false,
+            "min": 0,
+            "defaultValue": 0
+          },
+          {
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodePosition": {
+              "x": 660.0,
+              "y": 1160.0
+            },
+            "ngMapNodeSize": {
+              "x": 189.0,
+              "y": 230.0
+            },
+            "fieldType": "INT",
+            "label": "lowValue",
+            "MinStepSize": 0.0,
+            "hasMax": false,
+            "max": 0,
+            "hasMin": false,
+            "min": 0,
+            "defaultValue": 0
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 1140.0,
+              "y": 1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "unlockDependencies",
+            "field": {
+              "ngMapNodeName": "Key Tracker Slot",
+              "ngMapNodePosition": {
+                "x": 1340.0,
+                "y": 1180.0
+              },
+              "ngMapNodeSize": {
+                "x": 232.0,
+                "y": 126.0
+              },
+              "fieldType": "KEY_TRACKER",
+              "label": "Objective",
+              "slotType": 1,
+              "emptyHandling": "EMPTY_STRING"
+            }
+          },
+          {
+            "ngMapNodeName": "Link To Child Slot",
+            "ngMapNodePosition": {
+              "x": 1140.0,
+              "y": 1300.0
+            },
+            "ngMapNodeSize": {
+              "x": 230.0,
+              "y": 151.0
+            },
+            "fieldType": "LINK_TO_CHILD",
+            "label": "displayData",
+            "slotType": 2,
+            "explicitNode": "",
+            "emptyHandling": "EMPTY_OBJECT"
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1500.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 149.0
+        },
+        "title": "Mission Display Data",
+        "color": {
+          "r": 0.494117647,
+          "g": 0.56078434,
+          "b": 0.5058824,
+          "a": 1.0
+        },
+        "parentType": 1,
+        "fields": []
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1700.0
+        },
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 149.0
+        },
+        "title": "Objective Display Data",
+        "color": {
+          "r": 0.6313726,
+          "g": 0.7254902,
+          "b": 0.7411765,
+          "a": 1.0
+        },
+        "parentType": 2,
+        "fields": []
+      }
+    ]
+  },
+  "metaMakerVersion": "0.6.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
+  "reuseDll": false,
+  "exportScript": {},
   "nestingColors": [
     {
       "r": 0.0,
@@ -1229,542 +1768,5 @@
         }
       }
     }
-  ],
-  "data": {
-    "ngMapNodeName": "Graph",
-    "ngMapNodePosition": {
-      "x": -140.0,
-      "y": 680.0
-    },
-    "ngMapNodeSize": {
-      "x": 252.0,
-      "y": 305.0
-    },
-    "defaultListing": "missions",
-    "explicitNode": "Mission",
-    "nestingColors": [
-      {
-        "r": 0.0,
-        "g": 0.53125,
-        "b": 1.0,
-        "a": 1.0
-      },
-      {
-        "r": 1.0,
-        "g": 0.84375,
-        "b": 0.0,
-        "a": 1.0
-      },
-      {
-        "r": 0.875,
-        "g": 0.0,
-        "b": 1.0,
-        "a": 1.0
-      }
-    ],
-    "keyColors": [
-      {
-        "r": 0.40625,
-        "g": 1.0,
-        "b": 0.0,
-        "a": 1.0
-      },
-      {
-        "r": 0.0,
-        "g": 1.0,
-        "b": 0.8125,
-        "a": 1.0
-      }
-    ],
-    "nodeList": [
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 200.0
-        },
-        "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 269.0
-        },
-        "title": "Mission",
-        "color": {
-          "r": 0.2801966,
-          "g": 0.4375,
-          "b": 0.37851125,
-          "a": 1.0
-        },
-        "parentType": -1,
-        "fields": [
-          {
-            "ngMapNodeName": "Key Slot",
-            "ngMapNodePosition": {
-              "x": 640.0,
-              "y": 200.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 159.0
-            },
-            "fieldType": "KEY",
-            "label": "missionId",
-            "slotType": 0,
-            "keyPrefix": "Mis-",
-            "keySize": 6
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 860.0,
-              "y": 200.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 109.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "name",
-            "defaultValue": "Mission Name"
-          },
-          {
-            "ngMapNodeName": "Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 160.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 124.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "autoActivate",
-            "defaultValue": false,
-            "id": "BOOL-8oX"
-          },
-          {
-            "ngMapNodeName": "Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 300.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 124.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "autoTurnIn",
-            "defaultValue": false,
-            "id": "BOOL-R1r"
-          },
-          {
-            "ngMapNodeName": "Enum Slot",
-            "ngMapNodePosition": {
-              "x": 820.0,
-              "y": 380.0
-            },
-            "ngMapNodeSize": {
-              "x": 230.0,
-              "y": 209.0
-            },
-            "fieldType": "ENUM",
-            "label": "visibility",
-            "values": [
-              "SHOWN",
-              "HIDDEN_UNTIL_AVAILABLE",
-              "HIDDEN_UNTIL_COMPLETE",
-              "HIDDEN"
-            ]
-          },
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 1060.0,
-              "y": 460.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 99.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "unlockDependencies",
-            "field": {
-              "ngMapNodeName": "Key Tracker Slot",
-              "ngMapNodePosition": {
-                "x": 1260.0,
-                "y": 440.0
-              },
-              "ngMapNodeSize": {
-                "x": 232.0,
-                "y": 126.0
-              },
-              "fieldType": "KEY_TRACKER",
-              "label": "Mission",
-              "slotType": 0,
-              "emptyHandling": "EMPTY_STRING"
-            }
-          },
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 1060.0,
-              "y": 560.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 99.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "objectives",
-            "field": {
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodePosition": {
-                "x": 1260.0,
-                "y": 560.0
-              },
-              "ngMapNodeSize": {
-                "x": 230.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "Objective",
-              "slotType": 0,
-              "explicitNode": "",
-              "emptyHandling": "EMPTY_OBJECT"
-            }
-          },
-          {
-            "ngMapNodeName": "Link To Child Slot",
-            "ngMapNodePosition": {
-              "x": 1500.0,
-              "y": 440.0
-            },
-            "ngMapNodeSize": {
-              "x": 230.0,
-              "y": 151.0
-            },
-            "fieldType": "LINK_TO_CHILD",
-            "label": "displayData",
-            "slotType": 1,
-            "explicitNode": "",
-            "emptyHandling": "EMPTY_OBJECT"
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 720.0
-        },
-        "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 359.0
-        },
-        "title": "Objective",
-        "color": {
-          "r": 0.2233146,
-          "g": 0.375,
-          "b": 0.375,
-          "a": 1.0
-        },
-        "parentType": 0,
-        "fields": [
-          {
-            "ngMapNodeName": "Key Slot",
-            "ngMapNodePosition": {
-              "x": 680.0,
-              "y": 720.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 159.0
-            },
-            "fieldType": "KEY",
-            "label": "objectiveId",
-            "slotType": 1,
-            "keyPrefix": "Obj-",
-            "keySize": 3
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 900.0,
-              "y": 720.0
-            },
-            "ngMapNodeSize": {
-              "x": 187.999878,
-              "y": 109.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "name",
-            "defaultValue": "Objective Name"
-          },
-          {
-            "ngMapNodeName": "Linked Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1560.0,
-              "y": 720.0
-            },
-            "ngMapNodeSize": {
-              "x": 262.0,
-              "y": 239.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "required",
-            "defaultValue": false,
-            "id": "BOOL-0Lr",
-            "matchTrue": [],
-            "invertTrue": [],
-            "matchFalse": [
-              "BOOL-0Lr"
-            ],
-            "invertFalse": []
-          },
-          {
-            "ngMapNodeName": "Enum Slot",
-            "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 720.0
-            },
-            "ngMapNodeSize": {
-              "x": 230.000122,
-              "y": 209.0
-            },
-            "fieldType": "ENUM",
-            "label": "visibility",
-            "values": [
-              "SHOWN",
-              "HIDDEN_UNTIL_AVAILABLE",
-              "HIDDEN_UNTIL_COMPLETE",
-              "HIDDEN"
-            ]
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 700.0,
-              "y": 900.0
-            },
-            "ngMapNodeSize": {
-              "x": 187.999878,
-              "y": 109.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "actionId",
-            "defaultValue": ""
-          },
-          {
-            "ngMapNodeName": "Linked Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1560.0,
-              "y": 960.0
-            },
-            "ngMapNodeSize": {
-              "x": 262.0,
-              "y": 254.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "canFail",
-            "defaultValue": false,
-            "id": "BOOL-0Lr",
-            "matchTrue": [
-              "BOOL-0Lr",
-              "BOOL-0Lr"
-            ],
-            "invertTrue": [],
-            "matchFalse": [],
-            "invertFalse": []
-          },
-          {
-            "ngMapNodeName": "Linked Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1560.0,
-              "y": 1220.0
-            },
-            "ngMapNodeSize": {
-              "x": 262.0,
-              "y": 239.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "canUnComplete",
-            "defaultValue": false,
-            "id": "BOOL-0Lr",
-            "matchTrue": [],
-            "invertTrue": [],
-            "matchFalse": [
-              "BOOL-0Lr"
-            ],
-            "invertFalse": []
-          },
-          {
-            "ngMapNodeName": "Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 1000.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 124.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "hideWhenComplete",
-            "defaultValue": true,
-            "id": "BOOL-6AS"
-          },
-          {
-            "ngMapNodeName": "Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 1000.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 124.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "useTotal",
-            "defaultValue": true,
-            "id": "BOOL-P6x"
-          },
-          {
-            "ngMapNodeName": "Boolean Slot",
-            "ngMapNodePosition": {
-              "x": 1320.0,
-              "y": 1000.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 124.0
-            },
-            "fieldType": "BOOLEAN",
-            "label": "showAsTime",
-            "defaultValue": true,
-            "id": "BOOL-DUr"
-          },
-          {
-            "ngMapNodeName": "Int Slot",
-            "ngMapNodePosition": {
-              "x": 860.0,
-              "y": 1160.0
-            },
-            "ngMapNodeSize": {
-              "x": 189.0,
-              "y": 230.0
-            },
-            "fieldType": "INT",
-            "label": "highValue",
-            "MinStepSize": 0.0,
-            "hasMax": false,
-            "max": 0,
-            "hasMin": false,
-            "min": 0,
-            "defaultValue": 0
-          },
-          {
-            "ngMapNodeName": "Int Slot",
-            "ngMapNodePosition": {
-              "x": 660.0,
-              "y": 1160.0
-            },
-            "ngMapNodeSize": {
-              "x": 189.0,
-              "y": 230.0
-            },
-            "fieldType": "INT",
-            "label": "lowValue",
-            "MinStepSize": 0.0,
-            "hasMax": false,
-            "max": 0,
-            "hasMin": false,
-            "min": 0,
-            "defaultValue": 0
-          },
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": 1180.0
-            },
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 99.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "unlockDependencies",
-            "field": {
-              "ngMapNodeName": "Key Tracker Slot",
-              "ngMapNodePosition": {
-                "x": 1340.0,
-                "y": 1180.0
-              },
-              "ngMapNodeSize": {
-                "x": 232.0,
-                "y": 126.0
-              },
-              "fieldType": "KEY_TRACKER",
-              "label": "Objective",
-              "slotType": 1,
-              "emptyHandling": "EMPTY_STRING"
-            }
-          },
-          {
-            "ngMapNodeName": "Link To Child Slot",
-            "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": 1300.0
-            },
-            "ngMapNodeSize": {
-              "x": 230.0,
-              "y": 151.0
-            },
-            "fieldType": "LINK_TO_CHILD",
-            "label": "displayData",
-            "slotType": 2,
-            "explicitNode": "",
-            "emptyHandling": "EMPTY_OBJECT"
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 1500.0
-        },
-        "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 149.0
-        },
-        "title": "Mission Display Data",
-        "color": {
-          "r": 0.494117647,
-          "g": 0.56078434,
-          "b": 0.5058824,
-          "a": 1.0
-        },
-        "parentType": 1,
-        "fields": []
-      },
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 1700.0
-        },
-        "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 149.0
-        },
-        "title": "Objective Display Data",
-        "color": {
-          "r": 0.6313726,
-          "g": 0.7254902,
-          "b": 0.7411765,
-          "a": 1.0
-        },
-        "parentType": 2,
-        "fields": []
-      }
-    ]
-  }
+  ]
 }

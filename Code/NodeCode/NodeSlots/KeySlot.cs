@@ -36,7 +36,7 @@ namespace MetaMaker
 			template.GetValue( "keySize", out _keySize );
 
 			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			if(parentModel.values.ContainsKey(_label.Text) && ! _app.Get.pastingData)
 			{
 				parentModel.GetValue( _label.Text, out string value );
 				SetKey( value );

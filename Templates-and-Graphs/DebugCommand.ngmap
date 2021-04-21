@@ -1,7 +1,9 @@
 {
-  "targetVersion": "0.4.1",
+  "metaMakerVersion": "0.6.0",
   "defaultListing": "_commandHub",
   "explicitNode": "Commands",
+  "reuseDll": false,
+  "exportScript": {},
   "nestingColors": [
     {
       "r": 0.21875,

@@ -525,6 +525,9 @@ namespace MetaMaker
 				NODE_SIZE_KEY
 			};
 
+			_exportRules.graphVersionKey = GRAPH_VERSION_KEY;
+			_exportRules.metaMakerVersion = Version;
+
 			ExportSet exportSet = _exportRules.ExportTargets[exportName];
 
 			if (!(_model.GetRelativeGdo(exportSet.gdoExportTarget) is GenericDataArray data)) 
@@ -532,28 +535,60 @@ namespace MetaMaker
 				throw new Exception($"Object at path {exportSet.gdoExportTarget} is not an array");
 			}
 
-			var graph = data.DataCopy();
-			graph.AddValue( GRAPH_VERSION_KEY, Version );
+			data = data.DataCopy();
 
 			if(keys != null)
 			{
-				graph.RecursivelyRemoveKeys(keys);
+				data.RecursivelyRemoveKeys(keys);
 			}
 
-			_exportRules.PreprocessExportGDA(graph, exportName);
-
-			string json = graph.ToJson();
-
-			json = _exportRules.PostprocessExportJSON(json, exportName);
-					
-			// TODO : this path needs to be converted to an absolute path
 			string path = exportSet.relativeSavePath.Replace("$name",GetFileName(SaveFilePath));
 			path = path.Replace("$export",exportName);
 			path = GetContainingPath(SaveFilePath) + "/" + path;
-			// TODO : convert '../' to a navigate up one folder
-			path = System.IO.Path.GetFullPath(path);
 
-			SaveJsonFile( path, json );
+			int fileCount = 1;
+			int itemCount = exportSet.childCount;
+			int current = 0;
+			if(exportSet.childCount > 0)
+			{
+				fileCount = (int)Math.Ceiling((float)data.values.Count / exportSet.childCount);
+			}
+			else
+			{
+				itemCount = data.values.Count;
+			}
+			Log.Error($"c{exportSet.childCount} f{fileCount} i{itemCount}");
+
+			List<GenericDataArray> items = new List<GenericDataArray>();
+			var graph = new GenericDataArray(){type = data.type};
+
+			foreach (KeyValuePair<string, GenericDataObject> pair in data.values)
+			{
+				if(current == itemCount)
+				{
+					items.Add(graph);
+					graph = new GenericDataArray(){type = data.type};
+					current = 0;
+				}
+				graph.AddValue(pair.Key, pair.Value);
+				Log.Error($"{pair.Key}:{pair.Value} c{current} I{items.Count}");
+				current++;
+			}
+			items.Add(graph);
+
+			for (int i = 0; i < fileCount; i++)
+			{
+				string myPath = path.Replace("$index",$"{i+1}");
+				myPath = System.IO.Path.GetFullPath(myPath);
+				
+				_exportRules.PreprocessExportGDA(items[i], exportName, myPath, i+1);
+
+				string json = items[i].ToJson();
+
+				json = _exportRules.PostprocessExportJSON(json, exportName, myPath, i+1);
+
+				SaveJsonFile( myPath, json );
+			}
 		}
 
 		private string GetContainingPath(string filePath)

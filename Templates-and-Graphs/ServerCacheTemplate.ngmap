@@ -1,5 +1,5 @@
 {
-  "metaMakerVersion": "0.5.0",
+  "metaMakerVersion": "0.6.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
@@ -1231,7 +1231,7 @@
     "defaultListing": "listing",
     "explicitNode": "Project",
     "reuseDll": true,
-    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Quests\"] = new ExportSet(){relativeSavePath = \"Quests.json\", gdoExportTarget = \"data/Quests\" };\n\t\t\t_exportTargets[\"Items\"] = new ExportSet(){relativeSavePath = \"Items.json\", gdoExportTarget = \"data/Items\" };\n\t\t\t_exportTargets[\"NPCs\"] = new ExportSet(){relativeSavePath = \"NPCs.json\", gdoExportTarget = \"data/NPCs\" };\n\t\t}\n\t}\n}",
+    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Quests\"] = new ExportSet(){relativeSavePath = \"Quests.json\", gdoExportTarget = \"data/Quests\" };\n\t\t\t_exportTargets[\"Items\"] = new ExportSet(){relativeSavePath = \"Items_$index.json\", gdoExportTarget = \"data/Items\", childCount = 3  };\n\t\t\t_exportTargets[\"NPCs\"] = new ExportSet(){relativeSavePath = \"NPCs.json\", gdoExportTarget = \"data/NPCs\" };\n\t\t}\n\t}\n}",
     "nestingColors": [
       {
         "r": 0.240431875,

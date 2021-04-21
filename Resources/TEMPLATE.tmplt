@@ -2,7 +2,7 @@
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGDA(GenericDataArray genericDataArray, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataArray.AddValue(  graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,
@@ -1218,10 +1218,11 @@
         {
           "fieldType": "TIME_SPAN",
           "label": "defaultValue",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "asSeconds": false
         }
       ]
     }
   ],
-  "metaMakerVersion": "0.5.0"
+  "metaMakerVersion": "0.6.0"
 }

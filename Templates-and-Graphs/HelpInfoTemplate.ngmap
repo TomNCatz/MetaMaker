@@ -1,7 +1,156 @@
 {
-  "metaMakerVersion": "0.5.0",
+  "data": {
+    "ngMapNodePosition": {
+      "x": -60.0,
+      "y": 200.0
+    },
+    "ngMapNodeName": "Graph",
+    "ngMapNodeSize": {
+      "x": 252.0,
+      "y": 369.0
+    },
+    "defaultListing": "",
+    "explicitNode": "",
+    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+    "nodeList": [
+      {
+        "ngMapNodePosition": {
+          "x": 300.0,
+          "y": 100.0
+        },
+        "ngMapNodeName": "Node",
+        "ngMapNodeSize": {
+          "x": 224.000122,
+          "y": 149.0
+        },
+        "title": "HelpInfo",
+        "color": {
+          "r": 0.40625,
+          "g": 0.40625,
+          "b": 0.40625,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 540.0,
+              "y": 100.0
+            },
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "helpInfo",
+            "field": {
+              "ngMapNodePosition": {
+                "x": 760.0,
+                "y": 100.0
+              },
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "Branch",
+              "slotType": 0,
+              "explicitNode": "Branch",
+              "emptyHandling": "SKIP"
+            }
+          }
+        ]
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 260.0,
+          "y": 300.0
+        },
+        "ngMapNodeName": "Node",
+        "ngMapNodeSize": {
+          "x": 224.0,
+          "y": 194.0
+        },
+        "title": "Branch",
+        "color": {
+          "r": 0.6853932,
+          "g": 0.7050562,
+          "b": 0.7050562,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 740.0,
+              "y": 300.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 109.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Entry",
+            "defaultValue": "Action"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 960.0,
+              "y": 300.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 188.000122,
+              "y": 168.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "Info",
+            "minHeight": 40.0,
+            "defaultValue": "Detailed description"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 520.0,
+              "y": 440.0
+            },
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodeSize": {
+              "x": 188.0,
+              "y": 99.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "Branches",
+            "field": {
+              "ngMapNodePosition": {
+                "x": 740.0,
+                "y": 440.0
+              },
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "Branch",
+              "slotType": 0,
+              "explicitNode": "Branch",
+              "emptyHandling": "SKIP"
+            }
+          }
+        ]
+      }
+    ],
+    "nestingColors": [],
+    "keyColors": []
+  },
+  "metaMakerVersion": "0.6.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
+  "reuseDll": false,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"HelpInfo.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,
@@ -36,7 +185,6 @@
       "a": 1.0
     }
   ],
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"HelpInfo.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
   "nodeList": [
     {
       "title": "Graph",
@@ -1242,150 +1390,5 @@
         }
       ]
     }
-  ],
-  "data": {
-    "ngMapNodePosition": {
-      "x": -60.0,
-      "y": 200.0
-    },
-    "ngMapNodeName": "Graph",
-    "ngMapNodeSize": {
-      "x": 252.0,
-      "y": 369.0
-    },
-    "defaultListing": "",
-    "explicitNode": "",
-    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
-    "nodeList": [
-      {
-        "ngMapNodePosition": {
-          "x": 300.0,
-          "y": 100.0
-        },
-        "ngMapNodeName": "Node",
-        "ngMapNodeSize": {
-          "x": 224.000122,
-          "y": 149.0
-        },
-        "title": "HelpInfo",
-        "color": {
-          "r": 0.40625,
-          "g": 0.40625,
-          "b": 0.40625,
-          "a": 1.0
-        },
-        "parentType": -1,
-        "fields": [
-          {
-            "ngMapNodePosition": {
-              "x": 540.0,
-              "y": 100.0
-            },
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 99.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "helpInfo",
-            "field": {
-              "ngMapNodePosition": {
-                "x": 760.0,
-                "y": 100.0
-              },
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodeSize": {
-                "x": 230.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "Branch",
-              "slotType": 0,
-              "explicitNode": "Branch",
-              "emptyHandling": "SKIP"
-            }
-          }
-        ]
-      },
-      {
-        "ngMapNodePosition": {
-          "x": 260.0,
-          "y": 300.0
-        },
-        "ngMapNodeName": "Node",
-        "ngMapNodeSize": {
-          "x": 224.0,
-          "y": 194.0
-        },
-        "title": "Branch",
-        "color": {
-          "r": 0.6853932,
-          "g": 0.7050562,
-          "b": 0.7050562,
-          "a": 1.0
-        },
-        "parentType": 0,
-        "fields": [
-          {
-            "ngMapNodePosition": {
-              "x": 740.0,
-              "y": 300.0
-            },
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 109.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Entry",
-            "defaultValue": "Action"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 960.0,
-              "y": 300.0
-            },
-            "ngMapNodeName": "Text Area Slot",
-            "ngMapNodeSize": {
-              "x": 188.000122,
-              "y": 168.0
-            },
-            "fieldType": "TEXT_AREA",
-            "label": "Info",
-            "minHeight": 40.0,
-            "defaultValue": "Detailed description"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 520.0,
-              "y": 440.0
-            },
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodeSize": {
-              "x": 188.0,
-              "y": 99.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "Branches",
-            "field": {
-              "ngMapNodePosition": {
-                "x": 740.0,
-                "y": 440.0
-              },
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodeSize": {
-                "x": 230.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "Branch",
-              "slotType": 0,
-              "explicitNode": "Branch",
-              "emptyHandling": "SKIP"
-            }
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

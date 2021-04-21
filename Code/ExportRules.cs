@@ -7,19 +7,23 @@ namespace MetaMaker
 	{
 		public string relativeSavePath;
 		public string gdoExportTarget;
+		public int childCount;
 	}
 
 	public class ExportRules
 	{
 		public Dictionary<string, ExportSet> ExportTargets => _exportTargets;
+		public string graphVersionKey;
+		public string metaMakerVersion;
+
 		protected Dictionary<string, ExportSet> _exportTargets = new Dictionary<string, ExportSet>();
 
-		public virtual string PostprocessExportJSON(string json, string exportName)
+		public virtual string PostprocessExportJSON(string json, string exportName, string exportLocation, int exportIndex)
 		{
 			return json;
 		}
 
-		public virtual void PreprocessExportGDA(GenericDataArray genericDataArray, string exportName)
+		public virtual void PreprocessExportGDA(GenericDataArray genericDataArray, string exportName, string exportLocation, int exportIndex)
 		{
 		}
 	}
@@ -37,6 +41,11 @@ namespace MetaMaker
 		public TemplateExportRules()
 		{
 			_exportTargets["Template file"] = new ExportSet(){relativeSavePath = "$name.tmplt", gdoExportTarget = "data" };
+		}
+
+		public override void PreprocessExportGDA(GenericDataArray genericDataArray, string exportName, string exportLocation, int exportIndex)
+		{
+			genericDataArray.AddValue( graphVersionKey, metaMakerVersion );
 		}
 	}
 }
