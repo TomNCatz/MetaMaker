@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Godot;
+using MetaMakerLib;
 using LibT;
 using LibT.Serialization;
 using LibT.Services;
@@ -54,7 +55,7 @@ namespace MetaMaker
 		private bool _hasUnbackedChanges;
 		private GenericDataArray _model;
 		private readonly List<GenericDataArray> _topModels = new List<GenericDataArray>();
-		private ExportRules _exportRules;
+		private ExportRulesAbstract _exportRules;
 		private string _loadingPath;
 
 		public string Version => _version;
@@ -518,13 +519,6 @@ namespace MetaMaker
 		{
 			if(string.IsNullOrEmpty(SaveFilePath)) throw new Exception("Relative export requires the graph to have been saved first.");
 
-			List<string> keys = new List<string>
-			{
-				NODE_NAME_KEY,
-				NODE_POSITION_KEY,
-				NODE_SIZE_KEY
-			};
-
 			_exportRules.graphVersionKey = GRAPH_VERSION_KEY;
 			_exportRules.metaMakerVersion = Version;
 
@@ -536,11 +530,6 @@ namespace MetaMaker
 			}
 
 			data = data.DataCopy();
-
-			if(keys != null)
-			{
-				data.RecursivelyRemoveKeys(keys);
-			}
 
 			string path = exportSet.relativeSavePath.Replace("$name",GetFileName(SaveFilePath));
 			path = path.Replace("$export",exportName);
@@ -557,7 +546,6 @@ namespace MetaMaker
 			{
 				itemCount = data.values.Count;
 			}
-			Log.Error($"c{exportSet.childCount} f{fileCount} i{itemCount}");
 
 			List<GenericDataArray> items = new List<GenericDataArray>();
 			var graph = new GenericDataArray(){type = data.type};
@@ -571,7 +559,6 @@ namespace MetaMaker
 					current = 0;
 				}
 				graph.AddValue(pair.Key, pair.Value);
-				Log.Error($"{pair.Key}:{pair.Value} c{current} I{items.Count}");
 				current++;
 			}
 			items.Add(graph);
@@ -581,8 +568,20 @@ namespace MetaMaker
 				string myPath = path.Replace("$index",$"{i+1}");
 				myPath = System.IO.Path.GetFullPath(myPath);
 				
-				_exportRules.PreprocessExportGDA(items[i], exportName, myPath, i+1);
+				List<string> keys = new List<string>
+				{
+					NODE_NAME_KEY,
+					NODE_POSITION_KEY,
+					NODE_SIZE_KEY
+				};
 
+				_exportRules.PreprocessExportGDA(items[i], keys, exportName, myPath, i+1);
+
+				if(keys != null)
+				{
+					data.RecursivelyRemoveKeys(keys);
+				}
+				
 				string json = items[i].ToJson();
 
 				json = _exportRules.PostprocessExportJSON(json, exportName, myPath, i+1);
@@ -915,7 +914,7 @@ namespace MetaMaker
 						args.exportPath = dllPath;
 					}
 					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(Dictionary<,>)));
-					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(ExportRules)));
+					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(ExportRulesAbstract)));
 					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(GenericDataArray)));
 					args.code = exportScript;
 					assembly = SharpMods.RoslynRuntimeCompile(args);
@@ -931,7 +930,7 @@ namespace MetaMaker
 				var type = assembly.GetType("Rules.ExportRules");
 
 				var obj = Activator.CreateInstance(type, null);
-				_exportRules = obj as ExportRules;
+				_exportRules = obj as ExportRulesAbstract;
 			}
 		}
 		#endregion
