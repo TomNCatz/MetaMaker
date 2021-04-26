@@ -29,6 +29,7 @@ namespace MetaMaker
 		QUATERNION,
 		DATE_TIME,
 		DATE_TIME_OFFSET,
-		TIME_SPAN
+		TIME_SPAN,
+		RELATIVE_PATH
 	}
 }

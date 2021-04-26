@@ -1222,6 +1222,52 @@
           "asSeconds": false
         }
       ]
+    },
+    {
+      "title": "Relative Path Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "RELATIVE_PATH"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Path"
+        },
+        {
+          "fieldType": "INT",
+          "label": "startOffset",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "prefix",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "extensions",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "*.png"
+          }
+        }
+      ]
     }
   ],
   "metaMakerVersion": "0.6.0"

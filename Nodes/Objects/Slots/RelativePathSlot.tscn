@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/RelativePathSlot.cs" type="Script" id=1]
+
+[node name="RelativePathSlot" type="VBoxContainer"]
+margin_right = 153.0
+margin_bottom = 18.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("HBoxContainer/Label")
+_fieldPath = NodePath("HBoxContainer/Field")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 153.0
+margin_bottom = 14.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_right = 74.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Color"
+
+[node name="Field" type="Label" parent="HBoxContainer"]
+margin_left = 78.0
+margin_right = 153.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Color"

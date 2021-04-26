@@ -240,6 +240,9 @@ namespace MetaMaker
 				case FieldType.TIME_SPAN : 
 					child = _builder.timeSpanScene.Instance();
 					break;
+				case FieldType.RELATIVE_PATH : 
+					child = _builder.relativePathScene.Instance();
+					break;
 				default : throw new ArgumentOutOfRangeException( nameof(fieldData), fieldData, null );
 			}
 

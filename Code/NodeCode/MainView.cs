@@ -43,6 +43,7 @@ namespace MetaMaker
 		[Export] public PackedScene dateTimeOffsetScene;
 		[Export] public PackedScene dateTimeScene;
 		[Export] public PackedScene timeSpanScene;
+		[Export] public PackedScene relativePathScene;
 		#endregion
 
 		#region Variables
@@ -133,6 +134,8 @@ namespace MetaMaker
 			}
 			get => _app.AutoBackup;
 		}
+
+		public FileDialogExtended FilePopup => _filePopup;
 		#endregion
 
 		#region Godot and signal connectors

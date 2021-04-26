@@ -194,9 +194,9 @@ namespace MetaMaker
 		public void UpdateTitle()
 		{
 			var title = "MetaMaker";
-			if( !string.IsNullOrEmpty( _saveFilePath ) )
+			if( !string.IsNullOrEmpty( SaveFilePath ) )
 			{
-				title += " - " + _saveFilePath;
+				title += " - " + SaveFilePath;
 			}
 
 			if( HasUnsavedChanges )
@@ -531,9 +531,9 @@ namespace MetaMaker
 
 			data = data.DataCopy();
 
-			string path = exportSet.relativeSavePath.Replace("$name",GetFileName(SaveFilePath));
+			string path = exportSet.relativeSavePath.Replace("$name", SaveFilePath.PathGetFileName());
 			path = path.Replace("$export",exportName);
-			path = GetContainingPath(SaveFilePath) + "/" + path;
+			path = SaveFilePath.PathGetContainingFolder() + path;
 
 			int fileCount = 1;
 			int itemCount = exportSet.childCount;
@@ -579,7 +579,7 @@ namespace MetaMaker
 
 				if(keys != null)
 				{
-					data.RecursivelyRemoveKeys(keys);
+					items[i].RecursivelyRemoveKeys(keys);
 				}
 				
 				string json = items[i].ToJson();
@@ -590,36 +590,13 @@ namespace MetaMaker
 			}
 		}
 
-		private string GetContainingPath(string filePath)
-		{
-			int index = filePath.LastIndexOf('/');
-			if(index < 0)
-			{
-				index = filePath.LastIndexOf('\\');
-			}
-
-			return filePath.Substring(0,index) ;
-		}
-
-		private string GetFileName(string filePath)
-		{
-			int startIndex = filePath.LastIndexOf('/');
-			if(startIndex < 0)
-			{
-				startIndex = filePath.LastIndexOf('\\');
-			}
-			int endIndex = filePath.LastIndexOf('.');
-
-			return filePath.Substring(startIndex,endIndex - startIndex);
-		}
-
 		public void SaveJsonFile( string path, string json )
 		{
 			try
 			{
 				if(!path.Contains("user:")&&!path.Contains("res:"))
 				{
-					Serializer.CreatePathIfMissing( GetContainingPath(path) );
+					Serializer.CreatePathIfMissing( path.PathGetContainingFolder() );
 				}
 
 				File file = new File();
