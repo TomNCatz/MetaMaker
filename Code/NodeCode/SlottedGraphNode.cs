@@ -43,6 +43,8 @@ namespace MetaMaker
 		}
 		private bool _dirty;
 
+		public string CleanTitle => _title;
+
 		public override void _Ready()
 		{
 			_builder = GetParent().GetParent<MainView>();
@@ -51,6 +53,7 @@ namespace MetaMaker
 		public void SetSlots(GenericDataArray definition, GenericDataArray objData = null)
 		{
 			definition.GetValue( "title", out _title );
+			Dirty = false;
 
 			if(objData != null)
 			{
@@ -280,6 +283,11 @@ namespace MetaMaker
 			}
 
 			return child;
+		}
+
+		public string GetPathToPort(int port)
+		{
+			return (GetSlot(port) as LinkToChildSlot).Label;
 		}
 
 		public new void RemoveChild( Node child )

@@ -24,6 +24,7 @@ namespace MetaMaker
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 
 		public int Count => _children.Count;
+		public string Label => _title.Text;
 		private GenericDataArray _parentModel;
 		private GenericDataArray _model;
 		public event System.Action OnValueUpdated;
@@ -83,6 +84,12 @@ namespace MetaMaker
 				_field.AddValue("label", _selector.Text);
 				int index = _graphNode.GetChildIndex(this) + 1;
 				_children[_selector.Text] = _graphNode.AddChildField(_field, index, _model);
+
+				if(_children[_selector.Text] is LinkToChildSlot link)
+				{
+					link.parentListing = this;
+				}
+				
 				OnValueUpdated?.Invoke();
 			}
 			catch(Exception ex)

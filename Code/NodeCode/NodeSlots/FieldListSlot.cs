@@ -26,6 +26,7 @@ namespace MetaMaker
 		private readonly List<GenericDataArray> _childData = new List<GenericDataArray>();
 
 		public int Count => _children.Count;
+		public string Label => _title.Text;
 
 		public override void _Ready()
 		{
@@ -85,6 +86,12 @@ namespace MetaMaker
 			_selector.MaxValue = _children.Count;
 			_selector.Value++;
 			(child as IField).OnValueUpdated += UpdateField;
+
+			if(child is LinkToChildSlot link)
+			{
+				link.parentListing = this;
+			}
+
 			UpdateField();
 		}
 
@@ -121,6 +128,19 @@ namespace MetaMaker
 			}
 			_parentModel.AddValue( _title.Text, childSlots );
 			OnValueUpdated?.Invoke();
+		}
+
+		public int GetIndex(Node child)
+		{
+			for(int i = 0; i < _children.Count; i++)
+			{
+				if(_children[i] == child)
+				{
+					return i;
+				}
+			}
+
+			return -1;
 		}
 	}
 }

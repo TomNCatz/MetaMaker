@@ -15,7 +15,30 @@ namespace MetaMaker
 		private EmptyHandling emptyHandling;
 		private SlottedGraphNode _parent;
 		private GenericDataArray _parentModel;
+
+		public IField parentListing;
 		public event System.Action OnValueUpdated;
+
+		public string Label
+		{
+			get
+			{
+				if(parentListing != null)
+				{
+					if(parentListing is FieldListSlot listSlot)
+					{
+						return listSlot.Label + "/" + listSlot.GetIndex(this);
+					}
+
+					if(parentListing is FieldDictionarySlot dictSlot)
+					{
+						return dictSlot.Label + "/" + Text;
+					}
+				}
+
+				return Text;
+			}
+		}
 
 		private enum EmptyHandling
 		{
