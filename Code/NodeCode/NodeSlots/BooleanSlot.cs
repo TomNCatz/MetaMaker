@@ -18,9 +18,11 @@ namespace MetaMaker
 		private List<string> _invertFalse = new List<string>();
 
 		private SlottedGraphNode _parent;
-		public event System.Action OnValueUpdated;
 		private bool _toggling;
-		private GenericDataArray _parentModel;
+		private GenericDataObject<bool> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
+		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
@@ -32,22 +34,22 @@ namespace MetaMaker
 			_parent = GetParent<SlottedGraphNode>();
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<bool> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out bool value );
-				_field.Pressed = value;
+				_model = model;
+				_field.Pressed = _model.value;
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out bool value );
+				_model = parentModel.TryAddValue(_label.Text, value) as GenericDataObject<bool>;
 				_field.Pressed = value;
-				_parentModel.AddValue(_label.Text, value);
 			}
 
 			if( template.values.ContainsKey( "id" ) )
@@ -107,7 +109,7 @@ namespace MetaMaker
 			}
 
 			_field.Pressed = buttonPressed;
-			_parentModel.AddValue(_label.Text, buttonPressed);
+			_model.value = buttonPressed;
 			_toggling = false;
 			OnValueUpdated?.Invoke();
 		}

@@ -10,6 +10,8 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -18,7 +20,7 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 		
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
@@ -26,7 +28,7 @@ namespace MetaMaker
 			template.GetValue( "defaultValue", out string text );
 			_field.Text = text;
 			
-			parentModel.AddValue(_label.Text, text);
+			parentModel.TryAddValue(_label.Text, text);
 		}
 	}
 }

@@ -25,9 +25,11 @@ namespace MetaMaker
 		private SpinBox _milisecond;
 
 		private TimeSpan span;
-		private GenericDataArray _parentModel;
+		private GenericDataObject _model;
 		private bool asSeconds = false;
 
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -80,41 +82,70 @@ namespace MetaMaker
 		{
 			GetDateInPopup();
 			_field.Text = span.ToString("c");
-			UpdateDisplay();
+			UpdateData();
 		}
 
-		private void UpdateDisplay()
+		private void UpdateData()
 		{
-			if(asSeconds)
+			if( asSeconds )
 			{
-				_parentModel.AddValue( _label.Text, span.TotalSeconds );
+				_model.CopyFrom(GenericDataObject.CreateGdo((int)Math.Round(span.TotalSeconds)));
 			}
 			else
 			{
-				_parentModel.AddValue( _label.Text, span );
+				_model.CopyFrom(GenericDataObject.CreateGdo(span));
 			}
 			OnValueUpdated?.Invoke();
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
 			template.GetValue( "asSeconds", out asSeconds );
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			GenericDataObject gdo = parentModel.TryGetRelativeGdo(_label.Text);
+			if(gdo != null)
 			{
-				parentModel.GetValue( _label.Text, out span );
-				_field.Text = span.ToString("c");
+				if(gdo.GetValue(out int seconds))
+				{
+					span = new TimeSpan(0,0,seconds);
+					if(asSeconds)
+					{
+						_model = gdo;
+					}
+					else
+					{
+						_model = new GenericDataDictionary();
+					}
+				}
+				else if(gdo.GetValue(out span))
+				{
+					if(asSeconds)
+					{
+						_model = new GenericDataObject<int>();
+					}
+					else
+					{
+						_model = gdo;
+					}
+				}
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out span );
-				_field.Text = span.ToString("c");
-				UpdateDisplay();
+				if( asSeconds )
+				{
+					_model = parentModel.TryAddValue( _label.Text, (int)Math.Round(span.TotalSeconds) );
+				}
+				else
+				{
+					_model = parentModel.TryAddValue( _label.Text, span );
+				}
 			}
+
+			_field.Text = span.ToString("c");
 		}
 	}
 }

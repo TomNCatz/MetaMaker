@@ -83,7 +83,7 @@ namespace MetaMaker
 		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
 
 		private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
-		private readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
+		private readonly List<GenericDataDictionary> _copied = new List<GenericDataDictionary>();
 		private Vector2 _copiedCorner = new Vector2(50,100);
 		private Vector2 _offset = new Vector2(50,100);
 		private Vector2 _buffer = new Vector2(40,10);
@@ -95,8 +95,9 @@ namespace MetaMaker
 		private PopupMenu _recentSubmenu;
 		private Promise<Color> _pickingColor;
 		private Tween _tween;
-
 		private App _app;
+
+		public int CurrentParentIndex {set; get;}
 		
 		public Color GridMajorColor
 		{
@@ -245,9 +246,9 @@ namespace MetaMaker
 				_backupTimer.Start();
 
 				_helpInfoPopup.Version = _app.Version;
-				GenericDataArray helpData = new GenericDataArray();
+				GenericDataDictionary helpData = new GenericDataDictionary();
 				helpData.FromJson( _app.LoadJsonFile( App.HELP_INFO_SOURCE ) );
-				_helpInfoPopup.LoadFromGda( helpData );
+				_helpInfoPopup.SetObjectData( helpData );
 			}
 			catch( Exception e )
 			{
@@ -483,7 +484,7 @@ namespace MetaMaker
 					_app.ClearData();
 
 					string json = _app.LoadJsonFile( path );
-					var data = new GenericDataArray();
+					var data = new GenericDataDictionary();
 					data.FromJson( json );
 					_app.LoadData( data );
 
@@ -522,17 +523,17 @@ namespace MetaMaker
 					_copied.Add( node.Model.DataCopy() );
 				}
 				
-				foreach( GenericDataArray node in _copied )
+				foreach( GenericDataDictionary node in _copied )
 				{
 					TrimToSelection(node);
 				}
-				List<GenericDataArray> toRemove = new List<GenericDataArray>();
-				foreach( GenericDataArray node in _copied )
+				List<GenericDataDictionary> toRemove = new List<GenericDataDictionary>();
+				foreach( GenericDataDictionary node in _copied )
 				{
 					FindDuplicates(node, toRemove);
 				}
 				
-				foreach (GenericDataArray item in toRemove)
+				foreach (GenericDataDictionary item in toRemove)
 				{
 					_copied.Remove(item);
 				}
@@ -543,13 +544,13 @@ namespace MetaMaker
 			}
 		}
 
-		private void TrimToSelection( GenericDataArray target )
+		private void TrimToSelection( GenericDataDictionary target )
 		{
 			List<string> removeKeys = new List<string>();
 
 			foreach (var pair in target.values)
 			{
-				if(pair.Value is GenericDataArray subTarget)
+				if(pair.Value is GenericDataDictionary subTarget)
 				{
 					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
 					{
@@ -583,17 +584,17 @@ namespace MetaMaker
 			}
 		}
 
-		private void FindDuplicates( GenericDataArray target, List<GenericDataArray> toRemove )
+		private void FindDuplicates( GenericDataDictionary target, List<GenericDataDictionary> toRemove )
 		{
 			foreach (var pair in target.values)
 			{
-				if(pair.Value is GenericDataArray subTarget)
+				if(pair.Value is GenericDataDictionary subTarget)
 				{
 					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
 					{
 						for (int i = _copied.Count-1; i >= 0; i--)
 						{
-							GenericDataArray copy = _copied[i];
+							GenericDataDictionary copy = _copied[i];
 							if (!subTarget.DeepEquals(copy) || toRemove.Contains(copy)) continue;
 
 							toRemove.Add(copy);
@@ -729,7 +730,7 @@ namespace MetaMaker
 			_areYouSurePopup.Display(args);
 		}
 
-		public SlottedGraphNode CreateNode(GenericDataArray nodeData, GenericDataArray nodeContent = null)
+		public SlottedGraphNode CreateNode(GenericDataDictionary nodeData, GenericDataDictionary nodeContent = null)
 		{
 			if( nodeData == null ) throw new ArgumentNullException("CreateNode passed NULL nodeData");
 
@@ -916,7 +917,7 @@ namespace MetaMaker
 				if( !( rightSlot is LinkToParentSlot rightLink) || rightLink.IsLinked ) return;
 				if( !leftLink.LinkChild( rightGraph ) ) return;
 
-				rightLink.Link();
+				rightLink.Link(1);
 				_graph.ConnectNode( @from, fromSlot, to, toSlot );
 			}
 		}

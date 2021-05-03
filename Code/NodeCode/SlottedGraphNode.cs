@@ -18,12 +18,12 @@ namespace MetaMaker
 		public readonly Dictionary<string,BooleanSlot> booleanLookup = new Dictionary<string, BooleanSlot>();
 		
 		private readonly List<Node> slots = new List<Node>();
-		private MainView _builder;
+		private MainView _mainView;
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		private string _title;
 
-		public GenericDataArray Model => _model;
-		private GenericDataArray _model;
+		public GenericDataDictionary Model => _model;
+		private GenericDataDictionary _model;
 
 		public bool Dirty{
 			get => _dirty;
@@ -47,10 +47,10 @@ namespace MetaMaker
 
 		public override void _Ready()
 		{
-			_builder = GetParent().GetParent<MainView>();
+			_mainView = GetParent().GetParent<MainView>();
 		}
 
-		public void SetSlots(GenericDataArray definition, GenericDataArray objData = null)
+		public void SetSlots(GenericDataDictionary definition, GenericDataDictionary objData = null)
 		{
 			definition.GetValue( "title", out _title );
 			Dirty = false;
@@ -72,7 +72,7 @@ namespace MetaMaker
 			}
 			else
 			{
-				_model = new GenericDataArray();
+				_model = new GenericDataDictionary();
 
 				_model.AddValue( App.NODE_NAME_KEY, _title );
 				_model.AddValue( App.NODE_POSITION_KEY, Offset );
@@ -102,17 +102,17 @@ namespace MetaMaker
 			{
 				definition.GetValue( "parentType", out int parentType );
 				ParentType = parentType;
-				GenericDataArray gda = new GenericDataArray();
+				GenericDataDictionary gda = new GenericDataDictionary();
 				gda.AddValue( "fieldType", FieldType.LINK_TO_PARENT );
 				gda.AddValue( "slotType", ParentType );
 				AddChildField( gda );
 			}
 
-			GenericDataArray listing = definition.GetGdo( "fields" ) as GenericDataArray;
+			GenericDataList listing = definition.GetGdo( "fields" ) as GenericDataList;
 
-			foreach( GenericDataObject dataObject in listing.values.Values )
+			foreach( GenericDataObject dataObject in listing.values )
 			{
-				AddChildField( dataObject as GenericDataArray );
+				AddChildField( dataObject as GenericDataDictionary );
 				if (slots[slots.Count - 1] is IField field)
 				{
 					field.OnValueUpdated += OnSlotChange;
@@ -136,7 +136,7 @@ namespace MetaMaker
 			return slots[index];
 		}
 
-		public Node AddChildField( GenericDataArray fieldData, int insertIndex = -1, GenericDataArray parentOveride = null)
+		public Node AddChildField( GenericDataDictionary fieldData, int insertIndex = -1, GenericDataObject parentOveride = null)
 		{
 			int leftType = -1;
 			Color leftColor = Colors.Transparent;
@@ -149,102 +149,103 @@ namespace MetaMaker
 			switch(fieldType)
 			{
 				case FieldType.SEPARATOR : 
-					child = _builder.separatorScene.Instance();
+					child = _mainView.separatorScene.Instance();
 					break;
 				case FieldType.KEY : 
-					child = _builder.keyScene.Instance();
+					child = _mainView.keyScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
 					rightColor = _app.Get.GetKeyColor( rightType );
 					break;
 				case FieldType.KEY_TRACKER : 
-					child = _builder.keyLinkScene.Instance();
+					child = _mainView.keyLinkScene.Instance();
 					fieldData.GetValue( "slotType", out leftType );
 					leftColor = _app.Get.GetKeyColor( leftType );
 					break;
 				case FieldType.LINK_TO_PARENT :
 					fieldData.GetValue( "slotType", out leftType );
+					child = _mainView.linkToParentScene.Instance();
 					
-					if( leftType < 0 ) return null;
-					
-					child = _builder.linkToParentScene.Instance();
-					leftColor = _app.Get.GetParentChildColor( leftType );
+					if( leftType != _mainView.CurrentParentIndex)
+					{
+						leftColor = _app.Get.GetParentChildColor( leftType );
+					}
 					break;
 				case FieldType.LINK_TO_CHILD : 
-					child = _builder.linkToChildScene.Instance();
+					child = _mainView.linkToChildScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
 					rightColor = _app.Get.GetParentChildColor( rightType );
 					break;
 				case FieldType.FIELD_LIST : 
-					child = _builder.fieldListScene.Instance();
+					child = _mainView.fieldListScene.Instance();
 					break;
 				case FieldType.FIELD_DICTIONARY : 
-					child = _builder.fieldDictionaryScene.Instance();
+					child = _mainView.fieldDictionaryScene.Instance();
 					break;
 				case FieldType.INFO : 
-					child = _builder.infoScene.Instance();
+					child = _mainView.infoScene.Instance();
 					break;
 				case FieldType.AUTO : 
-					child = _builder.autoScene.Instance();
+					child = _mainView.autoScene.Instance();
 					break;
 				case FieldType.TYPE : 
-					child = _builder.typeScene.Instance();
+					child = _mainView.typeScene.Instance();
 					break;
 				case FieldType.ENUM : 
-					child = _builder.enumScene.Instance();
+					child = _mainView.enumScene.Instance();
 					break;
 				case FieldType.FLAGS : 
-					child = _builder.flagsScene.Instance();
+					child = _mainView.flagsScene.Instance();
 					break;
 				case FieldType.TEXT_LINE : 
-					child = _builder.textLineScene.Instance();
+					child = _mainView.textLineScene.Instance();
 					break;
 				case FieldType.TEXT_AREA : 
-					child = _builder.textAreaScene.Instance();
+					child = _mainView.textAreaScene.Instance();
 					break;
 				case FieldType.TEXT_AREA_RICH : 
-					child = _builder.textAreaRichScene.Instance();
+					child = _mainView.textAreaRichScene.Instance();
 					break;
 				case FieldType.FLOAT : 
-					child = _builder.floatScene.Instance();
+					child = _mainView.floatScene.Instance();
 					break;
 				case FieldType.DOUBLE : 
-					child = _builder.doubleScene.Instance();
+					child = _mainView.doubleScene.Instance();
 					break;
 				case FieldType.INT : 
-					child = _builder.intScene.Instance();
+					child = _mainView.intScene.Instance();
 					break;
 				case FieldType.LONG : 
-					child = _builder.longScene.Instance();
+					child = _mainView.longScene.Instance();
 					break;
 				case FieldType.BOOLEAN : 
-					child = _builder.booleanScene.Instance();
+					child = _mainView.booleanScene.Instance();
 					break;
 				case FieldType.COLOR : 
-					child = _builder.colorScene.Instance();
+					child = _mainView.colorScene.Instance();
 					break;
 				case FieldType.VECTOR2 : 
-					child = _builder.vector2Scene.Instance();
+					child = _mainView.vector2Scene.Instance();
 					break;
 				case FieldType.VECTOR3 : 
-					child = _builder.vector3Scene.Instance();
+					child = _mainView.vector3Scene.Instance();
 					break;
 				case FieldType.VECTOR4 : 
-					child = _builder.vector4Scene.Instance();
+					child = _mainView.vector4Scene.Instance();
 					break;
 				case FieldType.QUATERNION : 
-					child = _builder.vector4Scene.Instance();
+					child = _mainView.vector4Scene.Instance();
 					break;
 				case FieldType.DATE_TIME : 
-					child = _builder.dateTimeScene.Instance();
+					child = _mainView.dateTimeScene.Instance();
 					break;
 				case FieldType.DATE_TIME_OFFSET : 
-					child = _builder.dateTimeOffsetScene.Instance();
+					child = _mainView.dateTimeOffsetScene.Instance();
 					break;
 				case FieldType.TIME_SPAN : 
-					child = _builder.timeSpanScene.Instance();
+					child = _mainView.timeSpanScene.Instance();
 					break;
 				case FieldType.RELATIVE_PATH : 
-					child = _builder.relativePathScene.Instance();
+					child = _mainView.relativePathScene.Instance();
 					break;
 				default : throw new ArgumentOutOfRangeException( nameof(fieldData), fieldData, null );
 			}
@@ -257,8 +258,8 @@ namespace MetaMaker
 			}
 			else
 			{
-				var connections = _builder.GetConnectionsToNode( this );
-				_builder.BreakConnections( connections );
+				var connections = _mainView.GetConnectionsToNode( this );
+				_mainView.BreakConnections( connections );
 				
 				AddChild(child);
 				MoveChild(child, insertIndex);
@@ -271,11 +272,6 @@ namespace MetaMaker
 			SetSlot( insertIndex, 
 				true, leftType, leftColor, 
 				true, rightType, rightColor );
-
-			if( child is IGdaLoadable loadable )
-			{
-				loadable.LoadFromGda( fieldData );
-			}
 
 			if( child is IField field )
 			{
@@ -296,8 +292,8 @@ namespace MetaMaker
 
 			if( index < 0 ) return;
 			
-			var connections = _builder.GetConnectionsToNode( this );
-			_builder.BreakConnections( connections );
+			var connections = _mainView.GetConnectionsToNode( this );
+			_mainView.BreakConnections( connections );
 			
 			ShiftSlotsUp( index );
 
@@ -370,7 +366,7 @@ namespace MetaMaker
 				}
 			}
 			
-			_builder.RebuildConnections( connections );
+			_mainView.RebuildConnections( connections );
 		}
 		
 		private void ShiftSlotsUp(int start)
@@ -390,7 +386,7 @@ namespace MetaMaker
 
 		public void CloseRequest()
 		{
-			_builder.FreeNode( this );
+			_mainView.FreeNode( this );
 			QueueFree();
 		}
 

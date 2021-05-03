@@ -124,7 +124,8 @@ _logFile = "LogData"
 [node name="GraphEdit" type="GraphEdit" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 27.0
+margin_top = 25.9406
+margin_bottom = -1.05945
 custom_styles/bg = SubResource( 1 )
 custom_colors/grid_major = Color( 1, 1, 1, 0.392157 )
 custom_colors/grid_minor = Color( 1, 1, 1, 0.0980392 )

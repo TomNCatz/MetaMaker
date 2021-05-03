@@ -20,10 +20,12 @@ namespace MetaMaker
 		private int _startOffset;
 		private string _prefix;
 		private string[] _extensions;
-		private GenericDataArray _parentModel;
+		private GenericDataObject<string> _model;
 		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -85,11 +87,11 @@ namespace MetaMaker
 
 		private void UpdateData()
 		{
-			_parentModel.AddValue( _label.Text, _relativePath );
+			_model.value = _relativePath;
 			OnValueUpdated?.Invoke();
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
@@ -98,17 +100,20 @@ namespace MetaMaker
 			template.GetValue( "prefix", out _prefix );
 			template.GetValue( "extensions", out _extensions );
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out _relativePath );
-				UpdateDisplay();
+				_model = model;
+				_relativePath = _model.value;
 			}
 			else
 			{
-				UpdateDisplay();
-				UpdateData();
+				template.GetValue( "defaultValue", out string value );
+				_relativePath = value;
+				_model = parentModel.TryAddValue(_label.Text, _relativePath) as GenericDataObject<string>;
 			}
+
+			UpdateDisplay();
 		}
 	}
 }

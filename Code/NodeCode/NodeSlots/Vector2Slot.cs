@@ -12,7 +12,9 @@ namespace MetaMaker
 		private SpinBox _x;
 		[Export] public NodePath _yPath;
 		private SpinBox _y;
-		private GenericDataArray _parentModel;
+		private GenericDataDictionary _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -26,15 +28,16 @@ namespace MetaMaker
 			_y.Connect("value_changed",this,nameof(OnChanged));
 		}
 		
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataDictionary model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out Vector2 vector );
+				_model = model;
+				_model.GetValue( out Vector2 vector );
 				_x.Value = vector.x;
 				_y.Value = vector.y;
 			}
@@ -42,16 +45,16 @@ namespace MetaMaker
 			{
 			
 				template.GetValue( "defaultValue", out Vector2 vector );
+				_model = parentModel.TryAddValue(_label.Text, vector) as GenericDataDictionary;
 				_x.Value = vector.x;
 				_y.Value = vector.y;
-				_parentModel.AddValue(_label.Text, vector);
 			}
 		}
 		
 		private void OnChanged(float value)
 		{
 			LibT.Maths.Vector2 vector = new Vector2((float)_x.Value,(float)_y.Value);
-			_parentModel.AddValue( _label.Text, vector );
+			_model.CopyFrom(GenericDataObject.CreateGdo(vector));
 			OnValueUpdated?.Invoke();
 		}
 	}

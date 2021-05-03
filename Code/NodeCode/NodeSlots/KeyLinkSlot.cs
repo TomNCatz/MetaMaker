@@ -20,7 +20,9 @@ namespace MetaMaker
 		private Label _field;
 		private EmptyHandling emptyHandling;
 		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
-		private GenericDataArray _parentModel;
+		private GenericDataObject<string> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
@@ -45,7 +47,7 @@ namespace MetaMaker
 			if( !string.IsNullOrEmpty( _field.Text ) ) return false;
 
 			_field.Text = link;
-			UpdateField(_parentModel);
+			UpdateField();
 
 			return true;
 		}
@@ -55,51 +57,40 @@ namespace MetaMaker
 			if( string.IsNullOrEmpty( _field.Text ) ) return false;
 
 			_field.Text = string.Empty;
-			UpdateField(_parentModel);
+			UpdateField();
 
 			return true;
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
-			_parentModel = parentModel;
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
 				template.GetValue( "emptyHandling", out emptyHandling );
 			}
 
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out string key );
+				_model = model;
 
-				if( string.IsNullOrEmpty( key ) ) return;
+				if( string.IsNullOrEmpty( model.value ) ) return;
 				
-				_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, key ) );
-			}
-		}
-
-		private void UpdateField( GenericDataArray objData )
-		{
-			if( string.IsNullOrEmpty( _field.Text ) )
-			{
-				switch(emptyHandling)
-				{
-					case EmptyHandling.EMPTY_STRING :
-						objData.AddValue( _label.Text, _field.Text );
-						break;
-					case EmptyHandling.SKIP : 
-						objData.RemoveValue(_label.Text);
-						break;
-					default : throw new ArgumentOutOfRangeException();
-				}
+				_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, model.value ) );
 			}
 			else
 			{
-				objData.AddValue( _label.Text, _field.Text );
+				_model = parentModel.TryAddValue(_label.Text, string.Empty) as GenericDataObject<string>;
 			}
+		}
+
+		private void UpdateField()
+		{
+			// TODO : We lost the option to skip empties, I would like something similar back somehow
+			_model.value = _field.Text;
 			OnValueUpdated?.Invoke();
 		}
 	}

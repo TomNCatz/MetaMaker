@@ -9,7 +9,7 @@ namespace MetaMaker
 	public class FieldListSlot : Container, IField
 	{
 		[Export] public NodePath _titlePath;
-		private Label _title;
+		private Label _label;
 		[Export] public NodePath _selectorPath;
 		private SpinBox _selector;
 		[Export] public NodePath _addButtonPath;
@@ -18,20 +18,21 @@ namespace MetaMaker
 		private Button _deleteButton;
 		
 		private SlottedGraphNode _graphNode;
-		private GenericDataArray _field;
+		private GenericDataDictionary _field;
 		private readonly List<Node> _children = new List<Node>();
-		private GenericDataArray _parentModel;
-		private GenericDataArray _model;
+		private GenericDataList _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
-		private readonly List<GenericDataArray> _childData = new List<GenericDataArray>();
+		
+		private readonly List<GenericDataDictionary> _childData = new List<GenericDataDictionary>();
 
 		public int Count => _children.Count;
-		public string Label => _title.Text;
 
 		public override void _Ready()
 		{
 			_graphNode = GetParent<SlottedGraphNode>();
-			_title = this.GetNodeFromPath<Label>( _titlePath );
+			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_selector = this.GetNodeFromPath<SpinBox>( _selectorPath );
 			
 			_addButton = this.GetNodeFromPath<Button>( _addButtonPath );
@@ -41,55 +42,39 @@ namespace MetaMaker
 			_deleteButton.Connect( "pressed", this, nameof(Delete) );
 		}
 		
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
-			_title.Text = label;
+			_label.Text = label;
 			template.GetValue( "field", out _field );
-			
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(label))
-			{
-				parentModel.GetValue( _title.Text, out _model );
-				parentModel.GetValue( _title.Text, out List<GenericDataObject> childSlots );
 
-				_field.GetValue( "label", out string name );
-				foreach( GenericDataObject item in childSlots )
+			parentModel.TryGetValue(_label.Text, out GenericDataList model);
+			if(model != null)
+			{
+				_model = model;
+				for( int i = 0; i < _model.values.Count; i++)
 				{
-					int index = _graphNode.GetChildIndex( this )+1;
-					index += (int)_selector.Value;
-					GenericDataArray childData = new GenericDataArray();
-					childData.AddValue(name, item);
-					Node child = _graphNode.AddChildField( _field, index, childData );
-					_children.Insert( (int)_selector.Value, child );
-					_childData.Insert( (int)_selector.Value, childData );
-					_selector.MaxValue = _children.Count;
-					_selector.Value++;
-					if(child is IField childField)
-					{
-						childField.OnValueUpdated += UpdateField;
-					}
+					Add();
 				}
 			}
-
-			UpdateField();
+			else
+			{
+				_model = parentModel.TryAddValue(_label.Text, new GenericDataList()) as GenericDataList;
+			}
 		}
 
 		public void Add()
 		{
 			int index = _graphNode.GetChildIndex( this )+1;
 			index += (int)_selector.Value;
-			GenericDataArray childData = new GenericDataArray();
-			Node child = _graphNode.AddChildField( _field, index, childData );
+			_field.AddValue("label", _selector.Value.ToString());
+			Node child = _graphNode.AddChildField( _field, index, _model );
 			_children.Insert( (int)_selector.Value, child );
-			_childData.Insert( (int)_selector.Value, childData );
 			_selector.MaxValue = _children.Count;
 			_selector.Value++;
-			(child as IField).OnValueUpdated += UpdateField;
-
-			if(child is LinkToChildSlot link)
+			if(child is IField childField)
 			{
-				link.parentListing = this;
+				childField.OnValueUpdated += UpdateField;
 			}
 
 			UpdateField();
@@ -107,26 +92,22 @@ namespace MetaMaker
 			
 			Node child = _children[target];
 			_children.Remove( child );
-			_childData.RemoveAt( target );
+			_model.RemoveValue(target);
 			_graphNode.RemoveChild( child );
 			_selector.MaxValue = _children.Count;
+
 			UpdateField();
 		}
 
 		private void UpdateField()
 		{
-			List<GenericDataObject> childSlots = new List<GenericDataObject>();
-
-			foreach(GenericDataArray gda in _childData)
+			for (int i = 0; i < _children.Count; i++)
 			{
-				if( gda == null ) continue;
-
-				if( gda.values.Count > 0 )
+				if( _children[i] is IField field )
 				{
-					childSlots.Add( gda.values.Values.First() );
+					field.Label = i.ToString();
 				}
 			}
-			_parentModel.AddValue( _title.Text, childSlots );
 			OnValueUpdated?.Invoke();
 		}
 

@@ -42,7 +42,7 @@ namespace MetaMaker
 
 		public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
 		
-		private readonly Dictionary<string, GenericDataArray> _nodeData = new Dictionary<string, GenericDataArray>();
+		private readonly Dictionary<string, GenericDataDictionary> _nodeData = new Dictionary<string, GenericDataDictionary>();
 		private readonly List<Color> _parentChildColors = new List<Color> ();
 		private readonly List<Color> _keyColors = new List<Color>();
 		public bool copyingData;
@@ -53,8 +53,8 @@ namespace MetaMaker
 		private string _defaultListing;
 		private string _explicitNode;
 		private bool _hasUnbackedChanges;
-		private GenericDataArray _model;
-		private readonly List<GenericDataArray> _topModels = new List<GenericDataArray>();
+		private GenericDataDictionary _model;
+		private readonly List<GenericDataDictionary> _topModels = new List<GenericDataDictionary>();
 		private ExportRulesAbstract _exportRules;
 		private string _loadingPath;
 
@@ -117,7 +117,7 @@ namespace MetaMaker
 			ServiceProvider.Add(this);
 
 			_mainView = mainView;
-			_model = new GenericDataArray();
+			_model = new GenericDataDictionary();
 			OS.LowProcessorUsageMode = true;
 		}
 
@@ -134,7 +134,7 @@ namespace MetaMaker
 			File file = new File();
 			if( !file.FileExists( SETTINGS_SOURCE ) )return;
 
-			GenericDataArray gda = new GenericDataArray();
+			GenericDataDictionary gda = new GenericDataDictionary();
 			gda.FromJson( LoadJsonFile( SETTINGS_SOURCE ) );
 			
 			gda.GetValue( "backgroundColor", out Color background );
@@ -278,6 +278,7 @@ namespace MetaMaker
 				_mainView.nodes[i].CloseRequest();
 			}
 			
+			_mainView.CurrentParentIndex = -1;
 			_nodeData.Clear();
 			ClearBackup();
 			HasUnsavedChanges = false;
@@ -287,7 +288,7 @@ namespace MetaMaker
 
 		public void SaveSettings()
 		{
-			GenericDataArray gda = new GenericDataArray();
+			GenericDataDictionary gda = new GenericDataDictionary();
 			gda.AddValue( "RecentFiles", _recentFiles );
 			gda.AddValue( "RecentTemplates", _recentTemplates );
 			gda.AddValue( "backgroundColor", _mainView.Color );
@@ -327,7 +328,7 @@ namespace MetaMaker
 		
 		private void UpdateData()
 		{
-			GenericDataArray gda;
+			GenericDataDictionary gda;
 
 			if( _topModels.Count == 1 )
 			{
@@ -335,7 +336,7 @@ namespace MetaMaker
 			}
 			else
 			{
-				gda = new GenericDataArray();
+				gda = new GenericDataDictionary();
 
 				gda.AddValue( _defaultListing, _topModels );
 			}
@@ -400,9 +401,9 @@ namespace MetaMaker
 
 							LoadTemplate( json );
 
-							var graph = new GenericDataArray();
+							var graph = new GenericDataDictionary();
 							graph.FromJson( json );
-							graph.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+							graph.GetValue( GRAPH_DATA_KEY, out GenericDataDictionary data );
 							LoadData( data );
 
 							HasUnsavedChanges = true;
@@ -431,12 +432,12 @@ namespace MetaMaker
 		#endregion
 
 		#region Get Data
-		public GenericDataArray GetNodeData(string index)
+		public GenericDataDictionary GetNodeData(string index)
 		{
 			return _nodeData[index];
 		}
 
-		public SlottedGraphNode LoadNode( GenericDataArray nodeContent )
+		public SlottedGraphNode LoadNode( GenericDataDictionary nodeContent )
 		{
 			if( _nodeData.Count == 0 ) throw new KeyNotFoundException("No Nodes currently loaded");
 
@@ -448,7 +449,7 @@ namespace MetaMaker
 				throw new ArgumentOutOfRangeException($"'{nodeName}' not found in loaded data");
 			}
 			
-			GenericDataArray nodeData = _nodeData[nodeName];
+			GenericDataDictionary nodeData = _nodeData[nodeName];
 			
 			if( nodeData == null ) throw new ArgumentNullException($"Data for '{nodeName}' was null");
 
@@ -524,7 +525,7 @@ namespace MetaMaker
 
 			ExportSet exportSet = _exportRules.ExportTargets[exportName];
 
-			if (!(_model.GetRelativeGdo(exportSet.gdoExportTarget) is GenericDataArray data)) 
+			if (!(_model.GetRelativeGdo(exportSet.gdoExportTarget) is GenericDataDictionary data)) 
 			{
 				throw new Exception($"Object at path {exportSet.gdoExportTarget} is not an array");
 			}
@@ -547,15 +548,15 @@ namespace MetaMaker
 				itemCount = data.values.Count;
 			}
 
-			List<GenericDataArray> items = new List<GenericDataArray>();
-			var graph = new GenericDataArray(){type = data.type};
+			List<GenericDataDictionary> items = new List<GenericDataDictionary>();
+			var graph = new GenericDataDictionary(){type = data.type};
 
 			foreach (KeyValuePair<string, GenericDataObject> pair in data.values)
 			{
 				if(current == itemCount)
 				{
 					items.Add(graph);
-					graph = new GenericDataArray(){type = data.type};
+					graph = new GenericDataDictionary(){type = data.type};
 					current = 0;
 				}
 				graph.AddValue(pair.Key, pair.Value);
@@ -575,7 +576,7 @@ namespace MetaMaker
 					NODE_SIZE_KEY
 				};
 
-				_exportRules.PreprocessExportGDA(items[i], keys, exportName, myPath, i+1);
+				_exportRules.PreprocessExportGdo(items[i], keys, exportName, myPath, i+1);
 
 				if(keys != null)
 				{
@@ -644,9 +645,9 @@ namespace MetaMaker
 
 						LoadTemplateInternal(json);
 
-						var graph = new GenericDataArray();
+						var graph = new GenericDataDictionary();
 						graph.FromJson( json );
-						graph.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+						graph.GetValue( GRAPH_DATA_KEY, out GenericDataDictionary data );
 						LoadData( data );
 
 						SaveFilePath = path;
@@ -661,7 +662,7 @@ namespace MetaMaker
 			});
 		}
 
-		public void LoadData(GenericDataArray data)
+		public void LoadData(GenericDataDictionary data)
 		{
 			if(data == null)
 			{
@@ -676,9 +677,9 @@ namespace MetaMaker
 			{
 				string key = data.values.Keys.First();
 				
-				data.GetValue( key, out List<GenericDataArray> items );
+				data.GetValue( key, out List<GenericDataDictionary> items );
 
-				foreach( GenericDataArray item in items )
+				foreach( GenericDataDictionary item in items )
 				{
 					if( !item.values.ContainsKey( NODE_NAME_KEY ) )
 					{
@@ -707,7 +708,7 @@ namespace MetaMaker
 			.Then(() => {
 				try
 				{
-					_model.GetValue( GRAPH_DATA_KEY, out GenericDataArray data );
+					_model.GetValue( GRAPH_DATA_KEY, out GenericDataDictionary data );
 					data = data.DataCopy();
 					ClearData();
 					LoadTemplate( LoadJsonFile( path ) );
@@ -757,7 +758,7 @@ namespace MetaMaker
 
 		private void LoadTemplateInternal( string json )
 		{
-			GenericDataArray gda = new GenericDataArray();
+			GenericDataDictionary gda = new GenericDataDictionary();
 			gda.FromJson( json );
 
 			gda.GetValue( GRAPH_VERSION_KEY, out string targetVersion );
@@ -774,14 +775,14 @@ namespace MetaMaker
 			{
 				_defaultListing = "listing";
 			}
-			GenericDataArray listing = gda.GetGdo( GRAPH_NODE_LIST_KEY ) as GenericDataArray;
+			gda.GetValue( GRAPH_NODE_LIST_KEY, out GenericDataList listing);
 
 			gda.GetValue( GRAPH_NESTED_COLORS_KEY, out List<Color> nestingColors );
 			gda.GetValue( GRAPH_KEY_COLORS_KEY, out List<Color> keyColors );
 			gda.GetValue( GRAPH_EXPORT_DLL_KEY, out bool reuseDll );
 			gda.GetValue( GRAPH_EXPORT_SCRIPT_KEY, out string exportScript );
 			
-			List<GenericDataObject> dataList = listing.values.Values.ToList();
+			List<GenericDataObject> dataList = listing.values;
 			if( dataList == null )
 			{
 				throw new NullReferenceException("LoadTemplate does not accept a null dataList");
@@ -841,7 +842,7 @@ namespace MetaMaker
 			
 			foreach( GenericDataObject gdo in dataList )
 			{
-				GenericDataArray item = gdo as GenericDataArray;
+				GenericDataDictionary item = gdo as GenericDataDictionary;
 				
 				item.GetValue( "title", out string title );
 
@@ -855,7 +856,7 @@ namespace MetaMaker
 				}
 			}
 
-			List<GenericDataArray> nodeList = _nodeData.Values.ToList();
+			List<GenericDataDictionary> nodeList = _nodeData.Values.ToList();
 			_model.AddValue( GRAPH_NODE_LIST_KEY, nodeList );
 
 			_mainView.ResetCreateMenu(_nodeData.Keys.ToList());
@@ -892,7 +893,7 @@ namespace MetaMaker
 					}
 					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(Dictionary<,>)));
 					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(ExportRulesAbstract)));
-					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(GenericDataArray)));
+					args.references.Add(SharpMods.GetPortableReferenceToType(typeof(GenericDataDictionary)));
 					args.code = exportScript;
 					assembly = SharpMods.RoslynRuntimeCompile(args);
 				}

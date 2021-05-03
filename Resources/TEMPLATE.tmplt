@@ -2,7 +2,7 @@
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGDA(GenericDataArray genericDataArray, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataArray.AddValue(  graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keysToRemove, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue( graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,

@@ -10,7 +10,9 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private SpinBox _field;
-		private GenericDataArray _parentModel;
+		private GenericDataObject<int> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
@@ -20,7 +22,7 @@ namespace MetaMaker
 			_field.Connect("value_changed",this,nameof(OnChanged));
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
@@ -28,17 +30,17 @@ namespace MetaMaker
 			template.GetValue( "hasMax", out bool hasMax );
 			template.GetValue( "hasMin", out bool hasMin );
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<int> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out int value );
-				_field.Value = value;
+				_model = model;
+				_field.Value = _model.value;
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out int value );
+				_model = parentModel.TryAddValue(_label.Text, value) as GenericDataObject<int>;
 				_field.Value = value;
-				_parentModel.AddValue(_label.Text, value);
 			}
 
 			_field.AllowGreater = !hasMax;
@@ -64,7 +66,7 @@ namespace MetaMaker
 
 		private void OnChanged(float value)
 		{
-			_parentModel.AddValue(_label.Text, (int)value);
+			_model.value = (int)value;
 			OnValueUpdated?.Invoke();
 		}
 	}

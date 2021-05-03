@@ -10,7 +10,7 @@ namespace MetaMaker
 	public class FieldDictionarySlot : Container, IField
 	{
 		[Export] public NodePath _titlePath;
-		private Label _title;
+		private Label _label;
 		[Export] public NodePath _selectorPath;
 		private LineEdit _selector;
 		[Export] public NodePath _addButtonPath;
@@ -19,20 +19,20 @@ namespace MetaMaker
 		private Button _deleteButton;
 		
 		private SlottedGraphNode _graphNode;
-		private GenericDataArray _field;
+		private GenericDataDictionary _field;
 		private readonly Dictionary<string,Node> _children = new Dictionary<string, Node>();
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 
 		public int Count => _children.Count;
-		public string Label => _title.Text;
-		private GenericDataArray _parentModel;
-		private GenericDataArray _model;
+		private GenericDataDictionary _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
 		{
 			_graphNode = GetParent<SlottedGraphNode>();
-			_title = this.GetNodeFromPath<Label>( _titlePath );
+			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_selector = this.GetNodeFromPath<LineEdit>( _selectorPath );
 			
 			_addButton = this.GetNodeFromPath<Button>( _addButtonPath );
@@ -42,28 +42,27 @@ namespace MetaMaker
 			_deleteButton.Connect( "pressed", this, nameof(Delete) );
 		}
 		
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
-			_title.Text = label;
-			_parentModel = parentModel;
-			_field = template.GetGdo( "field" ) as GenericDataArray;
+			_label.Text = label;
 			
-			if(parentModel.values.ContainsKey(_title.Text))
+			_field = template.GetGdo( "field" ) as GenericDataDictionary;
+
+			parentModel.TryGetValue(_label.Text, out GenericDataDictionary model);
+			if(model != null)
 			{
-				parentModel.GetValue( _title.Text, out _model );
-				parentModel.GetValue( _title.Text, out Dictionary<string,GenericDataObject> childSlots );
+				_model = model;
 				
-				foreach( var dataArray in childSlots )
+				foreach( var dataArray in _model.values )
 				{
 					_selector.Text = dataArray.Key;
-					Add();
+					InternalAdd();
 				}
 			}
 			else
 			{
-				_model = new GenericDataArray();
-				_parentModel.AddValue(_title.Text, _model);
+				_model = parentModel.TryAddValue(_label.Text, new GenericDataDictionary()) as GenericDataDictionary;
 			}
 		}
 
@@ -80,15 +79,8 @@ namespace MetaMaker
 				{
 					throw new ArgumentException("That key already exists in the dictionary");
 				}
-
-				_field.AddValue("label", _selector.Text);
-				int index = _graphNode.GetChildIndex(this) + 1;
-				_children[_selector.Text] = _graphNode.AddChildField(_field, index, _model);
-
-				if(_children[_selector.Text] is LinkToChildSlot link)
-				{
-					link.parentListing = this;
-				}
+				
+				InternalAdd();
 				
 				OnValueUpdated?.Invoke();
 			}
@@ -96,6 +88,13 @@ namespace MetaMaker
 			{
 				_app.Get.CatchException(ex);
 			}
+		}
+
+		private void InternalAdd()
+		{
+			_field.AddValue("label", _selector.Text);
+			int index = _graphNode.GetChildIndex(this) + 1;
+			_children[_selector.Text] = _graphNode.AddChildField(_field, index, _model);
 		}
 
 		public void Delete()

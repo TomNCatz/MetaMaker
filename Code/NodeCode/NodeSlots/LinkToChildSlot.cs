@@ -6,39 +6,43 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class LinkToChildSlot : Label, IField
+	public class LinkToChildSlot : Control, IField
 	{
+		[Export] public NodePath _labelPath;
+		private Label _label;
+
 		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
 		private EmptyHandling emptyHandling;
 		private SlottedGraphNode _parent;
-		private GenericDataArray _parentModel;
+		private GenericDataObject _parentModel;
 
-		public IField parentListing;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
-		public string Label
-		{
-			get
-			{
-				if(parentListing != null)
-				{
-					if(parentListing is FieldListSlot listSlot)
-					{
-						return listSlot.Label + "/" + listSlot.GetIndex(this);
-					}
+		// public string Label
+		// {
+		// 	get
+		// 	{
+		// 		if(parentListing != null)
+		// 		{
+		// 			if(parentListing is FieldListSlot listSlot)
+		// 			{
+		// 				return listSlot.Label + "/" + listSlot.GetIndex(this);
+		// 			}
 
-					if(parentListing is FieldDictionarySlot dictSlot)
-					{
-						return dictSlot.Label + "/" + Text;
-					}
-				}
+		// 			if(parentListing is FieldDictionarySlot dictSlot)
+		// 			{
+		// 				return dictSlot.Label + "/" + Text;
+		// 			}
+		// 		}
 
-				return Text;
-			}
-		}
+		// 		return Text;
+		// 	}
+		// }
 
 		private enum EmptyHandling
 		{
@@ -48,13 +52,14 @@ namespace MetaMaker
 		
 		public override void _Ready()
 		{
+			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_parent = GetParent<SlottedGraphNode>();
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
-			Text = label;
+			_label.Text = label;
 
 			if( template.values.ContainsKey( App.GRAPH_EXPLICIT_KEY ) )
 			{
@@ -67,26 +72,27 @@ namespace MetaMaker
 			}
 
 			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(Text))
+			_parentModel.TryGetValue( _label.Text, out GenericDataDictionary data );
+
+			if( data == null || data.values.Count == 0 ) 
 			{
-				parentModel.GetValue( Text, out GenericDataArray data );
-
-				if( data == null || data.values.Count == 0 ) return;
-
-				if( !data.values.ContainsKey( App.NODE_NAME_KEY ) )
-				{
-					if( string.IsNullOrEmpty( _explicitNode ) )
-					{
-						throw new InvalidCastException($"Type definition not determinate for node {_parentModel}");
-					}
-					
-					data.AddValue( App.NODE_NAME_KEY, _explicitNode );
-				}
-
-				SlottedGraphNode node = _app.Get.LoadNode( data );
-
-				_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
+				UpdateField();
+				return;
 			}
+
+			if( !data.values.ContainsKey( App.NODE_NAME_KEY ) )
+			{
+				if( string.IsNullOrEmpty( _explicitNode ) )
+				{
+					throw new InvalidCastException($"Type definition not determinate for node {_parentModel}");
+				}
+				
+				data.AddValue( App.NODE_NAME_KEY, _explicitNode );
+			}
+
+			SlottedGraphNode node = _app.Get.LoadNode( data );
+
+			_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
 		}
 
 		public bool LinkChild( SlottedGraphNode child )
@@ -95,7 +101,7 @@ namespace MetaMaker
 
 			_child = child;
 			_parent.children.Add( child );
-			UpdateField( _parentModel );
+			UpdateField();
 
 			return true;
 		}
@@ -106,29 +112,23 @@ namespace MetaMaker
 
 			_child = null;
 			_parent.children.Remove( child );
-			UpdateField( _parentModel );
+			UpdateField();
 
 			return true;
 		}
 
-		private void UpdateField( GenericDataArray objData )
+		private void UpdateField()
 		{
+			// TODO : We lost the option to skip empties, I would like something similar back somehow
 			if( _child == null )
 			{
-				switch(emptyHandling)
-				{
-					case EmptyHandling.EMPTY_OBJECT :
-						objData.AddValue( Text, new GenericDataArray() );
-						break;
-					case EmptyHandling.SKIP : 
-						objData.RemoveValue(Text);
-						break;
-					default : throw new ArgumentOutOfRangeException();
-				}
+				_parentModel.TryRemoveValue( _label.Text );
+				_parentModel.TryAddValue( _label.Text, new GenericDataDictionary() );
 			}
 			else
 			{
-				objData.AddValue( Text, _child.Model );
+				_parentModel.TryRemoveValue( _label.Text );
+				_parentModel.TryAddValue( _label.Text, _child.Model );
 			}
 			OnValueUpdated?.Invoke();
 		}

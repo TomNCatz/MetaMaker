@@ -13,10 +13,10 @@ namespace MetaMaker
 		private ColorRect _colorRect;
 		
 		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
-
 		private bool asHtml;
+		private GenericDataObject _model;
 
-		private GenericDataArray _parentModel;
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -35,51 +35,72 @@ namespace MetaMaker
 					.Then(color =>
 					{
 						_colorRect.Color = color;
-						SetColor(_parentModel);
+						SetColor();
 					});
 			}
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
 			template.GetValue( "asHtml", out asHtml );
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			GenericDataObject gdo = parentModel.TryGetRelativeGdo(_label.Text);
+			if(gdo != null)
 			{
 				Color color;
-				if (asHtml)
+				if(gdo.GetValue(out string colorData))
 				{
-					parentModel.GetValue(_label.Text, out string colorData);
 					color = new Color(colorData);
+					if(asHtml)
+					{
+						_model = gdo;
+					}
+					else
+					{
+						_model = new GenericDataDictionary();
+					}
 				}
-				else
+				else if(gdo.GetValue(out color))
 				{
-					parentModel.GetValue(_label.Text, out color);
+					if(asHtml)
+					{
+						_model = new GenericDataObject<string>();
+					}
+					else
+					{
+						_model = gdo;
+					}
 				}
 				_colorRect.Color = color;
+				SetColor();
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out Color value );
 				_colorRect.Color = value;
-				_parentModel.AddValue(_label.Text, value);
-				SetColor(_parentModel);
+				if( asHtml )
+				{
+					_model = parentModel.TryAddValue( _label.Text, $"#{_colorRect.Color.ToHtml()}" );
+				}
+				else
+				{
+					_model = parentModel.TryAddValue( _label.Text, _colorRect.Color );
+				}
 			}
 		}
 
-		private void SetColor(GenericDataArray parent)
+		private void SetColor()
 		{
 			if( asHtml )
 			{
-				parent.AddValue( _label.Text, $"#{_colorRect.Color.ToHtml()}" );
+				_model.CopyFrom(GenericDataObject.CreateGdo($"#{_colorRect.Color.ToHtml()}"));
 			}
 			else
 			{
-				parent.AddValue( _label.Text, _colorRect.Color );
+				_model.CopyFrom(GenericDataObject.CreateGdo(_colorRect.Color));
 			}
 			OnValueUpdated?.Invoke();
 		}

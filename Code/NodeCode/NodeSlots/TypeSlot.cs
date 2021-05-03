@@ -7,7 +7,7 @@ namespace MetaMaker
 	public class TypeSlot : Container, IField
 	{
 		[Export] public NodePath _fieldPath;
-		private Label _field;
+		private Label _label;
 		[Export] public NodePath _popupPath;
 		private PopupDialog _popup;
 		[Export] public NodePath _assemblyLabelPath;
@@ -17,12 +17,14 @@ namespace MetaMaker
 
 		private string assembly;
 		private string type;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
-			_field = this.GetNodeFromPath<Label>( _fieldPath );
-			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+			_label = this.GetNodeFromPath<Label>( _fieldPath );
+			_label.Connect( "gui_input", this, nameof(_GuiInput) );
 			
 			
 			_popup = this.GetNodeFromPath<PopupDialog>( _popupPath );
@@ -39,18 +41,18 @@ namespace MetaMaker
 			}
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "Class Assembly", out assembly );
 			_assemblyLabel.Text = assembly;
 			
 			template.GetValue( "Class Type", out type );
 			
-			_field.Text = type.Substring( type.LastIndexOf( '.' ) + 1 );
+			_label.Text = type.Substring( type.LastIndexOf( '.' ) + 1 );
 			_typeLabel.Text = type;
 
-			parentModel.AddValue( "Class Assembly", assembly );
-			parentModel.AddValue( "Class Type", type );
+			parentModel.TryAddValue("Class Assembly", assembly);
+			parentModel.TryAddValue("Class Type", type);
 		}
 	}
 }
