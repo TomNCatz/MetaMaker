@@ -15,38 +15,31 @@ namespace MetaMaker
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
-		private EmptyHandling emptyHandling;
+		private EmptyHandling _emptyHandling;
 		private SlottedGraphNode _parent;
 		private GenericDataObject _parentModel;
 
-
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
+		public IField parentListing;
 
-		// public string Label
-		// {
-		// 	get
-		// 	{
-		// 		if(parentListing != null)
-		// 		{
-		// 			if(parentListing is FieldListSlot listSlot)
-		// 			{
-		// 				return listSlot.Label + "/" + listSlot.GetIndex(this);
-		// 			}
+		public string LocalAddress
+		{
+			get
+			{
+				if(parentListing != null)
+				{
+					return parentListing.Label + "/" + Label;
+				}
 
-		// 			if(parentListing is FieldDictionarySlot dictSlot)
-		// 			{
-		// 				return dictSlot.Label + "/" + Text;
-		// 			}
-		// 		}
-
-		// 		return Text;
-		// 	}
-		// }
+				return Label;
+			}
+		}
 
 		private enum EmptyHandling
 		{
 			EMPTY_OBJECT,
+			NULL,
 			SKIP
 		}
 		
@@ -68,7 +61,7 @@ namespace MetaMaker
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
-				template.GetValue( "emptyHandling", out emptyHandling );
+				template.GetValue( "emptyHandling", out _emptyHandling );
 			}
 
 			_parentModel = parentModel;
@@ -119,11 +112,23 @@ namespace MetaMaker
 
 		private void UpdateField()
 		{
-			// TODO : We lost the option to skip empties, I would like something similar back somehow
 			if( _child == null )
 			{
 				_parentModel.TryRemoveValue( _label.Text );
-				_parentModel.TryAddValue( _label.Text, new GenericDataDictionary() );
+				switch (_emptyHandling)
+				{
+					case EmptyHandling.EMPTY_OBJECT:
+						_parentModel.TryAddValue( _label.Text, new GenericDataDictionary() );
+						break;
+					case EmptyHandling.NULL:
+						_parentModel.TryAddValue( _label.Text, new GenericDataNull() );
+						break;
+					case EmptyHandling.SKIP:
+						_parentModel.TryAddValue( _label.Text, new GenericDataSkip() );
+						break;
+					default:
+						break;
+				}
 			}
 			else
 			{

@@ -1,4 +1,1229 @@
 {
+  "metaMakerVersion": "0.7.0",
+  "defaultListing": "nodeList",
+  "explicitNode": "Graph",
+  "reuseDll": false,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMakerLib.ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"../Resources/TEMPLATE.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keys, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue(  graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
+  "nestingColors": [
+    {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.84375,
+      "g": 0.84375,
+      "b": 0.84375,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.64794004,
+      "g": 0.295880139,
+      "b": 1.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 1.0,
+      "b": 0.0625,
+      "a": 1.0
+    }
+  ],
+  "nodeList": [
+    {
+      "title": "Graph",
+      "color": {
+        "r": 0.328125,
+        "g": 0.328125,
+        "b": 0.328125,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultListing",
+          "defaultValue": "listing"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "nestingColors",
+          "field": {
+            "fieldType": "COLOR",
+            "label": "2",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "keyColors",
+          "field": {
+            "fieldType": "COLOR",
+            "label": "1",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false
+          }
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "reuseDll",
+          "defaultValue": true,
+          "id": "BOOL-LYn"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "exportScript",
+          "minHeight": 200.0,
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "nodeList",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "29",
+            "slotType": 0,
+            "explicitNode": "Node",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Node",
+      "color": {
+        "r": 0.6862745,
+        "g": 0.6862745,
+        "b": 0.6862745,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "title",
+          "defaultValue": "Node"
+        },
+        {
+          "fieldType": "COLOR",
+          "label": "color",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false
+        },
+        {
+          "fieldType": "INT",
+          "label": "parentType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": -1,
+          "defaultValue": -1
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "fields",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "4",
+            "slotType": 1,
+            "explicitNode": "",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Separator Slot",
+      "color": {
+        "r": 0.716467738,
+        "g": 0.828125,
+        "b": 0.828125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SEPARATOR"
+        }
+      ]
+    },
+    {
+      "title": "Key Slot",
+      "color": {
+        "r": 0.6156863,
+        "g": 0.8117647,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "id"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyPrefix",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "INT",
+          "label": "keySize",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 1,
+          "defaultValue": 1
+        }
+      ]
+    },
+    {
+      "title": "Key Tracker Slot",
+      "color": {
+        "r": 0.51924175,
+        "g": 0.671875,
+        "b": 0.299449921,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_TRACKER"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "target"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_STRING",
+            "SKIP"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Link To Child Slot",
+      "color": {
+        "r": 0.316713482,
+        "g": 0.6875,
+        "b": 0.5476952,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LINK_TO_CHILD"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_OBJECT",
+            "SKIP"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Field List Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.6222496,
+        "b": 0.19212313,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FIELD_LIST"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Fields"
+        },
+        {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "field",
+          "slotType": 1,
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
+        }
+      ]
+    },
+    {
+      "title": "Field Dictionary Slot",
+      "color": {
+        "r": 0.8408679,
+        "g": 0.859375,
+        "b": 0.267146528,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FIELD_DICTIONARY"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Fields"
+        },
+        {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "field",
+          "slotType": 1,
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT"
+        }
+      ]
+    },
+    {
+      "title": "Info Slot",
+      "color": {
+        "r": 0.78039217,
+        "g": 0.872794151,
+        "b": 0.882352948,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "INFO"
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "label",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0
+        }
+      ]
+    },
+    {
+      "title": "Auto Slot",
+      "color": {
+        "r": 0.451662,
+        "g": 0.53125,
+        "b": 0.53125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "AUTO"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "text"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultValue",
+          "defaultValue": "default"
+        }
+      ]
+    },
+    {
+      "title": "Type Slot",
+      "color": {
+        "r": 0.531367064,
+        "g": 0.6162219,
+        "b": 0.625,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TYPE"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Class Assembly",
+          "defaultValue": "fully qualified assembly name"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Class Type",
+          "defaultValue": "Full class name"
+        }
+      ]
+    },
+    {
+      "title": "Enum Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.40288505,
+        "b": 0.260943323,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "ENUM"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Type"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "values",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "1",
+            "defaultValue": "ENUM"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Flags Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.40288505,
+        "b": 0.260943323,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FLAGS"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Flags"
+        },
+        {
+          "fieldType": "INT",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "flags",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "Flag"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Text Line Slot",
+      "color": {
+        "r": 0.383251429,
+        "g": 0.517907262,
+        "b": 0.921875,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_LINE"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "String"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultValue",
+          "defaultValue": "String"
+        }
+      ]
+    },
+    {
+      "title": "Text Area Slot",
+      "color": {
+        "r": 0.292310417,
+        "g": 0.3179863,
+        "b": 0.703125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_AREA"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Some text"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "defaultValue",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        }
+      ]
+    },
+    {
+      "title": "Rich Text Slot",
+      "color": {
+        "r": 0.120962083,
+        "g": 0.243065327,
+        "b": 0.609375,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_AREA_RICH"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Some text"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "defaultValue",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        }
+      ]
+    },
+    {
+      "title": "Float Slot",
+      "color": {
+        "r": 0.8117647,
+        "g": 0.333333343,
+        "b": 0.5127451,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FLOAT"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "MinStepSize",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": true,
+          "min": "0",
+          "defaultValue": "0"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "B-aH6"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "max",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "B-2hF"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "min",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        }
+      ]
+    },
+    {
+      "title": "Double Slot",
+      "color": {
+        "r": 0.515625,
+        "g": 0.252984554,
+        "b": 0.351474732,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DOUBLE"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "MinStepSize",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": true,
+          "min": "0",
+          "defaultValue": "0"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "BOOL-uGT"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "max",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": false,
+          "min": "0",
+          "defaultValue": "0"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "BOOL-yIn"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "min",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": false,
+          "min": "0",
+          "defaultValue": "0"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": false,
+          "min": "0",
+          "defaultValue": "0"
+        }
+      ]
+    },
+    {
+      "title": "Int Slot",
+      "color": {
+        "r": 0.8117647,
+        "g": 0.333333343,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "INT"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "MinStepSize",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": true,
+          "min": "0",
+          "defaultValue": "0"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "B-zqM"
+        },
+        {
+          "fieldType": "INT",
+          "label": "max",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "B-Y2e"
+        },
+        {
+          "fieldType": "INT",
+          "label": "min",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "INT",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "title": "Long Slot",
+      "color": {
+        "r": 0.59375,
+        "g": 0.0378042981,
+        "b": 0.0378042981,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LONG"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "allowNegative",
+          "defaultValue": true,
+          "id": "B-zqM"
+        },
+        {
+          "fieldType": "LONG",
+          "label": "defaultValue",
+          "allowNegative": true,
+          "defaultValue": "0"
+        }
+      ]
+    },
+    {
+      "title": "Boolean Slot",
+      "color": {
+        "r": 0.5294118,
+        "g": 0.333333343,
+        "b": 0.8117647,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "BOOLEAN"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "IsActive"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "defaultValue",
+          "defaultValue": false,
+          "id": "B-SAC"
+        },
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "BOOL-",
+          "keySize": 3
+        }
+      ]
+    },
+    {
+      "title": "Linked Boolean Slot",
+      "color": {
+        "r": 0.345098048,
+        "g": 0.05490196,
+        "b": 0.7647059,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "BOOLEAN"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "IsActive"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "defaultValue",
+          "defaultValue": false,
+          "id": "B-Ili"
+        },
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "BOOL-",
+          "keySize": 3
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "matchTrue",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "true when true",
+            "slotType": 0,
+            "emptyHandling": "SKIP"
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "invertTrue",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "false when true",
+            "slotType": 0,
+            "emptyHandling": "SKIP"
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "matchFalse",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "false when false",
+            "slotType": 0,
+            "emptyHandling": "SKIP"
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "invertFalse",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "true when false",
+            "slotType": 0,
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Vector2 Slot",
+      "color": {
+        "r": 0.7058824,
+        "g": 0.333333343,
+        "b": 0.8117647,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR2"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector"
+        },
+        {
+          "fieldType": "VECTOR2",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "title": "Vector3 Slot",
+      "color": {
+        "r": 0.549019635,
+        "g": 0.286274523,
+        "b": 0.623529434,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR3"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector"
+        },
+        {
+          "fieldType": "VECTOR3",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "title": "Vector4 Slot",
+      "color": {
+        "r": 0.380392164,
+        "g": 0.23137255,
+        "b": 0.423529416,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR4"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector"
+        },
+        {
+          "fieldType": "VECTOR4",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "title": "Color Slot",
+      "color": {
+        "r": 0.900632,
+        "g": 0.642556131,
+        "b": 0.9375,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "COLOR"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Color"
+        },
+        {
+          "fieldType": "COLOR",
+          "label": "defaultValue",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "asHtml",
+          "defaultValue": false,
+          "id": "B-Dog"
+        }
+      ]
+    },
+    {
+      "title": "Date Time Offset Slot",
+      "color": {
+        "r": 0.78039217,
+        "g": 0.0,
+        "b": 0.58431375,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DATE_TIME_OFFSET"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Date"
+        },
+        {
+          "fieldType": "DATE_TIME_OFFSET",
+          "label": "defaultValue",
+          "defaultValue": {
+            "date": "2020-07-16T14:34:11.0000000",
+            "offset": "-07:00"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Date Time Slot",
+      "color": {
+        "r": 0.5647059,
+        "g": 0.0,
+        "b": 0.423529416,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DATE_TIME"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Date"
+        },
+        {
+          "fieldType": "DATE_TIME",
+          "label": "defaultValue",
+          "defaultValue": {
+            "date": "2020-07-16T14:34:16.0000000",
+            "offset": "-00:00"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Time Span Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TIME_SPAN"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Duration"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "asSeconds",
+          "defaultValue": false,
+          "id": "BOOL-9KE"
+        },
+        {
+          "fieldType": "TIME_SPAN",
+          "label": "defaultValue",
+          "defaultValue": "0"
+        }
+      ]
+    }
+  ],
   "data": {
     "ngMapNodePosition": {
       "x": -500.0,
@@ -1884,7 +3109,7 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 1100.0,
+              "x": 1120.0,
               "y": 5900.0
             },
             "ngMapNodeName": "Boolean Slot",
@@ -2422,7 +3647,7 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 880.0,
+              "x": 900.0,
               "y": 7940.0
             },
             "ngMapNodeName": "Text Line Slot",
@@ -2436,7 +3661,7 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 1080.0,
+              "x": 1120.0,
               "y": 7940.0
             },
             "ngMapNodeName": "Color Slot",
@@ -2456,7 +3681,7 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 1300.0,
+              "x": 1340.0,
               "y": 7940.0
             },
             "ngMapNodeName": "Boolean Slot",
@@ -2792,1230 +4017,5 @@
         ]
       }
     ]
-  },
-  "metaMakerVersion": "0.6.0",
-  "defaultListing": "nodeList",
-  "explicitNode": "Graph",
-  "reuseDll": false,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMakerLib.ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"../Resources/TEMPLATE.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keys, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue(  graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
-  "nestingColors": [
-    {
-      "r": 0.0,
-      "g": 0.0,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.84375,
-      "g": 0.84375,
-      "b": 0.84375,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.0,
-      "b": 0.0,
-      "a": 1.0
-    }
-  ],
-  "keyColors": [
-    {
-      "r": 0.64794004,
-      "g": 0.295880139,
-      "b": 1.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.0,
-      "g": 1.0,
-      "b": 0.0625,
-      "a": 1.0
-    }
-  ],
-  "nodeList": [
-    {
-      "title": "Graph",
-      "color": {
-        "r": 0.328125,
-        "g": 0.328125,
-        "b": 0.328125,
-        "a": 1.0
-      },
-      "parentType": -1,
-      "fields": [
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "defaultListing",
-          "defaultValue": "listing"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "explicitNode",
-          "defaultValue": ""
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "nestingColors",
-          "field": {
-            "fieldType": "COLOR",
-            "label": "Color",
-            "defaultValue": {
-              "r": 1.0,
-              "g": 1.0,
-              "b": 1.0,
-              "a": 1.0
-            },
-            "asHtml": false
-          }
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "keyColors",
-          "field": {
-            "fieldType": "COLOR",
-            "label": "Color",
-            "defaultValue": {
-              "r": 1.0,
-              "g": 1.0,
-              "b": 1.0,
-              "a": 1.0
-            },
-            "asHtml": false
-          }
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "reuseDll",
-          "defaultValue": true,
-          "id": "BOOL-LYn"
-        },
-        {
-          "fieldType": "TEXT_AREA",
-          "label": "exportScript",
-          "minHeight": 200.0,
-          "defaultValue": ""
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "nodeList",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "-",
-            "slotType": 0,
-            "explicitNode": "Node",
-            "emptyHandling": "SKIP"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Node",
-      "color": {
-        "r": 0.6862745,
-        "g": 0.6862745,
-        "b": 0.6862745,
-        "a": 1.0
-      },
-      "parentType": 0,
-      "fields": [
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "title",
-          "defaultValue": "Node"
-        },
-        {
-          "fieldType": "COLOR",
-          "label": "color",
-          "defaultValue": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "asHtml": false
-        },
-        {
-          "fieldType": "INT",
-          "label": "parentType",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": -1,
-          "defaultValue": -1
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "fields",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "-",
-            "slotType": 1,
-            "explicitNode": "",
-            "emptyHandling": "SKIP"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Separator Slot",
-      "color": {
-        "r": 0.716467738,
-        "g": 0.828125,
-        "b": 0.828125,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "SEPARATOR"
-        }
-      ]
-    },
-    {
-      "title": "Key Slot",
-      "color": {
-        "r": 0.6156863,
-        "g": 0.8117647,
-        "b": 0.333333343,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "KEY"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "id"
-        },
-        {
-          "fieldType": "INT",
-          "label": "slotType",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": 0,
-          "defaultValue": 0
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "keyPrefix",
-          "defaultValue": ""
-        },
-        {
-          "fieldType": "INT",
-          "label": "keySize",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": 1,
-          "defaultValue": 1
-        }
-      ]
-    },
-    {
-      "title": "Key Tracker Slot",
-      "color": {
-        "r": 0.51924175,
-        "g": 0.671875,
-        "b": 0.299449921,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "KEY_TRACKER"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "target"
-        },
-        {
-          "fieldType": "INT",
-          "label": "slotType",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": 0,
-          "defaultValue": 0
-        },
-        {
-          "fieldType": "ENUM",
-          "label": "emptyHandling",
-          "values": [
-            "EMPTY_STRING",
-            "SKIP"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Link To Child Slot",
-      "color": {
-        "r": 0.316713482,
-        "g": 0.6875,
-        "b": 0.5476952,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "LINK_TO_CHILD"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "children"
-        },
-        {
-          "fieldType": "INT",
-          "label": "slotType",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": 0,
-          "defaultValue": 0
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "explicitNode",
-          "defaultValue": ""
-        },
-        {
-          "fieldType": "ENUM",
-          "label": "emptyHandling",
-          "values": [
-            "EMPTY_OBJECT",
-            "SKIP"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Field List Slot",
-      "color": {
-        "r": 0.765625,
-        "g": 0.6222496,
-        "b": 0.19212313,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "FIELD_LIST"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Fields"
-        },
-        {
-          "fieldType": "LINK_TO_CHILD",
-          "label": "field",
-          "slotType": 1,
-          "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
-        }
-      ]
-    },
-    {
-      "title": "Field Dictionary Slot",
-      "color": {
-        "r": 0.8408679,
-        "g": 0.859375,
-        "b": 0.267146528,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "FIELD_DICTIONARY"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Fields"
-        },
-        {
-          "fieldType": "LINK_TO_CHILD",
-          "label": "field",
-          "slotType": 1,
-          "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
-        }
-      ]
-    },
-    {
-      "title": "Info Slot",
-      "color": {
-        "r": 0.78039217,
-        "g": 0.872794151,
-        "b": 0.882352948,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "INFO"
-        },
-        {
-          "fieldType": "TEXT_AREA_RICH",
-          "label": "label",
-          "minHeight": 40.0,
-          "defaultValue": "Some text"
-        },
-        {
-          "fieldType": "FLOAT",
-          "label": "minHeight",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0.0,
-          "hasMin": true,
-          "min": 18.0,
-          "defaultValue": 40.0
-        }
-      ]
-    },
-    {
-      "title": "Auto Slot",
-      "color": {
-        "r": 0.451662,
-        "g": 0.53125,
-        "b": 0.53125,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "AUTO"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "text"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "defaultValue",
-          "defaultValue": "default"
-        }
-      ]
-    },
-    {
-      "title": "Type Slot",
-      "color": {
-        "r": 0.531367064,
-        "g": 0.6162219,
-        "b": 0.625,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "TYPE"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Class Assembly",
-          "defaultValue": "fully qualified assembly name"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Class Type",
-          "defaultValue": "Full class name"
-        }
-      ]
-    },
-    {
-      "title": "Enum Slot",
-      "color": {
-        "r": 0.765625,
-        "g": 0.40288505,
-        "b": 0.260943323,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "ENUM"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Type"
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "values",
-          "field": {
-            "fieldType": "TEXT_LINE",
-            "label": "-",
-            "defaultValue": "ENUM"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Flags Slot",
-      "color": {
-        "r": 0.765625,
-        "g": 0.40288505,
-        "b": 0.260943323,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "FLAGS"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Flags"
-        },
-        {
-          "fieldType": "INT",
-          "label": "defaultValue",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": false,
-          "min": 0,
-          "defaultValue": 0
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "flags",
-          "field": {
-            "fieldType": "TEXT_LINE",
-            "label": "-",
-            "defaultValue": "Flag"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Text Line Slot",
-      "color": {
-        "r": 0.383251429,
-        "g": 0.517907262,
-        "b": 0.921875,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "TEXT_LINE"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "String"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "defaultValue",
-          "defaultValue": "String"
-        }
-      ]
-    },
-    {
-      "title": "Text Area Slot",
-      "color": {
-        "r": 0.292310417,
-        "g": 0.3179863,
-        "b": 0.703125,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "TEXT_AREA"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Some text"
-        },
-        {
-          "fieldType": "FLOAT",
-          "label": "minHeight",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0.0,
-          "hasMin": true,
-          "min": 18.0,
-          "defaultValue": 40.0
-        },
-        {
-          "fieldType": "TEXT_AREA",
-          "label": "defaultValue",
-          "minHeight": 40.0,
-          "defaultValue": "Some text"
-        }
-      ]
-    },
-    {
-      "title": "Rich Text Slot",
-      "color": {
-        "r": 0.120962083,
-        "g": 0.243065327,
-        "b": 0.609375,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "TEXT_AREA_RICH"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Some text"
-        },
-        {
-          "fieldType": "FLOAT",
-          "label": "minHeight",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0.0,
-          "hasMin": true,
-          "min": 18.0,
-          "defaultValue": 40.0
-        },
-        {
-          "fieldType": "TEXT_AREA_RICH",
-          "label": "defaultValue",
-          "minHeight": 40.0,
-          "defaultValue": "Some text"
-        }
-      ]
-    },
-    {
-      "title": "Float Slot",
-      "color": {
-        "r": 0.8117647,
-        "g": 0.333333343,
-        "b": 0.5127451,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "FLOAT"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Value"
-        },
-        {
-          "fieldType": "DOUBLE",
-          "label": "MinStepSize",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": "0",
-          "hasMin": true,
-          "min": "0",
-          "defaultValue": "0"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "hasMax",
-          "defaultValue": false,
-          "id": "B-aH6"
-        },
-        {
-          "fieldType": "FLOAT",
-          "label": "max",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0.0,
-          "hasMin": false,
-          "min": 0.0,
-          "defaultValue": 0.0
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "hasMin",
-          "defaultValue": false,
-          "id": "B-2hF"
-        },
-        {
-          "fieldType": "FLOAT",
-          "label": "min",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0.0,
-          "hasMin": false,
-          "min": 0.0,
-          "defaultValue": 0.0
-        },
-        {
-          "fieldType": "FLOAT",
-          "label": "defaultValue",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0.0,
-          "hasMin": false,
-          "min": 0.0,
-          "defaultValue": 0.0
-        }
-      ]
-    },
-    {
-      "title": "Double Slot",
-      "color": {
-        "r": 0.515625,
-        "g": 0.252984554,
-        "b": 0.351474732,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "DOUBLE"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Value"
-        },
-        {
-          "fieldType": "DOUBLE",
-          "label": "MinStepSize",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": "0",
-          "hasMin": true,
-          "min": "0",
-          "defaultValue": "0"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "hasMax",
-          "defaultValue": false,
-          "id": "BOOL-uGT"
-        },
-        {
-          "fieldType": "DOUBLE",
-          "label": "max",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": "0",
-          "hasMin": false,
-          "min": "0",
-          "defaultValue": "0"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "hasMin",
-          "defaultValue": false,
-          "id": "BOOL-yIn"
-        },
-        {
-          "fieldType": "DOUBLE",
-          "label": "min",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": "0",
-          "hasMin": false,
-          "min": "0",
-          "defaultValue": "0"
-        },
-        {
-          "fieldType": "DOUBLE",
-          "label": "defaultValue",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": "0",
-          "hasMin": false,
-          "min": "0",
-          "defaultValue": "0"
-        }
-      ]
-    },
-    {
-      "title": "Int Slot",
-      "color": {
-        "r": 0.8117647,
-        "g": 0.333333343,
-        "b": 0.333333343,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "INT"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Value"
-        },
-        {
-          "fieldType": "DOUBLE",
-          "label": "MinStepSize",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": "0",
-          "hasMin": true,
-          "min": "0",
-          "defaultValue": "0"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "hasMax",
-          "defaultValue": false,
-          "id": "B-zqM"
-        },
-        {
-          "fieldType": "INT",
-          "label": "max",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": false,
-          "min": 0,
-          "defaultValue": 0
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "hasMin",
-          "defaultValue": false,
-          "id": "B-Y2e"
-        },
-        {
-          "fieldType": "INT",
-          "label": "min",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": false,
-          "min": 0,
-          "defaultValue": 0
-        },
-        {
-          "fieldType": "INT",
-          "label": "defaultValue",
-          "MinStepSize": "0",
-          "hasMax": false,
-          "max": 0,
-          "hasMin": false,
-          "min": 0,
-          "defaultValue": 0
-        }
-      ]
-    },
-    {
-      "title": "Long Slot",
-      "color": {
-        "r": 0.59375,
-        "g": 0.0378042981,
-        "b": 0.0378042981,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "LONG"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Value"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "allowNegative",
-          "defaultValue": true,
-          "id": "B-zqM"
-        },
-        {
-          "fieldType": "LONG",
-          "label": "defaultValue",
-          "allowNegative": true,
-          "defaultValue": "0"
-        }
-      ]
-    },
-    {
-      "title": "Boolean Slot",
-      "color": {
-        "r": 0.5294118,
-        "g": 0.333333343,
-        "b": 0.8117647,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "BOOLEAN"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "IsActive"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "defaultValue",
-          "defaultValue": false,
-          "id": "B-SAC"
-        },
-        {
-          "fieldType": "KEY",
-          "label": "id",
-          "slotType": 0,
-          "keyPrefix": "BOOL-",
-          "keySize": 3
-        }
-      ]
-    },
-    {
-      "title": "Linked Boolean Slot",
-      "color": {
-        "r": 0.345098048,
-        "g": 0.05490196,
-        "b": 0.7647059,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "BOOLEAN"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "IsActive"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "defaultValue",
-          "defaultValue": false,
-          "id": "B-Ili"
-        },
-        {
-          "fieldType": "KEY",
-          "label": "id",
-          "slotType": 0,
-          "keyPrefix": "BOOL-",
-          "keySize": 3
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "matchTrue",
-          "field": {
-            "fieldType": "KEY_TRACKER",
-            "label": "true when true",
-            "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "invertTrue",
-          "field": {
-            "fieldType": "KEY_TRACKER",
-            "label": "false when true",
-            "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "matchFalse",
-          "field": {
-            "fieldType": "KEY_TRACKER",
-            "label": "false when false",
-            "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "invertFalse",
-          "field": {
-            "fieldType": "KEY_TRACKER",
-            "label": "true when false",
-            "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Vector2 Slot",
-      "color": {
-        "r": 0.7058824,
-        "g": 0.333333343,
-        "b": 0.8117647,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "VECTOR2"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Vector"
-        },
-        {
-          "fieldType": "VECTOR2",
-          "label": "defaultValue",
-          "defaultValue": {
-            "x": 0.0,
-            "y": 0.0
-          }
-        }
-      ]
-    },
-    {
-      "title": "Vector3 Slot",
-      "color": {
-        "r": 0.549019635,
-        "g": 0.286274523,
-        "b": 0.623529434,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "VECTOR3"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Vector"
-        },
-        {
-          "fieldType": "VECTOR3",
-          "label": "defaultValue",
-          "defaultValue": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          }
-        }
-      ]
-    },
-    {
-      "title": "Vector4 Slot",
-      "color": {
-        "r": 0.380392164,
-        "g": 0.23137255,
-        "b": 0.423529416,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "VECTOR4"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Vector"
-        },
-        {
-          "fieldType": "VECTOR4",
-          "label": "defaultValue",
-          "defaultValue": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 0.0
-          }
-        }
-      ]
-    },
-    {
-      "title": "Color Slot",
-      "color": {
-        "r": 0.900632,
-        "g": 0.642556131,
-        "b": 0.9375,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "COLOR"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Color"
-        },
-        {
-          "fieldType": "COLOR",
-          "label": "defaultValue",
-          "defaultValue": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "asHtml": false
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "asHtml",
-          "defaultValue": false,
-          "id": "B-Dog"
-        }
-      ]
-    },
-    {
-      "title": "Date Time Offset Slot",
-      "color": {
-        "r": 0.78039217,
-        "g": 0.0,
-        "b": 0.58431375,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "DATE_TIME_OFFSET"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Date"
-        },
-        {
-          "fieldType": "DATE_TIME_OFFSET",
-          "label": "defaultValue",
-          "defaultValue": {
-            "date": "2020-07-16T14:34:11.0000000",
-            "offset": "-07:00"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Date Time Slot",
-      "color": {
-        "r": 0.5647059,
-        "g": 0.0,
-        "b": 0.423529416,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "DATE_TIME"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Date"
-        },
-        {
-          "fieldType": "DATE_TIME",
-          "label": "defaultValue",
-          "defaultValue": {
-            "date": "2020-07-16T14:34:16.0000000",
-            "offset": "-00:00"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Time Span Slot",
-      "color": {
-        "r": 0.3984375,
-        "g": 0.0,
-        "b": 0.298418134,
-        "a": 1.0
-      },
-      "parentType": 1,
-      "fields": [
-        {
-          "fieldType": "AUTO",
-          "label": "fieldType",
-          "defaultValue": "TIME_SPAN"
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "label",
-          "defaultValue": "Duration"
-        },
-        {
-          "fieldType": "BOOLEAN",
-          "label": "asSeconds",
-          "defaultValue": false,
-          "id": "BOOL-9KE"
-        },
-        {
-          "fieldType": "TIME_SPAN",
-          "label": "defaultValue",
-          "defaultValue": "0"
-        }
-      ]
-    }
-  ]
+  }
 }

@@ -65,16 +65,23 @@ namespace MetaMaker
 
 		public void Add()
 		{
+			int select = (int)_selector.Value;
 			int index = _graphNode.GetChildIndex( this )+1;
-			index += (int)_selector.Value;
+			index += select;
 			_field.AddValue("label", _selector.Value.ToString());
+			if(select < _children.Count && select >= 0)
+			{
+				_model.AddValue(select, new GenericDataNull());
+				(_children[select] as IField).Label = (select+1).ToString();
+			}
 			Node child = _graphNode.AddChildField( _field, index, _model );
-			_children.Insert( (int)_selector.Value, child );
+			_children.Insert( select, child );
 			_selector.MaxValue = _children.Count;
 			_selector.Value++;
-			if(child is IField childField)
+
+			if(child is LinkToChildSlot linkField)
 			{
-				childField.OnValueUpdated += UpdateField;
+				linkField.parentListing = this;
 			}
 
 			UpdateField();
@@ -92,8 +99,8 @@ namespace MetaMaker
 			
 			Node child = _children[target];
 			_children.Remove( child );
-			_model.RemoveValue(target);
 			_graphNode.RemoveChild( child );
+			_model.RemoveValue(target);
 			_selector.MaxValue = _children.Count;
 
 			UpdateField();

@@ -11,6 +11,7 @@ namespace MetaMaker
 		private enum EmptyHandling
 		{
 			EMPTY_STRING,
+			NULL_STRING,
 			SKIP
 		}
 
@@ -18,9 +19,9 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
-		private EmptyHandling emptyHandling;
+		private EmptyHandling _emptyHandling;
 		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
-		private GenericDataObject<string> _model;
+		private GenericDataObject _parentModel;
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
@@ -69,28 +70,46 @@ namespace MetaMaker
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
-				template.GetValue( "emptyHandling", out emptyHandling );
+				template.GetValue( "emptyHandling", out _emptyHandling );
 			}
 
+			_parentModel = parentModel;
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
-			if(model != null)
-			{
-				_model = model;
-
-				if( string.IsNullOrEmpty( model.value ) ) return;
-				
+			if(model != null && !string.IsNullOrEmpty( model.value ))
+			{				
 				_builder.Get.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, model.value ) );
 			}
 			else
 			{
-				_model = parentModel.TryAddValue(_label.Text, string.Empty) as GenericDataObject<string>;
+				UpdateField();
 			}
 		}
 
 		private void UpdateField()
 		{
-			// TODO : We lost the option to skip empties, I would like something similar back somehow
-			_model.value = _field.Text;
+			if( string.IsNullOrEmpty( _label.Text ) )
+			{
+				_parentModel.TryRemoveValue( _label.Text );
+				switch (_emptyHandling)
+				{
+					case EmptyHandling.EMPTY_STRING:
+						_parentModel.TryAddValue( _label.Text, string.Empty );
+						break;
+					case EmptyHandling.NULL_STRING:
+						_parentModel.TryAddValue( _label.Text, new GenericDataObject<string>() );
+						break;
+					case EmptyHandling.SKIP:
+						_parentModel.TryAddValue( _label.Text, new GenericDataSkip() );
+						break;
+					default:
+						break;
+				}
+			}
+			else
+			{
+				_parentModel.TryRemoveValue( _label.Text );
+				_parentModel.TryAddValue( _label.Text, _field.Text );
+			}
 			OnValueUpdated?.Invoke();
 		}
 	}

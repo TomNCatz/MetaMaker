@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Code/NodeCode/NodeSlots/LinkToParentSlot.cs" type="Script" id=1]
+[ext_resource path="res://Textures/DownArrow.png" type="Texture" id=2]
+[ext_resource path="res://Textures/UpArrow.png" type="Texture" id=3]
 
 [node name="LinkToParentSlot" type="HBoxContainer"]
 margin_right = 137.0
@@ -36,12 +38,12 @@ __meta__ = {
 
 [node name="ButtonUp" type="Button" parent="."]
 margin_left = 125.0
-margin_right = 144.0
+margin_right = 151.0
 margin_bottom = 20.0
-text = "^"
+icon = ExtResource( 3 )
 
 [node name="ButtonDown" type="Button" parent="."]
-margin_left = 148.0
-margin_right = 167.0
+margin_left = 155.0
+margin_right = 181.0
 margin_bottom = 20.0
-text = "v"
+icon = ExtResource( 2 )

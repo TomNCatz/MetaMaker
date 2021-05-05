@@ -95,6 +95,11 @@ namespace MetaMaker
 			_field.AddValue("label", _selector.Text);
 			int index = _graphNode.GetChildIndex(this) + 1;
 			_children[_selector.Text] = _graphNode.AddChildField(_field, index, _model);
+
+			if(_children[_selector.Text] is LinkToChildSlot linkField)
+			{
+				linkField.parentListing = this;
+			}
 		}
 
 		public void Delete()

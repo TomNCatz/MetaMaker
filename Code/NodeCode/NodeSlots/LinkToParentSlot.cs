@@ -12,6 +12,8 @@ namespace MetaMaker
 		[Export] public NodePath _downButtonPath;
 		private Button _downButton;
 
+		private LinkToChildSlot _link;
+
 		public bool IsLinked { get; private set; }
 		public int Index
 		{
@@ -32,29 +34,55 @@ namespace MetaMaker
 			_downButton = this.GetNodeFromPath<Button>( _downButtonPath );
 			_upButton.Connect( "pressed", this, nameof(OnUpPressed) );
 			_downButton.Connect( "pressed", this, nameof(OnDownPressed) );
+			UpdateDisplay();
 		}
 
-		public void Link(int index)
+		public void Link(LinkToChildSlot link)
 		{
 			IsLinked = true;
-			Index = index;
+
+			_link = link;
+			if(_link.parentListing != null)
+			{
+				_link.parentListing.OnValueUpdated += ListingChange;
+			}
+			UpdateDisplay(_link.Label);
 		}
 
 		public void Unlink()
 		{
 			IsLinked = false;
-			Index = -1;
+
+			if(_link != null)
+			{
+				if(_link.parentListing != null)
+				{
+					_link.parentListing.OnValueUpdated -= ListingChange;
+				}
+				_link = null;
+			}
+
+			UpdateDisplay();
 		}
 
-		private void UpdateDisplay()
+		private void ListingChange()
 		{
-			if(_index < 0)
+			UpdateDisplay(_link.Label);
+		}
+
+		private void UpdateDisplay(string link = null)
+		{
+			if(string.IsNullOrEmpty(link))
 			{
 				_indexLabel.Text = "UNLINKED";
+				_upButton.Visible = false;
+				_downButton.Visible = false;
 			}
 			else
 			{
-				_indexLabel.Text = _index.ToString();
+				_indexLabel.Text = link;
+				//_upButton.Visible = true;
+				//_downButton.Visible = true;
 			}
 		}
 

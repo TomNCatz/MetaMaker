@@ -283,7 +283,7 @@ namespace MetaMaker
 
 		public string GetPathToPort(int port)
 		{
-			return (GetSlot(port) as LinkToChildSlot).Label;
+			return (GetSlot(port) as LinkToChildSlot).LocalAddress;
 		}
 
 		public new void RemoveChild( Node child )

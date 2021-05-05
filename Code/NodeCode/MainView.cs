@@ -917,7 +917,7 @@ namespace MetaMaker
 				if( !( rightSlot is LinkToParentSlot rightLink) || rightLink.IsLinked ) return;
 				if( !leftLink.LinkChild( rightGraph ) ) return;
 
-				rightLink.Link(1);
+				rightLink.Link(leftLink);
 				_graph.ConnectNode( @from, fromSlot, to, toSlot );
 			}
 		}

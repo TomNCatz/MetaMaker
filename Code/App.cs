@@ -487,8 +487,15 @@ namespace MetaMaker
 			if( string.IsNullOrEmpty( SaveFilePath ) ) return;
 			
 			_hasUnbackedChanges = false;
-						
-			SaveJsonFile( SaveFilePath + ".back", _model.DataCopy().ToJson() );
+
+			try
+			{
+				SaveJsonFile( SaveFilePath + ".back", _model.DataCopy().ToJson() );
+			}	
+			catch(Exception e)
+			{
+				CatchException(e);
+			}
 		}
 
 		public void SaveGraph( string path )
