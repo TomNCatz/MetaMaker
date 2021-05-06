@@ -54,7 +54,21 @@ namespace MetaMaker
 				_model = model;
 				for( int i = 0; i < _model.values.Count; i++)
 				{
-					Add();
+					int select = (int)_selector.Value;
+					int index = _graphNode.GetChildIndex( this )+1;
+					index += select;
+					_field.AddValue("label", _selector.Value.ToString());
+					Node child = _graphNode.AddChildField( _field, index, _model );
+					_children.Insert( select, child );
+					_selector.MaxValue = _children.Count;
+					_selector.Value++;
+
+					if(child is LinkToChildSlot linkField)
+					{
+						linkField.parentListing = this;
+					}
+
+					UpdateField();
 				}
 			}
 			else

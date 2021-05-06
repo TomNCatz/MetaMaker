@@ -261,6 +261,7 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_STRING",
+            "NULL_STRING",
             "SKIP"
           ]
         }
@@ -306,6 +307,7 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_OBJECT",
+            "NULL",
             "SKIP"
           ]
         }
@@ -1270,5 +1272,5 @@
       ]
     }
   ],
-  "metaMakerVersion": "0.6.0"
+  "metaMakerVersion": "0.7.0"
 }

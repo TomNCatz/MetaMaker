@@ -541,7 +541,7 @@ namespace MetaMaker
 
 			string path = exportSet.relativeSavePath.Replace("$name", SaveFilePath.PathGetFileName());
 			path = path.Replace("$export",exportName);
-			path = SaveFilePath.PathGetContainingFolder() + path;
+			path = SaveFilePath.PathGetContainingFolder() + '/' + path;
 
 			int fileCount = 1;
 			int itemCount = exportSet.childCount;
@@ -555,10 +555,10 @@ namespace MetaMaker
 				itemCount = data.values.Count;
 			}
 
-			List<GenericDataDictionary> items = new List<GenericDataDictionary>();
+			var items = new List<GenericDataDictionary>();
 			var graph = new GenericDataDictionary(){type = data.type};
 
-			foreach (KeyValuePair<string, GenericDataObject> pair in data.values)
+			foreach (var pair in data.values)
 			{
 				if(current == itemCount)
 				{
@@ -575,6 +575,10 @@ namespace MetaMaker
 			{
 				string myPath = path.Replace("$index",$"{i+1}");
 				myPath = System.IO.Path.GetFullPath(myPath);
+				if(myPath.Contains(".."))
+				{
+					CatchException(new Exception($"Export failed at path '{myPath}'. Check the export rules and try again."));
+				}
 				
 				List<string> keys = new List<string>
 				{
@@ -593,7 +597,7 @@ namespace MetaMaker
 				string json = items[i].ToJson();
 
 				json = _exportRules.PostprocessExportJSON(json, exportName, myPath, i+1);
-
+				
 				SaveJsonFile( myPath, json );
 			}
 		}

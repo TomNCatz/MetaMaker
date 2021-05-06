@@ -36,10 +36,17 @@ namespace MetaMaker
 			_display.RectMinSize = new Vector2(0,height);
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			parentModel.TryGetValue(_label.Text, out GenericDataObject nullToken);
 			if(model != null)
 			{
 				_model = model;
 				_field.Text = _model.value;
+			}
+			else if(nullToken is GenericDataNull)
+			{
+				parentModel.TryRemoveValue(_label.Text);
+				_model = parentModel.TryAddValue(_label.Text, new GenericDataObject<string>()) as GenericDataObject<string>;
+				_field.Text = string.Empty;
 			}
 			else
 			{

@@ -262,6 +262,7 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_STRING",
+            "NULL_STRING",
             "SKIP"
           ]
         }
@@ -307,6 +308,7 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_OBJECT",
+            "NULL",
             "SKIP"
           ]
         }
@@ -1766,6 +1768,7 @@
             "label": "emptyHandling",
             "values": [
               "EMPTY_STRING",
+              "NULL_STRING",
               "SKIP"
             ]
           }
@@ -1865,6 +1868,7 @@
             "label": "emptyHandling",
             "values": [
               "EMPTY_OBJECT",
+              "NULL",
               "SKIP"
             ]
           }
