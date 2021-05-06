@@ -175,6 +175,10 @@ namespace MetaMaker
 					fieldData.GetValue( "slotType", out rightType );
 					rightColor = _app.Get.GetParentChildColor( rightType );
 					break;
+				case FieldType.SUB_GRAPH_LIST :
+				case FieldType.SUB_GRAPH_DICTIONARY :
+					child = _mainView.subGraphScene.Instance();
+					break;
 				case FieldType.FIELD_LIST : 
 					child = _mainView.fieldListScene.Instance();
 					break;

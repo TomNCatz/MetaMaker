@@ -106,7 +106,7 @@
           "label": "nodeList",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "29",
+            "label": "6",
             "slotType": 0,
             "explicitNode": "Node",
             "emptyHandling": "SKIP"
@@ -484,7 +484,7 @@
           "label": "values",
           "field": {
             "fieldType": "TEXT_LINE",
-            "label": "1",
+            "label": "2",
             "defaultValue": "ENUM"
           }
         }
@@ -1278,7 +1278,7 @@
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -900.0
+          "y": -1600.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1297,7 +1297,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -900.0
+              "y": -1600.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1311,7 +1311,7 @@
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -900.0
+              "y": -1600.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1325,7 +1325,7 @@
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": -900.0
+              "y": -1600.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1337,7 +1337,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 1380.0,
-                "y": -900.0
+                "y": -1600.0
               },
               "ngMapNodeName": "Color Slot",
               "ngMapNodeSize": {
@@ -1358,7 +1358,7 @@
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": -780.0
+              "y": -1480.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1370,7 +1370,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 1380.0,
-                "y": -760.0
+                "y": -1460.0
               },
               "ngMapNodeName": "Color Slot",
               "ngMapNodeSize": {
@@ -1391,7 +1391,7 @@
           {
             "ngMapNodePosition": {
               "x": 1600.0,
-              "y": -720.0
+              "y": -1420.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -1406,7 +1406,7 @@
           {
             "ngMapNodePosition": {
               "x": 1600.0,
-              "y": -900.0
+              "y": -1600.0
             },
             "ngMapNodeName": "Text Area Slot",
             "ngMapNodeSize": {
@@ -1421,7 +1421,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -740.0
+              "y": -1440.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1433,7 +1433,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 880.0,
-                "y": -740.0
+                "y": -1440.0
               },
               "ngMapNodeName": "Link To Child Slot",
               "ngMapNodeSize": {
@@ -1452,7 +1452,7 @@
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -520.0
+          "y": -1180.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1471,7 +1471,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": -520.0
+              "y": -1180.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1485,7 +1485,7 @@
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -520.0
+              "y": -1180.0
             },
             "ngMapNodeName": "Color Slot",
             "ngMapNodeSize": {
@@ -1505,7 +1505,7 @@
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": -520.0
+              "y": -1180.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1524,7 +1524,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": -400.0
+              "y": -1060.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1536,7 +1536,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 900.0,
-                "y": -380.0
+                "y": -1040.0
               },
               "ngMapNodeName": "Link To Child Slot",
               "ngMapNodeSize": {
@@ -1555,7 +1555,7 @@
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -180.0
+          "y": -800.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1574,7 +1574,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -180.0
+              "y": -800.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1590,7 +1590,7 @@
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 0.0
+          "y": -560.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1609,7 +1609,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": 0.0
+              "y": -560.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1623,7 +1623,7 @@
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 0.0
+              "y": -560.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1637,7 +1637,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 120.0
+              "y": -440.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1656,7 +1656,7 @@
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 120.0
+              "y": -440.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1670,7 +1670,7 @@
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 120.0
+              "y": -440.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1691,7 +1691,7 @@
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 400.0
+          "y": -120.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1710,7 +1710,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": 400.0
+              "y": -120.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1724,7 +1724,7 @@
           {
             "ngMapNodePosition": {
               "x": 640.0,
-              "y": 520.0
+              "y": 0.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1737,8 +1737,8 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 420.0
+              "x": 900.0,
+              "y": -120.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1756,8 +1756,8 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 1100.0,
-              "y": 400.0
+              "x": 1140.0,
+              "y": -120.0
             },
             "ngMapNodeName": "Enum Slot",
             "ngMapNodeSize": {
@@ -1771,6 +1771,184 @@
               "NULL_STRING",
               "SKIP"
             ]
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 200.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "title": "Graph List Slot",
+        "color": {
+          "r": 0.875,
+          "g": 0.7667193,
+          "b": 0.4358614,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 640.0,
+              "y": 200.0
+            },
+            "ngMapNodeName": "Auto Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "AUTO",
+            "label": "fieldType",
+            "defaultValue": "SUB_GRAPH_LIST"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 200.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "label",
+            "defaultValue": "children"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 200.0
+            },
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 230.0
+            },
+            "fieldType": "INT",
+            "label": "slotType",
+            "MinStepSize": "0",
+            "hasMax": false,
+            "max": 0,
+            "hasMin": true,
+            "min": 0,
+            "defaultValue": 0
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 340.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "explicitNode",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 560.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "title": "Graph Dictionary Slot",
+        "color": {
+          "r": 0.8812586,
+          "g": 0.890625,
+          "b": 0.5370435,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 640.0,
+              "y": 560.0
+            },
+            "ngMapNodeName": "Auto Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "AUTO",
+            "label": "fieldType",
+            "defaultValue": "SUB_GRAPH_DICTIONARY"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 560.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "label",
+            "defaultValue": "children"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 560.0
+            },
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 230.0
+            },
+            "fieldType": "INT",
+            "label": "slotType",
+            "MinStepSize": "0",
+            "hasMax": false,
+            "max": 0,
+            "hasMin": true,
+            "min": 0,
+            "defaultValue": 0
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 700.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "explicitNode",
+            "defaultValue": ""
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1360.0,
+              "y": 560.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "keyField",
+            "defaultValue": "id"
           }
         ]
       },

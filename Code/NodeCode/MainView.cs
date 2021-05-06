@@ -21,6 +21,7 @@ namespace MetaMaker
 		[Export] public PackedScene keyLinkScene;
 		[Export] public PackedScene linkToParentScene;
 		[Export] public PackedScene linkToChildScene;
+		[Export] public PackedScene subGraphScene;
 		[Export] public PackedScene fieldListScene;
 		[Export] public PackedScene fieldDictionaryScene;
 		[Export] public PackedScene infoScene;

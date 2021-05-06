@@ -86,7 +86,10 @@ namespace MetaMaker
 			if(select < _children.Count && select >= 0)
 			{
 				_model.AddValue(select, new GenericDataNull());
-				(_children[select] as IField).Label = (select+1).ToString();
+				for(int i = select; i < _children.Count; i++)
+				{
+					(_children[i] as IField).Label = (i+1).ToString();
+				}
 			}
 			Node child = _graphNode.AddChildField( _field, index, _model );
 			_children.Insert( select, child );
