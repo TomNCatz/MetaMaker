@@ -1,0 +1,898 @@
+{
+  "metaMakerVersion": "0.6.0",
+  "defaultListing": "States",
+  "explicitNode": "",
+  "reuseDll": false,
+  "exportScript": "",
+  "nestingColors": [
+    {
+      "r": 0.2509804,
+      "g": 0.882352948,
+      "b": 0.572549045,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.7019608,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.87890625,
+      "g": 0.8459884,
+      "b": 0.8459884,
+      "a": 1.0
+    }
+  ],
+  "nodeList": [
+    {
+      "title": "Start",
+      "color": {
+        "r": 0.1484375,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "firstState",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Character Change",
+      "color": {
+        "r": 0.0,
+        "g": 0.014831543,
+        "b": 0.94921875,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Move, hide, or change the expression of a character",
+          "minHeight": 40.0
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "character",
+          "values": [
+            "NARATOR",
+            "MC",
+            "POLICE",
+            "EYEPATCH",
+            "NORMIE",
+            "OXFORDS",
+            "HOUSE_HUSBAND",
+            "YANDERE",
+            "DETECTIVE_CLEAN",
+            "DETECTIVE_REFORMED",
+            "POCKET_SPARROW",
+            "BLACK_WIDOW"
+          ]
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emote",
+          "values": [
+            "DEFAULT",
+            "STARTLED",
+            "ANGRY",
+            "SMUG",
+            "DARK",
+            "SEXY",
+            "BLOODY",
+            "KILLER"
+          ]
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "position",
+          "values": [
+            "HIDDEN_LEFT",
+            "LEFT_1",
+            "LEFT_2",
+            "LEFT_3",
+            "CENTER_LEFT",
+            "CENTER_RIGHT",
+            "RIGHT_3",
+            "RIGHT_2",
+            "RIGHT_1",
+            "HIDDEN_RIGHT"
+          ]
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "faceLeft",
+          "defaultValue": false,
+          "id": "BOOL-4Tl"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Character Points",
+      "color": {
+        "r": 0.466666669,
+        "g": 0.03137255,
+        "b": 0.623529434,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Update your affinity score with a character",
+          "minHeight": 40.0
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "character",
+          "values": [
+            "NARATOR",
+            "MC",
+            "POLICE",
+            "EYEPATCH",
+            "NORMIE",
+            "OXFORDS",
+            "HOUSE_HUSBAND",
+            "YANDERE",
+            "DETECTIVE_CLEAN",
+            "DETECTIVE_REFORMED",
+            "POCKET_SPARROW",
+            "BLACK_WIDOW"
+          ]
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "pointsGiven",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Assess Character Points",
+      "color": {
+        "r": 0.733333349,
+        "g": 0.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Make a choice based on your affinity score with a character",
+          "minHeight": 40.0
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "character",
+          "values": [
+            "NARATOR",
+            "MC",
+            "POLICE",
+            "EYEPATCH",
+            "NORMIE",
+            "OXFORDS",
+            "HOUSE_HUSBAND",
+            "YANDERE",
+            "DETECTIVE_CLEAN",
+            "DETECTIVE_REFORMED",
+            "POCKET_SPARROW",
+            "BLACK_WIDOW"
+          ]
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "threshold",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "overPath",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "underPath",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Dialog",
+      "color": {
+        "r": 0.02745098,
+        "g": 0.41568628,
+        "b": 0.223529413,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "character",
+          "values": [
+            "NARATOR",
+            "MC",
+            "POLICE",
+            "EYEPATCH",
+            "NORMIE",
+            "OXFORDS",
+            "HOUSE_HUSBAND",
+            "YANDERE",
+            "DETECTIVE_CLEAN",
+            "DETECTIVE_REFORMED",
+            "POCKET_SPARROW",
+            "BLACK_WIDOW"
+          ]
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Text a character says",
+          "minHeight": 20.0
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "text",
+          "minHeight": 80.0,
+          "defaultValue": "Some text"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Player Choice",
+      "color": {
+        "r": 0.2509804,
+        "g": 0.882352948,
+        "b": 0.572549045,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "A player choice junction, either for dialog or interaction",
+          "minHeight": 40.0
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "text",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "choices",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 0,
+            "explicitNode": "",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Choice",
+      "color": {
+        "r": 0.2509804,
+        "g": 0.882352948,
+        "b": 0.572549045,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "INFO",
+          "label": "One choice available to the player as a button",
+          "minHeight": 40.0
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "text",
+          "minHeight": 40.0,
+          "defaultValue": "Some text"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Scene Change",
+      "color": {
+        "r": 0.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "sceneId",
+          "defaultValue": "foyer"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "VFX",
+      "color": {
+        "r": 0.0,
+        "g": 0.7647059,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "effectId",
+          "defaultValue": "EffectName"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "SFX",
+      "color": {
+        "r": 0.08627451,
+        "g": 0.533333361,
+        "b": 0.670588255,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "effectId",
+          "defaultValue": "SoundName"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Puzzle",
+      "color": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.7019608,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "puzzleId",
+          "defaultValue": "PuzzleName"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "scoreEvents",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "-",
+            "slotType": 1,
+            "explicitNode": "",
+            "emptyHandling": "SKIP"
+          }
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "defaultPath",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Score Event",
+      "color": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.7019608,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "FLOAT",
+          "label": "threshold",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "scoreAbove",
+          "defaultValue": true,
+          "id": "BOOL-NJY"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Throw Flag",
+      "color": {
+        "r": 1.0,
+        "g": 0.9372549,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Sets a marker in the player's save data. For example, \"found key\" or \"Saw murder 3\"",
+          "minHeight": 60.0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "marker",
+          "defaultValue": "found key"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "isActive",
+          "defaultValue": true,
+          "id": "BOOL-iyu"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Check Flag",
+      "color": {
+        "r": 0.6627451,
+        "g": 0.623529434,
+        "b": 0.03529412,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Checks if a marker was set. If it has not been set, or has been unset (isActive unchecked) then it will take the if unset path",
+          "minHeight": 80.0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "marker",
+          "defaultValue": "found key"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "ifSetPath",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "ifUnsetPath",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Terminal Path",
+      "color": {
+        "r": 0.76953125,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "endingName",
+          "defaultValue": "d.e.d."
+        }
+      ]
+    }
+  ],
+  "data": {
+    "States": [
+      {
+        "ngMapNodeName": "Start",
+        "ngMapNodePosition": {
+          "x": 180.0,
+          "y": 20.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "firstState": "ST_VDraVm"
+      },
+      {
+        "ngMapNodeName": "Character Change",
+        "ngMapNodePosition": {
+          "x": 3040.0,
+          "y": 40.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_npkYJX",
+        "character": "NORMIE",
+        "emote": "SMUG",
+        "position": "CENTER_LEFT",
+        "faceLeft": false,
+        "next": "ST_dINi8t"
+      },
+      {
+        "ngMapNodeName": "Character Points",
+        "ngMapNodePosition": {
+          "x": 1600.0,
+          "y": 0.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_bZBg8z",
+        "character": "NORMIE",
+        "pointsGiven": 20.0,
+        "next": "ST_HSSWPq"
+      },
+      {
+        "ngMapNodeName": "Assess Character Points",
+        "ngMapNodePosition": {
+          "x": 1860.0,
+          "y": 40.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_HSSWPq",
+        "character": "NORMIE",
+        "threshold": 20.0,
+        "underPath": "ST_ErNKy2",
+        "overPath": "ST_Agh0v5"
+      },
+      {
+        "ngMapNodeName": "Dialog",
+        "ngMapNodePosition": {
+          "x": 440.0,
+          "y": 20.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_VDraVm",
+        "character": "NARATOR",
+        "text": "The was once a game...",
+        "next": "ST_iOVWwP"
+      },
+      {
+        "ngMapNodeName": "Player Choice",
+        "ngMapNodePosition": {
+          "x": 960.0,
+          "y": 40.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_7RUDms",
+        "text": "Want to play a [b]game[/b]?",
+        "choices": [
+          {
+            "ngMapNodeName": "Choice",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 40.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "text": "Yes?",
+            "next": "ST_bZBg8z"
+          },
+          {
+            "ngMapNodeName": "Choice",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 340.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "text": "Nah",
+            "next": "ST_iWhxyX"
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Scene Change",
+        "ngMapNodePosition": {
+          "x": 700.0,
+          "y": 40.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_iOVWwP",
+        "sceneId": "foyer",
+        "next": "ST_7RUDms"
+      },
+      {
+        "ngMapNodeName": "VFX",
+        "ngMapNodePosition": {
+          "x": 2360.0,
+          "y": -100.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_Agh0v5",
+        "effectId": "StarFlash",
+        "next": "ST_npkYJX"
+      },
+      {
+        "ngMapNodeName": "SFX",
+        "ngMapNodePosition": {
+          "x": 2600.0,
+          "y": 340.0
+        },
+        "ngMapNodeSize": {
+          "x": 299.0,
+          "y": 80.0
+        },
+        "id": "ST_M8iDMB",
+        "effectId": "YouFuckedUp.mp3",
+        "next": "ST_npkYJX"
+      },
+      {
+        "ngMapNodeName": "Puzzle",
+        "ngMapNodePosition": {
+          "x": 2100.0,
+          "y": 180.0
+        },
+        "ngMapNodeSize": {
+          "x": 242.0,
+          "y": 120.0
+        },
+        "id": "ST_ErNKy2",
+        "puzzleId": "PuzzleName",
+        "scoreEvents": [
+          {
+            "ngMapNodeName": "Score Event",
+            "ngMapNodePosition": {
+              "x": 2380.0,
+              "y": 100.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "threshold": 1.0,
+            "scoreAbove": true,
+            "next": "ST_tmE833"
+          }
+        ],
+        "defaultPath": "ST_M8iDMB"
+      },
+      {
+        "ngMapNodeName": "Throw Flag",
+        "ngMapNodePosition": {
+          "x": 2620.0,
+          "y": 100.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_tmE833",
+        "marker": "found key",
+        "isActive": true,
+        "next": "ST_npkYJX"
+      },
+      {
+        "ngMapNodeName": "Check Flag",
+        "ngMapNodePosition": {
+          "x": 3340.0,
+          "y": 160.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_dINi8t",
+        "marker": "found key",
+        "ifSetPath": "ST_NVwdwI",
+        "ifUnsetPath": "ST_iWhxyX"
+      },
+      {
+        "ngMapNodeName": "Terminal Path",
+        "ngMapNodePosition": {
+          "x": 3680.0,
+          "y": 180.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_NVwdwI",
+        "endingName": "Escape"
+      },
+      {
+        "ngMapNodeName": "Terminal Path",
+        "ngMapNodePosition": {
+          "x": 3680.0,
+          "y": 400.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_iWhxyX",
+        "endingName": "d.e.d."
+      }
+    ]
+  }
+}
