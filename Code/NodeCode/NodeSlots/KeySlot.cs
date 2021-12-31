@@ -27,6 +27,14 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 
+		public override void _GuiInput( InputEvent @event )
+		{
+			if (@event is InputEventMouseButton mouseButton && mouseButton.Doubleclick)
+			{
+				OS.Clipboard = GetKey;
+			}
+		}
+
 		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
 			template.GetValue( "label", out string label );

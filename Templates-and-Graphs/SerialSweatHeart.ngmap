@@ -48,9 +48,9 @@
     {
       "title": "Character Change",
       "color": {
-        "r": 0.0,
-        "g": 0.014831543,
-        "b": 0.94921875,
+        "r": 0.317267954,
+        "g": 0.0193117931,
+        "b": 0.64453125,
         "a": 1.0
       },
       "parentType": -1,
@@ -120,6 +120,18 @@
           "label": "faceLeft",
           "defaultValue": false,
           "id": "BOOL-4Tl"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "masked",
+          "defaultValue": false,
+          "id": "BOOL-70N"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "popIn",
+          "defaultValue": false,
+          "id": "BOOL-P2f"
         },
         {
           "fieldType": "KEY_TRACKER",
@@ -298,6 +310,30 @@
           "defaultValue": "Some text"
         },
         {
+          "fieldType": "BOOLEAN",
+          "label": "inChat",
+          "defaultValue": false,
+          "id": "BOOL-CoV",
+          "matchTrue": [],
+          "invertTrue": [],
+          "matchFalse": [
+            "BOOL-daO"
+          ],
+          "invertFalse": []
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "directMessage",
+          "defaultValue": false,
+          "id": "BOOL-daO",
+          "matchTrue": [
+            "BOOL-CoV"
+          ],
+          "invertTrue": [],
+          "matchFalse": [],
+          "invertFalse": []
+        },
+        {
           "fieldType": "KEY_TRACKER",
           "label": "next",
           "slotType": 0,
@@ -428,6 +464,42 @@
           "defaultValue": "EffectName"
         },
         {
+          "fieldType": "FLOAT",
+          "label": "seconds",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 0.0,
+          "defaultValue": 1.0
+        },
+        {
+          "fieldType": "VECTOR3",
+          "label": "intensity",
+          "defaultValue": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        {
+          "fieldType": "COLOR",
+          "label": "tint",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "pause",
+          "defaultValue": false,
+          "id": "BOOL-Jau"
+        },
+        {
           "fieldType": "KEY_TRACKER",
           "label": "next",
           "slotType": 0,
@@ -456,6 +528,47 @@
           "fieldType": "TEXT_LINE",
           "label": "effectId",
           "defaultValue": "SoundName"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "pause",
+          "defaultValue": false,
+          "id": "BOOL-BRp"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
+      "title": "Pause",
+      "color": {
+        "r": 0.114422373,
+        "g": 0.355294555,
+        "b": 0.92578125,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "seconds",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 0.0,
+          "defaultValue": 1.0
         },
         {
           "fieldType": "KEY_TRACKER",
@@ -582,6 +695,47 @@
       ]
     },
     {
+      "title": "Throw Persistent Flag",
+      "color": {
+        "r": 1.0,
+        "g": 0.9372549,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "ST_",
+          "keySize": 6
+        },
+        {
+          "fieldType": "INFO",
+          "label": "Sets a marker in the player's save data. For example, \"found key\" or \"Saw murder 3\"",
+          "minHeight": 60.0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "marker",
+          "defaultValue": "found key"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "isActive",
+          "defaultValue": true,
+          "id": "BOOL-ET4"
+        },
+        {
+          "fieldType": "KEY_TRACKER",
+          "label": "next",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    },
+    {
       "title": "Check Flag",
       "color": {
         "r": 0.6627451,
@@ -676,7 +830,9 @@
         "emote": "SMUG",
         "position": "CENTER_LEFT",
         "faceLeft": false,
-        "next": "ST_dINi8t"
+        "next": "ST_dINi8t",
+        "masked": false,
+        "popIn": false
       },
       {
         "ngMapNodeName": "Character Points",
@@ -722,7 +878,9 @@
         "id": "ST_VDraVm",
         "character": "NARATOR",
         "text": "The was once a game...",
-        "next": "ST_iOVWwP"
+        "next": "ST_iOVWwP",
+        "inChat": true,
+        "directMessage": false
       },
       {
         "ngMapNodeName": "Player Choice",
@@ -757,11 +915,11 @@
               "y": 340.0
             },
             "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
+              "x": 192.0,
+              "y": 199.0
             },
             "text": "Nah",
-            "next": "ST_iWhxyX"
+            "next": "ST_VWC1ab"
           }
         ]
       },
@@ -783,7 +941,7 @@
         "ngMapNodeName": "VFX",
         "ngMapNodePosition": {
           "x": 2360.0,
-          "y": -100.0
+          "y": -140.0
         },
         "ngMapNodeSize": {
           "x": 202.0,
@@ -791,7 +949,20 @@
         },
         "id": "ST_Agh0v5",
         "effectId": "StarFlash",
-        "next": "ST_npkYJX"
+        "next": "ST_npkYJX",
+        "seconds": 1.0,
+        "intensity": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "tint": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "pause": false
       },
       {
         "ngMapNodeName": "SFX",
@@ -805,7 +976,8 @@
         },
         "id": "ST_M8iDMB",
         "effectId": "YouFuckedUp.mp3",
-        "next": "ST_npkYJX"
+        "next": "ST_npkYJX",
+        "pause": true
       },
       {
         "ngMapNodeName": "Puzzle",
@@ -840,8 +1012,8 @@
       {
         "ngMapNodeName": "Throw Flag",
         "ngMapNodePosition": {
-          "x": 2620.0,
-          "y": 100.0
+          "x": 2660.0,
+          "y": 120.0
         },
         "ngMapNodeSize": {
           "x": 202.0,
@@ -865,7 +1037,7 @@
         "id": "ST_dINi8t",
         "marker": "found key",
         "ifSetPath": "ST_NVwdwI",
-        "ifUnsetPath": "ST_iWhxyX"
+        "ifUnsetPath": "ST_wORuqO"
       },
       {
         "ngMapNodeName": "Terminal Path",
@@ -883,8 +1055,8 @@
       {
         "ngMapNodeName": "Terminal Path",
         "ngMapNodePosition": {
-          "x": 3680.0,
-          "y": 400.0
+          "x": 3920.0,
+          "y": 500.0
         },
         "ngMapNodeSize": {
           "x": 202.0,
@@ -892,6 +1064,35 @@
         },
         "id": "ST_iWhxyX",
         "endingName": "d.e.d."
+      },
+      {
+        "ngMapNodeName": "Pause",
+        "ngMapNodePosition": {
+          "x": 2451.0,
+          "y": 559.894836
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "id": "ST_VWC1ab",
+        "seconds": 1.0,
+        "next": "ST_wORuqO"
+      },
+      {
+        "ngMapNodeName": "Throw Persistent Flag",
+        "ngMapNodePosition": {
+          "x": 3680.0,
+          "y": 400.0
+        },
+        "ngMapNodeSize": {
+          "x": 192.999756,
+          "y": 166.0
+        },
+        "id": "ST_wORuqO",
+        "marker": "Has died",
+        "isActive": true,
+        "next": "ST_iWhxyX"
       }
     ]
   }
