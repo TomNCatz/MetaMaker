@@ -6,10 +6,10 @@
     <Reference Include="MetaMakerLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Code\DLLs\MetaMakerLib.dll</HintPath>
     </Reference>
-    <Reference Include="LibT.Debugging, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="LibT.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Code\DLLs\LibT.Debugging.dll</HintPath>
     </Reference>
-    <Reference Include="LibT.Serialization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="LibT.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Code\DLLs\LibT.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="LibT, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
