@@ -195,6 +195,10 @@ namespace MetaMaker
 				_recentShiftSubmenu.Connect( "id_pressed", this, nameof(OnRecentShiftMenuSelection));
 				_recentSubmenu.Connect( "id_pressed", this, nameof(OnRecentMenuSelection));
 
+				_errorPopup.AddButton("Copy",true,nameof(CopyErrorInfo));
+
+				_errorPopup.Connect( "custom_action", this, nameof(ErrorCustomActions) );
+
 				PopupMenu menu = _fileMenuButton.GetPopup();
 				menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
 				menu.AddItem( "Build Template (CTRL+N)", 0 );
@@ -273,6 +277,7 @@ namespace MetaMaker
 			}
 			catch( Exception e )
 			{
+				//throw e;
 				_app.CatchException( e );
 			}
 		}
@@ -802,6 +807,15 @@ namespace MetaMaker
 			_errorPopup.DialogText = notice;
 			_errorPopup.PopupCentered();
 		}
+
+		public void ErrorCustomActions(string action)
+		{
+			OS.Clipboard = _errorPopup.DialogText;
+		}
+
+		public void CopyErrorInfo()
+		{
+		}
 		
 		public void UpdateRecentMenu( List<string> recents )
 		{
@@ -940,19 +954,19 @@ namespace MetaMaker
 			var rightGraph = _graph.GetNode<SlottedGraphNode>( to );
 			Node rightSlot = rightGraph.GetSlot( toSlot );
 
-			if( leftSlot is KeySlot leftKey )
+			if( leftSlot is KeyLinkSlot keyLink )
 			{
-				if( !( rightSlot is KeyLinkSlot keyLink ) )
+				if( !( rightSlot is KeySlot key ) )
 				{
-					throw new Exception($"{rightSlot.Name} is not a KeyLinkSlot");
+					throw new Exception($"{leftSlot.Name} is not a KeyLinkSlot");
 				}
-				if( !keyLink.AddKey( leftKey.GetKey ) ) return;
+				if( !keyLink.AddKey( key.GetKey ) ) return;
 
 				_graph.ConnectNode( @from, fromSlot, to, toSlot );
 			}
 			else if( leftSlot is LinkToChildSlot leftLink )
 			{
-				if( !( rightSlot is LinkToParentSlot rightLink) || rightLink.IsLinked ) return;
+				if( !( rightSlot is LinkToParentSlot rightLink) ) return;
 				if( !leftLink.LinkChild( rightGraph ) ) return;
 
 				rightLink.Link(leftLink);
@@ -966,13 +980,13 @@ namespace MetaMaker
 			var rightGraph = _graph.GetNode<SlottedGraphNode>( to );
 			Node rightSlot = rightGraph.GetSlot( toSlot );
 
-			if( leftSlot is KeySlot leftKey )
+			if( leftSlot is KeyLinkSlot keyLink )
 			{
-				if( !( rightSlot is KeyLinkSlot keyLink ) )
+				if( !( rightSlot is KeySlot key ) )
 				{
-					throw new Exception($"{rightSlot.Name} is not a KeyLinkSlot");
+					throw new Exception($"{leftSlot.Name} is not a KeyLinkSlot");
 				}
-				if( !keyLink.RemoveKey( leftKey.GetKey ) ) return;
+				if( !keyLink.RemoveKey( key.GetKey ) ) return;
 
 				_graph.DisconnectNode( from, fromSlot, to, toSlot );
 			}
@@ -1062,22 +1076,22 @@ namespace MetaMaker
 			}
 			
 			SlottedGraphNode linkParent = link.GetParent<SlottedGraphNode>();
-			int toSlot = linkParent.GetChildIndex( link );
+			int fromSlot = linkParent.GetChildIndex( link );
 
-			if( toSlot < 0 )
+			if( fromSlot < 0 )
 			{
 				throw new ArgumentException($"{link.Name} not found in {linkParent.Name}",nameof(link));
 			}
 			
 			SlottedGraphNode keyParent = _app.generatedKeys[key].GetParent<SlottedGraphNode>();
-			int fromSlot = keyParent.GetChildIndex( _app.generatedKeys[key] );
+			int toSlot = keyParent.GetChildIndex( _app.generatedKeys[key] );
 			
-			if( fromSlot < 0 )
+			if( toSlot < 0 )
 			{
 				throw new ArgumentException($"{_app.generatedKeys[key].Name} not found in {keyParent.Name}",nameof(link));
 			}
 			
-			OnConnectionRequest( keyParent.Name, fromSlot ,linkParent.Name, toSlot );
+			OnConnectionRequest( linkParent.Name, fromSlot ,keyParent.Name, toSlot );
 		}
 		#endregion
 	}

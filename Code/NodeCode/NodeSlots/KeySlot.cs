@@ -30,6 +30,15 @@ namespace MetaMaker
 		}
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
+		public override void _GuiInput( InputEvent @event )
+		{
+			if (@event is InputEventMouseButton mouseButton && mouseButton.Doubleclick)
+			{
+				OS.Clipboard = GetKey;
+			}
+		}
+
+		public void Init(GenericDataArray template, GenericDataArray parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;

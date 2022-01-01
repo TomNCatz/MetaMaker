@@ -153,13 +153,13 @@ namespace MetaMaker
 					break;
 				case FieldType.KEY : 
 					child = _mainView.keyScene.Instance();
-					fieldData.GetValue( "slotType", out rightType );
-					rightColor = _app.Get.GetKeyColor( rightType );
+					fieldData.GetValue( "slotType", out leftType );
+					leftColor = _app.Get.GetKeyColor( leftType );
 					break;
 				case FieldType.KEY_TRACKER : 
 					child = _mainView.keyLinkScene.Instance();
-					fieldData.GetValue( "slotType", out leftType );
-					leftColor = _app.Get.GetKeyColor( leftType );
+					fieldData.GetValue( "slotType", out rightType );
+					rightColor = _app.Get.GetKeyColor( rightType );
 					break;
 				case FieldType.LINK_TO_PARENT :
 					fieldData.GetValue( "slotType", out leftType );

@@ -15,6 +15,8 @@ namespace MetaMaker
 		private LinkToChildSlot _link;
 
 		public bool IsLinked { get; private set; }
+		public bool IsLinked => _links >0;
+		private int _links = 0;
 		public int Index
 		{
 			get => _index;
@@ -29,6 +31,7 @@ namespace MetaMaker
 		
 		public override void _Ready()
 		{
+			_links++;
 			_indexLabel = this.GetNodeFromPath<Label>( _indexPath );
 			_upButton = this.GetNodeFromPath<Button>( _upButtonPath );
 			_downButton = this.GetNodeFromPath<Button>( _downButtonPath );
@@ -51,7 +54,7 @@ namespace MetaMaker
 
 		public void Unlink()
 		{
-			IsLinked = false;
+			_links--;
 
 			if(_link != null)
 			{
