@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class HelpPopup : WindowDialog, IGdaLoadable
+	public class HelpPopup : WindowDialog, IGddLoadable
 	{
 		[Export] public NodePath _treePath;
 		private Tree _tree;
@@ -33,15 +33,9 @@ namespace MetaMaker
 
 			_tree.HideRoot = true;
 			_tree.Connect( "item_selected", this, nameof(HandleSelect) );
-
-	//	    var export_config = new ConfigFile();
-	//	    var config_error = export_config.Load( "res://export_presets.cfg" );
-	//	    object version = export_config.GetValue("preset.0.options","version/name", "failed");
-			//object version = ProjectSettings.GetSetting( "version" );
-			
 		}
 
-		public void LoadFromGda( GenericDataArray data )
+		public void SetObjectData( GenericDataDictionary data )
 		{
 			data.GetValue( "helpInfo", out List<FaqData> infoData );
 
@@ -77,18 +71,13 @@ namespace MetaMaker
 			}
 		}
 		
-		private class FaqData : IGdoConvertible
+		private class FaqData : IGddLoadable
 		{
 			public string Entry;
 			public string Info;
 			public List<FaqData> Branches;
 
-			public void GetObjectData( GenericDataArray objData )
-			{
-				throw new System.NotImplementedException();
-			}
-
-			public void SetObjectData( GenericDataArray objData )
+			public void SetObjectData( GenericDataDictionary objData )
 			{
 				objData.GetValue( "Entry", out Entry );
 				objData.GetValue( "Info", out Info );

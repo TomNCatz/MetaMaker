@@ -21,6 +21,7 @@ namespace MetaMaker
 		[Export] public PackedScene keyLinkScene;
 		[Export] public PackedScene linkToParentScene;
 		[Export] public PackedScene linkToChildScene;
+		[Export] public PackedScene subGraphScene;
 		[Export] public PackedScene fieldListScene;
 		[Export] public PackedScene fieldDictionaryScene;
 		[Export] public PackedScene infoScene;
@@ -49,22 +50,16 @@ namespace MetaMaker
 		#region Variables
 		[Export] public NodePath _graphPath;
 		private GraphEdit _graph;
-		[Export] public NodePath _zoomOutPath;
-		private Button _zoomOutButton;
-		[Export] public NodePath _zoomNormalPath;
-		private Button _zoomNormalButton;
-		[Export] public NodePath _zoomInPath;
-		private Button _zoomInButton;
-		[Export] public NodePath _snapPath;
-		private Button _snapButton;
-		[Export] public NodePath _snapSizePath;
-		private SpinBox _snapSizeField;
 		[Export] public NodePath _fileMenuButtonPath;
 		private MenuButton _fileMenuButton;
 		[Export] public NodePath _editMenuButtonPath;
 		private MenuButton _editMenuButton;
 		[Export] public NodePath _settingsMenuButtonPath;
 		private MenuButton _settingsMenuButton;
+		[Export] public NodePath _navUpButtonPath;
+		private Button _navUpButton;
+		[Export] public NodePath _addressBarLabelPath;
+		private Label _addressBar;
 		[Export] public NodePath _searchBarPath;
 		private LineEdit _searchBar;
 		[Export] public NodePath _searchButtonPath;
@@ -82,14 +77,14 @@ namespace MetaMaker
 		private AreYouSurePopup _areYouSurePopup;
 		[Export] public NodePath _helpInfoPopupPath;
 		private HelpPopup _helpInfoPopup;
-		[Export] public NodePath _autoBackupSettingsPath;
-		private AutoBackupSettingsPopup _autoBackupSettingsPopup;
+		[Export] public NodePath _settingsPath;
+		private SettingsPopup _settingsPopup;
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
 
 		private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
-		private readonly List<GenericDataArray> _copied = new List<GenericDataArray>();
+		private readonly List<GenericDataDictionary> _copied = new List<GenericDataDictionary>();
 		private Vector2 _copiedCorner = new Vector2(50,100);
 		private Vector2 _offset = new Vector2(50,100);
 		private Vector2 _buffer = new Vector2(40,10);
@@ -101,8 +96,28 @@ namespace MetaMaker
 		private PopupMenu _recentSubmenu;
 		private Promise<Color> _pickingColor;
 		private Tween _tween;
-
 		private App _app;
+
+		public int CurrentParentIndex {set; get;}
+
+		
+		public static bool ScrollLock
+		{
+			set
+			{
+				if(value)
+				{
+					_scrollLock++;
+				}
+				else
+				{
+					_scrollLock--;
+				}
+			}
+			get => _scrollLock != 0;
+		}
+		private static int _scrollLock = 0;
+		private Vector2 _scrollCurrent;
 		
 		public Color GridMajorColor
 		{
@@ -126,13 +141,21 @@ namespace MetaMaker
 		{
 			set
 			{
-				_settingsMenuButton.GetPopup().SetItemChecked(3,value);
 				if(_app.AutoBackup != value)
 				{
 					_app.AutoBackup = value;
 				}
 			}
 			get => _app.AutoBackup;
+		}
+
+		public bool SettingGraphButtons
+		{
+			set
+			{
+				_graph.GetZoomHbox().Visible = value;
+			}
+			get => _graph.GetZoomHbox().Visible;
 		}
 
 		public FileDialogExtended FilePopup => _filePopup;
@@ -150,6 +173,8 @@ namespace MetaMaker
 				_fileMenuButton = this.GetNodeFromPath<MenuButton>( _fileMenuButtonPath );
 				_editMenuButton = this.GetNodeFromPath<MenuButton>( _editMenuButtonPath );
 				_settingsMenuButton = this.GetNodeFromPath<MenuButton>( _settingsMenuButtonPath );
+				_navUpButton = this.GetNodeFromPath<Button>( _navUpButtonPath );
+				_addressBar = this.GetNodeFromPath<Label>( _addressBarLabelPath );
 				_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
 				_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
 				_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
@@ -158,7 +183,7 @@ namespace MetaMaker
 				_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
 				_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
 				_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
-				_autoBackupSettingsPopup = this.GetNodeFromPath<AutoBackupSettingsPopup>( _autoBackupSettingsPath );
+				_settingsPopup = this.GetNodeFromPath<SettingsPopup>( _settingsPath );
 
 				_recentTemplateSubmenu = new PopupMenu { Name = "RecentTemplateMenu" };
 				_recentShiftSubmenu = new PopupMenu { Name = "RecentShiftMenu" };
@@ -211,12 +236,11 @@ namespace MetaMaker
 				
 				PopupMenu settingsMenu = _settingsMenuButton.GetPopup();
 				settingsMenu.Connect( "id_pressed", this, nameof(OnSettingsMenuSelection));
-				settingsMenu.AddItem( "Change Background Color", 0 );
-				settingsMenu.AddItem( "Change Grid Major Color", 1 );
-				settingsMenu.AddItem( "Change Grid Minor Color", 2 );
-				settingsMenu.AddItem( "Auto Backup...", 4 );
+				settingsMenu.AddItem( "Editor Settings...", 4 );
 				settingsMenu.AddSeparator(  );
 				settingsMenu.AddItem( "Help and FAQ", 3 );
+
+				_navUpButton.Connect( "pressed", this, nameof(OnNavUpPress) );
 
 				_searchBar.Connect( "text_entered", this, nameof(OnSearch) );
 				_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
@@ -232,19 +256,8 @@ namespace MetaMaker
 				_graph.Connect( "paste_nodes_request", this, nameof(RequestPasteNode) );
 				_graph.Connect( "delete_nodes_request", this, nameof(RequestDeleteNode) );
 				_graph.Connect( "gui_input", this, nameof(GraphClick) );
-				_graph.GetZoomHbox().Visible = false;
-				
-				_zoomOutButton = this.GetNodeFromPath<Button>( _zoomOutPath );
-				_zoomOutButton.Connect( "pressed", this, nameof(ZoomOutPress) );
-				_zoomNormalButton = this.GetNodeFromPath<Button>( _zoomNormalPath );
-				_zoomNormalButton.Connect( "pressed", this, nameof(ZoomNormalPress) );
-				_zoomInButton = this.GetNodeFromPath<Button>( _zoomInPath );
-				_zoomInButton.Connect( "pressed", this, nameof(ZoomInPress) );
-				_snapButton = this.GetNodeFromPath<Button>( _snapPath );
-				_snapButton.Connect( "pressed", this, nameof(SnapPress) );
-				_snapSizeField = this.GetNodeFromPath<SpinBox>( _snapSizePath );
-				_snapSizeField.Connect( "changed", this, nameof(SnapChanged) );
-				
+				_graph.Connect( "scroll_offset_changed", this, nameof(GraphOnScroll) );
+								
 				_tween = new Tween();
 				AddChild( _tween );
 				
@@ -258,9 +271,9 @@ namespace MetaMaker
 				_backupTimer.Start();
 
 				_helpInfoPopup.Version = _app.Version;
-				GenericDataArray helpData = new GenericDataArray();
+				GenericDataDictionary helpData = new GenericDataDictionary();
 				helpData.FromJson( _app.LoadJsonFile( App.HELP_INFO_SOURCE ) );
-				_helpInfoPopup.LoadFromGda( helpData );
+				_helpInfoPopup.SetObjectData( helpData );
 			}
 			catch( Exception e )
 			{
@@ -400,32 +413,8 @@ namespace MetaMaker
 			{
 				switch(id)
 				{
-					case 0 :  
-						GetColorFromUser( Color )
-							.Then( color =>
-							{
-								Color = color;
-								_app.SaveSettings();
-							}); 
-							break;
-					case 1 :  
-						GetColorFromUser( Color )
-							.Then( color =>
-							{
-								GridMajorColor = color;
-								_app.SaveSettings();
-							}); 
-						break;
-					case 2 :  
-						GetColorFromUser( Color )
-							.Then( color =>
-							{
-								GridMinorColor = color;
-								_app.SaveSettings();
-							}); 
-						break;
 					case 3 :  OpenHelpPopup(); break;
-					case 4 :  _autoBackupSettingsPopup.PopupCentered(); break;
+					case 4 :  _settingsPopup.PopupCentered(); break;
 				}
 			}
 			catch( Exception e )
@@ -457,33 +446,18 @@ namespace MetaMaker
 			CenterViewOnKeyedNode( text );
 		}
 
-		private void ZoomOutPress()
+		private void GraphOnScroll(Vector2 offset)
 		{
-			_graph.Zoom -= 0.1f;
+			if(ScrollLock)
+			{
+				_graph.ScrollOffset = _scrollCurrent;
+			}
+			else
+			{
+				_scrollCurrent = offset;
+			}
 		}
 
-		private void ZoomInPress()
-		{
-			_graph.Zoom += 0.1f;
-		}
-
-		private void ZoomNormalPress()
-		{
-			_graph.Zoom = 1;
-		}
-
-		private void SnapPress()
-		{
-			_graph.UseSnap = !_graph.UseSnap;
-
-			_snapSizeField.Visible = _graph.UseSnap;
-		}
-
-		private void SnapChanged()
-		{
-			_graph.SnapDistance = (int)_snapSizeField.Value;
-		}
-		
 		private void GraphClick( InputEvent @event )
 		{
 			if( @event is InputEventMouseButton eventMouse )
@@ -548,7 +522,7 @@ namespace MetaMaker
 					_app.ClearData();
 
 					string json = _app.LoadJsonFile( path );
-					var data = new GenericDataArray();
+					var data = new GenericDataDictionary();
 					data.FromJson( json );
 					_app.LoadData( data );
 
@@ -587,17 +561,17 @@ namespace MetaMaker
 					_copied.Add( node.Model.DataCopy() );
 				}
 				
-				foreach( GenericDataArray node in _copied )
+				foreach( GenericDataDictionary node in _copied )
 				{
 					TrimToSelection(node);
 				}
-				List<GenericDataArray> toRemove = new List<GenericDataArray>();
-				foreach( GenericDataArray node in _copied )
+				List<GenericDataDictionary> toRemove = new List<GenericDataDictionary>();
+				foreach( GenericDataDictionary node in _copied )
 				{
 					FindDuplicates(node, toRemove);
 				}
 				
-				foreach (GenericDataArray item in toRemove)
+				foreach (GenericDataDictionary item in toRemove)
 				{
 					_copied.Remove(item);
 				}
@@ -608,13 +582,13 @@ namespace MetaMaker
 			}
 		}
 
-		private void TrimToSelection( GenericDataArray target )
+		private void TrimToSelection( GenericDataDictionary target )
 		{
 			List<string> removeKeys = new List<string>();
 
 			foreach (var pair in target.values)
 			{
-				if(pair.Value is GenericDataArray subTarget)
+				if(pair.Value is GenericDataDictionary subTarget)
 				{
 					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
 					{
@@ -648,17 +622,17 @@ namespace MetaMaker
 			}
 		}
 
-		private void FindDuplicates( GenericDataArray target, List<GenericDataArray> toRemove )
+		private void FindDuplicates( GenericDataDictionary target, List<GenericDataDictionary> toRemove )
 		{
 			foreach (var pair in target.values)
 			{
-				if(pair.Value is GenericDataArray subTarget)
+				if(pair.Value is GenericDataDictionary subTarget)
 				{
 					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
 					{
 						for (int i = _copied.Count-1; i >= 0; i--)
 						{
-							GenericDataArray copy = _copied[i];
+							GenericDataDictionary copy = _copied[i];
 							if (!subTarget.DeepEquals(copy) || toRemove.Contains(copy)) continue;
 
 							toRemove.Add(copy);
@@ -711,8 +685,7 @@ namespace MetaMaker
 			if( _selection.Contains( graphNode ) ) return;
 			
 			_selection.Add( graphNode );
-			
-			_app.HasUnsavedChanges = true;
+			UpdateAddress(graphNode);
 		}
 
 		private void DeselectNode(Node node)
@@ -722,6 +695,43 @@ namespace MetaMaker
 			if( !_selection.Contains( graphNode ) ) return;
 			
 			_selection.Remove( graphNode );
+		}
+
+		private void OnNavUpPress()
+		{
+			
+		}
+
+		private void UpdateAddress(SlottedGraphNode graphNode)
+		{
+			_addressBar.Text = RecurseAddress(graphNode);
+		}
+
+		private string RecurseAddress(SlottedGraphNode node)
+		{
+			if(node.ParentType >= 0)
+			{
+				Godot.Collections.Array fullList = _graph.GetConnectionList();
+				
+				foreach( Godot.Collections.Dictionary connection in fullList )
+				{
+					if( Equals( connection["to"], node.Name ) && Equals( connection["to_port"], 0 ) )
+					{
+						SlottedGraphNode parent = _graph.GetNode<SlottedGraphNode>( (string)connection["from"] );
+						string before = RecurseAddress(parent);
+
+						if(string.IsNullOrEmpty(before)) return null;
+						
+						return before + parent.GetPathToPort((int)connection["from_port"]) + "/";
+					}
+				}
+			}
+			else
+			{
+				return "/";
+			}
+
+			return null;
 		}
 		#endregion
 
@@ -758,7 +768,7 @@ namespace MetaMaker
 			_areYouSurePopup.Display(args);
 		}
 
-		public SlottedGraphNode CreateNode(GenericDataArray nodeData, GenericDataArray nodeContent = null)
+		public SlottedGraphNode CreateNode(GenericDataDictionary nodeData, GenericDataDictionary nodeContent = null)
 		{
 			if( nodeData == null ) throw new ArgumentNullException("CreateNode passed NULL nodeData");
 
@@ -930,6 +940,11 @@ namespace MetaMaker
 				node.Dirty = false;
 			}
 		}
+
+		public void ClearScrollLock()
+		{
+			_scrollLock = 0;
+		}
 		#endregion
 
 		#region Connections
@@ -954,7 +969,7 @@ namespace MetaMaker
 				if( !( rightSlot is LinkToParentSlot rightLink) ) return;
 				if( !leftLink.LinkChild( rightGraph ) ) return;
 
-				rightLink.Link();
+				rightLink.Link(leftLink);
 				_graph.ConnectNode( @from, fromSlot, to, toSlot );
 			}
 		}
@@ -980,7 +995,7 @@ namespace MetaMaker
 				if( !( rightSlot is LinkToParentSlot rightLink) || !rightLink.IsLinked ) return;
 				if( !leftLink.UnLinkChild( rightGraph ) ) return;
 
-				rightLink.Unlink();
+				rightLink.Unlink(leftLink);
 				_graph.DisconnectNode( @from, fromSlot, to, toSlot );
 			}
 		}

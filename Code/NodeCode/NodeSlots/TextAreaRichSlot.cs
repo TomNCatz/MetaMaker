@@ -12,7 +12,9 @@ namespace MetaMaker
 		private TextEdit _field;
 		[Export] public NodePath _displayPath;
 		private RichTextLabel _display;
-		private GenericDataArray _parentModel;
+		private GenericDataObject<string> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
@@ -22,9 +24,11 @@ namespace MetaMaker
 			_display = this.GetNodeFromPath<RichTextLabel>( _displayPath );
 
 			_field.Connect( "text_changed", this, nameof(OnTextChanged) );
+			_field.Connect("mouse_entered",this,nameof(OnEnter));
+			_field.Connect("mouse_exited",this,nameof(OnExit));
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
@@ -33,17 +37,24 @@ namespace MetaMaker
 			_field.RectMinSize = new Vector2(0,height);
 			_display.RectMinSize = new Vector2(0,height);
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			parentModel.TryGetValue(_label.Text, out GenericDataObject nullToken);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out string value );
-				_field.Text = value;
+				_model = model;
+				_field.Text = _model.value;
+			}
+			else if(nullToken is GenericDataNull)
+			{
+				parentModel.TryRemoveValue(_label.Text);
+				_model = parentModel.TryAddValue(_label.Text, new GenericDataObject<string>()) as GenericDataObject<string>;
+				_field.Text = string.Empty;
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out string value );
+				_model = parentModel.TryAddValue(_label.Text, value) as GenericDataObject<string>;
 				_field.Text = value;
-				_parentModel.AddValue(_label.Text, value);
 			}
 			_display.BbcodeText = _field.Text;
 		}
@@ -51,8 +62,18 @@ namespace MetaMaker
 		private void OnTextChanged()
 		{
 			_display.BbcodeText = _field.Text;
-			_parentModel.AddValue(_label.Text, _field.Text);
+			_model.value = _field.Text;
 			OnValueUpdated?.Invoke();
+		}
+
+		private void OnEnter()
+		{
+			MainView.ScrollLock = true;
+		}
+
+		private void OnExit()
+		{
+			MainView.ScrollLock = false;
 		}
 	}
 }

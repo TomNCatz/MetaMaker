@@ -1666,11 +1666,10 @@
       }
     ]
   },
-  "metaMakerVersion": "0.6.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGDA(GenericDataArray genericDataArray, List<string> keysToRemove, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataArray.AddValue(  graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keysToRemove, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue( graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,
@@ -1929,8 +1928,88 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_STRING",
+            "NULL_STRING",
             "SKIP"
           ]
+        }
+      ]
+    },
+    {
+      "title": "Graph List Slot",
+      "color": {
+        "r": 0.875,
+        "g": 0.7667193,
+        "b": 0.4358614,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_LIST"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        }
+      ]
+    },
+    {
+      "title": "Graph Dictionary Slot",
+      "color": {
+        "r": 0.8812586,
+        "g": 0.890625,
+        "b": 0.5370435,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_DICTIONARY"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyField",
+          "defaultValue": "id"
         }
       ]
     },
@@ -1974,6 +2053,7 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_OBJECT",
+            "NULL",
             "SKIP"
           ]
         }
@@ -2890,6 +2970,53 @@
           "asSeconds": false
         }
       ]
+    },
+    {
+      "title": "Relative Path Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "RELATIVE_PATH"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Path"
+        },
+        {
+          "fieldType": "INT",
+          "label": "startOffset",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "prefix",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "extensions",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "*.png"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "metaMakerVersion": "0.7.0"
 }

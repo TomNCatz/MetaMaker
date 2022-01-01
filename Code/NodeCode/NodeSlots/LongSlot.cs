@@ -12,7 +12,9 @@ namespace MetaMaker
 		private LineEdit _field;
 		private long _value;
 		private bool _allowNegative;
-		private GenericDataArray _parentModel;
+		private GenericDataObject<string> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
@@ -49,7 +51,7 @@ namespace MetaMaker
 				_field.Text = _value.ToString();
 			}
 			
-			_parentModel.AddValue(_label.Text, _value);
+			_model.CopyFrom(GenericDataObject.CreateGdo(_value));
 			OnValueUpdated?.Invoke();
 		}
 		
@@ -58,22 +60,23 @@ namespace MetaMaker
 			_field.Text = _value.ToString();
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out _value );
+				_model = model;
+				model.GetValue(out _value);
 				_field.Text = _value.ToString();
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out _value );
+				_model = parentModel.TryAddValue(_label.Text, _value) as GenericDataObject<string>;
 				_field.Text = _value.ToString();
-				_parentModel.AddValue(_label.Text, _value);
 			}
 			
 			template.GetValue( "allowNegative", out _allowNegative );

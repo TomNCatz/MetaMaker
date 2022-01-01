@@ -15,7 +15,9 @@ namespace MetaMaker
 		[Export] public NodePath _currentPath;
 		private Label _current;
 
-		private GenericDataArray _parentModel;
+		private GenericDataObject<int> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event Action OnValueUpdated;
 
 		private Mask32 _value;
@@ -27,7 +29,7 @@ namespace MetaMaker
 			_current = this.GetNodeFromPath<Label>( _currentPath );
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
@@ -42,18 +44,19 @@ namespace MetaMaker
 				items.Add(item);
 			}
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<int> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out int value );
-				_value = value;
+				_model = model;
+				_value = _model.value;
 			}
 			else
 			{
 				template.GetValue( "defaultValue", out int value );
 				_value = value;
-				_parentModel.AddValue(_label.Text, value);
+				_model = parentModel.TryAddValue(_label.Text, value) as GenericDataObject<int>;
 			}
+
 			for(int i = 0; i < items.Count; i++)
 			{
 				items[i].Value = _value[i];
@@ -70,7 +73,7 @@ namespace MetaMaker
 			}
 
 			_current.Text = _value.flags.ToString();
-			_parentModel.AddValue(_label.Text, _value);
+			_model.value = _value.flags;
 			OnValueUpdated?.Invoke();
 		}
 	}

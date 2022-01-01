@@ -1,5 +1,5 @@
 {
-  "metaMakerVersion": "0.6.0",
+  "metaMakerVersion": "0.7.0",
   "defaultListing": "States",
   "explicitNode": "",
   "reuseDll": false,
@@ -374,7 +374,7 @@
           "label": "choices",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "-",
+            "label": "1",
             "slotType": 0,
             "explicitNode": "",
             "emptyHandling": "SKIP"
@@ -605,7 +605,7 @@
           "label": "scoreEvents",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "-",
+            "label": "0",
             "slotType": 1,
             "explicitNode": "",
             "emptyHandling": "SKIP"

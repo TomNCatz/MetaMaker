@@ -1,8 +1,8 @@
 {
   "data": {
     "ngMapNodePosition": {
-      "x": -60.0,
-      "y": 200.0
+      "x": -200.0,
+      "y": -100.0
     },
     "ngMapNodeName": "Graph",
     "ngMapNodeSize": {
@@ -11,12 +11,12 @@
     },
     "defaultListing": "",
     "explicitNode": "",
-    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
     "nodeList": [
       {
         "ngMapNodePosition": {
-          "x": 300.0,
-          "y": 100.0
+          "x": 200.0,
+          "y": 0.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -34,8 +34,8 @@
         "fields": [
           {
             "ngMapNodePosition": {
-              "x": 540.0,
-              "y": 100.0
+              "x": 480.0,
+              "y": 0.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -46,8 +46,8 @@
             "label": "helpInfo",
             "field": {
               "ngMapNodePosition": {
-                "x": 760.0,
-                "y": 100.0
+                "x": 720.0,
+                "y": 0.0
               },
               "ngMapNodeName": "Link To Child Slot",
               "ngMapNodeSize": {
@@ -65,8 +65,8 @@
       },
       {
         "ngMapNodePosition": {
-          "x": 260.0,
-          "y": 300.0
+          "x": 200.0,
+          "y": 220.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -84,8 +84,8 @@
         "fields": [
           {
             "ngMapNodePosition": {
-              "x": 740.0,
-              "y": 300.0
+              "x": 480.0,
+              "y": 220.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -98,8 +98,8 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 960.0,
-              "y": 300.0
+              "x": 720.0,
+              "y": 220.0
             },
             "ngMapNodeName": "Text Area Slot",
             "ngMapNodeSize": {
@@ -113,8 +113,8 @@
           },
           {
             "ngMapNodePosition": {
-              "x": 520.0,
-              "y": 440.0
+              "x": 480.0,
+              "y": 360.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -125,8 +125,8 @@
             "label": "Branches",
             "field": {
               "ngMapNodePosition": {
-                "x": 740.0,
-                "y": 440.0
+                "x": 720.0,
+                "y": 420.0
               },
               "ngMapNodeName": "Link To Child Slot",
               "ngMapNodeSize": {
@@ -144,13 +144,14 @@
       }
     ],
     "nestingColors": [],
-    "keyColors": []
+    "keyColors": [],
+    "reuseDll": true
   },
-  "metaMakerVersion": "0.6.0",
+  "metaMakerVersion": "0.7.0",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMaker;\n\nnamespace Rules\n{\n\tpublic class ExportRules : MetaMaker.ExportRules\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"HelpInfo.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keysToRemove, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue( graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,
@@ -237,6 +238,12 @@
           }
         },
         {
+          "fieldType": "BOOLEAN",
+          "label": "reuseDll",
+          "defaultValue": true,
+          "id": "BOOL-LYn"
+        },
+        {
           "fieldType": "TEXT_AREA",
           "label": "exportScript",
           "minHeight": 200.0,
@@ -247,7 +254,7 @@
           "label": "nodeList",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "-",
+            "label": "1",
             "slotType": 0,
             "explicitNode": "Node",
             "emptyHandling": "SKIP"
@@ -296,7 +303,7 @@
           "label": "fields",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "-",
+            "label": "2",
             "slotType": 1,
             "explicitNode": "",
             "emptyHandling": "SKIP"
@@ -403,30 +410,31 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_STRING",
+            "NULL_STRING",
             "SKIP"
           ]
         }
       ]
     },
     {
-      "title": "Link To Parent Slot",
+      "title": "Graph List Slot",
       "color": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
+        "r": 0.875,
+        "g": 0.7667193,
+        "b": 0.4358614,
         "a": 1.0
       },
-      "parentType": 1,
+      "parentType": -1,
       "fields": [
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "LINK_TO_PARENT"
+          "defaultValue": "SUB_GRAPH_LIST"
         },
         {
-          "fieldType": "INFO",
-          "label": "NODE TYPE IS DEPRICATED\nAs of 0.3.0 this node type is depricated and should be replaced by the parent typ listed in the node itself",
-          "minHeight": 100.0
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children"
         },
         {
           "fieldType": "INT",
@@ -435,8 +443,55 @@
           "hasMax": false,
           "max": 0,
           "hasMin": true,
-          "min": -1,
-          "defaultValue": -1
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        }
+      ]
+    },
+    {
+      "title": "Graph Dictionary Slot",
+      "color": {
+        "r": 0.8812586,
+        "g": 0.890625,
+        "b": 0.5370435,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_DICTIONARY"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyField",
+          "defaultValue": "id"
         }
       ]
     },
@@ -480,6 +535,7 @@
           "label": "emptyHandling",
           "values": [
             "EMPTY_OBJECT",
+            "NULL",
             "SKIP"
           ]
         }
@@ -1384,9 +1440,62 @@
           "defaultValue": "Duration"
         },
         {
+          "fieldType": "BOOLEAN",
+          "label": "asSeconds",
+          "defaultValue": false,
+          "id": "BOOL-9KE"
+        },
+        {
           "fieldType": "TIME_SPAN",
           "label": "defaultValue",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "asSeconds": false
+        }
+      ]
+    },
+    {
+      "title": "Relative Path Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "RELATIVE_PATH"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Path"
+        },
+        {
+          "fieldType": "INT",
+          "label": "startOffset",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "prefix",
+          "defaultValue": ""
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "extensions",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "*.png"
+          }
         }
       ]
     }

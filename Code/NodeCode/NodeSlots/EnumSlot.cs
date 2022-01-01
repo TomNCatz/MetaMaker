@@ -11,7 +11,9 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private OptionButton _field;
-		private GenericDataArray _parentModel;
+		private GenericDataObject<string> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
@@ -21,22 +23,21 @@ namespace MetaMaker
 			_field.Connect("item_selected",this,nameof(OnChanged));
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
-			_parentModel = parentModel;
-
 			template.GetValue( "values", out List<string> values );
 			foreach( string value in values )
 			{
 				_field.AddItem( value );
 			}
-
-			if(parentModel.values.ContainsKey(_label.Text))
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out string choice );
+				_model = model;
+				_model.GetValue(out string choice);
 
 				for( int i = 0; i < _field.GetItemCount(); i++ )
 				{
@@ -48,13 +49,13 @@ namespace MetaMaker
 			}
 			else
 			{
-				_parentModel.AddValue( _label.Text, GetSelection() );
+				_model = parentModel.TryAddValue( _label.Text, GetSelection() ) as GenericDataObject<string>;
 			}
 		}
 
 		private void OnChanged(int value)
 		{
-			_parentModel.AddValue( _label.Text, GetSelection() );
+			_model.value = GetSelection();
 			OnValueUpdated?.Invoke();
 		}
 

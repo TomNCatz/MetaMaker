@@ -18,7 +18,9 @@ namespace MetaMaker
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
 		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
-		private GenericDataArray _parentModel;
+		private GenericDataObject<string> _model;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
@@ -35,7 +37,7 @@ namespace MetaMaker
 			}
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
@@ -43,17 +45,16 @@ namespace MetaMaker
 			template.GetValue( "keyPrefix", out _keyPrefix );
 			template.GetValue( "keySize", out _keySize );
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text) && ! _app.Get.pastingData)
+			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
+			if(model != null)
 			{
-				parentModel.GetValue( _label.Text, out string value );
-				SetKey( value );
+				_model = model;
+				SetKey( _model.value );
 			}
 			else
 			{
 				SetKey();
-
-				_parentModel.AddValue(_label.Text, _field.Text);
+				_model = parentModel.TryAddValue(_label.Text, _field.Text) as GenericDataObject<string>;
 			}
 		}
 

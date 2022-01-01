@@ -8,6 +8,8 @@ namespace MetaMaker
 	{
 		[Export] public NodePath _labelPath;
 		private RichTextLabel _label;
+
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -15,7 +17,7 @@ namespace MetaMaker
 			_label = this.GetNodeFromPath<RichTextLabel>( _labelPath );
 		}
 		
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;

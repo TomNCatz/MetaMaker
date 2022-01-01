@@ -5,7 +5,8 @@ namespace MetaMaker
 {
 	public interface IField
 	{
+		string Label{get;set;}
 		event Action OnValueUpdated;
-		void Init(GenericDataArray template, GenericDataArray parentModel);
+		void Init(GenericDataDictionary template, GenericDataObject parentModel);
 	}
 }

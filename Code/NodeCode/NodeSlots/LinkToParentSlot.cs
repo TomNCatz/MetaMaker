@@ -1,20 +1,98 @@
+using System.Collections.Generic;
 using Godot;
+using LibT;
 
 namespace MetaMaker
 {
-	public class LinkToParentSlot : Label
+	public class LinkToParentSlot : Control
 	{
-		public bool IsLinked => _links >0;
-		private int _links = 0;
-		
-		public void Link()
+		[Export] public NodePath _indexPath;
+		private Label _indexLabel;
+		[Export] public NodePath _upButtonPath;
+		private Button _upButton;
+		[Export] public NodePath _downButtonPath;
+		private Button _downButton;
+
+		private List<LinkToChildSlot> _links = new List<LinkToChildSlot>();
+
+		public bool IsLinked => _links.Count > 0;
+
+		public int Index
 		{
-			_links++;
+			get => _index;
+			set
+			{
+				_index = value;
+
+				UpdateDisplay();
+			}
+		}
+		private int _index;
+		
+		public override void _Ready()
+		{
+			_indexLabel = this.GetNodeFromPath<Label>( _indexPath );
+			_upButton = this.GetNodeFromPath<Button>( _upButtonPath );
+			_downButton = this.GetNodeFromPath<Button>( _downButtonPath );
+			_upButton.Connect( "pressed", this, nameof(OnUpPressed) );
+			_downButton.Connect( "pressed", this, nameof(OnDownPressed) );
+			UpdateDisplay();
 		}
 
-		public void Unlink()
+		public void Link(LinkToChildSlot link)
 		{
-			_links--;
+			_links.Add(link);
+			if(link.parentListing != null)
+			{
+				link.parentListing.OnValueUpdated += UpdateDisplay;
+			}
+			UpdateDisplay();
+		}
+
+		public void Unlink(LinkToChildSlot link)
+		{
+			if(_links.Contains(link))
+			{
+				if(link.parentListing != null)
+				{
+					link.parentListing.OnValueUpdated -= UpdateDisplay;
+				}
+				_links.Remove(link);
+			}
+
+			UpdateDisplay();
+		}
+
+		private void UpdateDisplay()
+		{
+			if(_links.Count == 0)
+			{
+				_indexLabel.Text = "UNLINKED";
+				_upButton.Visible = false;
+				_downButton.Visible = false;
+			}
+			else if(_links.Count == 1)
+			{
+				_indexLabel.Text = _links[0].Label;
+				//_upButton.Visible = true;
+				//_downButton.Visible = true;
+			}
+			else
+			{
+				_indexLabel.Text = "MULTIPLE";
+				_upButton.Visible = false;
+				_downButton.Visible = false;
+			}
+		}
+
+		private void OnUpPressed()
+		{
+
+		}
+
+		private void OnDownPressed()
+		{
+			
 		}
 	}
 }

@@ -1,4 +1,70 @@
 {
+  "metaMakerVersion": "0.7.0",
+  "defaultListing": "listing",
+  "explicitNode": "",
+  "reuseDll": true,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+  "nestingColors": [],
+  "keyColors": [],
+  "nodeList": [
+    {
+      "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "helpInfo",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "5",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Entry",
+          "defaultValue": "Action"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "Info",
+          "minHeight": 40.0,
+          "defaultValue": "Detailed description"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Branches",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "1",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    }
+  ],
   "data": {
     "ngMapNodeName": "HelpInfo",
     "ngMapNodePosition": {
@@ -1904,133 +1970,5 @@
         "Branches": []
       }
     ]
-  },
-  "metaMakerVersion": "0.6.0",
-  "defaultListing": "listing",
-  "explicitNode": "",
-  "reuseDll": false,
-  "exportScript": {},
-  "nestingColors": [
-    {
-      "r": 0.5,
-      "g": 1.0,
-      "b": 0.83,
-      "a": 1.0
-    },
-    {
-      "r": 0.96,
-      "g": 0.96,
-      "b": 0.86,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.84,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.0,
-      "g": 0.0,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.7,
-      "g": 0.13,
-      "b": 0.13,
-      "a": 1.0
-    }
-  ],
-  "keyColors": [
-    {
-      "r": 0.5,
-      "g": 1.0,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.39,
-      "g": 0.58,
-      "b": 0.93,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.97,
-      "b": 0.86,
-      "a": 1.0
-    },
-    {
-      "r": 0.29,
-      "g": 0.0,
-      "b": 0.51,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.41,
-      "b": 0.71,
-      "a": 1.0
-    }
-  ],
-  "nodeList": [
-    {
-      "title": "HelpInfo",
-      "color": {
-        "r": 0.40625,
-        "g": 0.40625,
-        "b": 0.40625,
-        "a": 1.0
-      },
-      "parentType": -1,
-      "fields": {
-        "0": {
-          "fieldType": "FIELD_LIST",
-          "label": "helpInfo",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "Branch",
-            "slotType": 0,
-            "explicitNode": "Branch",
-            "emptyHandling": "SKIP"
-          }
-        }
-      }
-    },
-    {
-      "title": "Branch",
-      "color": {
-        "r": 0.6853932,
-        "g": 0.7050562,
-        "b": 0.7050562,
-        "a": 1.0
-      },
-      "parentType": 0,
-      "fields": {
-        "0": {
-          "fieldType": "TEXT_LINE",
-          "label": "Entry",
-          "defaultValue": "Action"
-        },
-        "1": {
-          "fieldType": "TEXT_AREA",
-          "label": "Info",
-          "minHeight": 40.0,
-          "defaultValue": "Detailed description"
-        },
-        "2": {
-          "fieldType": "FIELD_LIST",
-          "label": "Branches",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "Branch",
-            "slotType": 0,
-            "explicitNode": "Branch",
-            "emptyHandling": "SKIP"
-          }
-        }
-      }
-    }
-  ]
+  }
 }

@@ -32,8 +32,9 @@ namespace MetaMaker
 
 		private bool isOffset;
 		private DateTimeOffset dtOffset;
+		private GenericDataObject _model;
 
-		private GenericDataArray _parentModel;
+		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 
 		public override void _Ready()
@@ -185,7 +186,7 @@ namespace MetaMaker
 		{
 			GetDateInPopup();
 			UpdateDisplay();
-			SetTime(_parentModel);
+			SetTime();
 			OnValueUpdated?.Invoke();
 		}
 
@@ -201,21 +202,21 @@ namespace MetaMaker
 			}
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 
-			_parentModel = parentModel;
-			if(parentModel.values.ContainsKey(_label.Text))
+			_model = parentModel.TryGetRelativeGdo(_label.Text);
+			if(_model != null)
 			{
 				if( isOffset )
 				{
-					template.GetValue( _label.Text, out dtOffset );
+					_model.TryGetValue( _label.Text, out dtOffset );
 				}
 				else
 				{
-					template.GetValue( _label.Text, out DateTime dateTime );
+					_model.TryGetValue( _label.Text, out DateTime dateTime );
 					dtOffset = new DateTimeOffset(dateTime);
 				}
 			}
@@ -224,27 +225,29 @@ namespace MetaMaker
 				if( isOffset )
 				{
 					template.GetValue( "defaultValue", out dtOffset );
+					_model = parentModel.TryAddValue(_label.Text, dtOffset);
 				}
 				else
 				{
 					template.GetValue( "defaultValue", out DateTime dateTime );
 					dtOffset = new DateTimeOffset(dateTime);
+					_model = parentModel.TryAddValue(_label.Text, dtOffset.DateTime);
 				}
-				SetTime(_parentModel);
+				SetTime();
 			}
 
 			UpdateDisplay();
 		}
 
-		private void SetTime(GenericDataArray parent)
+		private void SetTime()
 		{
 			if( isOffset )
 			{
-				parent.AddValue( _label.Text, dtOffset );
+				_model.CopyFrom(GenericDataObject.CreateGdo(dtOffset));
 			}
 			else
 			{
-				parent.AddValue( _label.Text, dtOffset.DateTime );
+				_model.CopyFrom(GenericDataObject.CreateGdo(dtOffset.DateTime));
 			}
 		}
 	}
