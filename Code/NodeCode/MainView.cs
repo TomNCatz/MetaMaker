@@ -58,7 +58,7 @@ namespace MetaMaker
 		private MenuButton _settingsMenuButton;
 		[Export] public NodePath _navUpButtonPath;
 		private Button _navUpButton;
-		[Export] public NodePath _addressBarPath;
+		[Export] public NodePath _addressBarLabelPath;
 		private Label _addressBar;
 		[Export] public NodePath _searchBarPath;
 		private LineEdit _searchBar;
@@ -155,7 +155,7 @@ namespace MetaMaker
 				_editMenuButton = this.GetNodeFromPath<MenuButton>( _editMenuButtonPath );
 				_settingsMenuButton = this.GetNodeFromPath<MenuButton>( _settingsMenuButtonPath );
 				_navUpButton = this.GetNodeFromPath<Button>( _navUpButtonPath );
-				_addressBar = this.GetNodeFromPath<Label>( _addressBarPath );
+				_addressBar = this.GetNodeFromPath<Label>( _addressBarLabelPath );
 				_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
 				_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
 				_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
@@ -253,6 +253,7 @@ namespace MetaMaker
 			}
 			catch( Exception e )
 			{
+				throw e;
 				_app.CatchException( e );
 			}
 		}
