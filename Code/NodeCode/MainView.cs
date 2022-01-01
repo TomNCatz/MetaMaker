@@ -99,6 +99,25 @@ namespace MetaMaker
 		private App _app;
 
 		public int CurrentParentIndex {set; get;}
+
+		
+		public static bool ScrollLock
+		{
+			set
+			{
+				if(value)
+				{
+					_scrollLock++;
+				}
+				else
+				{
+					_scrollLock--;
+				}
+			}
+			get => _scrollLock != 0;
+		}
+		private static int _scrollLock = 0;
+		private Vector2 _scrollCurrent;
 		
 		public Color GridMajorColor
 		{
@@ -233,6 +252,7 @@ namespace MetaMaker
 				_graph.Connect( "paste_nodes_request", this, nameof(RequestPasteNode) );
 				_graph.Connect( "delete_nodes_request", this, nameof(RequestDeleteNode) );
 				_graph.Connect( "gui_input", this, nameof(GraphClick) );
+				_graph.Connect( "scroll_offset_changed", this, nameof(GraphOnScroll) );
 								
 				_tween = new Tween();
 				AddChild( _tween );
@@ -253,7 +273,6 @@ namespace MetaMaker
 			}
 			catch( Exception e )
 			{
-				throw e;
 				_app.CatchException( e );
 			}
 		}
@@ -421,7 +440,19 @@ namespace MetaMaker
 			
 			CenterViewOnKeyedNode( text );
 		}
-		
+
+		private void GraphOnScroll(Vector2 offset)
+		{
+			if(ScrollLock)
+			{
+				_graph.ScrollOffset = _scrollCurrent;
+			}
+			else
+			{
+				_scrollCurrent = offset;
+			}
+		}
+
 		private void GraphClick( InputEvent @event )
 		{
 			if( @event is InputEventMouseButton eventMouse )
@@ -894,6 +925,11 @@ namespace MetaMaker
 			{
 				node.Dirty = false;
 			}
+		}
+
+		public void ClearScrollLock()
+		{
+			_scrollLock = 0;
 		}
 		#endregion
 

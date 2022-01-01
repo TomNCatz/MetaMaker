@@ -19,8 +19,11 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<TextEdit>( _fieldPath );
-			_field.Connect("text_changed",this,nameof(OnChanged));
+			_field.Connect("text_changed",this,nameof(OnTextChanged));
+			_field.Connect("mouse_entered",this,nameof(OnEnter));
+			_field.Connect("mouse_exited",this,nameof(OnExit));
 		}
+		
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
@@ -50,10 +53,20 @@ namespace MetaMaker
 			_field.RectMinSize = new Vector2(0,height);
 		}
 
-		private void OnChanged()
+		private void OnTextChanged()
 		{
 			_model.value = _field.Text;
 			OnValueUpdated?.Invoke();
+		}
+
+		private void OnEnter()
+		{
+			MainView.ScrollLock = true;
+		}
+
+		private void OnExit()
+		{
+			MainView.ScrollLock = false;
 		}
 	}
 }

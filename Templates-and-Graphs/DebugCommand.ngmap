@@ -1,9 +1,9 @@
 {
-  "metaMakerVersion": "0.6.0",
+  "metaMakerVersion": "0.7.0",
   "defaultListing": "_commandHub",
   "explicitNode": "Commands",
-  "reuseDll": false,
-  "exportScript": {},
+  "reuseDll": true,
+  "exportScript": "",
   "nestingColors": [
     {
       "r": 0.21875,
@@ -18,38 +18,7 @@
       "a": 1.0
     }
   ],
-  "keyColors": [
-    {
-      "r": 0.5,
-      "g": 1.0,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 0.39,
-      "g": 0.58,
-      "b": 0.93,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.97,
-      "b": 0.86,
-      "a": 1.0
-    },
-    {
-      "r": 0.29,
-      "g": 0.0,
-      "b": 0.51,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 0.41,
-      "b": 0.71,
-      "a": 1.0
-    }
-  ],
+  "keyColors": [],
   "nodeList": [
     {
       "title": "Commands",
@@ -60,19 +29,19 @@
         "a": 1.0
       },
       "parentType": -1,
-      "fields": {
-        "0": {
+      "fields": [
+        {
           "fieldType": "FIELD_LIST",
           "label": "_commandHub",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "CMD",
+            "label": "2",
             "slotType": 0,
             "explicitNode": "",
             "emptyHandling": "SKIP"
           }
         }
-      }
+      ]
     },
     {
       "title": "Command Set",
@@ -83,40 +52,40 @@
         "a": 1.0
       },
       "parentType": 0,
-      "fields": {
-        "0": {
+      "fields": [
+        {
           "fieldType": "TYPE",
           "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Class Type": "CommandSet"
         },
-        "1": {
+        {
           "fieldType": "TEXT_LINE",
           "label": "Id",
           "defaultValue": "String"
         },
-        "2": {
+        {
           "fieldType": "TEXT_AREA",
           "label": "Description",
           "minHeight": 40.0,
           "defaultValue": "Some text"
         },
-        "3": {
+        {
           "fieldType": "TEXT_LINE",
           "label": "Format",
           "defaultValue": "String"
         },
-        "4": {
+        {
           "fieldType": "FIELD_LIST",
           "label": "SubCommands",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "children",
+            "label": "3",
             "slotType": 0,
             "explicitNode": "",
             "emptyHandling": "EMPTY_OBJECT"
           }
         }
-      }
+      ]
     },
     {
       "title": "Command",
@@ -127,44 +96,44 @@
         "a": 1.0
       },
       "parentType": 0,
-      "fields": {
-        "0": {
+      "fields": [
+        {
           "fieldType": "TYPE",
           "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
           "Class Type": "CommandTerminal"
         },
-        "1": {
+        {
           "fieldType": "TEXT_LINE",
           "label": "Id",
           "defaultValue": "String"
         },
-        "2": {
+        {
           "fieldType": "TEXT_AREA",
           "label": "Description",
           "minHeight": 40.0,
           "defaultValue": "Some text"
         },
-        "3": {
+        {
           "fieldType": "TEXT_LINE",
           "label": "Format",
           "defaultValue": "String"
         },
-        "4": {
+        {
           "fieldType": "TEXT_LINE",
           "label": "EventId",
           "defaultValue": "String"
         },
-        "5": {
+        {
           "fieldType": "INT",
           "label": "ParameterCount",
-          "MinStepSize": 0.0,
+          "MinStepSize": "0",
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
           "defaultValue": 0
         }
-      }
+      ]
     }
   ],
   "data": {

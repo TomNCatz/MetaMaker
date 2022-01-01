@@ -24,6 +24,8 @@ namespace MetaMaker
 			_display = this.GetNodeFromPath<RichTextLabel>( _displayPath );
 
 			_field.Connect( "text_changed", this, nameof(OnTextChanged) );
+			_field.Connect("mouse_entered",this,nameof(OnEnter));
+			_field.Connect("mouse_exited",this,nameof(OnExit));
 		}
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -62,6 +64,16 @@ namespace MetaMaker
 			_display.BbcodeText = _field.Text;
 			_model.value = _field.Text;
 			OnValueUpdated?.Invoke();
+		}
+
+		private void OnEnter()
+		{
+			MainView.ScrollLock = true;
+		}
+
+		private void OnExit()
+		{
+			MainView.ScrollLock = false;
 		}
 	}
 }

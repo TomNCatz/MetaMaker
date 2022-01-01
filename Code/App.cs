@@ -104,6 +104,7 @@ namespace MetaMaker
 				if(!_hasUnsavedChanges)
 				{
 					_mainView.SetNodesClean();
+					_mainView.ClearScrollLock();
 				}
 			}
 			get => _hasUnsavedChanges;
