@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using LibT;
 
@@ -12,11 +13,10 @@ namespace MetaMaker
 		[Export] public NodePath _downButtonPath;
 		private Button _downButton;
 
-		private LinkToChildSlot _link;
+		private List<LinkToChildSlot> _links = new List<LinkToChildSlot>();
 
-		public bool IsLinked { get; private set; }
-		public bool IsLinked => _links >0;
-		private int _links = 0;
+		public bool IsLinked => _links.Count > 0;
+
 		public int Index
 		{
 			get => _index;
@@ -31,7 +31,6 @@ namespace MetaMaker
 		
 		public override void _Ready()
 		{
-			_links++;
 			_indexLabel = this.GetNodeFromPath<Label>( _indexPath );
 			_upButton = this.GetNodeFromPath<Button>( _upButtonPath );
 			_downButton = this.GetNodeFromPath<Button>( _downButtonPath );
@@ -42,50 +41,47 @@ namespace MetaMaker
 
 		public void Link(LinkToChildSlot link)
 		{
-			IsLinked = true;
-
-			_link = link;
-			if(_link.parentListing != null)
+			_links.Add(link);
+			if(link.parentListing != null)
 			{
-				_link.parentListing.OnValueUpdated += ListingChange;
+				link.parentListing.OnValueUpdated += UpdateDisplay;
 			}
-			UpdateDisplay(_link.Label);
+			UpdateDisplay();
 		}
 
-		public void Unlink()
+		public void Unlink(LinkToChildSlot link)
 		{
-			_links--;
-
-			if(_link != null)
+			if(_links.Contains(link))
 			{
-				if(_link.parentListing != null)
+				if(link.parentListing != null)
 				{
-					_link.parentListing.OnValueUpdated -= ListingChange;
+					link.parentListing.OnValueUpdated -= UpdateDisplay;
 				}
-				_link = null;
+				_links.Remove(link);
 			}
 
 			UpdateDisplay();
 		}
 
-		private void ListingChange()
+		private void UpdateDisplay()
 		{
-			UpdateDisplay(_link.Label);
-		}
-
-		private void UpdateDisplay(string link = null)
-		{
-			if(string.IsNullOrEmpty(link))
+			if(_links.Count == 0)
 			{
 				_indexLabel.Text = "UNLINKED";
 				_upButton.Visible = false;
 				_downButton.Visible = false;
 			}
-			else
+			else if(_links.Count == 1)
 			{
-				_indexLabel.Text = link;
+				_indexLabel.Text = _links[0].Label;
 				//_upButton.Visible = true;
 				//_downButton.Visible = true;
+			}
+			else
+			{
+				_indexLabel.Text = "MULTIPLE";
+				_upButton.Visible = false;
+				_downButton.Visible = false;
 			}
 		}
 

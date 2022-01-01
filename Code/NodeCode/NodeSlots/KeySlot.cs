@@ -29,7 +29,6 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 
-		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		public override void _GuiInput( InputEvent @event )
 		{
 			if (@event is InputEventMouseButton mouseButton && mouseButton.Doubleclick)
@@ -38,7 +37,7 @@ namespace MetaMaker
 			}
 		}
 
-		public void Init(GenericDataArray template, GenericDataArray parentModel)
+		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
