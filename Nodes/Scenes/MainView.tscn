@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Code/NodeCode/MainView.cs" type="Script" id=1]
 [ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
@@ -41,6 +41,7 @@
 [ext_resource path="res://Textures/MergeDown90.png" type="Texture" id=39]
 [ext_resource path="res://Textures/SettingsIcon.png" type="Texture" id=40]
 [ext_resource path="res://Textures/EditIcon.png" type="Texture" id=41]
+[ext_resource path="res://Nodes/Objects/Slots/KeySelectSlot.tscn" type="PackedScene" id=42]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -74,6 +75,7 @@ __meta__ = {
 nodeScene = ExtResource( 8 )
 separatorScene = ExtResource( 16 )
 keyScene = ExtResource( 10 )
+keySelectScene = ExtResource( 42 )
 keyLinkScene = ExtResource( 9 )
 linkToParentScene = ExtResource( 11 )
 linkToChildScene = ExtResource( 12 )

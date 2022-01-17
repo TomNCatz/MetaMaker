@@ -19,11 +19,11 @@ namespace MetaMaker
         [Export] public NodePath _autoDelayPath;
         private SpinBox _autoDelay;
         
-		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
-		private readonly ServiceInjection<MainView> _mainview = new ServiceInjection<MainView>();
+		private MainView _mainview;
 
         public override void _Ready()
         {
+            _mainview = ServiceInjection<MainView>.Service;
             _backColorRect = this.GetNodeFromPath<ColorRect>( _backColorRectPath );
             _majorColorRect = this.GetNodeFromPath<ColorRect>( _majorColorRectPath );
             _minorColorRect = this.GetNodeFromPath<ColorRect>( _minorColorRectPath );
@@ -45,7 +45,7 @@ namespace MetaMaker
                 && mouseButton.ButtonIndex == 1 
                 && !mouseButton.Pressed)
 			{
-                _mainview.Get.GetColorFromUser( _backColorRect.Color )
+                _mainview.GetColorFromUser( _backColorRect.Color )
                     .Then(color => _backColorRect.Color = color);
             }
         }
@@ -56,7 +56,7 @@ namespace MetaMaker
                 && mouseButton.ButtonIndex == 1 
                 && !mouseButton.Pressed)
 			{
-                _mainview.Get.GetColorFromUser( _majorColorRect.Color )
+                _mainview.GetColorFromUser( _majorColorRect.Color )
                     .Then(color => _majorColorRect.Color = color);
             }
         }
@@ -67,30 +67,30 @@ namespace MetaMaker
                 && mouseButton.ButtonIndex == 1 
                 && !mouseButton.Pressed)
 			{
-                _mainview.Get.GetColorFromUser( _minorColorRect.Color )
+                _mainview.GetColorFromUser( _minorColorRect.Color )
                     .Then(color => _minorColorRect.Color = color);
             }
         }
 
         public void OnPrep()
         {
-            _backColorRect.Color = _mainview.Get.Color;
-            _majorColorRect.Color = _mainview.Get.GridMajorColor;
-            _minorColorRect.Color = _mainview.Get.GridMinorColor;
-            _graphNavToggle.Pressed = _mainview.Get.SettingGraphButtons;
-            _autoToggle.Pressed = _app.Get.AutoBackup;
-            _autoDelay.Value = _app.Get.BackupFrequency / 60;
+            _backColorRect.Color = _mainview.Color;
+            _majorColorRect.Color = _mainview.GridMajorColor;
+            _minorColorRect.Color = _mainview.GridMinorColor;
+            _graphNavToggle.Pressed = _mainview.SettingGraphButtons;
+            _autoToggle.Pressed = ServiceInjection<App>.Service.AutoBackup;
+            _autoDelay.Value = ServiceInjection<App>.Service.BackupFrequency / 60;
         }
 
         public void OnConfirm()
         {
-            _mainview.Get.Color = _backColorRect.Color;
-            _mainview.Get.GridMajorColor = _majorColorRect.Color;
-            _mainview.Get.GridMinorColor = _minorColorRect.Color;
-            _mainview.Get.SettingGraphButtons = _graphNavToggle.Pressed;
-            _app.Get.AutoBackup = _autoToggle.Pressed;
-            _app.Get.BackupFrequency = (float)_autoDelay.Value * 60;
-			_app.Get.SaveSettings();
+            _mainview.Color = _backColorRect.Color;
+            _mainview.GridMajorColor = _majorColorRect.Color;
+            _mainview.GridMinorColor = _minorColorRect.Color;
+            _mainview.SettingGraphButtons = _graphNavToggle.Pressed;
+            ServiceInjection<App>.Service.AutoBackup = _autoToggle.Pressed;
+            ServiceInjection<App>.Service.BackupFrequency = (float)_autoDelay.Value * 60;
+			ServiceInjection<App>.Service.SaveSettings();
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using Godot;
 using System.Collections.Generic;
-using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
@@ -19,7 +18,6 @@ namespace MetaMaker
 		
 		private readonly List<Node> slots = new List<Node>();
 		private MainView _mainView;
-		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		private string _title;
 
 		public GenericDataDictionary Model => _model;
@@ -33,7 +31,7 @@ namespace MetaMaker
 				if(_dirty)
 				{
 					Title = _title + "*";
-					_app.Get.HasUnsavedChanges = true;
+					ServiceInjection<App>.Service.HasUnsavedChanges = true;
 				}
 				else
 				{
@@ -154,26 +152,30 @@ namespace MetaMaker
 				case FieldType.KEY : 
 					child = _mainView.keyScene.Instance();
 					fieldData.GetValue( "slotType", out leftType );
-					leftColor = _app.Get.GetKeyColor( leftType );
+					leftColor = ServiceInjection<App>.Service.GetKeyColor( leftType );
 					break;
 				case FieldType.KEY_TRACKER : 
 					child = _mainView.keyLinkScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = _app.Get.GetKeyColor( rightType );
+					rightColor = ServiceInjection<App>.Service.GetKeyColor( rightType );
+					break;
+				case FieldType.KEY_SELECT : 
+					child = _mainView.keySelectScene.Instance();
 					break;
 				case FieldType.LINK_TO_PARENT :
 					fieldData.GetValue( "slotType", out leftType );
 					child = _mainView.linkToParentScene.Instance();
+					(child as LinkToParentSlot).LinkType = ParentType;
 					
 					if( leftType != _mainView.CurrentParentIndex)
 					{
-						leftColor = _app.Get.GetParentChildColor( leftType );
+						leftColor = ServiceInjection<App>.Service.GetParentChildColor( leftType );
 					}
 					break;
 				case FieldType.LINK_TO_CHILD : 
 					child = _mainView.linkToChildScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = _app.Get.GetParentChildColor( rightType );
+					rightColor = ServiceInjection<App>.Service.GetParentChildColor( rightType );
 					break;
 				case FieldType.SUB_GRAPH_LIST :
 				case FieldType.SUB_GRAPH_DICTIONARY :
@@ -234,8 +236,6 @@ namespace MetaMaker
 					child = _mainView.vector3Scene.Instance();
 					break;
 				case FieldType.VECTOR4 : 
-					child = _mainView.vector4Scene.Instance();
-					break;
 				case FieldType.QUATERNION : 
 					child = _mainView.vector4Scene.Instance();
 					break;

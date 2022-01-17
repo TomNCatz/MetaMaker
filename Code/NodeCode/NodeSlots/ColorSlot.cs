@@ -12,7 +12,6 @@ namespace MetaMaker
 		[Export] public NodePath _colorRectPath;
 		private ColorRect _colorRect;
 		
-		private readonly ServiceInjection<MainView> _builder = new ServiceInjection<MainView>();
 		private bool asHtml;
 		private GenericDataObject _model;
 
@@ -31,7 +30,7 @@ namespace MetaMaker
 		{
 			if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == 1 && !mouseButton.Pressed)
 			{
-				_builder.Get.GetColorFromUser(_colorRect.Color)
+				ServiceInjection<MainView>.Service.GetColorFromUser(_colorRect.Color)
 					.Then(color =>
 					{
 						_colorRect.Color = color;

@@ -5,6 +5,7 @@ namespace MetaMaker
 		SEPARATOR,
 		KEY,
 		KEY_TRACKER,
+		KEY_SELECT,
 		LINK_TO_PARENT,
 		LINK_TO_CHILD,
 		SUB_GRAPH_LIST,

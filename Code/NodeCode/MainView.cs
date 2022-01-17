@@ -18,6 +18,7 @@ namespace MetaMaker
 		[Export] public PackedScene nodeScene;
 		[Export] public PackedScene separatorScene;
 		[Export] public PackedScene keyScene;
+		[Export] public PackedScene keySelectScene;
 		[Export] public PackedScene keyLinkScene;
 		[Export] public PackedScene linkToParentScene;
 		[Export] public PackedScene linkToChildScene;
@@ -166,7 +167,7 @@ namespace MetaMaker
 		{
 			try
 			{
-				ServiceProvider.Add( this );
+				ServiceInjection<MainView>.SetService(this);
 
 				_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
 				_graph = this.GetNodeFromPath<GraphEdit>( _graphPath );

@@ -11,6 +11,7 @@ using RSG;
 using RSG.Exceptions;
 using Color = Godot.Color;
 using File = Godot.File;
+using System.Threading.Tasks;
 
 namespace MetaMaker
 {
@@ -41,6 +42,7 @@ namespace MetaMaker
 		private readonly MainView _mainView;
 
 		public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
+		public readonly Dictionary<int, List<string>> keySearch = new Dictionary<int, List<string>>();
 		
 		private readonly Dictionary<string, GenericDataDictionary> _nodeData = new Dictionary<string, GenericDataDictionary>();
 		private readonly List<Color> _parentChildColors = new List<Color> ();
@@ -115,7 +117,7 @@ namespace MetaMaker
 		#region Setup
 		public App(MainView mainView)
 		{
-			ServiceProvider.Add(this);
+			ServiceInjection<App>.SetService(this);
 
 			_mainView = mainView;
 			_model = new GenericDataDictionary();
@@ -270,21 +272,24 @@ namespace MetaMaker
 			}
 		}
 
-		public void ClearData()
+		public async Task ClearData()
 		{
-			_model.values.Clear();
-			generatedKeys.Clear();
 			for( int i = _mainView.nodes.Count-1; i >= 0; i-- )
 			{
 				_mainView.nodes[i].CloseRequest();
 			}
 			
 			_mainView.CurrentParentIndex = -1;
+			_model.values.Clear();
+			generatedKeys.Clear();
+			keySearch.Clear();
+			Log.Error("Cleared Keys");
 			_nodeData.Clear();
 			ClearBackup();
 			HasUnsavedChanges = false;
 			SaveFilePath = null;
 			_exportRules = null;
+			await Task.Delay(100);
 		}
 
 		public void SaveSettings()
@@ -369,8 +374,8 @@ namespace MetaMaker
 				leftPress = () => SaveGraph().Then(promise.Resolve),
 				showMiddle = true,
 				middleText = "Continue",
-				middlePress = () => { 
-					ClearData();
+				middlePress = async () => { 
+					await ClearData();
 					promise.Resolve();
 					},
 				showRight = true,
@@ -394,10 +399,10 @@ namespace MetaMaker
 				width = 600,
 				showLeft = true,
 				leftText = "Restore",
-				leftPress = () => { 
+				leftPress = async () => { 
 						try
 						{
-							ClearData();
+							await ClearData();
 							string json = LoadJsonFile( path + ".back" );
 
 							LoadTemplate( json );
@@ -418,9 +423,9 @@ namespace MetaMaker
 					},
 				showMiddle = true,
 				middleText = "Discard",
-				middlePress = () => { 
+				middlePress = async () => { 
 					SaveFilePath = path;
-					ClearData();
+					await ClearData();
 					promise.Resolve();
 					},
 				showRight = true,
@@ -467,6 +472,45 @@ namespace MetaMaker
 			return _keyColors[slotType % _keyColors.Count];
 		}
 		#endregion
+
+		#region Key links
+		public string GenerateKey(int keySize, string keyPrefix)
+		{
+			return Tool.GetUniqueKey( keySize, generatedKeys.ContainsKey, 5, keyPrefix );
+		}
+
+		public void AddKey(KeySlot slot)
+		{
+			generatedKeys[slot.GetKey] = slot;
+
+			if(!keySearch.ContainsKey(slot.LinkType))
+			{
+				keySearch[slot.LinkType] = new List<string>();
+			}
+			Log.Error($"Adding {slot.LinkType} : {slot.GetKey}");
+
+			keySearch[slot.LinkType].Add(slot.GetKey);
+		}
+
+		public void RemoveKey(KeySlot slot)
+		{
+			if( generatedKeys.ContainsKey( slot.GetKey ) )
+			{
+				generatedKeys.Remove( slot.GetKey );
+				keySearch[slot.LinkType].Remove(slot.GetKey);
+				Log.Error($"Removing {slot.LinkType} : {slot.GetKey}");
+			}
+		}
+
+		public List<string> AvailableKeys(int slotType)
+		{
+			if(keySearch.ContainsKey(slotType))
+			{
+				return keySearch[slotType];
+			}
+			return new List<string>();
+		}
+ 		#endregion
 
 		#region Save Flow
 		public IPromise SaveGraph()
@@ -649,10 +693,10 @@ namespace MetaMaker
 			CheckIfSavedFirst()
 			.Then(() => {
 				CheckIfShouldRestoreFirst(path)
-				.Then(() =>{
+				.Then(async () =>{
 					try
 					{
-						ClearData();
+						await ClearData();
 						string json = LoadJsonFile( path );
 
 						LoadTemplateInternal(json);
@@ -717,12 +761,12 @@ namespace MetaMaker
 		public void ShiftTemplateUnderData(string path)
 		{
 			CheckIfSavedFirst()
-			.Then(() => {
+			.Then(async () => {
 				try
 				{
 					_model.GetValue( GRAPH_DATA_KEY, out GenericDataDictionary data );
 					data = data.DataCopy();
-					ClearData();
+					await ClearData();
 					LoadTemplate( LoadJsonFile( path ) );
 					LoadData( data );
 					AddRecentTemplateFile( path );
@@ -755,10 +799,10 @@ namespace MetaMaker
 		public void LoadTemplate( string json )
 		{
 			CheckIfSavedFirst()
-			.Then(() => {
+			.Then(async () => {
 				try
 				{
-					ClearData();
+					await ClearData();
 					LoadTemplateInternal(json);
 				}
 				catch(Exception ex)

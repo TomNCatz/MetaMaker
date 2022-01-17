@@ -1,0 +1,105 @@
+{
+  "data": {
+    "listing": [
+      {
+        "ngMapNodeName": "Keys",
+        "ngMapNodePosition": {
+          "x": -60.0,
+          "y": 100.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "As": [
+          "a_j",
+          "a_Z"
+        ],
+        "Bs": [
+          "b_B",
+          "b_T"
+        ]
+      },
+      {
+        "ngMapNodeName": "Selectors",
+        "ngMapNodePosition": {
+          "x": 580.0,
+          "y": 140.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "target a": "a_Z",
+        "target b": "b_O"
+      }
+    ]
+  },
+  "metaMakerVersion": "0.7.0",
+  "defaultListing": "listing",
+  "explicitNode": "",
+  "reuseDll": true,
+  "exportScript": "",
+  "nestingColors": [],
+  "keyColors": [],
+  "nodeList": [
+    {
+      "title": "Keys",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "As",
+          "field": {
+            "fieldType": "KEY",
+            "label": "1",
+            "slotType": 0,
+            "keyPrefix": "a_",
+            "keySize": 1
+          }
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Bs",
+          "field": {
+            "fieldType": "KEY",
+            "label": "1",
+            "slotType": 1,
+            "keyPrefix": "b_",
+            "keySize": 1
+          }
+        }
+      ]
+    },
+    {
+      "title": "Selectors",
+      "color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "KEY_SELECT",
+          "label": "target a",
+          "slotType": 0,
+          "emptyHandling": "EMPTY_STRING"
+        },
+        {
+          "fieldType": "KEY_SELECT",
+          "label": "target b",
+          "slotType": 1,
+          "emptyHandling": "EMPTY_STRING"
+        }
+      ]
+    }
+  ]
+}

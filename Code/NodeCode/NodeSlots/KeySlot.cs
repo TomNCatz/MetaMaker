@@ -15,9 +15,11 @@ namespace MetaMaker
 
 		public string GetKey => _field.Text;
 		
+		public int LinkType {get; private set;}
+		
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
-		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
+		private App _app;
 		private GenericDataObject<string> _model;
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
@@ -25,6 +27,7 @@ namespace MetaMaker
 		
 		public override void _Ready()
 		{
+			_app = ServiceInjection<App>.Service;
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
@@ -44,54 +47,43 @@ namespace MetaMaker
 			
 			template.GetValue( "keyPrefix", out _keyPrefix );
 			template.GetValue( "keySize", out _keySize );
+			template.GetValue( "slotType", out int slotType );
+			LinkType = slotType;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
 			if(model != null)
 			{
 				_model = model;
 				SetKey( _model.value );
+				_model.value = GetKey;
 			}
 			else
 			{
 				SetKey();
-				_model = parentModel.TryAddValue(_label.Text, _field.Text) as GenericDataObject<string>;
+				_model = parentModel.TryAddValue(_label.Text, GetKey) as GenericDataObject<string>;
 			}
 		}
 
 		public override void _ExitTree()
 		{
-			if( _app.Get.generatedKeys.ContainsKey( _field.Text ) )
-			{
-				_app.Get.generatedKeys.Remove( _field.Text );
-			}
+			_app.RemoveKey(this);
 			base._ExitTree();
 		}
 
 		private void SetKey( string force = null )
 		{
-			if( _app.Get.pastingData )
+			if( _app.pastingData )
 			{
 				force = null;
 			}
 			
 			if(string.IsNullOrEmpty( force ))
 			{
-				force = Tool.GetUniqueKey( _keySize, _app.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
-			}
-			else if( _app.Get.generatedKeys.ContainsKey( force ) )
-			{
-				string alt = Tool.GetUniqueKey( _keySize, _app.Get.generatedKeys.ContainsKey, 4, _keyPrefix );
-
-				_app.Get.generatedKeys[alt] = _app.Get.generatedKeys[force];
-			}
-
-			if( _app.Get.generatedKeys.ContainsKey( _field.Text ) )
-			{
-				_app.Get.generatedKeys.Remove( _field.Text );
+				force = _app.GenerateKey(_keySize,_keyPrefix);
 			}
 			
 			_field.Text = force;
-			_app.Get.generatedKeys[_field.Text] = this;
+			_app.AddKey(this);
 		}
 	}
 }

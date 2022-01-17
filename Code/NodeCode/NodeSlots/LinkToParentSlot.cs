@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using LibT;
+using LibT.Services;
 
 namespace MetaMaker
 {
@@ -16,6 +17,8 @@ namespace MetaMaker
 		private List<LinkToChildSlot> _links = new List<LinkToChildSlot>();
 
 		public bool IsLinked => _links.Count > 0;
+		
+		public int LinkType {get;set;}
 
 		public int Index
 		{
@@ -65,7 +68,13 @@ namespace MetaMaker
 
 		private void UpdateDisplay()
 		{
-			if(_links.Count == 0)
+			if(LinkType == ServiceInjection<MainView>.Service.CurrentParentIndex)
+			{
+				_indexLabel.Text = "GLOBAL";
+				_upButton.Visible = false;
+				_downButton.Visible = false;
+			}
+			else if(_links.Count == 0)
 			{
 				_indexLabel.Text = "UNLINKED";
 				_upButton.Visible = false;

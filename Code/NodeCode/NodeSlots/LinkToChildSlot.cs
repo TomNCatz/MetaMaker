@@ -11,8 +11,6 @@ namespace MetaMaker
 		[Export] public NodePath _labelPath;
 		private Label _label;
 
-		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
-		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 		private SlottedGraphNode _child;
 		private string _explicitNode;
 		private EmptyHandling _emptyHandling;
@@ -83,9 +81,9 @@ namespace MetaMaker
 				data.AddValue( App.NODE_NAME_KEY, _explicitNode );
 			}
 
-			SlottedGraphNode node = _app.Get.LoadNode( data );
+			SlottedGraphNode node = ServiceInjection<App>.Service.LoadNode( data );
 
-			_mainView.Get.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
+			ServiceInjection<MainView>.Service.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
 		}
 
 		public bool LinkChild( SlottedGraphNode child )

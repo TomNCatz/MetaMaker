@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeyLinkSlot : Container, IField
+	public class KeySelectSlot : Container, IField
 	{
 		private enum EmptyHandling
 		{
@@ -19,8 +19,18 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
+		[Export] public NodePath _buttonPath;
+		private Button _button;
+		[Export] public NodePath _popupPath;
+		private ConfirmationDialog _popup;
+		[Export] public NodePath _dropDownPath;
+		private OptionButton _dropDown;
+		[Export] public NodePath _clearButtonPath;
+		private Button _clearButton;
 		private EmptyHandling _emptyHandling;
 		private GenericDataObject _parentModel;
+		
+		public int LinkType {get; private set;}
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
@@ -29,6 +39,13 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
+			_button = this.GetNodeFromPath<Button>( _buttonPath );
+			_button.Connect( "pressed", this, nameof(OpenPopup) );
+			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
+			_popup.Connect( "confirmed", this, nameof(PullKey) );
+			_dropDown = this.GetNodeFromPath<OptionButton>( _dropDownPath );
+			_clearButton = this.GetNodeFromPath<Button>( _clearButtonPath );
+			_clearButton.Connect( "pressed", this, nameof(ClearSelection) );
 			_field.Connect( "gui_input", this, nameof(_GuiInput) );
 		}
 
@@ -41,31 +58,59 @@ namespace MetaMaker
 				ServiceInjection<MainView>.Service.CenterViewOnKeyedNode(_field.Text);
 			}
 		}
-
-		public bool AddKey(string link)
+		
+		private void OpenPopup()
 		{
-			if( !string.IsNullOrEmpty( _field.Text ) ) return false;
-
-			_field.Text = link;
-			UpdateField();
-
-			return true;
+			FillOptions();
+			_popup.PopupCentered();
 		}
 
-		public bool RemoveKey(string link)
+		private void FillOptions()
 		{
-			if( string.IsNullOrEmpty( _field.Text ) ) return false;
+			_dropDown.Clear();
+			_dropDown.AddItem( "NONE", 0 );
 
-			_field.Text = string.Empty;
+			int select = 0;
+
+			var keys = ServiceInjection<App>.Service.AvailableKeys(LinkType);
+
+			for(int i = 0; i < keys.Count; i++)
+			{
+				if(keys[i] == _field.Text)
+				{
+					select = i+1;
+				}
+				_dropDown.AddItem( keys[i], i+1 );
+			}
+			
+			_dropDown.Selected = select;
+		}
+
+		private void ClearSelection()
+		{
+			_dropDown.Selected = 0;
+		}
+
+		private void PullKey()
+		{
+			if(_dropDown.Selected == 0)
+			{
+				_field.Text = string.Empty;
+			}
+			else
+			{
+				_field.Text = _dropDown.GetItemText(_dropDown.Selected);
+			}
 			UpdateField();
-
-			return true;
 		}
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
+
+			template.GetValue( "slotType", out int slotType );
+			LinkType = slotType;
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
 			{
@@ -74,14 +119,7 @@ namespace MetaMaker
 
 			_parentModel = parentModel;
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
-			if(model != null && !string.IsNullOrEmpty( model.value ))
-			{				
-				ServiceInjection<MainView>.Service.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, model.value ) );
-			}
-			else
-			{
-				UpdateField();
-			}
+			_field.Text = model.value;
 		}
 
 		private void UpdateField()

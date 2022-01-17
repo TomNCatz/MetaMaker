@@ -21,8 +21,6 @@ namespace MetaMaker
 		private string _prefix;
 		private string[] _extensions;
 		private GenericDataObject<string> _model;
-		private readonly ServiceInjection<MainView> _mainView = new ServiceInjection<MainView>();
-		private readonly ServiceInjection<App> _app = new ServiceInjection<App>();
 
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
@@ -39,24 +37,24 @@ namespace MetaMaker
 		{
 			if (@event is InputEventMouseButton mouseButton && !mouseButton.Pressed)
 			{
-				_mainView.Get.FilePopup.Show( _extensions, false, "Select a File For a Path" )
+				ServiceInjection<MainView>.Service.FilePopup.Show( _extensions, false, "Select a File For a Path" )
 				.Then( path =>
 				{
-					path = path.PathAbsoluteToRelative(_app.Get.SaveFilePath);
+					path = path.PathAbsoluteToRelative(ServiceInjection<App>.Service.SaveFilePath);
 					if(path.Length > _startOffset)
 					{
 						path = path.Substring(_startOffset);
 					}
 					else
 					{
-						_app.Get.CatchException(new Exception($"Path({path}) was shorter than startOffest({_startOffset})"));
+						ServiceInjection<App>.Service.CatchException(new Exception($"Path({path}) was shorter than startOffest({_startOffset})"));
 					}
 
 					_relativePath = _prefix + path;
 					UpdateDisplay();
 					UpdateData();
 				} )
-				.Catch( _app.Get.CatchException );
+				.Catch( ServiceInjection<App>.Service.CatchException );
 			}
 		}
 
