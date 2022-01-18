@@ -62,7 +62,8 @@ namespace MetaMaker
 		private void OpenPopup()
 		{
 			FillOptions();
-			_popup.PopupCentered();
+			_popup.Popup_();
+			_popup.RectPosition = GetGlobalMousePosition();
 		}
 
 		private void FillOptions()

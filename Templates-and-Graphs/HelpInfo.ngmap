@@ -1,70 +1,4 @@
 {
-  "metaMakerVersion": "0.7.0",
-  "defaultListing": "listing",
-  "explicitNode": "",
-  "reuseDll": true,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
-  "nestingColors": [],
-  "keyColors": [],
-  "nodeList": [
-    {
-      "title": "HelpInfo",
-      "color": {
-        "r": 0.40625,
-        "g": 0.40625,
-        "b": 0.40625,
-        "a": 1.0
-      },
-      "parentType": -1,
-      "fields": [
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "helpInfo",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "5",
-            "slotType": 0,
-            "explicitNode": "Branch",
-            "emptyHandling": "SKIP"
-          }
-        }
-      ]
-    },
-    {
-      "title": "Branch",
-      "color": {
-        "r": 0.6853932,
-        "g": 0.7050562,
-        "b": 0.7050562,
-        "a": 1.0
-      },
-      "parentType": 0,
-      "fields": [
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Entry",
-          "defaultValue": "Action"
-        },
-        {
-          "fieldType": "TEXT_AREA",
-          "label": "Info",
-          "minHeight": 40.0,
-          "defaultValue": "Detailed description"
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "Branches",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "1",
-            "slotType": 0,
-            "explicitNode": "Branch",
-            "emptyHandling": "SKIP"
-          }
-        }
-      ]
-    }
-  ],
   "data": {
     "ngMapNodeName": "HelpInfo",
     "ngMapNodePosition": {
@@ -1970,5 +1904,71 @@
         "Branches": []
       }
     ]
-  }
+  },
+  "metaMakerVersion": "0.7.1",
+  "defaultListing": "listing",
+  "explicitNode": "",
+  "reuseDll": true,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+  "nestingColors": [],
+  "keyColors": [],
+  "nodeList": [
+    {
+      "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "helpInfo",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "5",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Entry",
+          "defaultValue": "Action"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "Info",
+          "minHeight": 40.0,
+          "defaultValue": "Detailed description"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Branches",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "1",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP"
+          }
+        }
+      ]
+    }
+  ]
 }

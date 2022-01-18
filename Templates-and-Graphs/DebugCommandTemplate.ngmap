@@ -1,5 +1,305 @@
 {
-  "metaMakerVersion": "0.7.0",
+  "data": {
+    "ngMapNodeName": "Graph",
+    "ngMapNodePosition": {
+      "x": -260.0,
+      "y": 160.0
+    },
+    "ngMapNodeSize": {
+      "x": 252.0,
+      "y": 248.0
+    },
+    "defaultListing": "_commandHub",
+    "explicitNode": "Commands",
+    "nestingColors": [
+      {
+        "r": 0.21875,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    ],
+    "keyColors": [],
+    "nodeList": [
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": -500.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 209.0
+        },
+        "title": "Commands",
+        "color": {
+          "r": 0.234638348,
+          "g": 0.2578125,
+          "b": 0.248800322,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": -500.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "_commandHub",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 680.0,
+                "y": -500.0
+              },
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "CMD",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "SKIP"
+            }
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": -80.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 209.0
+        },
+        "title": "Command Set",
+        "color": {
+          "r": 0.431372553,
+          "g": 0.5019608,
+          "b": 0.4745098,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodeName": "Type Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": -80.0
+            },
+            "ngMapNodeSize": {
+              "x": 402.0,
+              "y": 105.0
+            },
+            "fieldType": "TYPE",
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandSet"
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 40.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Id",
+            "defaultValue": "String"
+          },
+          {
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodePosition": {
+              "x": 900.0,
+              "y": -80.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "Description",
+            "minHeight": 40.0,
+            "defaultValue": "Some text"
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 900.0,
+              "y": 100.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Format",
+            "defaultValue": "String"
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 160.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "SubCommands",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 660.0,
+                "y": 120.0
+              },
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "children",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "EMPTY_OBJECT"
+            }
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": 460.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 224.0
+        },
+        "title": "Command",
+        "color": {
+          "r": 0.339946151,
+          "g": 0.578125,
+          "b": 0.5557957,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodeName": "Type Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 460.0
+            },
+            "ngMapNodeSize": {
+              "x": 402.0,
+              "y": 105.0
+            },
+            "fieldType": "TYPE",
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal"
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 580.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Id",
+            "defaultValue": "String"
+          },
+          {
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 460.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "Description",
+            "minHeight": 40.0,
+            "defaultValue": "Some text"
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 640.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Format",
+            "defaultValue": "String"
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 660.0,
+              "y": 660.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "EventId",
+            "defaultValue": "String"
+          },
+          {
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 720.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 230.0
+            },
+            "fieldType": "INT",
+            "label": "ParameterCount",
+            "MinStepSize": "0",
+            "hasMax": false,
+            "max": 0,
+            "hasMin": true,
+            "min": 0,
+            "defaultValue": 0
+          }
+        ]
+      }
+    ],
+    "reuseDll": true,
+    "exportScript": ""
+  },
+  "metaMakerVersion": "0.7.1",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
@@ -1351,305 +1651,5 @@
         }
       ]
     }
-  ],
-  "data": {
-    "ngMapNodeName": "Graph",
-    "ngMapNodePosition": {
-      "x": -260.0,
-      "y": 160.0
-    },
-    "ngMapNodeSize": {
-      "x": 252.0,
-      "y": 248.0
-    },
-    "defaultListing": "_commandHub",
-    "explicitNode": "Commands",
-    "nestingColors": [
-      {
-        "r": 0.21875,
-        "g": 1.0,
-        "b": 0.0,
-        "a": 1.0
-      },
-      {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": 1.0
-      }
-    ],
-    "keyColors": [],
-    "nodeList": [
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 200.0,
-          "y": -500.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 209.0
-        },
-        "title": "Commands",
-        "color": {
-          "r": 0.234638348,
-          "g": 0.2578125,
-          "b": 0.248800322,
-          "a": 1.0
-        },
-        "parentType": -1,
-        "fields": [
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": -500.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 95.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "_commandHub",
-            "field": {
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodePosition": {
-                "x": 680.0,
-                "y": -500.0
-              },
-              "ngMapNodeSize": {
-                "x": 230.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "CMD",
-              "slotType": 0,
-              "explicitNode": "",
-              "emptyHandling": "SKIP"
-            }
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 200.0,
-          "y": -80.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 209.0
-        },
-        "title": "Command Set",
-        "color": {
-          "r": 0.431372553,
-          "g": 0.5019608,
-          "b": 0.4745098,
-          "a": 1.0
-        },
-        "parentType": 0,
-        "fields": [
-          {
-            "ngMapNodeName": "Type Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": -80.0
-            },
-            "ngMapNodeSize": {
-              "x": 402.0,
-              "y": 105.0
-            },
-            "fieldType": "TYPE",
-            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "Class Type": "CommandSet"
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": 40.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Id",
-            "defaultValue": "String"
-          },
-          {
-            "ngMapNodeName": "Text Area Slot",
-            "ngMapNodePosition": {
-              "x": 900.0,
-              "y": -80.0
-            },
-            "ngMapNodeSize": {
-              "x": 342.0,
-              "y": 164.0
-            },
-            "fieldType": "TEXT_AREA",
-            "label": "Description",
-            "minHeight": 40.0,
-            "defaultValue": "Some text"
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 900.0,
-              "y": 100.0
-            },
-            "ngMapNodeSize": {
-              "x": 342.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Format",
-            "defaultValue": "String"
-          },
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": 160.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 95.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "SubCommands",
-            "field": {
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodePosition": {
-                "x": 660.0,
-                "y": 120.0
-              },
-              "ngMapNodeSize": {
-                "x": 230.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "children",
-              "slotType": 0,
-              "explicitNode": "",
-              "emptyHandling": "EMPTY_OBJECT"
-            }
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 200.0,
-          "y": 460.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 224.0
-        },
-        "title": "Command",
-        "color": {
-          "r": 0.339946151,
-          "g": 0.578125,
-          "b": 0.5557957,
-          "a": 1.0
-        },
-        "parentType": 0,
-        "fields": [
-          {
-            "ngMapNodeName": "Type Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": 460.0
-            },
-            "ngMapNodeSize": {
-              "x": 402.0,
-              "y": 105.0
-            },
-            "fieldType": "TYPE",
-            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "Class Type": "CommandTerminal"
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": 580.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Id",
-            "defaultValue": "String"
-          },
-          {
-            "ngMapNodeName": "Text Area Slot",
-            "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 460.0
-            },
-            "ngMapNodeSize": {
-              "x": 342.0,
-              "y": 164.0
-            },
-            "fieldType": "TEXT_AREA",
-            "label": "Description",
-            "minHeight": 40.0,
-            "defaultValue": "Some text"
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 640.0
-            },
-            "ngMapNodeSize": {
-              "x": 342.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Format",
-            "defaultValue": "String"
-          },
-          {
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodePosition": {
-              "x": 660.0,
-              "y": 660.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "EventId",
-            "defaultValue": "String"
-          },
-          {
-            "ngMapNodeName": "Int Slot",
-            "ngMapNodePosition": {
-              "x": 440.0,
-              "y": 720.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 230.0
-            },
-            "fieldType": "INT",
-            "label": "ParameterCount",
-            "MinStepSize": "0",
-            "hasMax": false,
-            "max": 0,
-            "hasMin": true,
-            "min": 0,
-            "defaultValue": 0
-          }
-        ]
-      }
-    ],
-    "reuseDll": true,
-    "exportScript": ""
-  }
+  ]
 }

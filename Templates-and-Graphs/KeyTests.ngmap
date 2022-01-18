@@ -1,5 +1,125 @@
 {
-  "metaMakerVersion": "0.7.0",
+  "data": {
+    "ngMapNodeName": "Graph",
+    "ngMapNodePosition": {
+      "x": -280.0,
+      "y": -780.0
+    },
+    "ngMapNodeSize": {
+      "x": 202.0,
+      "y": 66.0
+    },
+    "defaultListing": "listing",
+    "explicitNode": "",
+    "nestingColors": [],
+    "keyColors": [],
+    "reuseDll": true,
+    "exportScript": "",
+    "nodeList": [
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 220.0,
+          "y": -840.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "title": "Keys",
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 500.0,
+              "y": -840.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "As",
+            "field": {
+              "ngMapNodeName": "Key Manual Slot",
+              "ngMapNodePosition": {
+                "x": 500.0,
+                "y": -720.0
+              },
+              "ngMapNodeSize": {
+                "x": 202.0,
+                "y": 66.0
+              },
+              "fieldType": "KEY_MANUAL",
+              "label": "id",
+              "slotType": 0,
+              "key": "",
+              "keyPrefix": "id_"
+            }
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": -460.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "title": "Selectors",
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodeName": "Key Select Slot",
+            "ngMapNodePosition": {
+              "x": 560.0,
+              "y": -460.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "KEY_SELECT",
+            "label": "target a",
+            "slotType": 0,
+            "emptyHandling": "EMPTY_STRING"
+          },
+          {
+            "ngMapNodeName": "Key Select Slot",
+            "ngMapNodePosition": {
+              "x": 560.0,
+              "y": -300.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "KEY_SELECT",
+            "label": "target b",
+            "slotType": 1,
+            "emptyHandling": "EMPTY_STRING"
+          }
+        ]
+      }
+    ]
+  },
+  "metaMakerVersion": "0.7.1",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
@@ -1434,125 +1554,5 @@
         }
       ]
     }
-  ],
-  "data": {
-    "ngMapNodeName": "Graph",
-    "ngMapNodePosition": {
-      "x": -280.0,
-      "y": -780.0
-    },
-    "ngMapNodeSize": {
-      "x": 202.0,
-      "y": 66.0
-    },
-    "defaultListing": "listing",
-    "explicitNode": "",
-    "nestingColors": [],
-    "keyColors": [],
-    "reuseDll": true,
-    "exportScript": "",
-    "nodeList": [
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 220.0,
-          "y": -840.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "title": "Keys",
-        "color": {
-          "r": 1.0,
-          "g": 1.0,
-          "b": 1.0,
-          "a": 1.0
-        },
-        "parentType": -1,
-        "fields": [
-          {
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodePosition": {
-              "x": 500.0,
-              "y": -840.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "As",
-            "field": {
-              "ngMapNodeName": "Key Manual Slot",
-              "ngMapNodePosition": {
-                "x": 500.0,
-                "y": -720.0
-              },
-              "ngMapNodeSize": {
-                "x": 202.0,
-                "y": 66.0
-              },
-              "fieldType": "KEY_MANUAL",
-              "label": "id",
-              "slotType": 0,
-              "key": "",
-              "keyPrefix": "id_"
-            }
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Node",
-        "ngMapNodePosition": {
-          "x": 200.0,
-          "y": -460.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "title": "Selectors",
-        "color": {
-          "r": 1.0,
-          "g": 1.0,
-          "b": 1.0,
-          "a": 1.0
-        },
-        "parentType": -1,
-        "fields": [
-          {
-            "ngMapNodeName": "Key Select Slot",
-            "ngMapNodePosition": {
-              "x": 560.0,
-              "y": -460.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "fieldType": "KEY_SELECT",
-            "label": "target a",
-            "slotType": 0,
-            "emptyHandling": "EMPTY_STRING"
-          },
-          {
-            "ngMapNodeName": "Key Select Slot",
-            "ngMapNodePosition": {
-              "x": 560.0,
-              "y": -300.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "fieldType": "KEY_SELECT",
-            "label": "target b",
-            "slotType": 1,
-            "emptyHandling": "EMPTY_STRING"
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

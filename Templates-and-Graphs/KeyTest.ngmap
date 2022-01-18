@@ -1,5 +1,37 @@
 {
-  "metaMakerVersion": "0.7.0",
+  "data": {
+    "listing": [
+      {
+        "ngMapNodeName": "Keys",
+        "ngMapNodePosition": {
+          "x": 340.0,
+          "y": 142.954178
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "As": [
+          "id_1",
+          "id_2",
+          "id_3"
+        ]
+      },
+      {
+        "ngMapNodeName": "Selectors",
+        "ngMapNodePosition": {
+          "x": 677.0,
+          "y": 143.954178
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "target a": "id_3"
+      }
+    ]
+  },
+  "metaMakerVersion": "0.7.1",
   "defaultListing": "listing",
   "explicitNode": "",
   "reuseDll": true,
@@ -54,37 +86,5 @@
         }
       ]
     }
-  ],
-  "data": {
-    "listing": [
-      {
-        "ngMapNodeName": "Keys",
-        "ngMapNodePosition": {
-          "x": 340.0,
-          "y": 142.954178
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "As": [
-          "id_1",
-          "id_2",
-          "id_3"
-        ]
-      },
-      {
-        "ngMapNodeName": "Selectors",
-        "ngMapNodePosition": {
-          "x": 677.0,
-          "y": 143.954178
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "target a": "id_3"
-      }
-    ]
-  }
+  ]
 }

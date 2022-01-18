@@ -1,5 +1,454 @@
 {
-  "metaMakerVersion": "0.7.0",
+  "data": {
+    "ngMapNodePosition": {
+      "x": -400.0,
+      "y": 0.0
+    },
+    "ngMapNodeName": "Graph",
+    "ngMapNodeSize": {
+      "x": 252.0,
+      "y": 568.0
+    },
+    "defaultListing": "listing",
+    "explicitNode": "Project",
+    "reuseDll": true,
+    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Quests\"] = new ExportSet(){relativeSavePath = \"Quests.json\", gdoExportTarget = \"data/Quests\" };\n\t\t\t_exportTargets[\"Items\"] = new ExportSet(){relativeSavePath = \"Items_$index.json\", gdoExportTarget = \"data/Items\", childCount = 3  };\n\t\t\t_exportTargets[\"NPCs\"] = new ExportSet(){relativeSavePath = \"NPCs.json\", gdoExportTarget = \"data/NPCs\" };\n\t\t}\n\t}\n}",
+    "nestingColors": [
+      {
+        "r": 0.240431875,
+        "g": 0.383290142,
+        "b": 0.38671875,
+        "a": 1.0
+      },
+      {
+        "r": 0.232985124,
+        "g": 0.237769663,
+        "b": 0.35546875,
+        "a": 1.0
+      },
+      {
+        "r": 0.31640625,
+        "g": 0.285946965,
+        "b": 0.205012277,
+        "a": 1.0
+      }
+    ],
+    "keyColors": [
+      {
+        "r": 0.0,
+        "g": 0.9765625,
+        "b": 1.0,
+        "a": 1.0
+      },
+      {
+        "r": 0.0,
+        "g": 0.0390625,
+        "b": 1.0,
+        "a": 1.0
+      },
+      {
+        "r": 1.0,
+        "g": 0.6796875,
+        "b": 0.0,
+        "a": 1.0
+      }
+    ],
+    "nodeList": [
+      {
+        "ngMapNodePosition": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "ngMapNodeName": "Node",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 134.0
+        },
+        "title": "Project",
+        "color": {
+          "r": 0.28125,
+          "g": 0.28125,
+          "b": 0.28125,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 280.0,
+              "y": 0.0
+            },
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "Items",
+            "field": {
+              "ngMapNodePosition": {
+                "x": 520.0,
+                "y": 0.0
+              },
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodeSize": {
+                "x": 202.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "-",
+              "slotType": 0,
+              "explicitNode": "Item",
+              "emptyHandling": "SKIP"
+            }
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 280.0,
+              "y": 120.0
+            },
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "NPCs",
+            "field": {
+              "ngMapNodePosition": {
+                "x": 760.0,
+                "y": 40.0
+              },
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodeSize": {
+                "x": 202.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "-",
+              "slotType": 1,
+              "explicitNode": "NPC",
+              "emptyHandling": "SKIP"
+            }
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 280.0,
+              "y": 240.0
+            },
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "Quests",
+            "field": {
+              "ngMapNodePosition": {
+                "x": 580.0,
+                "y": 200.0
+              },
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodeSize": {
+                "x": 202.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "-",
+              "slotType": 2,
+              "explicitNode": "Quest",
+              "emptyHandling": "SKIP"
+            }
+          }
+        ]
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 0.0,
+          "y": 420.0
+        },
+        "ngMapNodeName": "Node",
+        "ngMapNodeSize": {
+          "x": 200.0,
+          "y": 179.0
+        },
+        "title": "Item",
+        "color": {
+          "r": 0.215443581,
+          "g": 0.77734375,
+          "b": 0.77734375,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 260.0,
+              "y": 420.0
+            },
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 155.0
+            },
+            "fieldType": "KEY",
+            "label": "Id",
+            "slotType": 0,
+            "keyPrefix": "IT_",
+            "keySize": 5
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 500.0,
+              "y": 420.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Name",
+            "defaultValue": "Item"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 740.0,
+              "y": 420.0
+            },
+            "ngMapNodeName": "Rich Text Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 208.0
+            },
+            "fieldType": "TEXT_AREA_RICH",
+            "label": "Description",
+            "minHeight": 80.0,
+            "defaultValue": "Player Facing Description"
+          }
+        ]
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 0.0,
+          "y": 680.0
+        },
+        "ngMapNodeName": "Node",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 134.0
+        },
+        "title": "NPC",
+        "color": {
+          "r": 0.1615315,
+          "g": 0.221195519,
+          "b": 0.70703125,
+          "a": 1.0
+        },
+        "parentType": 1,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 260.0,
+              "y": 680.0
+            },
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 155.0
+            },
+            "fieldType": "KEY",
+            "label": "Id",
+            "slotType": 1,
+            "keyPrefix": "NPC_",
+            "keySize": 5
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 500.0,
+              "y": 680.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Name",
+            "defaultValue": "Character"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 740.0,
+              "y": 680.0
+            },
+            "ngMapNodeName": "Rich Text Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 208.0
+            },
+            "fieldType": "TEXT_AREA_RICH",
+            "label": "Description",
+            "minHeight": 80.0,
+            "defaultValue": "Player Facing Description"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 500.0,
+              "y": 820.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "IconPath",
+            "defaultValue": "res:NPCIcons/"
+          }
+        ]
+      },
+      {
+        "ngMapNodePosition": {
+          "x": 0.0,
+          "y": 1000.0
+        },
+        "ngMapNodeName": "Node",
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 134.0
+        },
+        "title": "Quest",
+        "color": {
+          "r": 0.765625,
+          "g": 0.5122089,
+          "b": 0.1863881,
+          "a": 1.0
+        },
+        "parentType": 2,
+        "fields": [
+          {
+            "ngMapNodePosition": {
+              "x": 260.0,
+              "y": 1000.0
+            },
+            "ngMapNodeName": "Key Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 155.0
+            },
+            "fieldType": "KEY",
+            "label": "Id",
+            "slotType": 2,
+            "keyPrefix": "QT_",
+            "keySize": 5
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 520.0,
+              "y": 1000.0
+            },
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Name",
+            "defaultValue": "Character"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 780.0,
+              "y": 1000.0
+            },
+            "ngMapNodeName": "Rich Text Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 208.0
+            },
+            "fieldType": "TEXT_AREA_RICH",
+            "label": "Description",
+            "minHeight": 80.0,
+            "defaultValue": "Player Facing Description"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 260.0,
+              "y": 1160.0
+            },
+            "ngMapNodeName": "Key Tracker Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 126.0
+            },
+            "fieldType": "KEY_TRACKER",
+            "label": "QuestGiver",
+            "slotType": 1,
+            "emptyHandling": "EMPTY_STRING"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 520.0,
+              "y": 1160.0
+            },
+            "ngMapNodeName": "Key Tracker Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 126.0
+            },
+            "fieldType": "KEY_TRACKER",
+            "label": "Reward",
+            "slotType": 0,
+            "emptyHandling": "EMPTY_STRING"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 780.0,
+              "y": 1220.0
+            },
+            "ngMapNodeName": "Time Span Slot",
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "TIME_SPAN",
+            "label": "Timeout",
+            "defaultValue": "0",
+            "asSeconds": false
+          },
+          {
+            "ngMapNodeName": "Field Dictionary Slot",
+            "ngMapNodePosition": {
+              "x": 260.0,
+              "y": 1360.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "fieldType": "FIELD_DICTIONARY",
+            "label": "objectives",
+            "field": {
+              "ngMapNodeName": "Text Line Slot",
+              "ngMapNodePosition": {
+                "x": 545.0,
+                "y": 1401.64478
+              },
+              "ngMapNodeSize": {
+                "x": 202.0,
+                "y": 66.0
+              },
+              "fieldType": "TEXT_LINE",
+              "label": "-",
+              "defaultValue": "String"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metaMakerVersion": "0.7.1",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
@@ -1351,454 +1800,5 @@
         }
       ]
     }
-  ],
-  "data": {
-    "ngMapNodePosition": {
-      "x": -400.0,
-      "y": 0.0
-    },
-    "ngMapNodeName": "Graph",
-    "ngMapNodeSize": {
-      "x": 252.0,
-      "y": 568.0
-    },
-    "defaultListing": "listing",
-    "explicitNode": "Project",
-    "reuseDll": true,
-    "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Quests\"] = new ExportSet(){relativeSavePath = \"Quests.json\", gdoExportTarget = \"data/Quests\" };\n\t\t\t_exportTargets[\"Items\"] = new ExportSet(){relativeSavePath = \"Items_$index.json\", gdoExportTarget = \"data/Items\", childCount = 3  };\n\t\t\t_exportTargets[\"NPCs\"] = new ExportSet(){relativeSavePath = \"NPCs.json\", gdoExportTarget = \"data/NPCs\" };\n\t\t}\n\t}\n}",
-    "nestingColors": [
-      {
-        "r": 0.240431875,
-        "g": 0.383290142,
-        "b": 0.38671875,
-        "a": 1.0
-      },
-      {
-        "r": 0.232985124,
-        "g": 0.237769663,
-        "b": 0.35546875,
-        "a": 1.0
-      },
-      {
-        "r": 0.31640625,
-        "g": 0.285946965,
-        "b": 0.205012277,
-        "a": 1.0
-      }
-    ],
-    "keyColors": [
-      {
-        "r": 0.0,
-        "g": 0.9765625,
-        "b": 1.0,
-        "a": 1.0
-      },
-      {
-        "r": 0.0,
-        "g": 0.0390625,
-        "b": 1.0,
-        "a": 1.0
-      },
-      {
-        "r": 1.0,
-        "g": 0.6796875,
-        "b": 0.0,
-        "a": 1.0
-      }
-    ],
-    "nodeList": [
-      {
-        "ngMapNodePosition": {
-          "x": 0.0,
-          "y": 0.0
-        },
-        "ngMapNodeName": "Node",
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 134.0
-        },
-        "title": "Project",
-        "color": {
-          "r": 0.28125,
-          "g": 0.28125,
-          "b": 0.28125,
-          "a": 1.0
-        },
-        "parentType": -1,
-        "fields": [
-          {
-            "ngMapNodePosition": {
-              "x": 280.0,
-              "y": 0.0
-            },
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 95.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "Items",
-            "field": {
-              "ngMapNodePosition": {
-                "x": 520.0,
-                "y": 0.0
-              },
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodeSize": {
-                "x": 202.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "-",
-              "slotType": 0,
-              "explicitNode": "Item",
-              "emptyHandling": "SKIP"
-            }
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 280.0,
-              "y": 120.0
-            },
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 95.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "NPCs",
-            "field": {
-              "ngMapNodePosition": {
-                "x": 760.0,
-                "y": 40.0
-              },
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodeSize": {
-                "x": 202.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "-",
-              "slotType": 1,
-              "explicitNode": "NPC",
-              "emptyHandling": "SKIP"
-            }
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 280.0,
-              "y": 240.0
-            },
-            "ngMapNodeName": "Field List Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 95.0
-            },
-            "fieldType": "FIELD_LIST",
-            "label": "Quests",
-            "field": {
-              "ngMapNodePosition": {
-                "x": 580.0,
-                "y": 200.0
-              },
-              "ngMapNodeName": "Link To Child Slot",
-              "ngMapNodeSize": {
-                "x": 202.0,
-                "y": 151.0
-              },
-              "fieldType": "LINK_TO_CHILD",
-              "label": "-",
-              "slotType": 2,
-              "explicitNode": "Quest",
-              "emptyHandling": "SKIP"
-            }
-          }
-        ]
-      },
-      {
-        "ngMapNodePosition": {
-          "x": 0.0,
-          "y": 420.0
-        },
-        "ngMapNodeName": "Node",
-        "ngMapNodeSize": {
-          "x": 200.0,
-          "y": 179.0
-        },
-        "title": "Item",
-        "color": {
-          "r": 0.215443581,
-          "g": 0.77734375,
-          "b": 0.77734375,
-          "a": 1.0
-        },
-        "parentType": 0,
-        "fields": [
-          {
-            "ngMapNodePosition": {
-              "x": 260.0,
-              "y": 420.0
-            },
-            "ngMapNodeName": "Key Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 155.0
-            },
-            "fieldType": "KEY",
-            "label": "Id",
-            "slotType": 0,
-            "keyPrefix": "IT_",
-            "keySize": 5
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 500.0,
-              "y": 420.0
-            },
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Name",
-            "defaultValue": "Item"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 740.0,
-              "y": 420.0
-            },
-            "ngMapNodeName": "Rich Text Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 208.0
-            },
-            "fieldType": "TEXT_AREA_RICH",
-            "label": "Description",
-            "minHeight": 80.0,
-            "defaultValue": "Player Facing Description"
-          }
-        ]
-      },
-      {
-        "ngMapNodePosition": {
-          "x": 0.0,
-          "y": 680.0
-        },
-        "ngMapNodeName": "Node",
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 134.0
-        },
-        "title": "NPC",
-        "color": {
-          "r": 0.1615315,
-          "g": 0.221195519,
-          "b": 0.70703125,
-          "a": 1.0
-        },
-        "parentType": 1,
-        "fields": [
-          {
-            "ngMapNodePosition": {
-              "x": 260.0,
-              "y": 680.0
-            },
-            "ngMapNodeName": "Key Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 155.0
-            },
-            "fieldType": "KEY",
-            "label": "Id",
-            "slotType": 1,
-            "keyPrefix": "NPC_",
-            "keySize": 5
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 500.0,
-              "y": 680.0
-            },
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Name",
-            "defaultValue": "Character"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 740.0,
-              "y": 680.0
-            },
-            "ngMapNodeName": "Rich Text Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 208.0
-            },
-            "fieldType": "TEXT_AREA_RICH",
-            "label": "Description",
-            "minHeight": 80.0,
-            "defaultValue": "Player Facing Description"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 500.0,
-              "y": 820.0
-            },
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "IconPath",
-            "defaultValue": "res:NPCIcons/"
-          }
-        ]
-      },
-      {
-        "ngMapNodePosition": {
-          "x": 0.0,
-          "y": 1000.0
-        },
-        "ngMapNodeName": "Node",
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 134.0
-        },
-        "title": "Quest",
-        "color": {
-          "r": 0.765625,
-          "g": 0.5122089,
-          "b": 0.1863881,
-          "a": 1.0
-        },
-        "parentType": 2,
-        "fields": [
-          {
-            "ngMapNodePosition": {
-              "x": 260.0,
-              "y": 1000.0
-            },
-            "ngMapNodeName": "Key Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 155.0
-            },
-            "fieldType": "KEY",
-            "label": "Id",
-            "slotType": 2,
-            "keyPrefix": "QT_",
-            "keySize": 5
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 520.0,
-              "y": 1000.0
-            },
-            "ngMapNodeName": "Text Line Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 105.0
-            },
-            "fieldType": "TEXT_LINE",
-            "label": "Name",
-            "defaultValue": "Character"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 780.0,
-              "y": 1000.0
-            },
-            "ngMapNodeName": "Rich Text Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 208.0
-            },
-            "fieldType": "TEXT_AREA_RICH",
-            "label": "Description",
-            "minHeight": 80.0,
-            "defaultValue": "Player Facing Description"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 260.0,
-              "y": 1160.0
-            },
-            "ngMapNodeName": "Key Tracker Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 126.0
-            },
-            "fieldType": "KEY_TRACKER",
-            "label": "QuestGiver",
-            "slotType": 1,
-            "emptyHandling": "EMPTY_STRING"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 520.0,
-              "y": 1160.0
-            },
-            "ngMapNodeName": "Key Tracker Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 126.0
-            },
-            "fieldType": "KEY_TRACKER",
-            "label": "Reward",
-            "slotType": 0,
-            "emptyHandling": "EMPTY_STRING"
-          },
-          {
-            "ngMapNodePosition": {
-              "x": 780.0,
-              "y": 1220.0
-            },
-            "ngMapNodeName": "Time Span Slot",
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "fieldType": "TIME_SPAN",
-            "label": "Timeout",
-            "defaultValue": "0",
-            "asSeconds": false
-          },
-          {
-            "ngMapNodeName": "Field Dictionary Slot",
-            "ngMapNodePosition": {
-              "x": 260.0,
-              "y": 1360.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "fieldType": "FIELD_DICTIONARY",
-            "label": "objectives",
-            "field": {
-              "ngMapNodeName": "Text Line Slot",
-              "ngMapNodePosition": {
-                "x": 545.0,
-                "y": 1401.64478
-              },
-              "ngMapNodeSize": {
-                "x": 202.0,
-                "y": 66.0
-              },
-              "fieldType": "TEXT_LINE",
-              "label": "-",
-              "defaultValue": "String"
-            }
-          }
-        ]
-      }
-    ]
-  }
+  ]
 }

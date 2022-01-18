@@ -147,7 +147,7 @@
     "keyColors": [],
     "reuseDll": true
   },
-  "metaMakerVersion": "0.7.0",
+  "metaMakerVersion": "0.7.1",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
