@@ -227,6 +227,48 @@
       ]
     },
     {
+      "title": "Key Manual Slot",
+      "color": {
+        "r": 0.6156863,
+        "g": 0.8117647,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_MANUAL"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "id"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyPrefix",
+          "defaultValue": "id_"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "key",
+          "defaultValue": ""
+        }
+      ]
+    },
+    {
       "title": "Key Tracker Slot",
       "color": {
         "r": 0.51924175,

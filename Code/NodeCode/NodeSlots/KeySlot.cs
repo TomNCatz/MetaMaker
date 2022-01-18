@@ -6,29 +6,25 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeySlot : Container, IField
+	public class KeySlot : KeyAbstraction
 	{
-		[Export] public NodePath _labelPath;
-		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
 
-		public string GetKey => _field.Text;
+		public override string GetKey => _field.Text;
 		
-		public int LinkType {get; private set;}
-		
+		public override int LinkType => _linkType;
+		private int _linkType;
+
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
 		private App _app;
 		private GenericDataObject<string> _model;
-
-		public string Label { get => _label.Text; set => _label.Text = value; }
-		public event System.Action OnValueUpdated;
 		
 		public override void _Ready()
 		{
-			_app = ServiceInjection<App>.Service;
 			_label = this.GetNodeFromPath<Label>( _labelPath );
+			_app = ServiceInjection<App>.Service;
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 
@@ -40,15 +36,14 @@ namespace MetaMaker
 			}
 		}
 
-		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
+		public override void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
 			template.GetValue( "keyPrefix", out _keyPrefix );
 			template.GetValue( "keySize", out _keySize );
-			template.GetValue( "slotType", out int slotType );
-			LinkType = slotType;
+			template.GetValue( "slotType", out _linkType );
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
 			if(model != null)
@@ -84,6 +79,7 @@ namespace MetaMaker
 			
 			_field.Text = force;
 			_app.AddKey(this);
+			ValueUpdate();
 		}
 	}
 }

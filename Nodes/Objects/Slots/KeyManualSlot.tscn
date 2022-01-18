@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/KeyManualSlot.cs" type="Script" id=1]
+
+[node name="TextLineSlot" type="HBoxContainer"]
+margin_right = 138.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("Label")
+_prefixLabelPath = NodePath("PrefixLabel")
+_fieldPath = NodePath("Field")
+
+[node name="Label" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 36.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+
+[node name="PrefixLabel" type="Label" parent="."]
+margin_left = 40.0
+margin_top = 13.0
+margin_right = 76.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "id_"
+align = 2
+
+[node name="Field" type="LineEdit" parent="."]
+margin_left = 80.0
+margin_right = 138.0
+margin_bottom = 40.0
+size_flags_horizontal = 3

@@ -7,7 +7,7 @@
 margin_right = 40.0
 margin_bottom = 26.0
 rect_scale = Vector2( 0.7, 0.7 )
-size_flags_horizontal = 0
+size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource( 1 )
 __meta__ = {
@@ -38,6 +38,7 @@ margin_left = 13.0
 margin_right = 36.0
 margin_bottom = 26.0
 rect_clip_content = true
+size_flags_horizontal = 9
 icon = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
@@ -62,7 +63,7 @@ __meta__ = {
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 242.0
-margin_bottom = 28.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -70,11 +71,11 @@ __meta__ = {
 
 [node name="OptionButton" type="OptionButton" parent="Control/PopupPanel/HBoxContainer2"]
 margin_right = 186.0
-margin_bottom = 20.0
+margin_bottom = 26.0
 size_flags_horizontal = 3
 
 [node name="ClearButton" type="Button" parent="Control/PopupPanel/HBoxContainer2"]
 margin_left = 190.0
 margin_right = 234.0
-margin_bottom = 20.0
+margin_bottom = 26.0
 text = "Clear"

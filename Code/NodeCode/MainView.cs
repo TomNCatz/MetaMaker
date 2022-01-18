@@ -18,6 +18,7 @@ namespace MetaMaker
 		[Export] public PackedScene nodeScene;
 		[Export] public PackedScene separatorScene;
 		[Export] public PackedScene keyScene;
+		[Export] public PackedScene keyManualScene;
 		[Export] public PackedScene keySelectScene;
 		[Export] public PackedScene keyLinkScene;
 		[Export] public PackedScene linkToParentScene;
@@ -53,6 +54,8 @@ namespace MetaMaker
 		private GraphEdit _graph;
 		[Export] public NodePath _fileMenuButtonPath;
 		private MenuButton _fileMenuButton;
+		[Export] public NodePath _dataMenuButtonPath;
+		private MenuButton _dataMenuButton;
 		[Export] public NodePath _editMenuButtonPath;
 		private MenuButton _editMenuButton;
 		[Export] public NodePath _settingsMenuButtonPath;
@@ -172,6 +175,7 @@ namespace MetaMaker
 				_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
 				_graph = this.GetNodeFromPath<GraphEdit>( _graphPath );
 				_fileMenuButton = this.GetNodeFromPath<MenuButton>( _fileMenuButtonPath );
+				_dataMenuButton = this.GetNodeFromPath<MenuButton>( _dataMenuButtonPath );
 				_editMenuButton = this.GetNodeFromPath<MenuButton>( _editMenuButtonPath );
 				_settingsMenuButton = this.GetNodeFromPath<MenuButton>( _settingsMenuButtonPath );
 				_navUpButton = this.GetNodeFromPath<Button>( _navUpButtonPath );
@@ -202,28 +206,32 @@ namespace MetaMaker
 
 				PopupMenu menu = _fileMenuButton.GetPopup();
 				menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
-				menu.AddItem( "Build Template (CTRL+N)", 0 );
-				menu.AddItem( "Load Template", 1 );
-				menu.AddChild( _recentTemplateSubmenu );
-				menu.AddSubmenuItem( "Recent Template", "RecentTemplateMenu" );
-				menu.AddItem( "Shift Template Under Data", 7 );
-				menu.AddChild( _recentShiftSubmenu );
-				menu.AddSubmenuItem( "Recent Template Under Data", "RecentShiftMenu" );
-				menu.AddSeparator(  );
 				menu.AddItem( "Save Graph (CTRL+S)", 11 );
 				menu.AddItem( "Save Graph As", 2 );
 				menu.AddItem( "Load Graph", 3 );
 				menu.AddChild( _recentSubmenu );
 				menu.AddSubmenuItem( "Recent Graph", "RecentMenu" );
 				menu.AddSeparator(  );
-				menu.AddItem( "Clear Data", 6 );
-				menu.AddItem( "Import Data from JSON", 5 );
 				menu.AddItem( "Export All", 4 );
 				_exportSubmenu.Connect( "id_pressed", this, nameof(OnExportMenuSelection));
 				menu.AddChild(_exportSubmenu);
 				menu.AddSubmenuItem( "Export", "ExportMenu" );
 				menu.AddSeparator(  );
 				menu.AddItem( "Quit", 8 );
+
+				PopupMenu dataMenu = _dataMenuButton.GetPopup();
+				dataMenu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
+				dataMenu.AddItem( "Build Template (CTRL+N)", 0 );
+				dataMenu.AddItem( "Load Template", 1 );
+				dataMenu.AddChild( _recentTemplateSubmenu );
+				dataMenu.AddSubmenuItem( "Recent Template", "RecentTemplateMenu" );
+				dataMenu.AddItem( "Shift Template Under Data", 7 );
+				dataMenu.AddChild( _recentShiftSubmenu );
+				dataMenu.AddSubmenuItem( "Recent Template Under Data", "RecentShiftMenu" );
+				dataMenu.AddSeparator(  );
+				dataMenu.AddItem( "Clear Data", 6 );
+				dataMenu.AddItem( "Trim Dissconnected Data", 13 );
+				dataMenu.AddItem( "Import Data from JSON", 5 );
 
 				_createSubmenu.Connect( "id_pressed", this, nameof(OnCreateMenuSelection));
 
@@ -359,6 +367,7 @@ namespace MetaMaker
 					case 8 :  RequestQuit(); break;
 					case 11 :  _app.SaveGraph(); break;
 					case 12 :  OpenHelpPopup(); break;
+					case 13 :  TrimOldData(); break;
 				}
 			}
 			catch( Exception e )
@@ -530,6 +539,14 @@ namespace MetaMaker
 					this.DelayedInvoke( 0.5f, SortNodes );
 				} )
 				.Catch( _app.CatchException );
+		}
+
+		private void TrimOldData()
+		{
+			foreach (var node in nodes)
+			{
+				node.TrimDisconenctedData();
+			}
 		}
 
 		private void RequestQuit()

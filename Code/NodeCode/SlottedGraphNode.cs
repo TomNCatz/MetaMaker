@@ -22,6 +22,7 @@ namespace MetaMaker
 
 		public GenericDataDictionary Model => _model;
 		private GenericDataDictionary _model;
+		private GenericDataDictionary _definition;
 
 		public bool Dirty{
 			get => _dirty;
@@ -50,6 +51,7 @@ namespace MetaMaker
 
 		public void SetSlots(GenericDataDictionary definition, GenericDataDictionary objData = null)
 		{
+			_definition = definition;
 			definition.GetValue( "title", out _title );
 			Dirty = false;
 
@@ -156,6 +158,11 @@ namespace MetaMaker
 					break;
 				case FieldType.KEY_TRACKER : 
 					child = _mainView.keyLinkScene.Instance();
+					fieldData.GetValue( "slotType", out rightType );
+					rightColor = ServiceInjection<App>.Service.GetKeyColor( rightType );
+					break;
+				case FieldType.KEY_MANUAL : 
+					child = _mainView.keyManualScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
 					rightColor = ServiceInjection<App>.Service.GetKeyColor( rightType );
 					break;
@@ -385,6 +392,38 @@ namespace MetaMaker
 				SetSlot( i-1, 
 					true, leftType, leftColor, 
 					true, rightType, rightColor );
+			}
+		}
+
+		public void TrimDisconenctedData()
+		{
+			var oldData = new List<string>();
+			var currentData = new List<string>();
+			currentData.Add("ngMapNodeName");
+			currentData.Add("ngMapNodePosition");
+			currentData.Add("ngMapNodeSize");
+
+			_definition.GetValue("fields", out List<GenericDataObject> fields);
+
+			foreach(var gdo in fields)
+			{
+				var gdd = gdo as GenericDataDictionary;
+				gdd.GetValue("label", out string label);
+				if(string.IsNullOrEmpty(label)) continue;
+
+				currentData.Add(label);
+			}
+
+			foreach(var pair in _model.values)
+			{
+				if(currentData.Contains(pair.Key)) continue;
+
+				oldData.Add(pair.Key);
+			}
+
+			foreach(var item in oldData)
+			{
+				_model.RemoveValue(item);
 			}
 		}
 

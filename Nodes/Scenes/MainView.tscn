@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Code/NodeCode/MainView.cs" type="Script" id=1]
 [ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
@@ -42,6 +42,8 @@
 [ext_resource path="res://Textures/SettingsIcon.png" type="Texture" id=40]
 [ext_resource path="res://Textures/EditIcon.png" type="Texture" id=41]
 [ext_resource path="res://Nodes/Objects/Slots/KeySelectSlot.tscn" type="PackedScene" id=42]
+[ext_resource path="res://Nodes/Objects/Slots/KeyManualSlot.tscn" type="PackedScene" id=43]
+[ext_resource path="res://Textures/DataIcon.png" type="Texture" id=44]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -75,6 +77,7 @@ __meta__ = {
 nodeScene = ExtResource( 8 )
 separatorScene = ExtResource( 16 )
 keyScene = ExtResource( 10 )
+keyManualScene = ExtResource( 43 )
 keySelectScene = ExtResource( 42 )
 keyLinkScene = ExtResource( 9 )
 linkToParentScene = ExtResource( 11 )
@@ -104,6 +107,7 @@ timeSpanScene = ExtResource( 33 )
 relativePathScene = ExtResource( 37 )
 _graphPath = NodePath("GraphEdit")
 _fileMenuButtonPath = NodePath("HBoxContainer/FileMenu")
+_dataMenuButtonPath = NodePath("HBoxContainer/DataMenu")
 _editMenuButtonPath = NodePath("HBoxContainer/EditMenu")
 _settingsMenuButtonPath = NodePath("HBoxContainer/Settings")
 _navUpButtonPath = NodePath("HBoxContainer/NavUpButton")
@@ -161,9 +165,27 @@ icon = ExtResource( 38 )
 flat = false
 switch_on_hover = true
 
-[node name="EditMenu" type="MenuButton" parent="HBoxContainer"]
+[node name="DataMenu" type="MenuButton" parent="HBoxContainer"]
 margin_left = 50.0
-margin_right = 97.0
+margin_right = 102.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 28, 0 )
+focus_mode = 2
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Data"
+icon = ExtResource( 44 )
+flat = false
+switch_on_hover = true
+
+[node name="EditMenu" type="MenuButton" parent="HBoxContainer"]
+margin_left = 106.0
+margin_right = 153.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 30, 0 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -179,8 +201,8 @@ flat = false
 switch_on_hover = true
 
 [node name="Settings" type="MenuButton" parent="HBoxContainer"]
-margin_left = 101.0
-margin_right = 175.0
+margin_left = 157.0
+margin_right = 231.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 55, 0 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -196,19 +218,19 @@ flat = false
 switch_on_hover = true
 
 [node name="LeftSpacer" type="Control" parent="HBoxContainer"]
-margin_left = 179.0
-margin_right = 199.0
+margin_left = 235.0
+margin_right = 255.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 20, 0 )
 
 [node name="NavUpButton" type="Button" parent="HBoxContainer"]
-margin_left = 203.0
-margin_right = 235.0
+margin_left = 259.0
+margin_right = 291.0
 margin_bottom = 26.0
 icon = ExtResource( 39 )
 
 [node name="AddressBar" type="ColorRect" parent="HBoxContainer"]
-margin_left = 239.0
+margin_left = 295.0
 margin_right = 798.0
 margin_bottom = 26.0
 size_flags_horizontal = 3

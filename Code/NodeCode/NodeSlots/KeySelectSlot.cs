@@ -119,7 +119,14 @@ namespace MetaMaker
 
 			_parentModel = parentModel;
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
-			_field.Text = model.value;
+			if(model == null)
+			{
+				_field.Text = string.Empty;
+			}
+			else
+			{
+				_field.Text = model.value;
+			}
 		}
 
 		private void UpdateField()

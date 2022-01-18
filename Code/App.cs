@@ -41,7 +41,7 @@ namespace MetaMaker
 		#region Variables
 		private readonly MainView _mainView;
 
-		public readonly Dictionary<string, KeySlot> generatedKeys = new Dictionary<string, KeySlot>();
+		public readonly Dictionary<string, KeyAbstraction> generatedKeys = new Dictionary<string, KeyAbstraction>();
 		public readonly Dictionary<int, List<string>> keySearch = new Dictionary<int, List<string>>();
 		
 		private readonly Dictionary<string, GenericDataDictionary> _nodeData = new Dictionary<string, GenericDataDictionary>();
@@ -274,16 +274,16 @@ namespace MetaMaker
 
 		public async Task ClearData()
 		{
+			_model.values.Clear();
+			generatedKeys.Clear();
+			keySearch.Clear();
+
 			for( int i = _mainView.nodes.Count-1; i >= 0; i-- )
 			{
 				_mainView.nodes[i].CloseRequest();
 			}
 			
 			_mainView.CurrentParentIndex = -1;
-			_model.values.Clear();
-			generatedKeys.Clear();
-			keySearch.Clear();
-			Log.Error("Cleared Keys");
 			_nodeData.Clear();
 			ClearBackup();
 			HasUnsavedChanges = false;
@@ -479,7 +479,7 @@ namespace MetaMaker
 			return Tool.GetUniqueKey( keySize, generatedKeys.ContainsKey, 5, keyPrefix );
 		}
 
-		public void AddKey(KeySlot slot)
+		public void AddKey(KeyAbstraction slot)
 		{
 			generatedKeys[slot.GetKey] = slot;
 
@@ -487,19 +487,22 @@ namespace MetaMaker
 			{
 				keySearch[slot.LinkType] = new List<string>();
 			}
-			Log.Error($"Adding {slot.LinkType} : {slot.GetKey}");
 
 			keySearch[slot.LinkType].Add(slot.GetKey);
 		}
 
-		public void RemoveKey(KeySlot slot)
+		public void RemoveKey(KeyAbstraction slot)
 		{
-			if( generatedKeys.ContainsKey( slot.GetKey ) )
-			{
-				generatedKeys.Remove( slot.GetKey );
-				keySearch[slot.LinkType].Remove(slot.GetKey);
-				Log.Error($"Removing {slot.LinkType} : {slot.GetKey}");
-			}
+			if(string.IsNullOrEmpty(slot.GetKey)) return;
+			if( !generatedKeys.ContainsKey( slot.GetKey ) ) return;
+			
+			generatedKeys.Remove( slot.GetKey );
+			keySearch[slot.LinkType].Remove(slot.GetKey);
+		}
+
+		public bool ContainsKey(string key)
+		{
+			return generatedKeys.ContainsKey(key);
 		}
 
 		public List<string> AvailableKeys(int slotType)
@@ -767,9 +770,14 @@ namespace MetaMaker
 					_model.GetValue( GRAPH_DATA_KEY, out GenericDataDictionary data );
 					data = data.DataCopy();
 					await ClearData();
-					LoadTemplate( LoadJsonFile( path ) );
-					LoadData( data );
-					AddRecentTemplateFile( path );
+					LoadTemplate( LoadJsonFile( path ) )
+					.Then(() => {
+						LoadData( data );
+						AddRecentTemplateFile( path );
+					})
+					.Catch(CatchException);
+
+					
 				}
 				catch( Exception ex )
 				{
@@ -796,20 +804,24 @@ namespace MetaMaker
 			return json;
 		}
 
-		public void LoadTemplate( string json )
+		public IPromise LoadTemplate( string json )
 		{
+			var promise = new Promise();
 			CheckIfSavedFirst()
 			.Then(async () => {
 				try
 				{
 					await ClearData();
 					LoadTemplateInternal(json);
+					promise.Resolve();
 				}
 				catch(Exception ex)
 				{
 					CatchException(ex);
+					promise.Reject(ex);
 				}
 			});
+			return promise;
 		}
 
 		private void LoadTemplateInternal( string json )
