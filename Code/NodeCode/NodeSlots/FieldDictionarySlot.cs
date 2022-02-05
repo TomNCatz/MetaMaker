@@ -18,6 +18,8 @@ namespace MetaMaker
 		[Export] public NodePath _deleteButtonPath;
 		private Button _deleteButton;
 		
+		[Injectable] private App _app;
+		
 		private SlottedGraphNode _graphNode;
 		private GenericDataDictionary _field;
 		private readonly Dictionary<string,Node> _children = new Dictionary<string, Node>();
@@ -85,7 +87,7 @@ namespace MetaMaker
 			}
 			catch(Exception ex)
 			{
-				ServiceInjection<App>.Service.CatchException(ex);
+				_app.CatchException(ex);
 			}
 		}
 
@@ -123,7 +125,7 @@ namespace MetaMaker
 			}
 			catch(Exception ex)
 			{
-				ServiceInjection<App>.Service.CatchException(ex);
+				_app.CatchException(ex);
 			}
 		}
 	}

@@ -17,6 +17,8 @@ namespace MetaMaker
 		private SlottedGraphNode _parent;
 		private GenericDataObject _parentModel;
 
+		[Injectable] private MainView _mainView;
+		[Injectable] private App _app;
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		public IField parentListing;
@@ -81,9 +83,9 @@ namespace MetaMaker
 				data.AddValue( App.NODE_NAME_KEY, _explicitNode );
 			}
 
-			SlottedGraphNode node = ServiceInjection<App>.Service.LoadNode( data );
+			SlottedGraphNode node = _app.LoadNode( data );
 
-			ServiceInjection<MainView>.Service.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
+			_mainView.OnConnectionRequest(_parent.Name, _parent.GetChildIndex( this ),node.Name, 0);
 		}
 
 		public bool LinkChild( SlottedGraphNode child )

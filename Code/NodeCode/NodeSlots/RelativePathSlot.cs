@@ -15,6 +15,9 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
+		
+		[Injectable] private MainView _mainView;
+		[Injectable] private App _app;
 
 		private string _relativePath;
 		private int _startOffset;
@@ -37,24 +40,24 @@ namespace MetaMaker
 		{
 			if (@event is InputEventMouseButton mouseButton && !mouseButton.Pressed)
 			{
-				ServiceInjection<MainView>.Service.FilePopup.Show( _extensions, false, "Select a File For a Path" )
+				_mainView.FilePopup.Show( _extensions, false, "Select a File For a Path" )
 				.Then( path =>
 				{
-					path = path.PathAbsoluteToRelative(ServiceInjection<App>.Service.SaveFilePath);
+					path = path.PathAbsoluteToRelative(_app.SaveFilePath);
 					if(path.Length > _startOffset)
 					{
 						path = path.Substring(_startOffset);
 					}
 					else
 					{
-						ServiceInjection<App>.Service.CatchException(new Exception($"Path({path}) was shorter than startOffest({_startOffset})"));
+						_app.CatchException(new Exception($"Path({path}) was shorter than startOffest({_startOffset})"));
 					}
 
 					_relativePath = _prefix + path;
 					UpdateDisplay();
 					UpdateData();
 				} )
-				.Catch( ServiceInjection<App>.Service.CatchException );
+				.Catch( _app.CatchException );
 			}
 		}
 

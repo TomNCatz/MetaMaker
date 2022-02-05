@@ -11,6 +11,7 @@ namespace MetaMaker
 		[Export] public NodePath _fieldPath;
 		private Label _field;
 
+		[Injectable] private App _app;
 		public override string GetKey => _field.Text;
 		
 		public override int LinkType => _linkType;
@@ -18,13 +19,11 @@ namespace MetaMaker
 
 		private string _keyPrefix = String.Empty;
 		private int _keySize = 1;
-		private App _app;
 		private GenericDataObject<string> _model;
 		
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
-			_app = ServiceInjection<App>.Service;
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 		}
 

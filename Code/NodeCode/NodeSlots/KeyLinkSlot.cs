@@ -21,6 +21,9 @@ namespace MetaMaker
 		private Label _field;
 		private EmptyHandling _emptyHandling;
 		private GenericDataObject _parentModel;
+		
+		[Injectable] private App _app;
+		[Injectable] private MainView _mainView;
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
@@ -38,7 +41,7 @@ namespace MetaMaker
 			{
 				if (string.IsNullOrEmpty(_field.Text)) return;
 
-				ServiceInjection<MainView>.Service.CenterViewOnKeyedNode(_field.Text);
+				_mainView.CenterViewOnKeyedNode(_field.Text);
 			}
 		}
 
@@ -74,9 +77,12 @@ namespace MetaMaker
 
 			_parentModel = parentModel;
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
-			if(model != null && !string.IsNullOrEmpty( model.value ))
+			
+			if(!_app.pastingData &&
+			   model != null &&
+			   !string.IsNullOrEmpty( model.value ))
 			{				
-				ServiceInjection<MainView>.Service.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, model.value ) );
+				_mainView.loadingLinks.Add( new Tuple<KeyLinkSlot, string>( this, model.value ) );
 			}
 			else
 			{

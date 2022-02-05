@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MetaMaker
 {
-	public class App
+	public class App : LibT.Services.App
 	{
 		#region Const Values
 		public const string SETTINGS_SOURCE = "user://Settings.json";
@@ -39,7 +39,14 @@ namespace MetaMaker
 		#endregion
 		
 		#region Variables
-		private readonly MainView _mainView;
+		[Export] public NodePath _mainViewPath;
+		private MainView _mainView;
+		[Export] public NodePath _backupTimerPath;
+		private Timer _backupTimer;
+		[Export] public NodePath _helpInfoPopupPath;
+		private HelpPopup _helpInfoPopup;
+		[Export] public NodePath _settingsPath;
+		private SettingsPopup _settingsPopup;
 
 		public readonly Dictionary<string, KeyAbstraction> generatedKeys = new Dictionary<string, KeyAbstraction>();
 		public readonly Dictionary<int, List<string>> keySearch = new Dictionary<int, List<string>>();
@@ -47,7 +54,6 @@ namespace MetaMaker
 		private readonly Dictionary<string, GenericDataDictionary> _nodeData = new Dictionary<string, GenericDataDictionary>();
 		private readonly List<Color> _parentChildColors = new List<Color> ();
 		private readonly List<Color> _keyColors = new List<Color>();
-		public bool copyingData;
 		public bool pastingData;
 
 		private List<string> _recentTemplates = new List<string>();
@@ -79,12 +85,12 @@ namespace MetaMaker
 			set
 			{
 				_backupFrequency = value;
-				_mainView.UpdateBackupTimer();
+				_backupTimer.WaitTime = _backupFrequency;
 			}
 			get => _backupFrequency;
 		}
 		private float _backupFrequency = 300;
-
+		
 		public string SaveFilePath
 		{
 			set
@@ -115,21 +121,53 @@ namespace MetaMaker
 		#endregion
 
 		#region Setup
-		public App(MainView mainView)
+		public override Task Bindings(Context context)
 		{
-			ServiceInjection<App>.SetService(this);
-
-			_mainView = mainView;
-			_model = new GenericDataDictionary();
 			OS.LowProcessorUsageMode = true;
+			
+			_mainView = this.GetNodeFromPath<MainView>( _mainViewPath );
+			context.Set<MetaMaker.App>(this);
+			
+			context.Inject(_mainView);
+			context.Set(_mainView);
+			
+			_model = new GenericDataDictionary();
+
+			_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
+			_backupTimer.WaitTime = BackupFrequency;
+			_backupTimer.Connect("timeout", this, nameof(SaveBackup));
+			_backupTimer.Start();
+			
+			_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
+			_helpInfoPopup.Version = Version;
+			GenericDataDictionary helpData = new GenericDataDictionary();
+			helpData.FromJson(LoadJsonFile(App.HELP_INFO_SOURCE));
+			_helpInfoPopup.SetObjectData(helpData);
+			
+			_settingsPopup = this.GetNodeFromPath<SettingsPopup>( _settingsPath );
+			context.Inject(_settingsPopup);
+			
+			return Task.CompletedTask;
 		}
 
-		public void Init()
+		public override Task StartApp()
 		{
 			_version = LoadJsonFile( VERSION );
 				
 			LoadSettings();
 			LoadDefaultTemplate();
+			
+			return Task.CompletedTask;
+		}
+
+		public void OpenSettings()
+		{
+			_settingsPopup.PopupCentered();
+		}
+		
+		public void OpenHelpPopup()
+		{
+			_helpInfoPopup.PopupCentered();
 		}
 		
 		private void LoadSettings()

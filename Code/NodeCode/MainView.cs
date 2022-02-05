@@ -68,8 +68,6 @@ namespace MetaMaker
 		private LineEdit _searchBar;
 		[Export] public NodePath _searchButtonPath;
 		private Button _searchButton;
-		[Export] public NodePath _backupTimerPath;
-		private Timer _backupTimer;
 		[Export] public NodePath _filePopupPath;
 		private FileDialogExtended _filePopup;
 		[Export] public NodePath _colorPopupPath;
@@ -79,10 +77,6 @@ namespace MetaMaker
 		private AcceptDialog _errorPopup;
 		[Export] public NodePath _areYouSurePopupPath;
 		private AreYouSurePopup _areYouSurePopup;
-		[Export] public NodePath _helpInfoPopupPath;
-		private HelpPopup _helpInfoPopup;
-		[Export] public NodePath _settingsPath;
-		private SettingsPopup _settingsPopup;
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
@@ -125,19 +119,13 @@ namespace MetaMaker
 		
 		public Color GridMajorColor
 		{
-			set
-			{
-				_graph.Set( "custom_colors/grid_major", value );
-			}
+			set => _graph.Set( "custom_colors/grid_major", value );
 			get => (Color)_graph.Get( "custom_colors/grid_major" );
 		}
 		
 		public Color GridMinorColor
 		{
-			set
-			{
-				_graph.Set( "custom_colors/grid_minor", value );
-			}
+			set => _graph.Set( "custom_colors/grid_minor", value );
 			get => (Color)_graph.Get( "custom_colors/grid_minor" );
 		}
 
@@ -155,23 +143,24 @@ namespace MetaMaker
 
 		public bool SettingGraphButtons
 		{
-			set
-			{
-				_graph.GetZoomHbox().Visible = value;
-			}
+			set => _graph.GetZoomHbox().Visible = value;
 			get => _graph.GetZoomHbox().Visible;
 		}
 
 		public FileDialogExtended FilePopup => _filePopup;
 		#endregion
+		
+		[Injectable]
+		public void Init(App app)
+		{
+			_app = app;
+		}
 
 		#region Godot and signal connectors
 		public override void _Ready()
 		{
 			try
 			{
-				ServiceInjection<MainView>.SetService(this);
-
 				_errorPopup = this.GetNodeFromPath<AcceptDialog>( _errorPopupPath );
 				_graph = this.GetNodeFromPath<GraphEdit>( _graphPath );
 				_fileMenuButton = this.GetNodeFromPath<MenuButton>( _fileMenuButtonPath );
@@ -182,13 +171,11 @@ namespace MetaMaker
 				_addressBar = this.GetNodeFromPath<Label>( _addressBarLabelPath );
 				_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
 				_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
-				_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
 				_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
 				_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
 				_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
 				_colorPicker = _colorPopup.GetNode<ColorPicker>( "ColorPicker" );
-				_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
-				_settingsPopup = this.GetNodeFromPath<SettingsPopup>( _settingsPath );
+				
 
 				_recentTemplateSubmenu = new PopupMenu { Name = "RecentTemplateMenu" };
 				_recentShiftSubmenu = new PopupMenu { Name = "RecentShiftMenu" };
@@ -269,24 +256,9 @@ namespace MetaMaker
 								
 				_tween = new Tween();
 				AddChild( _tween );
-				
-				GetTree().SetAutoAcceptQuit(false);
-				
-				_app = new App(this);
-				_app.Init();
-
-				_backupTimer.WaitTime = _app.BackupFrequency;
-				_backupTimer.Connect( "timeout", this, nameof(SaveBackup) );
-				_backupTimer.Start();
-
-				_helpInfoPopup.Version = _app.Version;
-				GenericDataDictionary helpData = new GenericDataDictionary();
-				helpData.FromJson( _app.LoadJsonFile( App.HELP_INFO_SOURCE ) );
-				_helpInfoPopup.SetObjectData( helpData );
 			}
 			catch( Exception e )
 			{
-				//throw e;
 				_app.CatchException( e );
 			}
 		}
@@ -303,26 +275,21 @@ namespace MetaMaker
 		{
 			try
 			{
-				if( @event is InputEventKey eventKey )
+				if (!(@event is InputEventKey eventKey)) return;
+				if (eventKey.IsPressed()) return;
+				if (!eventKey.Control && !eventKey.Command) return;
+				
+				if( OS.GetScancodeString( eventKey.Scancode ).Equals( "S" ) )
 				{
-					if(!eventKey.IsPressed())
-					{
-						if( eventKey.Control || eventKey.Command )
-						{
-							if( OS.GetScancodeString( eventKey.Scancode ).Equals( "S" ) )
-							{
-								_app.SaveGraph();
-							}
-							else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "N" ) )
-							{
-								_app.LoadDefaultTemplate();
-							}
-							else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "P" ) )
-							{
-								SortNodes();
-							}
-						}
-					}
+					_app.SaveGraph();
+				}
+				else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "N" ) )
+				{
+					_app.LoadDefaultTemplate();
+				}
+				else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "P" ) )
+				{
+					SortNodes();
 				}
 			}
 			catch( Exception e )
@@ -366,7 +333,7 @@ namespace MetaMaker
 					case 7 :  ShiftTemplateUnderData(); break;
 					case 8 :  RequestQuit(); break;
 					case 11 :  _app.SaveGraph(); break;
-					case 12 :  OpenHelpPopup(); break;
+					case 12 :  _app.OpenHelpPopup(); break;
 					case 13 :  TrimOldData(); break;
 				}
 			}
@@ -423,8 +390,8 @@ namespace MetaMaker
 			{
 				switch(id)
 				{
-					case 3 :  OpenHelpPopup(); break;
-					case 4 :  _settingsPopup.PopupCentered(); break;
+					case 3 :  _app.OpenHelpPopup(); break;
+					case 4 :  _app.OpenSettings(); break;
 				}
 			}
 			catch( Exception e )
@@ -475,6 +442,7 @@ namespace MetaMaker
 				if(!eventMouse.IsPressed())
 				{
 					_offset = _graph.ScrollOffset + eventMouse.Position;
+					_offset /= _graph.Zoom;
 					
 					if( eventMouse.ButtonIndex == 2 )
 					{
@@ -556,11 +524,6 @@ namespace MetaMaker
 				.Then( ()=> GetTree().Quit() );
 		}
 
-		private void OpenHelpPopup()
-		{
-			_helpInfoPopup.PopupCentered();
-		}
-
 		private void RequestCopyNode()
 		{
 			try
@@ -578,7 +541,7 @@ namespace MetaMaker
 
 					_copied.Add( node.Model.DataCopy() );
 				}
-				
+
 				foreach( GenericDataDictionary node in _copied )
 				{
 					TrimToSelection(node);
@@ -598,6 +561,40 @@ namespace MetaMaker
 			{
 				_app.CatchException(ex);
 			}
+		}
+
+		private void RequestPasteNode()
+		{
+			if( _copied.Count == 0 ) return;
+
+			_app.pastingData = true;
+			int start = nodes.Count;
+			Vector2 startOffset = _offset - _copiedCorner;
+			
+			for( int i = 0; i < _copied.Count; i++ )
+			{
+				_app.LoadNode(  _copied[i].DataCopy() );
+			}
+
+			for( int i = start; i < nodes.Count; i++ )
+			{
+				nodes[i].Offset += startOffset;
+			}
+			_app.pastingData = false;
+		}
+
+		private void RequestDeleteNode()
+		{
+			for( int i = _selection.Count-1; i >= 0; i-- )
+			{
+				if(_selection[i] == null) return;
+				
+				_selection[i].CloseRequest();
+			}
+			
+			_selection.Clear();
+			
+			_app.HasUnsavedChanges = true;
 		}
 
 		private void TrimToSelection( GenericDataDictionary target )
@@ -660,40 +657,6 @@ namespace MetaMaker
 					FindDuplicates( subTarget, toRemove );
 				}
 			}
-		}
-
-		private void RequestPasteNode()
-		{
-			if( _copied.Count == 0 ) return;
-
-			_app.pastingData = true;
-			int start = nodes.Count;
-			Vector2 startOffset = _offset - _copiedCorner;
-			
-			for( int i = 0; i < _copied.Count; i++ )
-			{
-				_app.LoadNode(  _copied[i].DataCopy() );
-			}
-
-			for( int i = start; i < nodes.Count; i++ )
-			{
-				nodes[i].Offset += startOffset;
-			}
-			_app.pastingData = false;
-		}
-
-		private void RequestDeleteNode()
-		{
-			for( int i = _selection.Count-1; i >= 0; i-- )
-			{
-				if(_selection[i] == null) return;
-				
-				_selection[i].CloseRequest();
-			}
-			
-			_selection.Clear();
-			
-			_app.HasUnsavedChanges = true;
 		}
 
 		private void SelectNode(Node node)
@@ -776,11 +739,6 @@ namespace MetaMaker
 			}
 		}
 
-		public void UpdateBackupTimer()
-		{
-			_backupTimer.WaitTime = _app.BackupFrequency;
-		}
-
 		public void DisplayAreYouSurePopup(AreYouSurePopup.AreYouSureArgs args)
 		{
 			_areYouSurePopup.Display(args);
@@ -795,6 +753,8 @@ namespace MetaMaker
 			_graph.AddChild(child);
 			if (!(child is SlottedGraphNode node)) throw new NullReferenceException("nodeScene is not a SlottedGraphNode");
 
+			_app.AppContext.Inject(node);
+			
 			node.Offset = _offset;
 			
 			nodes.Add( node );

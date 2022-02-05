@@ -14,6 +14,8 @@ namespace MetaMaker
 		
 		private bool asHtml;
 		private GenericDataObject _model;
+		
+		[Injectable] private MainView _mainView;
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
@@ -30,7 +32,7 @@ namespace MetaMaker
 		{
 			if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == 1 && !mouseButton.Pressed)
 			{
-				ServiceInjection<MainView>.Service.GetColorFromUser(_colorRect.Color)
+				_mainView.GetColorFromUser(_colorRect.Color)
 					.Then(color =>
 					{
 						_colorRect.Color = color;

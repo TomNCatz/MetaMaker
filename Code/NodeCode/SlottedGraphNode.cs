@@ -17,8 +17,10 @@ namespace MetaMaker
 		public readonly Dictionary<string,BooleanSlot> booleanLookup = new Dictionary<string, BooleanSlot>();
 		
 		private readonly List<Node> slots = new List<Node>();
-		private MainView _mainView;
 		private string _title;
+		
+		[Injectable] private MainView _mainView;
+		[Injectable] private App _app;
 
 		public GenericDataDictionary Model => _model;
 		private GenericDataDictionary _model;
@@ -32,7 +34,7 @@ namespace MetaMaker
 				if(_dirty)
 				{
 					Title = _title + "*";
-					ServiceInjection<App>.Service.HasUnsavedChanges = true;
+					_app.HasUnsavedChanges = true;
 				}
 				else
 				{
@@ -154,17 +156,17 @@ namespace MetaMaker
 				case FieldType.KEY : 
 					child = _mainView.keyScene.Instance();
 					fieldData.GetValue( "slotType", out leftType );
-					leftColor = ServiceInjection<App>.Service.GetKeyColor( leftType );
+					leftColor = _app.GetKeyColor( leftType );
 					break;
 				case FieldType.KEY_TRACKER : 
 					child = _mainView.keyLinkScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = ServiceInjection<App>.Service.GetKeyColor( rightType );
+					rightColor = _app.GetKeyColor( rightType );
 					break;
 				case FieldType.KEY_MANUAL : 
 					child = _mainView.keyManualScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = ServiceInjection<App>.Service.GetKeyColor( rightType );
+					rightColor = _app.GetKeyColor( rightType );
 					break;
 				case FieldType.KEY_SELECT : 
 					child = _mainView.keySelectScene.Instance();
@@ -176,13 +178,13 @@ namespace MetaMaker
 					
 					if( leftType != _mainView.CurrentParentIndex)
 					{
-						leftColor = ServiceInjection<App>.Service.GetParentChildColor( leftType );
+						leftColor = _app.GetParentChildColor( leftType );
 					}
 					break;
 				case FieldType.LINK_TO_CHILD : 
 					child = _mainView.linkToChildScene.Instance();
 					fieldData.GetValue( "slotType", out rightType );
-					rightColor = ServiceInjection<App>.Service.GetParentChildColor( rightType );
+					rightColor = _app.GetParentChildColor( rightType );
 					break;
 				case FieldType.SUB_GRAPH_LIST :
 				case FieldType.SUB_GRAPH_DICTIONARY :
@@ -261,6 +263,8 @@ namespace MetaMaker
 				default : throw new ArgumentOutOfRangeException( nameof(fieldData), fieldData, null );
 			}
 
+			_app.AppContext.Inject(child);
+			
 			if( insertIndex < 0 )
 			{
 				insertIndex = slots.Count;
@@ -286,7 +290,14 @@ namespace MetaMaker
 
 			if( child is IField field )
 			{
-				field.Init( fieldData, parentOveride ?? _model );
+				try
+				{
+					field.Init( fieldData, parentOveride ?? _model );
+				}
+				catch(Exception ex)
+				{
+					_app.CatchException(ex);
+				}
 			}
 
 			return child;

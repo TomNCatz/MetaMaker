@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Code/NodeCode/MainView.cs" type="Script" id=1]
 [ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
@@ -44,6 +44,7 @@
 [ext_resource path="res://Nodes/Objects/Slots/KeySelectSlot.tscn" type="PackedScene" id=42]
 [ext_resource path="res://Nodes/Objects/Slots/KeyManualSlot.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Textures/DataIcon.png" type="Texture" id=44]
+[ext_resource path="res://Code/App.cs" type="Script" id=45]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -64,7 +65,14 @@ bg_color = Color( 1, 1, 1, 0.196078 )
 expand_margin_left = 2.0
 expand_margin_top = 2.0
 
-[node name="MainView" type="ColorRect"]
+[node name="App" type="Node"]
+script = ExtResource( 45 )
+_mainViewPath = NodePath("MainView")
+_backupTimerPath = NodePath("BackupTimer")
+_helpInfoPopupPath = NodePath("MainView/HelpPopup")
+_settingsPath = NodePath("MainView/SettingsPopup")
+
+[node name="MainView" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 2.10522
@@ -114,7 +122,7 @@ _navUpButtonPath = NodePath("HBoxContainer/NavUpButton")
 _addressBarLabelPath = NodePath("HBoxContainer/AddressBar/Label")
 _searchBarPath = NodePath("HBoxContainer/SearchBar")
 _searchButtonPath = NodePath("HBoxContainer/SearchButton")
-_backupTimerPath = NodePath("BackupTimer")
+_backupTimerPath = NodePath("../BackupTimer")
 _filePopupPath = NodePath("FileDialog")
 _colorPopupPath = NodePath("ColorPopup")
 _errorPopupPath = NodePath("ErrorPopup")
@@ -122,12 +130,12 @@ _areYouSurePopupPath = NodePath("AreYouSurePopup")
 _helpInfoPopupPath = NodePath("HelpPopup")
 _settingsPath = NodePath("SettingsPopup")
 
-[node name="Growl" type="Node" parent="."]
+[node name="Growl" type="Node" parent="MainView"]
 script = ExtResource( 2 )
 _lowestLogLevel = 7
 _logFile = "LogData"
 
-[node name="GraphEdit" type="GraphEdit" parent="."]
+[node name="GraphEdit" type="GraphEdit" parent="MainView"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 25.9406
@@ -140,7 +148,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainView"]
 anchor_right = 1.0
 margin_left = 3.0
 margin_right = -2.0
@@ -149,7 +157,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FileMenu" type="MenuButton" parent="HBoxContainer"]
+[node name="FileMenu" type="MenuButton" parent="MainView/HBoxContainer"]
 margin_right = 46.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 28, 0 )
@@ -165,7 +173,7 @@ icon = ExtResource( 38 )
 flat = false
 switch_on_hover = true
 
-[node name="DataMenu" type="MenuButton" parent="HBoxContainer"]
+[node name="DataMenu" type="MenuButton" parent="MainView/HBoxContainer"]
 margin_left = 50.0
 margin_right = 102.0
 margin_bottom = 26.0
@@ -183,7 +191,7 @@ icon = ExtResource( 44 )
 flat = false
 switch_on_hover = true
 
-[node name="EditMenu" type="MenuButton" parent="HBoxContainer"]
+[node name="EditMenu" type="MenuButton" parent="MainView/HBoxContainer"]
 margin_left = 106.0
 margin_right = 153.0
 margin_bottom = 26.0
@@ -200,7 +208,7 @@ icon = ExtResource( 41 )
 flat = false
 switch_on_hover = true
 
-[node name="Settings" type="MenuButton" parent="HBoxContainer"]
+[node name="Settings" type="MenuButton" parent="MainView/HBoxContainer"]
 margin_left = 157.0
 margin_right = 231.0
 margin_bottom = 26.0
@@ -217,26 +225,26 @@ icon = ExtResource( 40 )
 flat = false
 switch_on_hover = true
 
-[node name="LeftSpacer" type="Control" parent="HBoxContainer"]
+[node name="LeftSpacer" type="Control" parent="MainView/HBoxContainer"]
 margin_left = 235.0
 margin_right = 255.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 20, 0 )
 
-[node name="NavUpButton" type="Button" parent="HBoxContainer"]
+[node name="NavUpButton" type="Button" parent="MainView/HBoxContainer"]
 margin_left = 259.0
 margin_right = 291.0
 margin_bottom = 26.0
 icon = ExtResource( 39 )
 
-[node name="AddressBar" type="ColorRect" parent="HBoxContainer"]
+[node name="AddressBar" type="ColorRect" parent="MainView/HBoxContainer"]
 margin_left = 295.0
 margin_right = 798.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 color = Color( 0, 0, 0, 0.270588 )
 
-[node name="Label" type="Label" parent="HBoxContainer/AddressBar"]
+[node name="Label" type="Label" parent="MainView/HBoxContainer/AddressBar"]
 margin_left = 4.0
 margin_top = 5.0
 margin_right = 108.0
@@ -246,42 +254,44 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RightSpacer" type="Control" parent="HBoxContainer"]
+[node name="RightSpacer" type="Control" parent="MainView/HBoxContainer"]
 margin_left = 802.0
 margin_right = 822.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 20, 0 )
 
-[node name="SearchBar" type="LineEdit" parent="HBoxContainer"]
+[node name="SearchBar" type="LineEdit" parent="MainView/HBoxContainer"]
 margin_left = 826.0
 margin_right = 976.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 150, 0 )
 
-[node name="SearchButton" type="Button" parent="HBoxContainer"]
+[node name="SearchButton" type="Button" parent="MainView/HBoxContainer"]
 margin_left = 980.0
 margin_right = 1019.0
 margin_bottom = 26.0
 text = "Find"
 
-[node name="ErrorPopup" parent="." instance=ExtResource( 4 )]
+[node name="ErrorPopup" parent="MainView" instance=ExtResource( 4 )]
 
-[node name="ColorPopup" parent="." instance=ExtResource( 3 )]
+[node name="ColorPopup" parent="MainView" instance=ExtResource( 3 )]
 margin_left = 213.312
 margin_top = 277.993
 margin_right = 529.312
 margin_bottom = 747.993
 
-[node name="FileDialog" parent="." instance=ExtResource( 5 )]
+[node name="FileDialog" parent="MainView" instance=ExtResource( 5 )]
 visible = false
 current_dir = "/Users/tomnc/Dev/Godot/MetaMaker"
 current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
 
-[node name="AreYouSurePopup" parent="." instance=ExtResource( 6 )]
+[node name="AreYouSurePopup" parent="MainView" instance=ExtResource( 6 )]
 
-[node name="HelpPopup" parent="." instance=ExtResource( 7 )]
+[node name="HelpPopup" parent="MainView" instance=ExtResource( 7 )]
+_treePath = NodePath("ScrollContainer/HBoxContainer/Tree")
+_infoPath = NodePath("ScrollContainer/HBoxContainer/Info")
 
-[node name="SettingsPopup" parent="." instance=ExtResource( 36 )]
+[node name="SettingsPopup" parent="MainView" instance=ExtResource( 36 )]
 
 [node name="BackupTimer" type="Timer" parent="."]
 wait_time = 12.341

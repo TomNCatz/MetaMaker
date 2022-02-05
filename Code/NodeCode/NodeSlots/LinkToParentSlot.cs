@@ -13,6 +13,8 @@ namespace MetaMaker
 		private Button _upButton;
 		[Export] public NodePath _downButtonPath;
 		private Button _downButton;
+		
+		[Injectable] private MainView _mainView;
 
 		private List<LinkToChildSlot> _links = new List<LinkToChildSlot>();
 
@@ -68,7 +70,7 @@ namespace MetaMaker
 
 		private void UpdateDisplay()
 		{
-			if(LinkType == ServiceInjection<MainView>.Service.CurrentParentIndex)
+			if(LinkType == _mainView.CurrentParentIndex)
 			{
 				_indexLabel.Text = "GLOBAL";
 				_upButton.Visible = false;

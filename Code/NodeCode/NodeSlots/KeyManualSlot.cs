@@ -12,6 +12,8 @@ namespace MetaMaker
 		[Export] public NodePath _fieldPath;
 		private LineEdit _field;
 		private GenericDataObject<string> _model;
+		
+		[Injectable] private App _app;
 
 		public override string GetKey => _keyPrefix + _key;
 		private string _key;
@@ -55,15 +57,15 @@ namespace MetaMaker
 		private void OnChanged( string text )
 		{
 			bool problem = string.IsNullOrEmpty(text);
-			problem |= ServiceInjection<App>.Service.ContainsKey(text);
+			problem |= _app.ContainsKey(_keyPrefix + text);
 			IndicateTrouble(problem);
-			ServiceInjection<App>.Service.RemoveKey(this);
+			_app.RemoveKey(this);
 
 			if(problem) return;
 
 			_key = text;
 			_model.value = GetKey;
-			ServiceInjection<App>.Service.AddKey(this);
+			_app.AddKey(this);
 			ValueUpdate();
 		}
 

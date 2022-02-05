@@ -19,6 +19,8 @@ namespace MetaMaker
 		private Label _label;
 		[Export] public NodePath _fieldPath;
 		private Label _field;
+		[Export] public NodePath _fieldContainerPath;
+		private Container _fieldContainer;
 		[Export] public NodePath _buttonPath;
 		private Button _button;
 		[Export] public NodePath _popupPath;
@@ -30,6 +32,9 @@ namespace MetaMaker
 		private EmptyHandling _emptyHandling;
 		private GenericDataObject _parentModel;
 		
+		[Injectable] private MainView _mainView;
+		[Injectable] private App _app;
+		
 		public int LinkType {get; private set;}
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
@@ -39,6 +44,7 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
+			_fieldContainer = this.GetNodeFromPath<Container>( _fieldContainerPath );
 			_button = this.GetNodeFromPath<Button>( _buttonPath );
 			_button.Connect( "pressed", this, nameof(OpenPopup) );
 			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
@@ -47,6 +53,7 @@ namespace MetaMaker
 			_clearButton = this.GetNodeFromPath<Button>( _clearButtonPath );
 			_clearButton.Connect( "pressed", this, nameof(ClearSelection) );
 			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+			_fieldContainer.Connect( "gui_input", this, nameof(_GuiInput) );
 		}
 
 		public override void _GuiInput( InputEvent @event )
@@ -55,7 +62,7 @@ namespace MetaMaker
 			{
 				if (string.IsNullOrEmpty(_field.Text)) return;
 
-				ServiceInjection<MainView>.Service.CenterViewOnKeyedNode(_field.Text);
+				_mainView.CenterViewOnKeyedNode(_field.Text);
 			}
 		}
 		
@@ -73,7 +80,7 @@ namespace MetaMaker
 
 			int select = 0;
 
-			var keys = ServiceInjection<App>.Service.AvailableKeys(LinkType);
+			var keys = _app.AvailableKeys(LinkType);
 
 			for(int i = 0; i < keys.Count; i++)
 			{
