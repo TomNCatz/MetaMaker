@@ -1,5 +1,5 @@
 {
-  "metaMakerVersion": "0.7.1",
+  "metaMakerVersion": "0.7.2",
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,

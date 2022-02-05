@@ -122,13 +122,10 @@ _navUpButtonPath = NodePath("HBoxContainer/NavUpButton")
 _addressBarLabelPath = NodePath("HBoxContainer/AddressBar/Label")
 _searchBarPath = NodePath("HBoxContainer/SearchBar")
 _searchButtonPath = NodePath("HBoxContainer/SearchButton")
-_backupTimerPath = NodePath("../BackupTimer")
 _filePopupPath = NodePath("FileDialog")
 _colorPopupPath = NodePath("ColorPopup")
 _errorPopupPath = NodePath("ErrorPopup")
 _areYouSurePopupPath = NodePath("AreYouSurePopup")
-_helpInfoPopupPath = NodePath("HelpPopup")
-_settingsPath = NodePath("SettingsPopup")
 
 [node name="Growl" type="Node" parent="MainView"]
 script = ExtResource( 2 )

@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TextLineSlot : Container, IField
+	public class TextLineSlot : Container, IField, ITextSearchable
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -52,6 +52,11 @@ namespace MetaMaker
 		{
 			_model.value = text;
 			OnValueUpdated?.Invoke();
+		}
+
+		public bool ContainsText(string text)
+		{
+			return _field.Text.Contains(text);
 		}
 	}
 }

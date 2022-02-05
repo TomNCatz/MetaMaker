@@ -409,18 +409,21 @@ namespace MetaMaker
 		{
 			if(string.IsNullOrEmpty(text)) return;
 
-			if( !_app.generatedKeys.ContainsKey( text ) )
+			if (_app.generatedKeys.ContainsKey(text))
 			{
-				string partial = PartialFindKey( text );
-				
-				if( string.IsNullOrEmpty( partial ) ) return;
-				
-				CenterViewOnKeyedNode( partial );
-				
+				CenterViewOnKeyedNode(text);
 				return;
 			}
-			
-			CenterViewOnKeyedNode( text );
+
+			string partial = PartialFindKey(text);
+
+			if (string.IsNullOrEmpty(partial))
+			{
+				SearchText(text);
+				return;
+			}
+
+			CenterViewOnKeyedNode(partial);
 		}
 
 		private void GraphOnScroll(Vector2 offset)
@@ -881,6 +884,17 @@ namespace MetaMaker
 		public void CenterViewOnKeyedNode(string key)
 		{
 			CenterViewOnNode(_app.generatedKeys[key].GetParent<SlottedGraphNode>());
+		}
+		
+		public void SearchText(string text)
+		{
+			foreach (var searchable in _app.textSearch)
+			{
+				if (!searchable.ContainsText(text)) continue;
+				
+				CenterViewOnNode(searchable.GetParent<SlottedGraphNode>());
+				return;
+			}
 		}
 		
 		public void CenterViewOnNode(SlottedGraphNode node)

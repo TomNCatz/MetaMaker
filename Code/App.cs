@@ -50,6 +50,7 @@ namespace MetaMaker
 
 		public readonly Dictionary<string, KeyAbstraction> generatedKeys = new Dictionary<string, KeyAbstraction>();
 		public readonly Dictionary<int, List<string>> keySearch = new Dictionary<int, List<string>>();
+		public readonly List<ITextSearchable> textSearch = new List<ITextSearchable>();
 		
 		private readonly Dictionary<string, GenericDataDictionary> _nodeData = new Dictionary<string, GenericDataDictionary>();
 		private readonly List<Color> _parentChildColors = new List<Color> ();
@@ -124,6 +125,8 @@ namespace MetaMaker
 		public override Task Bindings(Context context)
 		{
 			OS.LowProcessorUsageMode = true;
+				
+			GetTree().SetAutoAcceptQuit(false);
 			
 			_mainView = this.GetNodeFromPath<MainView>( _mainViewPath );
 			context.Set<MetaMaker.App>(this);

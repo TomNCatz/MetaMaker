@@ -300,6 +300,11 @@ namespace MetaMaker
 				}
 			}
 
+			if( child is ITextSearchable searchable )
+			{
+				_app.textSearch.Add(searchable);
+			}
+
 			return child;
 		}
 
@@ -313,6 +318,11 @@ namespace MetaMaker
 			int index = GetChildIndex( child );
 
 			if( index < 0 ) return;
+
+			if( child is ITextSearchable searchable )
+			{
+				_app.textSearch.Remove(searchable);
+			}
 			
 			var connections = _mainView.GetConnectionsToNode( this );
 			_mainView.BreakConnections( connections );
@@ -440,6 +450,14 @@ namespace MetaMaker
 
 		public void CloseRequest()
 		{
+			foreach (var slot in slots)
+			{
+				if( slot is ITextSearchable searchable )
+				{
+					_app.textSearch.Remove(searchable);
+				}
+			}
+			
 			_mainView.FreeNode( this );
 			QueueFree();
 		}
