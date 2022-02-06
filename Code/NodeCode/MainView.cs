@@ -962,24 +962,32 @@ namespace MetaMaker
 			var rightGraph = _graph.GetNode<SlottedGraphNode>( to );
 			Node rightSlot = rightGraph.GetSlot( toSlot );
 
-			if( leftSlot is KeyLinkSlot keyLink )
+			if( rightSlot is KeyAbstraction keyAbstraction )
 			{
-				if( !( rightSlot is KeySlot key ) )
+				if( !( leftSlot is KeyLinkSlot link ) )
 				{
-					throw new Exception($"{leftSlot.Name} is not a KeyLinkSlot");
+					_app.CatchException( new Exception($"{leftSlot.Name} is not a KeyLinkSlot"));
+					return;
 				}
-				if( !keyLink.AddKey( key.GetKey ) ) return;
+				if( !link.AddKey( keyAbstraction.GetKey ) ) return;
 
 				_graph.ConnectNode( @from, fromSlot, to, toSlot );
+				
+				return;
 			}
-			else if( leftSlot is LinkToChildSlot leftLink )
+
+			if( leftSlot is LinkToChildSlot leftLink )
 			{
 				if( !( rightSlot is LinkToParentSlot rightLink) ) return;
 				if( !leftLink.LinkChild( rightGraph ) ) return;
 
 				rightLink.Link(leftLink);
 				_graph.ConnectNode( @from, fromSlot, to, toSlot );
+				
+				return;
 			}
+
+			_app.CatchException( new Exception("Connection not compatible"));
 		}
 		
 		private void OnDisconnectionRequest( string from, int fromSlot, string to, int toSlot)
