@@ -2,7 +2,7 @@ namespace MetaMaker
 {
 	public interface ITextSearchable
 	{
-		bool ContainsText(string text);
+		string Text { get; }
 		T GetParent<T>() where T : class;
 	}
 }

@@ -14,6 +14,7 @@ namespace MetaMaker
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
+		public string Text => _field.Text;
 		
 		public override void _Ready()
 		{
@@ -52,11 +53,6 @@ namespace MetaMaker
 		{
 			_model.value = text;
 			OnValueUpdated?.Invoke();
-		}
-
-		public bool ContainsText(string text)
-		{
-			return _field.Text.Contains(text);
 		}
 	}
 }

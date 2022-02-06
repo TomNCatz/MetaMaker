@@ -47,6 +47,8 @@ namespace MetaMaker
 		private HelpPopup _helpInfoPopup;
 		[Export] public NodePath _settingsPath;
 		private SettingsPopup _settingsPopup;
+		[Export] public NodePath _searchPopupPath;
+		private SearchPopup _searchPopup;
 
 		public readonly Dictionary<string, KeyAbstraction> generatedKeys = new Dictionary<string, KeyAbstraction>();
 		public readonly Dictionary<int, List<string>> keySearch = new Dictionary<int, List<string>>();
@@ -140,7 +142,7 @@ namespace MetaMaker
 			_backupTimer.WaitTime = BackupFrequency;
 			_backupTimer.Connect("timeout", this, nameof(SaveBackup));
 			_backupTimer.Start();
-			
+
 			_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
 			_helpInfoPopup.Version = Version;
 			GenericDataDictionary helpData = new GenericDataDictionary();
@@ -149,6 +151,9 @@ namespace MetaMaker
 			
 			_settingsPopup = this.GetNodeFromPath<SettingsPopup>( _settingsPath );
 			context.Inject(_settingsPopup);
+			
+			_searchPopup = this.GetNodeFromPath<SearchPopup>( _searchPopupPath );
+			context.Inject(_searchPopup);
 			
 			return Task.CompletedTask;
 		}
@@ -166,6 +171,11 @@ namespace MetaMaker
 		public void OpenSettings()
 		{
 			_settingsPopup.PopupCentered();
+		}
+
+		public void OpenSearch()
+		{
+			_searchPopup.PopupCentered();
 		}
 		
 		public void OpenHelpPopup()

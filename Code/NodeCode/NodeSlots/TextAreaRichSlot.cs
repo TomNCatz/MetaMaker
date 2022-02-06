@@ -14,6 +14,7 @@ namespace MetaMaker
 		private RichTextLabel _display;
 		private GenericDataObject<string> _model;
 
+		public string Text => _field.Text;
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		

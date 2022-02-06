@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://Code/NodeCode/MainView.cs" type="Script" id=1]
 [ext_resource path="res://Code/DLLs/Growl.cs" type="Script" id=2]
@@ -45,6 +45,7 @@
 [ext_resource path="res://Nodes/Objects/Slots/KeyManualSlot.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Textures/DataIcon.png" type="Texture" id=44]
 [ext_resource path="res://Code/App.cs" type="Script" id=45]
+[ext_resource path="res://Nodes/Objects/SearchPopup.tscn" type="PackedScene" id=46]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.27451 )
@@ -71,6 +72,7 @@ _mainViewPath = NodePath("MainView")
 _backupTimerPath = NodePath("BackupTimer")
 _helpInfoPopupPath = NodePath("MainView/HelpPopup")
 _settingsPath = NodePath("MainView/SettingsPopup")
+_searchPopupPath = NodePath("MainView/SearchPopup")
 
 [node name="MainView" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -122,6 +124,7 @@ _navUpButtonPath = NodePath("HBoxContainer/NavUpButton")
 _addressBarLabelPath = NodePath("HBoxContainer/AddressBar/Label")
 _searchBarPath = NodePath("HBoxContainer/SearchBar")
 _searchButtonPath = NodePath("HBoxContainer/SearchButton")
+_advancedSearchButtonPath = NodePath("HBoxContainer/AdvancedSearchButton")
 _filePopupPath = NodePath("FileDialog")
 _colorPopupPath = NodePath("ColorPopup")
 _errorPopupPath = NodePath("ErrorPopup")
@@ -236,7 +239,7 @@ icon = ExtResource( 39 )
 
 [node name="AddressBar" type="ColorRect" parent="MainView/HBoxContainer"]
 margin_left = 295.0
-margin_right = 798.0
+margin_right = 770.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
 color = Color( 0, 0, 0, 0.270588 )
@@ -252,22 +255,28 @@ __meta__ = {
 }
 
 [node name="RightSpacer" type="Control" parent="MainView/HBoxContainer"]
-margin_left = 802.0
-margin_right = 822.0
+margin_left = 774.0
+margin_right = 794.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 20, 0 )
 
 [node name="SearchBar" type="LineEdit" parent="MainView/HBoxContainer"]
-margin_left = 826.0
-margin_right = 976.0
+margin_left = 798.0
+margin_right = 948.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 150, 0 )
 
 [node name="SearchButton" type="Button" parent="MainView/HBoxContainer"]
-margin_left = 980.0
-margin_right = 1019.0
+margin_left = 952.0
+margin_right = 991.0
 margin_bottom = 26.0
 text = "Find"
+
+[node name="AdvancedSearchButton" type="Button" parent="MainView/HBoxContainer"]
+margin_left = 995.0
+margin_right = 1019.0
+margin_bottom = 26.0
+text = "..."
 
 [node name="ErrorPopup" parent="MainView" instance=ExtResource( 4 )]
 
@@ -287,6 +296,8 @@ current_path = "/Users/tomnc/Dev/Godot/MetaMaker/"
 [node name="HelpPopup" parent="MainView" instance=ExtResource( 7 )]
 _treePath = NodePath("ScrollContainer/HBoxContainer/Tree")
 _infoPath = NodePath("ScrollContainer/HBoxContainer/Info")
+
+[node name="SearchPopup" parent="MainView" instance=ExtResource( 46 )]
 
 [node name="SettingsPopup" parent="MainView" instance=ExtResource( 36 )]
 

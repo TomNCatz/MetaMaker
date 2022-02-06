@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using MetaMakerLib;
 using LibT;
@@ -68,6 +69,8 @@ namespace MetaMaker
 		private LineEdit _searchBar;
 		[Export] public NodePath _searchButtonPath;
 		private Button _searchButton;
+		[Export] public NodePath _advancedSearchButtonPath;
+		private Button _advancedSearchButton;
 		[Export] public NodePath _filePopupPath;
 		private FileDialogExtended _filePopup;
 		[Export] public NodePath _colorPopupPath;
@@ -98,6 +101,7 @@ namespace MetaMaker
 
 		public int CurrentParentIndex {set; get;}
 
+		public string SearchString => _searchBar.Text;
 		
 		public static bool ScrollLock
 		{
@@ -154,6 +158,7 @@ namespace MetaMaker
 		public void Init(App app)
 		{
 			_app = app;
+			_advancedSearchButton.Connect("pressed", _app, nameof(_app.OpenSearch));
 		}
 
 		#region Godot and signal connectors
@@ -171,6 +176,7 @@ namespace MetaMaker
 				_addressBar = this.GetNodeFromPath<Label>( _addressBarLabelPath );
 				_searchBar = this.GetNodeFromPath<LineEdit>( _searchBarPath );
 				_searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
+				_advancedSearchButton = this.GetNodeFromPath<Button>( _advancedSearchButtonPath );
 				_filePopup = this.GetNodeFromPath<FileDialogExtended>( _filePopupPath );
 				_areYouSurePopup = this.GetNodeFromPath<AreYouSurePopup>( _areYouSurePopupPath );
 				_colorPopup = this.GetNodeFromPath<Popup>( _colorPopupPath );
@@ -291,6 +297,10 @@ namespace MetaMaker
 				{
 					SortNodes();
 				}
+				else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "F" ) )
+				{
+					_app.OpenSearch();
+				}
 			}
 			catch( Exception e )
 			{
@@ -405,25 +415,59 @@ namespace MetaMaker
 			OnSearch(_searchBar.Text);
 		}
 
-		private void OnSearch( string text )
+		public void OnSearch( string text, bool matchCase = false, Dictionary<string, SlottedGraphNode> results = null)
 		{
 			if(string.IsNullOrEmpty(text)) return;
 
-			if (_app.generatedKeys.ContainsKey(text))
+			if (results == null && _app.generatedKeys.ContainsKey(text))
 			{
 				CenterViewOnKeyedNode(text);
 				return;
 			}
-
-			string partial = PartialFindKey(text);
-
-			if (string.IsNullOrEmpty(partial))
+			
+			var specificTarget = matchCase ? text : text.ToLower();
+			
+			foreach( var key in _app.generatedKeys.Keys )
 			{
-				SearchText(text);
-				return;
+				var specificKey = matchCase ? key : key.ToLower();
+				if (!specificKey.Contains(specificTarget)) continue;
+				
+				var node = _app.generatedKeys[key].GetParent<SlottedGraphNode>();
+				if (results == null)
+				{
+					CenterViewOnNode(node);
+					return;
+				}
+
+				results[key] = node;
 			}
 
-			CenterViewOnKeyedNode(partial);
+
+			foreach (var searchable in _app.textSearch)
+			{
+				var searchText = searchable.Text;
+				var specificText = matchCase ? searchText : searchText.ToLower();
+				if (!specificText.Contains(specificTarget)) continue;
+			
+				var node = searchable.GetParent<SlottedGraphNode>();
+				if (results == null)
+				{
+					CenterViewOnNode(node);
+					return;
+				}
+
+				while(results.ContainsKey(searchText))
+				{
+					searchText += " ";
+				}
+				
+				results[searchText] = node;
+			}
+		}
+		
+		public void CenterViewOnKeyedNode(string text)
+		{
+			CenterViewOnNode(_app.generatedKeys[text].GetParent<SlottedGraphNode>());
 		}
 
 		private void GraphOnScroll(Vector2 offset)
@@ -880,22 +924,6 @@ namespace MetaMaker
 				_pickingColor = null;
 			}
 		}
-
-		public void CenterViewOnKeyedNode(string key)
-		{
-			CenterViewOnNode(_app.generatedKeys[key].GetParent<SlottedGraphNode>());
-		}
-		
-		public void SearchText(string text)
-		{
-			foreach (var searchable in _app.textSearch)
-			{
-				if (!searchable.ContainsText(text)) continue;
-				
-				CenterViewOnNode(searchable.GetParent<SlottedGraphNode>());
-				return;
-			}
-		}
 		
 		public void CenterViewOnNode(SlottedGraphNode node)
 		{
@@ -911,18 +939,6 @@ namespace MetaMaker
 				(position * _graph.Zoom) - (_graph.RectSize * 0.5f),
 				0.3f );
 			_tween.Start();
-		}
-
-		private string PartialFindKey( string partial )
-		{
-			if( string.IsNullOrEmpty( partial ) ) return null;
-			
-			foreach( string key in _app.generatedKeys.Keys )
-			{
-				if( key.Contains( partial ) ) return key;
-			}
-			
-			return null;
 		}
 
 		public void SetNodesClean()

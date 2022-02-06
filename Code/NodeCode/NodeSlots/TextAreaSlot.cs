@@ -12,6 +12,7 @@ namespace MetaMaker
 		private TextEdit _field;
 		private GenericDataObject<string> _model;
 
+		public string Text => _field.Text;
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
 		
@@ -67,11 +68,6 @@ namespace MetaMaker
 		private void OnExit()
 		{
 			MainView.ScrollLock = false;
-		}
-
-		public bool ContainsText(string text)
-		{
-			return _field.Text.Contains(text);
 		}
 	}
 }
