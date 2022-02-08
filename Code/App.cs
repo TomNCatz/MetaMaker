@@ -115,7 +115,7 @@ namespace MetaMaker
 				if(!_hasUnsavedChanges)
 				{
 					_mainView.SetNodesClean();
-					_mainView.ClearScrollLock();
+					MainView.ScrollLock = false;
 				}
 			}
 			get => _hasUnsavedChanges;
@@ -740,6 +740,11 @@ namespace MetaMaker
 
 			HasUnsavedChanges = false;
 			SaveFilePath = null;
+		}
+
+		public void NewFromLastTemplate()
+		{
+			OnRecentTemplateMenuSelection(0);
 		}
 
 		public void LoadGraph( string path )

@@ -29,6 +29,14 @@ namespace MetaMaker
 			_field.Connect("text_changed",this,nameof(OnChanged));
 		}
 
+		public override void _GuiInput( InputEvent @event )
+		{
+			if (@event is InputEventMouseButton mouseButton && mouseButton.Doubleclick)
+			{
+				OnChanged(_field.Text);
+			}
+		}
+
 		public override void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "label", out string label );
@@ -56,9 +64,7 @@ namespace MetaMaker
 
 		private void OnChanged( string text )
 		{
-			bool problem = string.IsNullOrEmpty(text);
-			problem |= _app.ContainsKey(_keyPrefix + text);
-			IndicateTrouble(problem);
+			var problem = TroubleCheck(text);
 			_app.RemoveKey(this);
 
 			if(problem) return;
@@ -67,6 +73,22 @@ namespace MetaMaker
 			_model.value = GetKey;
 			_app.AddKey(this);
 			ValueUpdate();
+		}
+
+		public override void _ExitTree()
+		{
+			_app.RemoveKey(this);
+			base._ExitTree();
+		}
+
+		private bool TroubleCheck(string text)
+		{
+			var problem = string.IsNullOrEmpty(text);
+			problem |= _app.ContainsKey(_keyPrefix + text);
+			
+			IndicateTrouble(problem);
+			
+			return problem;
 		}
 
 		private void IndicateTrouble(bool trouble = true)

@@ -103,22 +103,7 @@ namespace MetaMaker
 
 		public string SearchString => _searchBar.Text;
 		
-		public static bool ScrollLock
-		{
-			set
-			{
-				if(value)
-				{
-					_scrollLock++;
-				}
-				else
-				{
-					_scrollLock--;
-				}
-			}
-			get => _scrollLock != 0;
-		}
-		private static int _scrollLock = 0;
+		public static bool ScrollLock { get; set; }
 		private Vector2 _scrollCurrent;
 		
 		public Color GridMajorColor
@@ -199,13 +184,14 @@ namespace MetaMaker
 
 				PopupMenu menu = _fileMenuButton.GetPopup();
 				menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
+				menu.AddItem( "New Graph (CTRL+N)", 14 );
 				menu.AddItem( "Save Graph (CTRL+S)", 11 );
 				menu.AddItem( "Save Graph As", 2 );
 				menu.AddItem( "Load Graph", 3 );
 				menu.AddChild( _recentSubmenu );
 				menu.AddSubmenuItem( "Recent Graph", "RecentMenu" );
 				menu.AddSeparator(  );
-				menu.AddItem( "Export All", 4 );
+				menu.AddItem( "Export All (CTRL+E)", 4 );
 				_exportSubmenu.Connect( "id_pressed", this, nameof(OnExportMenuSelection));
 				menu.AddChild(_exportSubmenu);
 				menu.AddSubmenuItem( "Export", "ExportMenu" );
@@ -214,10 +200,11 @@ namespace MetaMaker
 
 				PopupMenu dataMenu = _dataMenuButton.GetPopup();
 				dataMenu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
-				dataMenu.AddItem( "Build Template (CTRL+N)", 0 );
+				dataMenu.AddItem( "Build Template (CTRL+SHIFT+N)", 0 );
 				dataMenu.AddItem( "Load Template", 1 );
 				dataMenu.AddChild( _recentTemplateSubmenu );
 				dataMenu.AddSubmenuItem( "Recent Template", "RecentTemplateMenu" );
+				dataMenu.AddSeparator(  );
 				dataMenu.AddItem( "Shift Template Under Data", 7 );
 				dataMenu.AddChild( _recentShiftSubmenu );
 				dataMenu.AddSubmenuItem( "Recent Template Under Data", "RecentShiftMenu" );
@@ -232,9 +219,12 @@ namespace MetaMaker
 				_editMenu.Connect( "id_pressed", this, nameof(OnEditMenuSelection));
 				_editMenu.AddChild( _createSubmenu );
 				_editMenu.AddSubmenuItem( "Create", "CreateMenu" );
+				_editMenu.AddSeparator(  );
 				_editMenu.AddItem( "Copy Nodes (CTRL+C)", 0 );
 				_editMenu.AddItem( "Paste Nodes (CTRL+V)", 1 );
 				_editMenu.AddItem( "Delete Nodes (DEL)", 2 );
+				_editMenu.AddSeparator(  );
+				_editMenu.AddItem( "Find (CTRL+F)", 3 );
 				
 				PopupMenu settingsMenu = _settingsMenuButton.GetPopup();
 				settingsMenu.Connect( "id_pressed", this, nameof(OnSettingsMenuSelection));
@@ -284,22 +274,37 @@ namespace MetaMaker
 				if (!(@event is InputEventKey eventKey)) return;
 				if (eventKey.IsPressed()) return;
 				if (!eventKey.Control && !eventKey.Command) return;
+
+				var key = OS.GetScancodeString(eventKey.Scancode);
 				
-				if( OS.GetScancodeString( eventKey.Scancode ).Equals( "S" ) )
+				// CTRL + SHIFT + <key>
+				if (eventKey.Shift)
 				{
-					_app.SaveGraph();
+					if( key.Equals( "N" ) )
+					{
+						_app.LoadDefaultTemplate();
+					}
+					return;
 				}
-				else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "N" ) )
+
+				// CTRL + <key>
+				switch (key)
 				{
-					_app.LoadDefaultTemplate();
-				}
-				else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "P" ) )
-				{
-					SortNodes();
-				}
-				else if( OS.GetScancodeString( eventKey.Scancode ).Equals( "F" ) )
-				{
-					_app.OpenSearch();
+					case "S":
+						_app.SaveGraph();
+						break;
+					case "N":
+						_app.NewFromLastTemplate();
+						break;
+					case "P":
+						SortNodes();
+						break;
+					case "F":
+						_app.OpenSearch();
+						break;
+					case "E":
+						_app.ExportAll();
+						break;
 				}
 			}
 			catch( Exception e )
@@ -345,6 +350,7 @@ namespace MetaMaker
 					case 11 :  _app.SaveGraph(); break;
 					case 12 :  _app.OpenHelpPopup(); break;
 					case 13 :  TrimOldData(); break;
+					case 14 :  _app.NewFromLastTemplate(); break;
 				}
 			}
 			catch( Exception e )
@@ -362,6 +368,7 @@ namespace MetaMaker
 					case 0 :  RequestCopyNode(); break;
 					case 1 :  RequestPasteNode(); break;
 					case 2 :  RequestDeleteNode(); break;
+					case 3 :  _app.OpenSearch(); break;
 				}
 			}
 			catch( Exception e )
@@ -947,11 +954,6 @@ namespace MetaMaker
 			{
 				node.Dirty = false;
 			}
-		}
-
-		public void ClearScrollLock()
-		{
-			_scrollLock = 0;
 		}
 		#endregion
 

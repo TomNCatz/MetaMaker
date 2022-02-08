@@ -17,7 +17,7 @@ namespace MetaMaker
 		public override int LinkType => _linkType;
 		private int _linkType;
 
-		private string _keyPrefix = String.Empty;
+		private string _keyPrefix = string.Empty;
 		private int _keySize = 1;
 		private GenericDataObject<string> _model;
 		
