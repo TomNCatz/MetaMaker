@@ -744,7 +744,14 @@ namespace MetaMaker
 
 		public void NewFromLastTemplate()
 		{
-			OnRecentTemplateMenuSelection(0);
+			if (_recentTemplates.Count == 0)
+			{
+				LoadDefaultTemplate();
+			}
+			else
+			{
+				OnRecentTemplateMenuSelection(0);
+			}
 		}
 
 		public void LoadGraph( string path )
