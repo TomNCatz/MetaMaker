@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using LibT;
 using LibT.Serialization;
@@ -56,8 +57,9 @@ namespace MetaMaker
 			}
 			else
 			{
+				template.GetValue( "key", out string defaultKey );
+				_field.Text = defaultKey;
 				_model = parentModel.TryAddValue(_label.Text, string.Empty) as GenericDataObject<string>;
-				_field.Text = string.Empty;
 				OnChanged(_field.Text);
 			}
 		}
@@ -67,8 +69,14 @@ namespace MetaMaker
 			var problem = TroubleCheck(text);
 			_app.RemoveKey(this);
 
-			if(problem) return;
-
+			if (problem)
+			{
+				_key = text;
+				_model.value = GetKey;
+				_key = string.Empty;
+				return;
+			}
+			
 			_key = text;
 			_model.value = GetKey;
 			_app.AddKey(this);
