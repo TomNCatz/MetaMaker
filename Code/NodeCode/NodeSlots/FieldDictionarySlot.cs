@@ -54,10 +54,10 @@ namespace MetaMaker
 			if(model != null)
 			{
 				_model = model;
-				
-				foreach( var dataArray in _model.values )
+				var keys = new List<string>(_model.values.Keys);
+				for (int i = 0; i < keys.Count; i++)
 				{
-					_selector.Text = dataArray.Key;
+					_selector.Text = keys[i];
 					InternalAdd();
 				}
 			}
