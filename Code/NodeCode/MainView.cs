@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using MetaMakerLib;
 using LibT;
@@ -86,6 +85,7 @@ namespace MetaMaker
 
 		private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
 		private readonly List<GenericDataDictionary> _copied = new List<GenericDataDictionary>();
+		private bool _loopingError;
 		private Vector2 _copiedCorner = new Vector2(50,100);
 		private Vector2 _offset = new Vector2(50,100);
 		private Vector2 _buffer = new Vector2(40,10);
@@ -583,6 +583,8 @@ namespace MetaMaker
 			try
 			{
 				if(_selection.Count == 0) return;
+
+				if (_loopingError) throw new Exception("ERROR: Selected Nodes are part of a loop, cannot copy!");
 				
 				_copied.Clear();
 
@@ -606,6 +608,7 @@ namespace MetaMaker
 					FindDuplicates(node, toRemove);
 				}
 				
+				Log.Error($"should trim {toRemove.Count}");
 				foreach (GenericDataDictionary item in toRemove)
 				{
 					_copied.Remove(item);
@@ -657,30 +660,22 @@ namespace MetaMaker
 
 			foreach (var pair in target.values)
 			{
-				if(pair.Value is GenericDataDictionary subTarget)
+				switch (pair.Value)
 				{
-					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
+					case GenericDataDictionary subDictionary:
+						TrimUnlessSelected(subDictionary, removeKeys, pair.Key);
+						break;
+					case GenericDataList subList:
 					{
-						bool isSelected = false;
-						foreach(SlottedGraphNode selected in _selection)
+						for (int i = 0; i < subList.values.Count; i++)
 						{
-							if(subTarget.DeepEquals(selected.Model))
-							{
-								isSelected = true;
-							}
+							if (!(subList.values[i] is GenericDataDictionary listChild)) continue;
+							if (!TrimUnlessSelected(listChild, removeKeys, string.Empty)) continue;
+						
+							subList.values.RemoveAt(i);
+							i--;
 						}
-						if(isSelected)
-						{
-							TrimToSelection(subTarget);
-						}
-						else
-						{
-							removeKeys.Add(pair.Key);
-						}
-					}
-					else
-					{
-						TrimToSelection( subTarget );
+						break;
 					}
 				}
 			}
@@ -691,26 +686,79 @@ namespace MetaMaker
 			}
 		}
 
-		private void FindDuplicates( GenericDataDictionary target, List<GenericDataDictionary> toRemove )
+		private bool TrimUnlessSelected(GenericDataDictionary subDictionary, List<string> removeKeys, string key)
 		{
-			foreach (var pair in target.values)
+			if (subDictionary.values.ContainsKey(App.NODE_NAME_KEY))
 			{
-				if(pair.Value is GenericDataDictionary subTarget)
+				bool isSelected = false;
+				foreach (SlottedGraphNode selected in _selection)
 				{
-					if(subTarget.values.ContainsKey(App.NODE_NAME_KEY))
+					if (subDictionary.DeepEquals(selected.Model))
 					{
-						for (int i = _copied.Count-1; i >= 0; i--)
-						{
-							GenericDataDictionary copy = _copied[i];
-							if (!subTarget.DeepEquals(copy) || toRemove.Contains(copy)) continue;
-
-							toRemove.Add(copy);
-						}
+						isSelected = true;
 					}
+				}
 
-					FindDuplicates( subTarget, toRemove );
+				if (isSelected)
+				{
+					TrimToSelection(subDictionary);
+				}
+				else
+				{
+					removeKeys.Add(key);
+					return true;
 				}
 			}
+			else
+			{
+				TrimToSelection(subDictionary);
+			}
+
+			return false;
+		}
+
+		private void FindDuplicates( GenericDataDictionary target, List<GenericDataDictionary> toRemove )
+		{
+			if (toRemove.Contains(target)) return;
+			
+			foreach (var pair in target.values)
+			{
+				switch (pair.Value)
+				{
+					case GenericDataDictionary subTarget:
+						Log.Error($"{pair.Key} is a dictionary");
+						TrimIfDup(subTarget, toRemove);
+						break;
+					case GenericDataList subList:
+					{
+						Log.Error($"{pair.Key} is a list");
+						for (int i = 0; i < subList.values.Count; i++)
+						{
+							if (subList.values[i] is GenericDataDictionary childTarget)
+							{
+								TrimIfDup(childTarget, toRemove);
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		private void TrimIfDup(GenericDataDictionary target, List<GenericDataDictionary> toRemove)
+		{
+			if(target.values.ContainsKey(App.NODE_NAME_KEY))
+			{
+				for (int i = _copied.Count-1; i >= 0; i--)
+				{
+					GenericDataDictionary copy = _copied[i];
+					if (!target.DeepEquals(copy) || toRemove.Contains(copy)) continue;
+
+					toRemove.Add(copy);
+				}
+			}
+
+			FindDuplicates( target, toRemove );
 		}
 
 		private void SelectNode(Node node)
@@ -739,11 +787,21 @@ namespace MetaMaker
 
 		private void UpdateAddress(SlottedGraphNode graphNode)
 		{
-			_addressBar.Text = RecurseAddress(graphNode);
+			_addressBar.Text = RecurseAddress(graphNode, new List<SlottedGraphNode>());
 		}
 
-		private string RecurseAddress(SlottedGraphNode node)
+		private string RecurseAddress(SlottedGraphNode node, List<SlottedGraphNode> path)
 		{
+			if (path.Contains(node))
+			{
+				_loopingError = true;
+				_app.CatchException(new Exception("ERROR: Selected Nodes are part of a loop!"));
+				return "!ERROR LOOPING TREE! ";
+			}
+
+			_loopingError = false;
+			path.Add(node);
+			
 			if(node.ParentType >= 0)
 			{
 				Godot.Collections.Array fullList = _graph.GetConnectionList();
@@ -753,7 +811,7 @@ namespace MetaMaker
 					if( Equals( connection["to"], node.Name ) && Equals( connection["to_port"], 0 ) )
 					{
 						SlottedGraphNode parent = _graph.GetNode<SlottedGraphNode>( (string)connection["from"] );
-						string before = RecurseAddress(parent);
+						string before = RecurseAddress(parent, path);
 
 						if(string.IsNullOrEmpty(before)) return null;
 						
