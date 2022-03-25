@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using LibT;
 using LibT.Serialization;
@@ -6,7 +5,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeySelectSlot : Container, IField
+	public class KeySelectSlot : Container, IField, IKeyStore
 	{
 		private enum EmptyHandling
 		{
@@ -39,6 +38,12 @@ namespace MetaMaker
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
+
+		public string TargetKey
+		{
+			get => _field.Text;
+			set => _field.Text = value;
+		}
 		
 		public override void _Ready()
 		{

@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using System.Collections.Generic;
+using LibT;
 using LibT.Serialization;
 using LibT.Services;
 
@@ -305,6 +306,11 @@ namespace MetaMaker
 				_app.textSearch.Add(searchable);
 			}
 
+			if( child is IKeyStore keyStore )
+			{
+				_mainView.keyStores.Add(keyStore);
+			}
+
 			return child;
 		}
 
@@ -322,6 +328,11 @@ namespace MetaMaker
 			if( child is ITextSearchable searchable )
 			{
 				_app.textSearch.Remove(searchable);
+			}
+			
+			if( child is IKeyStore keyStore )
+			{
+				_mainView.keyStores.Remove(keyStore);
 			}
 			
 			var connections = _mainView.GetConnectionsToNode( this );
@@ -455,6 +466,11 @@ namespace MetaMaker
 				if( slot is ITextSearchable searchable )
 				{
 					_app.textSearch.Remove(searchable);
+				}
+			
+				if( slot is IKeyStore keyStore )
+				{
+					_mainView.keyStores.Remove(keyStore);
 				}
 			}
 			

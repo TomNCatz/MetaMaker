@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeyLinkSlot : Container, IField
+	public class KeyLinkSlot : Container, IField, IKeyStore
 	{
 		private enum EmptyHandling
 		{
@@ -27,7 +27,21 @@ namespace MetaMaker
 
 		public string Label { get => _label.Text; set => _label.Text = value; }
 		public event System.Action OnValueUpdated;
-		
+
+		public string TargetKey
+		{
+			get
+			{
+				return _field.Text;
+			}
+			set
+			{
+				RemoveKey(_field.Text);
+				AddKey(value);
+			}
+		}
+		public int LinkType {get; private set;}
+
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _titlePath );
@@ -69,6 +83,9 @@ namespace MetaMaker
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
+			
+			template.GetValue( "slotType", out int slotType );
+			LinkType = slotType;
 			
 			if( template.values.ContainsKey( "emptyHandling" ) )
 			{

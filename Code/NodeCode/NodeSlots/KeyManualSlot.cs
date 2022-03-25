@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using LibT;
 using LibT.Serialization;
@@ -15,12 +14,14 @@ namespace MetaMaker
 		private GenericDataObject<string> _model;
 		
 		[Injectable] private App _app;
+		[Injectable] private MainView _mainView;
 
 		public override string GetKey => _keyPrefix + _key;
 		private string _key;
 		private string _keyPrefix;
 		public override int LinkType => _linkType;
 		private int _linkType;
+		private string _lastGoodKey;
 		
 		public override void _Ready()
 		{
@@ -76,9 +77,12 @@ namespace MetaMaker
 				_key = string.Empty;
 				return;
 			}
-			
+
 			_key = text;
 			_model.value = GetKey;
+			Log.Error($"_lastGoodKey='{_lastGoodKey}' => GetKey='{GetKey}'");
+			UpdateLinked();
+			_lastGoodKey = GetKey;
 			_app.AddKey(this);
 			ValueUpdate();
 		}
@@ -89,6 +93,20 @@ namespace MetaMaker
 			base._ExitTree();
 		}
 
+		private void UpdateLinked()
+		{
+			if (string.IsNullOrEmpty(_lastGoodKey)) return;
+
+			string newKey = GetKey;
+			foreach (var keyStore in _mainView.keyStores)
+			{
+				if(keyStore.LinkType != LinkType) continue;
+				if(keyStore.TargetKey != _lastGoodKey) continue;
+
+				keyStore.TargetKey = newKey;
+			}
+		}
+		
 		private bool TroubleCheck(string text)
 		{
 			var problem = string.IsNullOrEmpty(text);

@@ -82,6 +82,7 @@ namespace MetaMaker
 
 		public readonly List<Tuple<KeyLinkSlot, string>> loadingLinks = new List<Tuple<KeyLinkSlot, string>>();
 		public readonly List<SlottedGraphNode> nodes = new List<SlottedGraphNode>();
+		public readonly List<IKeyStore> keyStores = new List<IKeyStore>();
 
 		private readonly List<SlottedGraphNode> _selection = new List<SlottedGraphNode>();
 		private readonly List<GenericDataDictionary> _copied = new List<GenericDataDictionary>();
