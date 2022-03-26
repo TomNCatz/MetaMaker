@@ -1905,7 +1905,7 @@
       }
     ]
   },
-  "metaMakerVersion": "0.7.1",
+  "metaMakerVersion": "0.7.4",
   "defaultListing": "listing",
   "explicitNode": "",
   "reuseDll": true,
@@ -1962,7 +1962,7 @@
           "label": "Branches",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "1",
+            "label": "2",
             "slotType": 0,
             "explicitNode": "Branch",
             "emptyHandling": "SKIP"

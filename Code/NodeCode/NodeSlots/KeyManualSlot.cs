@@ -80,7 +80,6 @@ namespace MetaMaker
 
 			_key = text;
 			_model.value = GetKey;
-			Log.Error($"_lastGoodKey='{_lastGoodKey}' => GetKey='{GetKey}'");
 			UpdateLinked();
 			_lastGoodKey = GetKey;
 			_app.AddKey(this);
