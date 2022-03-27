@@ -56,6 +56,8 @@ namespace MetaMaker
 		{
 			_definition = definition;
 			definition.GetValue( "title", out _title );
+			definition.GetValue( "info", out string info );
+			this.HintTooltip = info;
 			Dirty = false;
 
 			if(objData != null)

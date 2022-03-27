@@ -59,7 +59,7 @@ namespace MetaMaker
 			
 			if( template.values.ContainsKey( "minStepSize" ) )
 			{
-				template.GetValue( "minStepSize", out double minStepSize );
+				template.GetValue( "minStepSize", out int minStepSize );
 				_field.Step = minStepSize;
 			}
 		}

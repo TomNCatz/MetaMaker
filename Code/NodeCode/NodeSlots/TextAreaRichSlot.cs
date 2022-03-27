@@ -34,6 +34,9 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
+			template.GetValue( "info", out string info );
+			_field.HintTooltip = info;
+			
 			template.GetValue( "minHeight", out float height );
 			_field.RectMinSize = new Vector2(0,height);
 			_display.RectMinSize = new Vector2(0,height);

@@ -48,6 +48,9 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
+			
 			_field = template.GetGdo( "field" ) as GenericDataDictionary;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataDictionary model);

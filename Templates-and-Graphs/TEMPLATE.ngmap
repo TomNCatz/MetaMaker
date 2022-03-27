@@ -52,12 +52,14 @@
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultListing",
-          "defaultValue": "listing"
+          "defaultValue": "listing",
+          "info": "Name of the "
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Name of the node typ expected as children\n(This feature needs a refactor"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -71,8 +73,10 @@
               "b": 1.0,
               "a": 1.0
             },
-            "asHtml": false
-          }
+            "asHtml": false,
+            "info": ""
+          },
+          "info": "Colors used for Parent Child links"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -86,20 +90,24 @@
               "b": 1.0,
               "a": 1.0
             },
-            "asHtml": false
-          }
+            "asHtml": false,
+            "info": ""
+          },
+          "info": "Colors used for Key links"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "reuseDll",
           "defaultValue": true,
-          "id": "BOOL-LYn"
+          "id": "BOOL-LYn",
+          "info": "If this graph uses a generated DLL, should it reuse the same one?\nIf not, it will rebuild from scratch each time\nShould also be checked if there is an externally generated DLL for this file"
         },
         {
           "fieldType": "TEXT_AREA",
           "label": "exportScript",
           "minHeight": 200.0,
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Code used for generating JSON files\nIf empty will generate a single JSON file or the same name as the graph file being exported from\nNOTE: BETTER DOCUMENTATION NEEDED HERE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -109,10 +117,13 @@
             "label": "33",
             "slotType": 0,
             "explicitNode": "Node",
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "List of child nodes this graph can contain"
         }
-      ]
+      ],
+      "info": "Stores info about the graph itself\nThere should be only one per template"
     },
     {
       "title": "Node",
@@ -127,7 +138,8 @@
         {
           "fieldType": "TEXT_LINE",
           "label": "title",
-          "defaultValue": "Node"
+          "defaultValue": "Node",
+          "info": "Human readable name of the node\nNot stored in the final JSON"
         },
         {
           "fieldType": "COLOR",
@@ -138,30 +150,42 @@
             "b": 1.0,
             "a": 1.0
           },
-          "asHtml": false
+          "asHtml": false,
+          "info": "Tint that will be applied to this type of node"
         },
         {
           "fieldType": "INT",
           "label": "parentType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": -1,
-          "defaultValue": -1
+          "defaultValue": -1,
+          "info": "Type of parent this node can be connected to\nIf -1 then this node has only the graph as a parent"
         },
         {
           "fieldType": "FIELD_LIST",
           "label": "fields",
           "field": {
             "fieldType": "LINK_TO_CHILD",
-            "label": "4",
+            "label": "5",
             "slotType": 1,
             "explicitNode": "",
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "List of fields this node type will have"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Defines an individual node"
     },
     {
       "title": "Separator Slot",
@@ -176,9 +200,11 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "SEPARATOR"
+          "defaultValue": "SEPARATOR",
+          "info": ""
         }
-      ]
+      ],
+      "info": "A buffer that can be insterted between fields"
     },
     {
       "title": "Key Slot",
@@ -193,39 +219,107 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "KEY"
+          "defaultValue": "KEY",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "id"
+          "defaultValue": "id",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyPrefix",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Characters that remain the same for each key\nEG 'id' in id1234"
         },
         {
           "fieldType": "INT",
           "label": "keySize",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 1,
-          "defaultValue": 1
+          "defaultValue": 1,
+          "info": "how many characters will be generated for the key after the prefix"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot that generates a unique key per node\nStores as a string in the JSON"
+    },
+    {
+      "title": "Key Manual Slot",
+      "color": {
+        "r": 0.6156863,
+        "g": 0.8117647,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_MANUAL",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "id",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyPrefix",
+          "defaultValue": "id_",
+          "info": "Characters that remain the same for each key\nEG 'id_' in id_Jeff"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "key",
+          "defaultValue": "",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot that the user can manually enter a key\nAttempts to auto update any linked slots if it changes\nStores as a string in the JSON"
     },
     {
       "title": "Key Tracker Slot",
@@ -240,22 +334,25 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "KEY_TRACKER"
+          "defaultValue": "KEY_TRACKER",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "target"
+          "defaultValue": "target",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
         },
         {
           "fieldType": "ENUM",
@@ -264,9 +361,175 @@
             "EMPTY_STRING",
             "NULL_STRING",
             "SKIP"
-          ]
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for linking to a key\ndraws a line to the target key\ndouble clicking the key in the slot with take the view to the linked node"
+    },
+    {
+      "title": "Key Select Slot",
+      "color": {
+        "r": 0.51924175,
+        "g": 0.671875,
+        "b": 0.299449921,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_SELECT",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "target",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_STRING",
+            "NULL_STRING",
+            "SKIP"
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Shows a dropdown of keys and allows their selection\nif the key goes away it remains tracked until cleard or updated to prevent accidental data loss"
+    },
+    {
+      "title": "Graph List Slot",
+      "color": {
+        "r": 0.875,
+        "g": 0.7667193,
+        "b": 0.4358614,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_LIST",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": "",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "NOT YET IMPLIMENTED"
+    },
+    {
+      "title": "Graph Dictionary Slot",
+      "color": {
+        "r": 0.8812586,
+        "g": 0.890625,
+        "b": 0.5370435,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_DICTIONARY",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": "",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyField",
+          "defaultValue": "id",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "NOT YET IMPLIMENTED"
     },
     {
       "title": "Link To Child Slot",
@@ -281,27 +544,31 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "LINK_TO_CHILD"
+          "defaultValue": "LINK_TO_CHILD",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "children"
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Slot can only match up to a child node of this type"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Name of the node type expected as children\n(This feature needs a refactor"
         },
         {
           "fieldType": "ENUM",
@@ -310,9 +577,18 @@
             "EMPTY_OBJECT",
             "NULL",
             "SKIP"
-          ]
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_OBJECT stores an empty object {}\nNULL Stores as a null\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot to creat a parent child relationship\nChild node are actually nested objects in the generated JSON file"
     },
     {
       "title": "Field List Slot",
@@ -327,21 +603,32 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FIELD_LIST"
+          "defaultValue": "FIELD_LIST",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Fields"
+          "defaultValue": "Fields",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
           "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
+          "emptyHandling": "EMPTY_OBJECT",
+          "info": "Type of slot to populate this list with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For creating a resizable list of a particular data type"
     },
     {
       "title": "Field Dictionary Slot",
@@ -356,21 +643,32 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FIELD_DICTIONARY"
+          "defaultValue": "FIELD_DICTIONARY",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Fields"
+          "defaultValue": "Fields",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
           "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
+          "emptyHandling": "EMPTY_OBJECT",
+          "info": "Type of slot to populate this dictiionary with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For creating a dictionary of a particular data type"
     },
     {
       "title": "Info Slot",
@@ -385,13 +683,15 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "INFO"
+          "defaultValue": "INFO",
+          "info": ""
         },
         {
           "fieldType": "TEXT_AREA_RICH",
           "label": "label",
           "minHeight": 40.0,
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Text that will display for this info slot"
         },
         {
           "fieldType": "FLOAT",
@@ -401,9 +701,11 @@
           "max": 0.0,
           "hasMin": true,
           "min": 18.0,
-          "defaultValue": 40.0
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
         }
-      ]
+      ],
+      "info": "This persistently displays non-editable text for information, but IS NOT stored in the JSON file"
     },
     {
       "title": "Auto Slot",
@@ -418,19 +720,30 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "AUTO"
+          "defaultValue": "AUTO",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "text"
+          "defaultValue": "text",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultValue",
-          "defaultValue": "default"
+          "defaultValue": "default",
+          "info": "Text that will display be stored for this auto slot"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "This persistently displays non-editable text that IS stored in the JSON file"
     },
     {
       "title": "Type Slot",
@@ -445,19 +758,30 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TYPE"
+          "defaultValue": "TYPE",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "Class Assembly",
-          "defaultValue": "fully qualified assembly name"
+          "defaultValue": "fully qualified assembly name",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "Class Type",
-          "defaultValue": "Full class name"
+          "defaultValue": "Full class name",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "this is symilar to the Auto Slot, but is specifically designed for C# type data used in reflection"
     },
     {
       "title": "Enum Slot",
@@ -472,12 +796,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "ENUM"
+          "defaultValue": "ENUM",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Type"
+          "defaultValue": "Type",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -485,10 +811,20 @@
           "field": {
             "fieldType": "TEXT_LINE",
             "label": "2",
-            "defaultValue": "ENUM"
-          }
+            "defaultValue": "ENUM",
+            "info": ""
+          },
+          "info": "Options that will appear in the dropdown for a user to choose"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot that shows a dropdown of options\nStores in the JSON as a string matching the selected option"
     },
     {
       "title": "Flags Slot",
@@ -503,22 +839,25 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FLAGS"
+          "defaultValue": "FLAGS",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Flags"
+          "defaultValue": "Flags",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "defaultValue",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -526,10 +865,20 @@
           "field": {
             "fieldType": "TEXT_LINE",
             "label": "-",
-            "defaultValue": "Flag"
-          }
+            "defaultValue": "Flag",
+            "info": "Label for the flag to make it easier to edit\nWill not be sotred in the JSON"
+          },
+          "info": "List of flags the user will be able to turn on and off"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A list of boolean flags\nWill be stored as a single int value in the JSON without any of the labels"
     },
     {
       "title": "Text Line Slot",
@@ -544,19 +893,30 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TEXT_LINE"
+          "defaultValue": "TEXT_LINE",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "String"
+          "defaultValue": "String",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultValue",
-          "defaultValue": "String"
+          "defaultValue": "String",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for a single line of text\nStores as a string"
     },
     {
       "title": "Text Area Slot",
@@ -571,12 +931,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TEXT_AREA"
+          "defaultValue": "TEXT_AREA",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "FLOAT",
@@ -586,15 +948,25 @@
           "max": 0.0,
           "hasMin": true,
           "min": 18.0,
-          "defaultValue": 40.0
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
         },
         {
           "fieldType": "TEXT_AREA",
           "label": "defaultValue",
           "minHeight": 40.0,
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string"
     },
     {
       "title": "Rich Text Slot",
@@ -609,12 +981,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TEXT_AREA_RICH"
+          "defaultValue": "TEXT_AREA_RICH",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "FLOAT",
@@ -624,15 +998,25 @@
           "max": 0.0,
           "hasMin": true,
           "min": 18.0,
-          "defaultValue": 40.0
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
         },
         {
           "fieldType": "TEXT_AREA_RICH",
           "label": "defaultValue",
           "minHeight": 40.0,
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string\nNOTE: should display rich text preview but something appears to be wrong"
     },
     {
       "title": "Float Slot",
@@ -647,12 +1031,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FLOAT"
+          "defaultValue": "FLOAT",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DOUBLE",
@@ -662,13 +1048,15 @@
           "max": "0",
           "hasMin": true,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Size of the increment when the up and down arrows are pressed"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
-          "id": "B-aH6"
+          "id": "B-aH6",
+          "info": "If false the max will be ignored"
         },
         {
           "fieldType": "FLOAT",
@@ -678,13 +1066,15 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 0.0
+          "defaultValue": 0.0,
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
-          "id": "B-2hF"
+          "id": "B-2hF",
+          "info": "If false the min will be ignored"
         },
         {
           "fieldType": "FLOAT",
@@ -694,7 +1084,8 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 0.0
+          "defaultValue": 0.0,
+          "info": ""
         },
         {
           "fieldType": "FLOAT",
@@ -704,9 +1095,18 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 0.0
+          "defaultValue": 0.0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a floatign point value"
     },
     {
       "title": "Double Slot",
@@ -721,12 +1121,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "DOUBLE"
+          "defaultValue": "DOUBLE",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DOUBLE",
@@ -736,13 +1138,15 @@
           "max": "0",
           "hasMin": true,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Size of the increment when the up and down arrows are pressed"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
-          "id": "BOOL-uGT"
+          "id": "BOOL-uGT",
+          "info": "If false the max will be ignored"
         },
         {
           "fieldType": "DOUBLE",
@@ -752,13 +1156,15 @@
           "max": "0",
           "hasMin": false,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
-          "id": "BOOL-yIn"
+          "id": "BOOL-yIn",
+          "info": "If false the min will be ignored"
         },
         {
           "fieldType": "DOUBLE",
@@ -768,7 +1174,8 @@
           "max": "0",
           "hasMin": false,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": ""
         },
         {
           "fieldType": "DOUBLE",
@@ -778,9 +1185,18 @@
           "max": "0",
           "hasMin": false,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a double value"
     },
     {
       "title": "Int Slot",
@@ -795,66 +1211,82 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "INT"
+          "defaultValue": "INT",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
-          "fieldType": "DOUBLE",
+          "fieldType": "INT",
           "label": "MinStepSize",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
-          "max": "0",
+          "max": 0,
           "hasMin": true,
-          "min": "0",
-          "defaultValue": "0"
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Size of the increment when the up and down arrows are pressed"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
-          "id": "B-zqM"
+          "id": "B-zqM",
+          "info": "If false the max will be ignored"
         },
         {
           "fieldType": "INT",
           "label": "max",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
-          "id": "B-Y2e"
+          "id": "B-Y2e",
+          "info": "If false the min will be ignored"
         },
         {
           "fieldType": "INT",
           "label": "min",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": ""
         },
         {
           "fieldType": "INT",
           "label": "defaultValue",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for an integer"
     },
     {
       "title": "Long Slot",
@@ -869,26 +1301,38 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "LONG"
+          "defaultValue": "LONG",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "allowNegative",
           "defaultValue": true,
-          "id": "B-zqM"
+          "id": "B-zqM",
+          "info": "True makes it a normal long\nFalse basically  makes it a ulong "
         },
         {
           "fieldType": "LONG",
           "label": "defaultValue",
           "allowNegative": true,
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a long value\nStores as a string "
     },
     {
       "title": "Boolean Slot",
@@ -903,27 +1347,39 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "BOOLEAN"
+          "defaultValue": "BOOLEAN",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "IsActive"
+          "defaultValue": "IsActive",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "defaultValue",
           "defaultValue": false,
-          "id": "B-SAC"
+          "id": "B-SAC",
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "KEY",
           "label": "id",
           "slotType": 0,
           "keyPrefix": "BOOL-",
-          "keySize": 3
+          "keySize": 3,
+          "info": "Used by linked booleans"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a true false value"
     },
     {
       "title": "Linked Boolean Slot",
@@ -938,25 +1394,29 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "BOOLEAN"
+          "defaultValue": "BOOLEAN",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "IsActive"
+          "defaultValue": "IsActive",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "defaultValue",
           "defaultValue": false,
-          "id": "B-Ili"
+          "id": "B-Ili",
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "KEY",
           "label": "id",
           "slotType": 0,
           "keyPrefix": "BOOL-",
-          "keySize": 3
+          "keySize": 3,
+          "info": "Used by linked booleans"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -965,8 +1425,10 @@
             "fieldType": "KEY_TRACKER",
             "label": "true when true",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set TRUE all linked booleans will also be turned TRUE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -975,8 +1437,10 @@
             "fieldType": "KEY_TRACKER",
             "label": "false when true",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set TRUE all linked booleans will also be turned FALSE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -985,8 +1449,10 @@
             "fieldType": "KEY_TRACKER",
             "label": "false when false",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set FALSE all linked booleans will also be turned FALSE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -995,10 +1461,20 @@
             "fieldType": "KEY_TRACKER",
             "label": "true when false",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set FALSE all linked booleans will be turned TRUE"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a true false value that has conditional relations to other boolean slots within this node"
     },
     {
       "title": "Vector2 Slot",
@@ -1013,12 +1489,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VECTOR2"
+          "defaultValue": "VECTOR2",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Vector"
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "VECTOR2",
@@ -1026,9 +1504,18 @@
           "defaultValue": {
             "x": 0.0,
             "y": 0.0
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for X and Y coordinates\nStores as a nssted data set"
     },
     {
       "title": "Vector3 Slot",
@@ -1043,12 +1530,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VECTOR3"
+          "defaultValue": "VECTOR3",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Vector"
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "VECTOR3",
@@ -1057,9 +1546,18 @@
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for X, Y, and Z\nStores as a nssted data set"
     },
     {
       "title": "Vector4 Slot",
@@ -1074,12 +1572,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VECTOR4"
+          "defaultValue": "VECTOR4",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Vector"
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "VECTOR4",
@@ -1089,9 +1589,18 @@
             "y": 0.0,
             "z": 0.0,
             "w": 0.0
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for X, Y, Z, and W\nStores as a nssted data set"
     },
     {
       "title": "Color Slot",
@@ -1106,12 +1615,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "COLOR"
+          "defaultValue": "COLOR",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Color"
+          "defaultValue": "Color",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "COLOR",
@@ -1122,15 +1633,25 @@
             "b": 1.0,
             "a": 1.0
           },
-          "asHtml": false
+          "asHtml": false,
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "asHtml",
           "defaultValue": false,
-          "id": "B-Dog"
+          "id": "B-Dog",
+          "info": "Should the value be stored as an HTML hash string #AARRGGBB"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for a color value\nCan store as either a nested set (R,G,B,A) or a hash string #AARRGGBB"
     },
     {
       "title": "Date Time Offset Slot",
@@ -1145,12 +1666,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "DATE_TIME_OFFSET"
+          "defaultValue": "DATE_TIME_OFFSET",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Date"
+          "defaultValue": "Date",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DATE_TIME_OFFSET",
@@ -1158,9 +1681,18 @@
           "defaultValue": {
             "date": "2020-07-16T14:34:11.0000000",
             "offset": "-07:00"
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For storing a date time with a timezone component\nstores as a nested string"
     },
     {
       "title": "Date Time Slot",
@@ -1175,12 +1707,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "DATE_TIME"
+          "defaultValue": "DATE_TIME",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Date"
+          "defaultValue": "Date",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DATE_TIME",
@@ -1188,9 +1722,18 @@
           "defaultValue": {
             "date": "2020-07-16T14:34:16.0000000",
             "offset": "-00:00"
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For storing a date time \nstores as a nested set of strings"
     },
     {
       "title": "Time Span Slot",
@@ -1205,25 +1748,98 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TIME_SPAN"
+          "defaultValue": "TIME_SPAN",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Duration"
+          "defaultValue": "Duration",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "asSeconds",
           "defaultValue": false,
-          "id": "BOOL-9KE"
+          "id": "BOOL-9KE",
+          "info": "If true will be stored as a total number of seconds in an int\nIf false will be stored as a total number of ticks in a long"
         },
         {
           "fieldType": "TIME_SPAN",
           "label": "defaultValue",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "asSeconds": false,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For storing a timespan"
+    },
+    {
+      "title": "Relative Path Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "RELATIVE_PATH",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Path",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "startOffset",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "how many characters to trim off the front of the relative path"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "prefix",
+          "defaultValue": "",
+          "info": "Text that will be put in front of the relative path"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "extensions",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "*.png",
+            "info": ""
+          },
+          "info": "What file types to show as options"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for storing paths based on the file structure around your graph"
     }
   ],
   "data": {
@@ -1278,7 +1894,7 @@
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -2400.0
+          "y": -3400.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1297,7 +1913,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -2400.0
+              "y": -3400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1306,12 +1922,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "defaultListing",
-            "defaultValue": "listing"
+            "defaultValue": "listing",
+            "info": "Name of the "
           },
           {
             "ngMapNodePosition": {
-              "x": 900.0,
-              "y": -2400.0
+              "x": 880.0,
+              "y": -3400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1320,12 +1937,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "explicitNode",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": "Name of the node typ expected as children\n(This feature needs a refactor"
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": -2400.0
+              "x": 1120.0,
+              "y": -3400.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1337,7 +1955,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 1380.0,
-                "y": -2400.0
+                "y": -3400.0
               },
               "ngMapNodeName": "Color Slot",
               "ngMapNodeSize": {
@@ -1352,13 +1970,15 @@
                 "b": 1.0,
                 "a": 1.0
               },
-              "asHtml": false
-            }
+              "asHtml": false,
+              "info": ""
+            },
+            "info": "Colors used for Parent Child links"
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": -2280.0
+              "x": 1120.0,
+              "y": -3200.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1370,7 +1990,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 1380.0,
-                "y": -2260.0
+                "y": -3200.0
               },
               "ngMapNodeName": "Color Slot",
               "ngMapNodeSize": {
@@ -1385,13 +2005,15 @@
                 "b": 1.0,
                 "a": 1.0
               },
-              "asHtml": false
-            }
+              "asHtml": false,
+              "info": ""
+            },
+            "info": "Colors used for Key links"
           },
           {
             "ngMapNodePosition": {
               "x": 1600.0,
-              "y": -2220.0
+              "y": -3160.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -1401,12 +2023,13 @@
             "fieldType": "BOOLEAN",
             "label": "reuseDll",
             "defaultValue": true,
-            "id": "BOOL-LYn"
+            "id": "BOOL-LYn",
+            "info": "If this graph uses a generated DLL, should it reuse the same one?\nIf not, it will rebuild from scratch each time\nShould also be checked if there is an externally generated DLL for this file"
           },
           {
             "ngMapNodePosition": {
               "x": 1600.0,
-              "y": -2400.0
+              "y": -3400.0
             },
             "ngMapNodeName": "Text Area Slot",
             "ngMapNodeSize": {
@@ -1416,12 +2039,13 @@
             "fieldType": "TEXT_AREA",
             "label": "exportScript",
             "minHeight": 200.0,
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": "Code used for generating JSON files\nIf empty will generate a single JSON file or the same name as the graph file being exported from\nNOTE: BETTER DOCUMENTATION NEEDED HERE"
           },
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -2240.0
+              "y": -3220.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1433,7 +2057,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 880.0,
-                "y": -2240.0
+                "y": -3220.0
               },
               "ngMapNodeName": "Link To Child Slot",
               "ngMapNodeSize": {
@@ -1444,15 +2068,18 @@
               "label": "-",
               "slotType": 0,
               "explicitNode": "Node",
-              "emptyHandling": "SKIP"
-            }
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "List of child nodes this graph can contain"
           }
-        ]
+        ],
+        "info": "Stores info about the graph itself\nThere should be only one per template"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -1980.0
+          "y": -2940.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1471,7 +2098,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": -1980.0
+              "y": -2940.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1480,12 +2107,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "title",
-            "defaultValue": "Node"
+            "defaultValue": "Node",
+            "info": "Human readable name of the node\nNot stored in the final JSON"
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -1980.0
+              "y": -2940.0
             },
             "ngMapNodeName": "Color Slot",
             "ngMapNodeSize": {
@@ -1500,12 +2128,13 @@
               "b": 1.0,
               "a": 1.0
             },
-            "asHtml": false
+            "asHtml": false,
+            "info": "Tint that will be applied to this type of node"
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": -1980.0
+              "x": 1120.0,
+              "y": -2940.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1514,17 +2143,18 @@
             },
             "fieldType": "INT",
             "label": "parentType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": -1,
-            "defaultValue": -1
+            "defaultValue": -1,
+            "info": "Type of parent this node can be connected to\nIf -1 then this node has only the graph as a parent"
           },
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": -1860.0
+              "y": -2760.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -1536,7 +2166,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 900.0,
-                "y": -1840.0
+                "y": -2740.0
               },
               "ngMapNodeName": "Link To Child Slot",
               "ngMapNodeSize": {
@@ -1547,15 +2177,34 @@
               "label": "-",
               "slotType": 1,
               "explicitNode": "",
-              "emptyHandling": "SKIP"
-            }
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "List of fields this node type will have"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": -2940.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Defines an individual node"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -1600.0
+          "y": -2460.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1574,7 +2223,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -1600.0
+              "y": -2460.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1583,14 +2232,16 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "SEPARATOR"
+            "defaultValue": "SEPARATOR",
+            "info": ""
           }
-        ]
+        ],
+        "info": "A buffer that can be insterted between fields"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -1340.0
+          "y": -2160.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1609,7 +2260,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -1340.0
+              "y": -2160.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1618,12 +2269,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "KEY"
+            "defaultValue": "KEY",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -1340.0
+              "y": -2160.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1632,12 +2284,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "id"
+            "defaultValue": "id",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 680.0,
-              "y": -1220.0
+              "x": 1340.0,
+              "y": -2160.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1646,17 +2299,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Keys only match up to the same type"
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -1220.0
+              "y": -1980.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1665,12 +2319,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "keyPrefix",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": "Characters that remain the same for each key\nEG 'id' in id1234"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": -1220.0
+              "y": -2160.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1679,19 +2334,37 @@
             },
             "fieldType": "INT",
             "label": "keySize",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 1,
-            "defaultValue": 1
+            "defaultValue": 1,
+            "info": "how many characters will be generated for the key after the prefix"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 640.0,
+              "y": -1980.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot that generates a unique key per node\nStores as a string in the JSON"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -920.0
+          "y": -1680.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1710,7 +2383,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -920.0
+              "y": -1680.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1719,12 +2392,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "KEY_MANUAL"
+            "defaultValue": "KEY_MANUAL",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -920.0
+              "y": -1680.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1733,12 +2407,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "id"
+            "defaultValue": "id",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 680.0,
-              "y": -800.0
+              "x": 1360.0,
+              "y": -1680.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1747,17 +2422,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Keys only match up to the same type"
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -800.0
+              "y": -1500.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1766,12 +2442,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "keyPrefix",
-            "defaultValue": "id_"
+            "defaultValue": "id_",
+            "info": "Characters that remain the same for each key\nEG 'id_' in id_Jeff"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": -920.0
+              "y": -1680.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1780,14 +2457,32 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "key",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 640.0,
+              "y": -1500.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot that the user can manually enter a key\nAttempts to auto update any linked slots if it changes\nStores as a string in the JSON"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -500.0
+          "y": -1180.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1806,7 +2501,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -500.0
+              "y": -1180.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1815,12 +2510,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "KEY_TRACKER"
+            "defaultValue": "KEY_TRACKER",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 640.0,
-              "y": -380.0
+              "x": 660.0,
+              "y": -1000.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1829,12 +2525,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "target"
+            "defaultValue": "target",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -500.0
+              "y": -1180.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1843,17 +2540,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Keys only match up to the same type"
           },
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": -500.0
+              "y": -1180.0
             },
             "ngMapNodeName": "Enum Slot",
             "ngMapNodeSize": {
@@ -1866,14 +2564,32 @@
               "EMPTY_STRING",
               "NULL_STRING",
               "SKIP"
-            ]
+            ],
+            "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1360.0,
+              "y": -1180.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for linking to a key\ndraws a line to the target key\ndouble clicking the key in the slot with take the view to the linked node"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": -180.0
+          "y": -580.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -1892,7 +2608,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": -180.0
+              "y": -580.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1901,12 +2617,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "KEY_SELECT"
+            "defaultValue": "KEY_SELECT",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 640.0,
-              "y": -60.0
+              "x": 660.0,
+              "y": -400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -1915,12 +2632,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "target"
+            "defaultValue": "target",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": -180.0
+              "y": -580.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -1929,17 +2647,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Keys only match up to the same type"
           },
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": -180.0
+              "y": -580.0
             },
             "ngMapNodeName": "Enum Slot",
             "ngMapNodeSize": {
@@ -1952,15 +2671,33 @@
               "EMPTY_STRING",
               "NULL_STRING",
               "SKIP"
-            ]
+            ],
+            "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1360.0,
+              "y": -580.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Shows a dropdown of keys and allows their selection\nif the key goes away it remains tracked until cleard or updated to prevent accidental data loss"
       },
       {
         "ngMapNodeName": "Node",
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 200.0
+          "y": -100.0
         },
         "ngMapNodeSize": {
           "x": 202.0,
@@ -1978,7 +2715,7 @@
           {
             "ngMapNodePosition": {
               "x": 640.0,
-              "y": 200.0
+              "y": -100.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -1987,12 +2724,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "SUB_GRAPH_LIST"
+            "defaultValue": "SUB_GRAPH_LIST",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 200.0
+              "x": 860.0,
+              "y": -100.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2001,12 +2739,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "children"
+            "defaultValue": "children",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 200.0
+              "x": 1080.0,
+              "y": -100.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -2015,17 +2754,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 340.0
+              "x": 860.0,
+              "y": 80.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2034,15 +2774,33 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "explicitNode",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": ""
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1300.0,
+              "y": -100.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "NOT YET IMPLIMENTED"
       },
       {
         "ngMapNodeName": "Node",
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 560.0
+          "y": 400.0
         },
         "ngMapNodeSize": {
           "x": 202.0,
@@ -2060,7 +2818,7 @@
           {
             "ngMapNodePosition": {
               "x": 640.0,
-              "y": 560.0
+              "y": 400.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2069,12 +2827,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "SUB_GRAPH_DICTIONARY"
+            "defaultValue": "SUB_GRAPH_DICTIONARY",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 560.0
+              "x": 860.0,
+              "y": 400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2083,12 +2842,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "children"
+            "defaultValue": "children",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 560.0
+              "x": 1080.0,
+              "y": 400.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -2097,17 +2857,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 880.0,
-              "y": 700.0
+              "x": 860.0,
+              "y": 580.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2116,12 +2877,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "explicitNode",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 1360.0,
-              "y": 560.0
+              "x": 1300.0,
+              "y": 400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2130,9 +2892,27 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "keyField",
-            "defaultValue": "id"
+            "defaultValue": "id",
+            "info": ""
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 400.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "NOT YET IMPLIMENTED"
       },
       {
         "ngMapNodePosition": {
@@ -2165,7 +2945,8 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "LINK_TO_CHILD"
+            "defaultValue": "LINK_TO_CHILD",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
@@ -2179,7 +2960,8 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "children"
+            "defaultValue": "children",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
@@ -2193,17 +2975,18 @@
             },
             "fieldType": "INT",
             "label": "slotType",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Slot can only match up to a child node of this type"
           },
           {
             "ngMapNodePosition": {
-              "x": 700.0,
-              "y": 1060.0
+              "x": 640.0,
+              "y": 1100.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2212,7 +2995,8 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "explicitNode",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": "Name of the node type expected as children\n(This feature needs a refactor"
           },
           {
             "ngMapNodePosition": {
@@ -2230,14 +3014,32 @@
               "EMPTY_OBJECT",
               "NULL",
               "SKIP"
-            ]
+            ],
+            "info": "What to put in the JSON if no value is assigned\nEMPTY_OBJECT stores an empty object {}\nNULL Stores as a null\nSKIP leaves this entry out"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1580.0,
+              "y": 920.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot to creat a parent child relationship\nChild node are actually nested objects in the generated JSON file"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 1200.0
+          "y": 1420.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2256,7 +3058,7 @@
           {
             "ngMapNodePosition": {
               "x": 640.0,
-              "y": 1200.0
+              "y": 1420.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2265,12 +3067,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "FIELD_LIST"
+            "defaultValue": "FIELD_LIST",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 1200.0
+              "y": 1420.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2279,12 +3082,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Fields"
+            "defaultValue": "Fields",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 700.0,
-              "y": 1320.0
+              "x": 1120.0,
+              "y": 1420.0
             },
             "ngMapNodeName": "Link To Child Slot",
             "ngMapNodeSize": {
@@ -2295,14 +3099,32 @@
             "label": "field",
             "slotType": 1,
             "explicitNode": "",
-            "emptyHandling": "EMPTY_OBJECT"
+            "emptyHandling": "EMPTY_OBJECT",
+            "info": "Type of slot to populate this list with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1380.0,
+              "y": 1420.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "For creating a resizable list of a particular data type"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 1540.0
+          "y": 1760.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2321,7 +3143,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 1540.0
+              "y": 1760.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2330,12 +3152,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "FIELD_DICTIONARY"
+            "defaultValue": "FIELD_DICTIONARY",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 1540.0
+              "y": 1760.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2344,12 +3167,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Fields"
+            "defaultValue": "Fields",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 1540.0
+              "y": 1760.0
             },
             "ngMapNodeName": "Link To Child Slot",
             "ngMapNodeSize": {
@@ -2360,14 +3184,32 @@
             "label": "field",
             "slotType": 1,
             "explicitNode": "",
-            "emptyHandling": "EMPTY_OBJECT"
+            "emptyHandling": "EMPTY_OBJECT",
+            "info": "Type of slot to populate this dictiionary with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1380.0,
+              "y": 1760.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "For creating a dictionary of a particular data type"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 1840.0
+          "y": 2100.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2386,7 +3228,7 @@
           {
             "ngMapNodePosition": {
               "x": 640.0,
-              "y": 1860.0
+              "y": 2100.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2395,12 +3237,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "INFO"
+            "defaultValue": "INFO",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 860.0,
-              "y": 1820.0
+              "y": 2100.0
             },
             "ngMapNodeName": "Rich Text Slot",
             "ngMapNodeSize": {
@@ -2410,12 +3253,13 @@
             "fieldType": "TEXT_AREA_RICH",
             "label": "label",
             "minHeight": 40.0,
-            "defaultValue": "Some text"
+            "defaultValue": "Some text",
+            "info": "Text that will display for this info slot"
           },
           {
             "ngMapNodePosition": {
               "x": 1080.0,
-              "y": 1820.0
+              "y": 2100.0
             },
             "ngMapNodeName": "Float Slot",
             "ngMapNodeSize": {
@@ -2429,14 +3273,16 @@
             "max": 0.0,
             "hasMin": true,
             "min": 18.0,
-            "defaultValue": 40.0
+            "defaultValue": 40.0,
+            "info": "Height of the area for drawing the text"
           }
-        ]
+        ],
+        "info": "This persistently displays non-editable text for information, but IS NOT stored in the JSON file"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 2080.0
+          "y": 2480.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2454,8 +3300,8 @@
         "fields": [
           {
             "ngMapNodePosition": {
-              "x": 680.0,
-              "y": 2100.0
+              "x": 640.0,
+              "y": 2480.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2464,12 +3310,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "AUTO"
+            "defaultValue": "AUTO",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 900.0,
-              "y": 2100.0
+              "x": 860.0,
+              "y": 2480.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2478,12 +3325,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "text"
+            "defaultValue": "text",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 2100.0
+              "x": 1080.0,
+              "y": 2480.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2492,14 +3340,32 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "defaultValue",
-            "defaultValue": "default"
+            "defaultValue": "default",
+            "info": "Text that will display be stored for this auto slot"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1300.0,
+              "y": 2480.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "This persistently displays non-editable text that IS stored in the JSON file"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 2300.0
+          "y": 2820.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2517,8 +3383,8 @@
         "fields": [
           {
             "ngMapNodePosition": {
-              "x": 680.0,
-              "y": 2320.0
+              "x": 640.0,
+              "y": 2820.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2527,12 +3393,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "TYPE"
+            "defaultValue": "TYPE",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 900.0,
-              "y": 2320.0
+              "x": 860.0,
+              "y": 2820.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2541,12 +3408,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "Class Assembly",
-            "defaultValue": "fully qualified assembly name"
+            "defaultValue": "fully qualified assembly name",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 1120.0,
-              "y": 2320.0
+              "x": 1080.0,
+              "y": 2820.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2555,14 +3423,32 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "Class Type",
-            "defaultValue": "Full class name"
+            "defaultValue": "Full class name",
+            "info": ""
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1300.0,
+              "y": 2820.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "this is symilar to the Auto Slot, but is specifically designed for C# type data used in reflection"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 2540.0
+          "y": 3180.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2581,7 +3467,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 2540.0
+              "y": 3180.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2590,12 +3476,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "ENUM"
+            "defaultValue": "ENUM",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 2540.0
+              "y": 3180.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2604,12 +3491,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Type"
+            "defaultValue": "Type",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 2660.0
+              "y": 3360.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -2621,7 +3509,7 @@
             "field": {
               "ngMapNodePosition": {
                 "x": 900.0,
-                "y": 2660.0
+                "y": 3360.0
               },
               "ngMapNodeName": "Text Line Slot",
               "ngMapNodeSize": {
@@ -2630,15 +3518,34 @@
               },
               "fieldType": "TEXT_LINE",
               "label": "-",
-              "defaultValue": "ENUM"
-            }
+              "defaultValue": "ENUM",
+              "info": ""
+            },
+            "info": "Options that will appear in the dropdown for a user to choose"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1120.0,
+              "y": 3180.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot that shows a dropdown of options\nStores in the JSON as a string matching the selected option"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 2860.0
+          "y": 3620.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2656,8 +3563,8 @@
         "fields": [
           {
             "ngMapNodePosition": {
-              "x": 680.0,
-              "y": 2860.0
+              "x": 640.0,
+              "y": 3620.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2666,12 +3573,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "FLAGS"
+            "defaultValue": "FLAGS",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 2860.0
+              "x": 860.0,
+              "y": 3620.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2680,12 +3588,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Flags"
+            "defaultValue": "Flags",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 1180.0,
-              "y": 2860.0
+              "x": 1080.0,
+              "y": 3620.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -2694,17 +3603,18 @@
             },
             "fieldType": "INT",
             "label": "defaultValue",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Value that the field will start with"
           },
           {
             "ngMapNodePosition": {
-              "x": 680.0,
-              "y": 3000.0
+              "x": 640.0,
+              "y": 3800.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -2715,8 +3625,8 @@
             "label": "flags",
             "field": {
               "ngMapNodePosition": {
-                "x": 920.0,
-                "y": 3000.0
+                "x": 860.0,
+                "y": 3800.0
               },
               "ngMapNodeName": "Text Line Slot",
               "ngMapNodeSize": {
@@ -2725,15 +3635,34 @@
               },
               "fieldType": "TEXT_LINE",
               "label": "-",
-              "defaultValue": "Flag"
-            }
+              "defaultValue": "Flag",
+              "info": "Label for the flag to make it easier to edit\nWill not be sotred in the JSON"
+            },
+            "info": "List of flags the user will be able to turn on and off"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1300.0,
+              "y": 3620.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A list of boolean flags\nWill be stored as a single int value in the JSON without any of the labels"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 3240.0
+          "y": 4060.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2752,7 +3681,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 3240.0
+              "y": 4060.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2761,12 +3690,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "TEXT_LINE"
+            "defaultValue": "TEXT_LINE",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 3240.0
+              "y": 4060.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2775,12 +3705,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "String"
+            "defaultValue": "String",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 3240.0
+              "y": 4060.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2789,14 +3720,32 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "defaultValue",
-            "defaultValue": "String"
+            "defaultValue": "String",
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 4060.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for a single line of text\nStores as a string"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 3480.0
+          "y": 4360.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2815,7 +3764,7 @@
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": 3480.0
+              "y": 4360.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2824,12 +3773,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "TEXT_AREA"
+            "defaultValue": "TEXT_AREA",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 660.0,
-              "y": 3600.0
+              "y": 4540.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2838,12 +3788,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Some text"
+            "defaultValue": "Some text",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 880.0,
-              "y": 3500.0
+              "y": 4360.0
             },
             "ngMapNodeName": "Float Slot",
             "ngMapNodeSize": {
@@ -2857,12 +3808,13 @@
             "max": 0.0,
             "hasMin": true,
             "min": 18.0,
-            "defaultValue": 40.0
+            "defaultValue": 40.0,
+            "info": "Height of the area for drawing the text"
           },
           {
             "ngMapNodePosition": {
               "x": 1100.0,
-              "y": 3500.0
+              "y": 4360.0
             },
             "ngMapNodeName": "Text Area Slot",
             "ngMapNodeSize": {
@@ -2872,14 +3824,32 @@
             "fieldType": "TEXT_AREA",
             "label": "defaultValue",
             "minHeight": 40.0,
-            "defaultValue": "Some text"
+            "defaultValue": "Some text",
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1320.0,
+              "y": 4360.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 3840.0
+          "y": 4780.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2898,7 +3868,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 3840.0
+              "y": 4780.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2907,12 +3877,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "TEXT_AREA_RICH"
+            "defaultValue": "TEXT_AREA_RICH",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 3960.0
+              "y": 4960.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -2921,12 +3892,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Some text"
+            "defaultValue": "Some text",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 3860.0
+              "y": 4780.0
             },
             "ngMapNodeName": "Float Slot",
             "ngMapNodeSize": {
@@ -2940,12 +3912,13 @@
             "max": 0.0,
             "hasMin": true,
             "min": 18.0,
-            "defaultValue": 40.0
+            "defaultValue": 40.0,
+            "info": "Height of the area for drawing the text"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 3860.0
+              "y": 4780.0
             },
             "ngMapNodeName": "Rich Text Slot",
             "ngMapNodeSize": {
@@ -2955,14 +3928,32 @@
             "fieldType": "TEXT_AREA_RICH",
             "label": "defaultValue",
             "minHeight": 40.0,
-            "defaultValue": "Some text"
+            "defaultValue": "Some text",
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 4780.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string\nNOTE: should display rich text preview but something appears to be wrong"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 4220.0
+          "y": 5200.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -2981,7 +3972,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 4220.0
+              "y": 5200.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -2990,12 +3981,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "FLOAT"
+            "defaultValue": "FLOAT",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 4220.0
+              "y": 5200.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3004,12 +3996,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Value"
+            "defaultValue": "Value",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 1360.0,
-              "y": 4460.0
+              "x": 1560.0,
+              "y": 5200.0
             },
             "ngMapNodeName": "Double Slot",
             "ngMapNodeSize": {
@@ -3023,12 +4016,13 @@
             "max": "0",
             "hasMin": true,
             "min": "0",
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "info": "Size of the increment when the up and down arrows are pressed"
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": 4220.0
+              "x": 1120.0,
+              "y": 5200.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3038,12 +4032,13 @@
             "fieldType": "BOOLEAN",
             "label": "hasMax",
             "defaultValue": false,
-            "id": "B-aH6"
+            "id": "B-aH6",
+            "info": "If false the max will be ignored"
           },
           {
             "ngMapNodePosition": {
-              "x": 1360.0,
-              "y": 4220.0
+              "x": 1340.0,
+              "y": 5200.0
             },
             "ngMapNodeName": "Float Slot",
             "ngMapNodeSize": {
@@ -3057,12 +4052,13 @@
             "max": 0.0,
             "hasMin": false,
             "min": 0.0,
-            "defaultValue": 0.0
+            "defaultValue": 0.0,
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 700.0,
-              "y": 4380.0
+              "x": 680.0,
+              "y": 5380.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3072,12 +4068,13 @@
             "fieldType": "BOOLEAN",
             "label": "hasMin",
             "defaultValue": false,
-            "id": "B-2hF"
+            "id": "B-2hF",
+            "info": "If false the min will be ignored"
           },
           {
             "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 4380.0
+              "x": 900.0,
+              "y": 5380.0
             },
             "ngMapNodeName": "Float Slot",
             "ngMapNodeSize": {
@@ -3091,12 +4088,13 @@
             "max": 0.0,
             "hasMin": false,
             "min": 0.0,
-            "defaultValue": 0.0
+            "defaultValue": 0.0,
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": 4380.0
+              "x": 1120.0,
+              "y": 5400.0
             },
             "ngMapNodeName": "Float Slot",
             "ngMapNodeSize": {
@@ -3110,14 +4108,32 @@
             "max": 0.0,
             "hasMin": false,
             "min": 0.0,
-            "defaultValue": 0.0
+            "defaultValue": 0.0,
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 5500.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Slot for a floatign point value"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 4760.0
+          "y": 5800.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3136,7 +4152,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 4760.0
+              "y": 5800.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3145,12 +4161,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "DOUBLE"
+            "defaultValue": "DOUBLE",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 4760.0
+              "y": 5800.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3159,12 +4176,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Value"
+            "defaultValue": "Value",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
-              "x": 1360.0,
-              "y": 5000.0
+              "x": 1560.0,
+              "y": 5800.0
             },
             "ngMapNodeName": "Double Slot",
             "ngMapNodeSize": {
@@ -3178,12 +4196,13 @@
             "max": "0",
             "hasMin": true,
             "min": "0",
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "info": "Size of the increment when the up and down arrows are pressed"
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": 4760.0
+              "x": 1120.0,
+              "y": 5800.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3193,12 +4212,13 @@
             "fieldType": "BOOLEAN",
             "label": "hasMax",
             "defaultValue": false,
-            "id": "BOOL-uGT"
+            "id": "BOOL-uGT",
+            "info": "If false the max will be ignored"
           },
           {
             "ngMapNodePosition": {
-              "x": 1360.0,
-              "y": 4760.0
+              "x": 1340.0,
+              "y": 5800.0
             },
             "ngMapNodeName": "Double Slot",
             "ngMapNodeSize": {
@@ -3212,12 +4232,13 @@
             "max": "0",
             "hasMin": false,
             "min": "0",
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 700.0,
-              "y": 4920.0
+              "x": 680.0,
+              "y": 5980.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3227,12 +4248,13 @@
             "fieldType": "BOOLEAN",
             "label": "hasMin",
             "defaultValue": false,
-            "id": "BOOL-yIn"
+            "id": "BOOL-yIn",
+            "info": "If false the min will be ignored"
           },
           {
             "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 4920.0
+              "x": 900.0,
+              "y": 5980.0
             },
             "ngMapNodeName": "Double Slot",
             "ngMapNodeSize": {
@@ -3246,12 +4268,13 @@
             "max": "0",
             "hasMin": false,
             "min": "0",
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 1140.0,
-              "y": 4920.0
+              "x": 1120.0,
+              "y": 6000.0
             },
             "ngMapNodeName": "Double Slot",
             "ngMapNodeSize": {
@@ -3265,14 +4288,32 @@
             "max": "0",
             "hasMin": false,
             "min": "0",
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 6100.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Slot for a double value"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 5340.0
+          "y": 6400.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3291,7 +4332,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 5340.0
+              "y": 6400.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3300,12 +4341,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "INT"
+            "defaultValue": "INT",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 5340.0
+              "y": 6400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3314,31 +4356,33 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Value"
+            "defaultValue": "Value",
+            "info": "Label name that will display for this field"
           },
           {
+            "ngMapNodeName": "Int Slot",
             "ngMapNodePosition": {
-              "x": 1360.0,
-              "y": 5580.0
+              "x": 1580.0,
+              "y": 6400.0
             },
-            "ngMapNodeName": "Double Slot",
             "ngMapNodeSize": {
               "x": 202.0,
-              "y": 230.0
+              "y": 66.0
             },
-            "fieldType": "DOUBLE",
+            "fieldType": "INT",
             "label": "MinStepSize",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
-            "max": "0",
+            "max": 0,
             "hasMin": true,
-            "min": "0",
-            "defaultValue": "0"
+            "min": 0,
+            "defaultValue": 0,
+            "info": "Size of the increment when the up and down arrows are pressed"
           },
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": 5340.0
+              "y": 6400.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3348,12 +4392,13 @@
             "fieldType": "BOOLEAN",
             "label": "hasMax",
             "defaultValue": false,
-            "id": "B-zqM"
+            "id": "B-zqM",
+            "info": "If false the max will be ignored"
           },
           {
             "ngMapNodePosition": {
               "x": 1360.0,
-              "y": 5340.0
+              "y": 6400.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -3362,17 +4407,18 @@
             },
             "fieldType": "INT",
             "label": "max",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": ""
           },
           {
             "ngMapNodePosition": {
-              "x": 700.0,
-              "y": 5500.0
+              "x": 680.0,
+              "y": 6580.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3382,12 +4428,13 @@
             "fieldType": "BOOLEAN",
             "label": "hasMin",
             "defaultValue": false,
-            "id": "B-Y2e"
+            "id": "B-Y2e",
+            "info": "If false the min will be ignored"
           },
           {
             "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 5500.0
+              "x": 900.0,
+              "y": 6580.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -3396,17 +4443,18 @@
             },
             "fieldType": "INT",
             "label": "min",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 1140.0,
-              "y": 5500.0
+              "y": 6600.0
             },
             "ngMapNodeName": "Int Slot",
             "ngMapNodeSize": {
@@ -3415,19 +4463,37 @@
             },
             "fieldType": "INT",
             "label": "defaultValue",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": false,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1360.0,
+              "y": 6700.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Slot for an integer"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 5900.0
+          "y": 6980.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3446,7 +4512,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 5900.0
+              "y": 6980.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3455,12 +4521,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "LONG"
+            "defaultValue": "LONG",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 5900.0
+              "y": 6980.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3469,12 +4536,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Value"
+            "defaultValue": "Value",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 5900.0
+              "y": 6980.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3484,12 +4552,13 @@
             "fieldType": "BOOLEAN",
             "label": "allowNegative",
             "defaultValue": true,
-            "id": "B-zqM"
+            "id": "B-zqM",
+            "info": "True makes it a normal long\nFalse basically  makes it a ulong "
           },
           {
             "ngMapNodePosition": {
-              "x": 860.0,
-              "y": 6020.0
+              "x": 780.0,
+              "y": 7140.0
             },
             "ngMapNodeName": "Long Slot",
             "ngMapNodeSize": {
@@ -3499,14 +4568,32 @@
             "fieldType": "LONG",
             "label": "defaultValue",
             "allowNegative": true,
-            "defaultValue": "0"
+            "defaultValue": "0",
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 6980.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Slot for a long value\nStores as a string "
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 6240.0
+          "y": 7400.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3525,7 +4612,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 6240.0
+              "y": 7400.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3534,12 +4621,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "BOOLEAN"
+            "defaultValue": "BOOLEAN",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 6240.0
+              "y": 7400.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3548,12 +4636,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "IsActive"
+            "defaultValue": "IsActive",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 6360.0
+              "y": 7580.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3563,12 +4652,13 @@
             "fieldType": "BOOLEAN",
             "label": "defaultValue",
             "defaultValue": false,
-            "id": "B-SAC"
+            "id": "B-SAC",
+            "info": "Value that the field will start with"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 6280.0
+              "y": 7400.0
             },
             "ngMapNodeName": "Key Slot",
             "ngMapNodeSize": {
@@ -3579,14 +4669,32 @@
             "label": "id",
             "slotType": 0,
             "keyPrefix": "BOOL-",
-            "keySize": 3
+            "keySize": 3,
+            "info": "Used by linked booleans"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1340.0,
+              "y": 7400.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Slot for a true false value"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 6540.0
+          "y": 7840.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3605,7 +4713,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 6540.0
+              "y": 7840.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3614,12 +4722,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "BOOLEAN"
+            "defaultValue": "BOOLEAN",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 6540.0
+              "y": 7840.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3628,12 +4737,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "IsActive"
+            "defaultValue": "IsActive",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 6540.0
+              "y": 7840.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -3643,12 +4753,13 @@
             "fieldType": "BOOLEAN",
             "label": "defaultValue",
             "defaultValue": false,
-            "id": "B-Ili"
+            "id": "B-Ili",
+            "info": "Value that the field will start with"
           },
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 6680.0
+              "y": 8020.0
             },
             "ngMapNodeName": "Key Slot",
             "ngMapNodeSize": {
@@ -3659,12 +4770,13 @@
             "label": "id",
             "slotType": 0,
             "keyPrefix": "BOOL-",
-            "keySize": 3
+            "keySize": 3,
+            "info": "Used by linked booleans"
           },
           {
             "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 6680.0
+              "x": 900.0,
+              "y": 8020.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -3675,8 +4787,8 @@
             "label": "matchTrue",
             "field": {
               "ngMapNodePosition": {
-                "x": 1140.0,
-                "y": 6680.0
+                "x": 1120.0,
+                "y": 8020.0
               },
               "ngMapNodeName": "Key Tracker Slot",
               "ngMapNodeSize": {
@@ -3686,13 +4798,15 @@
               "fieldType": "KEY_TRACKER",
               "label": "true when true",
               "slotType": 0,
-              "emptyHandling": "SKIP"
-            }
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "When this boolean is set TRUE all linked booleans will also be turned TRUE"
           },
           {
             "ngMapNodePosition": {
-              "x": 920.0,
-              "y": 6800.0
+              "x": 900.0,
+              "y": 8200.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -3703,8 +4817,8 @@
             "label": "invertTrue",
             "field": {
               "ngMapNodePosition": {
-                "x": 1140.0,
-                "y": 6800.0
+                "x": 1120.0,
+                "y": 8200.0
               },
               "ngMapNodeName": "Key Tracker Slot",
               "ngMapNodeSize": {
@@ -3714,13 +4828,15 @@
               "fieldType": "KEY_TRACKER",
               "label": "false when true",
               "slotType": 0,
-              "emptyHandling": "SKIP"
-            }
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "When this boolean is set TRUE all linked booleans will also be turned FALSE"
           },
           {
             "ngMapNodePosition": {
-              "x": 1380.0,
-              "y": 6680.0
+              "x": 1340.0,
+              "y": 7840.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -3731,8 +4847,8 @@
             "label": "matchFalse",
             "field": {
               "ngMapNodePosition": {
-                "x": 1600.0,
-                "y": 6680.0
+                "x": 1560.0,
+                "y": 7840.0
               },
               "ngMapNodeName": "Key Tracker Slot",
               "ngMapNodeSize": {
@@ -3742,13 +4858,15 @@
               "fieldType": "KEY_TRACKER",
               "label": "false when false",
               "slotType": 0,
-              "emptyHandling": "SKIP"
-            }
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "When this boolean is set FALSE all linked booleans will also be turned FALSE"
           },
           {
             "ngMapNodePosition": {
-              "x": 1380.0,
-              "y": 6800.0
+              "x": 1340.0,
+              "y": 8080.0
             },
             "ngMapNodeName": "Field List Slot",
             "ngMapNodeSize": {
@@ -3759,8 +4877,8 @@
             "label": "invertFalse",
             "field": {
               "ngMapNodePosition": {
-                "x": 1600.0,
-                "y": 6800.0
+                "x": 1560.0,
+                "y": 8080.0
               },
               "ngMapNodeName": "Key Tracker Slot",
               "ngMapNodeSize": {
@@ -3770,15 +4888,34 @@
               "fieldType": "KEY_TRACKER",
               "label": "true when false",
               "slotType": 0,
-              "emptyHandling": "SKIP"
-            }
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "When this boolean is set FALSE all linked booleans will be turned TRUE"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1780.0,
+              "y": 7840.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "Slot for a true false value that has conditional relations to other boolean slots within this node"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 6980.0
+          "y": 8420.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3797,7 +4934,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 7000.0
+              "y": 8440.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3806,12 +4943,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "VECTOR2"
+            "defaultValue": "VECTOR2",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 7000.0
+              "y": 8440.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3820,12 +4958,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Vector"
+            "defaultValue": "Vector",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 7000.0
+              "y": 8440.0
             },
             "ngMapNodeName": "Vector2 Slot",
             "ngMapNodeSize": {
@@ -3837,14 +4976,32 @@
             "defaultValue": {
               "x": 0.0,
               "y": 0.0
-            }
+            },
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1420.0,
+              "y": 8440.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for X and Y coordinates\nStores as a nssted data set"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 7260.0
+          "y": 8700.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3863,7 +5020,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 7280.0
+              "y": 8720.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3872,12 +5029,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "VECTOR3"
+            "defaultValue": "VECTOR3",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 7280.0
+              "y": 8720.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3886,12 +5044,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Vector"
+            "defaultValue": "Vector",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 7280.0
+              "y": 8720.0
             },
             "ngMapNodeName": "Vector3 Slot",
             "ngMapNodeSize": {
@@ -3904,14 +5063,32 @@
               "x": 0.0,
               "y": 0.0,
               "z": 0.0
-            }
+            },
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1420.0,
+              "y": 8720.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for X, Y, and Z\nStores as a nssted data set"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 7580.0
+          "y": 9020.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3930,7 +5107,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 7600.0
+              "y": 9040.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -3939,12 +5116,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "VECTOR4"
+            "defaultValue": "VECTOR4",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 7600.0
+              "y": 9040.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -3953,12 +5131,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Vector"
+            "defaultValue": "Vector",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 7600.0
+              "y": 9040.0
             },
             "ngMapNodeName": "Vector4 Slot",
             "ngMapNodeSize": {
@@ -3972,14 +5151,32 @@
               "y": 0.0,
               "z": 0.0,
               "w": 0.0
-            }
+            },
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1420.0,
+              "y": 9040.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for X, Y, Z, and W\nStores as a nssted data set"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 7900.0
+          "y": 9340.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -3998,7 +5195,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 7940.0
+              "y": 9380.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -4007,12 +5204,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "COLOR"
+            "defaultValue": "COLOR",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 7940.0
+              "y": 9380.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -4021,12 +5219,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Color"
+            "defaultValue": "Color",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 7940.0
+              "y": 9380.0
             },
             "ngMapNodeName": "Color Slot",
             "ngMapNodeSize": {
@@ -4041,12 +5240,13 @@
               "b": 1.0,
               "a": 1.0
             },
-            "asHtml": false
+            "asHtml": false,
+            "info": "Value that the field will start with"
           },
           {
             "ngMapNodePosition": {
               "x": 1340.0,
-              "y": 7940.0
+              "y": 9380.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -4056,14 +5256,32 @@
             "fieldType": "BOOLEAN",
             "label": "asHtml",
             "defaultValue": false,
-            "id": "B-Dog"
+            "id": "B-Dog",
+            "info": "Should the value be stored as an HTML hash string #AARRGGBB"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1560.0,
+              "y": 9380.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for a color value\nCan store as either a nested set (R,G,B,A) or a hash string #AARRGGBB"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 8200.0
+          "y": 9640.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -4082,7 +5300,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 8220.0
+              "y": 9660.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -4091,12 +5309,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "DATE_TIME_OFFSET"
+            "defaultValue": "DATE_TIME_OFFSET",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 8220.0
+              "y": 9660.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -4105,12 +5324,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Date"
+            "defaultValue": "Date",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 8220.0
+              "y": 9660.0
             },
             "ngMapNodeName": "Date Time Offset Slot",
             "ngMapNodeSize": {
@@ -4122,14 +5342,32 @@
             "defaultValue": {
               "date": "2020-07-16T14:34:11.0000000",
               "offset": "-07:00"
-            }
+            },
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1400.0,
+              "y": 9660.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "For storing a date time with a timezone component\nstores as a nested string"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 8500.0
+          "y": 9940.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -4148,7 +5386,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 8520.0
+              "y": 9960.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -4157,12 +5395,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "DATE_TIME"
+            "defaultValue": "DATE_TIME",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 8520.0
+              "y": 9960.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -4171,12 +5410,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Date"
+            "defaultValue": "Date",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 8520.0
+              "y": 9960.0
             },
             "ngMapNodeName": "Date Time Slot",
             "ngMapNodeSize": {
@@ -4188,14 +5428,32 @@
             "defaultValue": {
               "date": "2020-07-16T14:34:16.0000000",
               "offset": "-00:00"
-            }
+            },
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1380.0,
+              "y": 9960.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "For storing a date time \nstores as a nested set of strings"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 8780.0
+          "y": 10220.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -4214,7 +5472,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 8820.0
+              "y": 10260.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -4223,12 +5481,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "TIME_SPAN"
+            "defaultValue": "TIME_SPAN",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 900.0,
-              "y": 8820.0
+              "y": 10260.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -4237,12 +5496,13 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Duration"
+            "defaultValue": "Duration",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodePosition": {
               "x": 1120.0,
-              "y": 8820.0
+              "y": 10260.0
             },
             "ngMapNodeName": "Boolean Slot",
             "ngMapNodeSize": {
@@ -4252,12 +5512,13 @@
             "fieldType": "BOOLEAN",
             "label": "asSeconds",
             "defaultValue": false,
-            "id": "BOOL-9KE"
+            "id": "BOOL-9KE",
+            "info": "If true will be stored as a total number of seconds in an int\nIf false will be stored as a total number of ticks in a long"
           },
           {
             "ngMapNodePosition": {
               "x": 1340.0,
-              "y": 8820.0
+              "y": 10260.0
             },
             "ngMapNodeName": "Time Span Slot",
             "ngMapNodeSize": {
@@ -4267,14 +5528,32 @@
             "fieldType": "TIME_SPAN",
             "label": "defaultValue",
             "defaultValue": "0",
-            "asSeconds": false
+            "asSeconds": false,
+            "info": "Value that the field will start with"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1580.0,
+              "y": 10260.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "For storing a timespan"
       },
       {
         "ngMapNodePosition": {
           "x": 400.0,
-          "y": 9100.0
+          "y": 10540.0
         },
         "ngMapNodeName": "Node",
         "ngMapNodeSize": {
@@ -4293,7 +5572,7 @@
           {
             "ngMapNodePosition": {
               "x": 680.0,
-              "y": 9100.0
+              "y": 10540.0
             },
             "ngMapNodeName": "Auto Slot",
             "ngMapNodeSize": {
@@ -4302,12 +5581,13 @@
             },
             "fieldType": "AUTO",
             "label": "fieldType",
-            "defaultValue": "RELATIVE_PATH"
+            "defaultValue": "RELATIVE_PATH",
+            "info": ""
           },
           {
             "ngMapNodePosition": {
               "x": 920.0,
-              "y": 9100.0
+              "y": 10540.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -4316,13 +5596,14 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "label",
-            "defaultValue": "Path"
+            "defaultValue": "Path",
+            "info": "Label name that will display for this field"
           },
           {
             "ngMapNodeName": "Int Slot",
             "ngMapNodePosition": {
               "x": 1160.0,
-              "y": 9100.0
+              "y": 10540.0
             },
             "ngMapNodeSize": {
               "x": 202.0,
@@ -4330,17 +5611,18 @@
             },
             "fieldType": "INT",
             "label": "startOffset",
-            "MinStepSize": "0",
+            "MinStepSize": 0,
             "hasMax": false,
             "max": 0,
             "hasMin": true,
             "min": 0,
-            "defaultValue": 0
+            "defaultValue": 0,
+            "info": "how many characters to trim off the front of the relative path"
           },
           {
             "ngMapNodePosition": {
               "x": 920.0,
-              "y": 9220.0
+              "y": 10720.0
             },
             "ngMapNodeName": "Text Line Slot",
             "ngMapNodeSize": {
@@ -4349,13 +5631,14 @@
             },
             "fieldType": "TEXT_LINE",
             "label": "prefix",
-            "defaultValue": ""
+            "defaultValue": "",
+            "info": "Text that will be put in front of the relative path"
           },
           {
             "ngMapNodeName": "Field List Slot",
             "ngMapNodePosition": {
               "x": 1400.0,
-              "y": 9100.0
+              "y": 10540.0
             },
             "ngMapNodeSize": {
               "x": 202.0,
@@ -4367,7 +5650,7 @@
               "ngMapNodeName": "Text Line Slot",
               "ngMapNodePosition": {
                 "x": 1640.0,
-                "y": 9100.0
+                "y": 10540.0
               },
               "ngMapNodeSize": {
                 "x": 202.0,
@@ -4375,10 +5658,29 @@
               },
               "fieldType": "TEXT_LINE",
               "label": "-",
-              "defaultValue": "*.png"
-            }
+              "defaultValue": "*.png",
+              "info": ""
+            },
+            "info": "What file types to show as options"
+          },
+          {
+            "ngMapNodePosition": {
+              "x": 1400.0,
+              "y": 10700.0
+            },
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodeSize": {
+              "x": 243.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "info",
+            "minHeight": 40.0,
+            "defaultValue": "",
+            "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
           }
-        ]
+        ],
+        "info": "A slot for storing paths based on the file structure around your graph"
       }
     ]
   }

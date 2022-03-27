@@ -40,6 +40,9 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
+			template.GetValue( "info", out string info );
+			_field.HintTooltip = info;
+			
 			template.GetValue( "keyPrefix", out _keyPrefix );
 			template.GetValue( "keySize", out _keySize );
 			template.GetValue( "slotType", out _linkType );

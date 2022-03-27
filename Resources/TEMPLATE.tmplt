@@ -51,12 +51,14 @@
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultListing",
-          "defaultValue": "listing"
+          "defaultValue": "listing",
+          "info": "Name of the "
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Name of the node typ expected as children\n(This feature needs a refactor"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -70,8 +72,10 @@
               "b": 1.0,
               "a": 1.0
             },
-            "asHtml": false
-          }
+            "asHtml": false,
+            "info": ""
+          },
+          "info": "Colors used for Parent Child links"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -85,20 +89,24 @@
               "b": 1.0,
               "a": 1.0
             },
-            "asHtml": false
-          }
+            "asHtml": false,
+            "info": ""
+          },
+          "info": "Colors used for Key links"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "reuseDll",
           "defaultValue": true,
-          "id": "BOOL-LYn"
+          "id": "BOOL-LYn",
+          "info": "If this graph uses a generated DLL, should it reuse the same one?\nIf not, it will rebuild from scratch each time\nShould also be checked if there is an externally generated DLL for this file"
         },
         {
           "fieldType": "TEXT_AREA",
           "label": "exportScript",
           "minHeight": 200.0,
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Code used for generating JSON files\nIf empty will generate a single JSON file or the same name as the graph file being exported from\nNOTE: BETTER DOCUMENTATION NEEDED HERE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -108,10 +116,13 @@
             "label": "-",
             "slotType": 0,
             "explicitNode": "Node",
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "List of child nodes this graph can contain"
         }
-      ]
+      ],
+      "info": "Stores info about the graph itself\nThere should be only one per template"
     },
     {
       "title": "Node",
@@ -126,7 +137,8 @@
         {
           "fieldType": "TEXT_LINE",
           "label": "title",
-          "defaultValue": "Node"
+          "defaultValue": "Node",
+          "info": "Human readable name of the node\nNot stored in the final JSON"
         },
         {
           "fieldType": "COLOR",
@@ -137,17 +149,19 @@
             "b": 1.0,
             "a": 1.0
           },
-          "asHtml": false
+          "asHtml": false,
+          "info": "Tint that will be applied to this type of node"
         },
         {
           "fieldType": "INT",
           "label": "parentType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": -1,
-          "defaultValue": -1
+          "defaultValue": -1,
+          "info": "Type of parent this node can be connected to\nIf -1 then this node has only the graph as a parent"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -157,10 +171,20 @@
             "label": "-",
             "slotType": 1,
             "explicitNode": "",
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "List of fields this node type will have"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Defines an individual node"
     },
     {
       "title": "Separator Slot",
@@ -175,9 +199,11 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "SEPARATOR"
+          "defaultValue": "SEPARATOR",
+          "info": ""
         }
-      ]
+      ],
+      "info": "A buffer that can be insterted between fields"
     },
     {
       "title": "Key Slot",
@@ -192,39 +218,52 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "KEY"
+          "defaultValue": "KEY",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "id"
+          "defaultValue": "id",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyPrefix",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Characters that remain the same for each key\nEG 'id' in id1234"
         },
         {
           "fieldType": "INT",
           "label": "keySize",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 1,
-          "defaultValue": 1
+          "defaultValue": 1,
+          "info": "how many characters will be generated for the key after the prefix"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot that generates a unique key per node\nStores as a string in the JSON"
     },
     {
       "title": "Key Manual Slot",
@@ -239,34 +278,47 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "KEY_MANUAL"
+          "defaultValue": "KEY_MANUAL",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "id"
+          "defaultValue": "id",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyPrefix",
-          "defaultValue": "id_"
+          "defaultValue": "id_",
+          "info": "Characters that remain the same for each key\nEG 'id_' in id_Jeff"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "key",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot that the user can manually enter a key\nAttempts to auto update any linked slots if it changes\nStores as a string in the JSON"
     },
     {
       "title": "Key Tracker Slot",
@@ -281,22 +333,25 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "KEY_TRACKER"
+          "defaultValue": "KEY_TRACKER",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "target"
+          "defaultValue": "target",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
         },
         {
           "fieldType": "ENUM",
@@ -305,9 +360,18 @@
             "EMPTY_STRING",
             "NULL_STRING",
             "SKIP"
-          ]
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for linking to a key\ndraws a line to the target key\ndouble clicking the key in the slot with take the view to the linked node"
     },
     {
       "title": "Key Select Slot",
@@ -322,22 +386,25 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "KEY_SELECT"
+          "defaultValue": "KEY_SELECT",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "target"
+          "defaultValue": "target",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
         },
         {
           "fieldType": "ENUM",
@@ -346,9 +413,18 @@
             "EMPTY_STRING",
             "NULL_STRING",
             "SKIP"
-          ]
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Shows a dropdown of keys and allows their selection\nif the key goes away it remains tracked until cleard or updated to prevent accidental data loss"
     },
     {
       "title": "Graph List Slot",
@@ -363,29 +439,41 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "SUB_GRAPH_LIST"
+          "defaultValue": "SUB_GRAPH_LIST",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "children"
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "NOT YET IMPLIMENTED"
     },
     {
       "title": "Graph Dictionary Slot",
@@ -400,34 +488,47 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "SUB_GRAPH_DICTIONARY"
+          "defaultValue": "SUB_GRAPH_DICTIONARY",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "children"
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyField",
-          "defaultValue": "id"
+          "defaultValue": "id",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "NOT YET IMPLIMENTED"
     },
     {
       "title": "Link To Child Slot",
@@ -442,27 +543,31 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "LINK_TO_CHILD"
+          "defaultValue": "LINK_TO_CHILD",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "children"
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "slotType",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Slot can only match up to a child node of this type"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Name of the node type expected as children\n(This feature needs a refactor"
         },
         {
           "fieldType": "ENUM",
@@ -471,9 +576,18 @@
             "EMPTY_OBJECT",
             "NULL",
             "SKIP"
-          ]
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_OBJECT stores an empty object {}\nNULL Stores as a null\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot to creat a parent child relationship\nChild node are actually nested objects in the generated JSON file"
     },
     {
       "title": "Field List Slot",
@@ -488,21 +602,32 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FIELD_LIST"
+          "defaultValue": "FIELD_LIST",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Fields"
+          "defaultValue": "Fields",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
           "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
+          "emptyHandling": "EMPTY_OBJECT",
+          "info": "Type of slot to populate this list with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For creating a resizable list of a particular data type"
     },
     {
       "title": "Field Dictionary Slot",
@@ -517,21 +642,32 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FIELD_DICTIONARY"
+          "defaultValue": "FIELD_DICTIONARY",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Fields"
+          "defaultValue": "Fields",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "LINK_TO_CHILD",
           "label": "field",
           "slotType": 1,
           "explicitNode": "",
-          "emptyHandling": "EMPTY_OBJECT"
+          "emptyHandling": "EMPTY_OBJECT",
+          "info": "Type of slot to populate this dictiionary with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For creating a dictionary of a particular data type"
     },
     {
       "title": "Info Slot",
@@ -546,13 +682,15 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "INFO"
+          "defaultValue": "INFO",
+          "info": ""
         },
         {
           "fieldType": "TEXT_AREA_RICH",
           "label": "label",
           "minHeight": 40.0,
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Text that will display for this info slot"
         },
         {
           "fieldType": "FLOAT",
@@ -562,9 +700,11 @@
           "max": 0.0,
           "hasMin": true,
           "min": 18.0,
-          "defaultValue": 40.0
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
         }
-      ]
+      ],
+      "info": "This persistently displays non-editable text for information, but IS NOT stored in the JSON file"
     },
     {
       "title": "Auto Slot",
@@ -579,19 +719,30 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "AUTO"
+          "defaultValue": "AUTO",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "text"
+          "defaultValue": "text",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultValue",
-          "defaultValue": "default"
+          "defaultValue": "default",
+          "info": "Text that will display be stored for this auto slot"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "This persistently displays non-editable text that IS stored in the JSON file"
     },
     {
       "title": "Type Slot",
@@ -606,19 +757,30 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TYPE"
+          "defaultValue": "TYPE",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "Class Assembly",
-          "defaultValue": "fully qualified assembly name"
+          "defaultValue": "fully qualified assembly name",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "Class Type",
-          "defaultValue": "Full class name"
+          "defaultValue": "Full class name",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "this is symilar to the Auto Slot, but is specifically designed for C# type data used in reflection"
     },
     {
       "title": "Enum Slot",
@@ -633,12 +795,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "ENUM"
+          "defaultValue": "ENUM",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Type"
+          "defaultValue": "Type",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -646,10 +810,20 @@
           "field": {
             "fieldType": "TEXT_LINE",
             "label": "-",
-            "defaultValue": "ENUM"
-          }
+            "defaultValue": "ENUM",
+            "info": ""
+          },
+          "info": "Options that will appear in the dropdown for a user to choose"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot that shows a dropdown of options\nStores in the JSON as a string matching the selected option"
     },
     {
       "title": "Flags Slot",
@@ -664,22 +838,25 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FLAGS"
+          "defaultValue": "FLAGS",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Flags"
+          "defaultValue": "Flags",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "defaultValue",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -687,10 +864,20 @@
           "field": {
             "fieldType": "TEXT_LINE",
             "label": "-",
-            "defaultValue": "Flag"
-          }
+            "defaultValue": "Flag",
+            "info": "Label for the flag to make it easier to edit\nWill not be sotred in the JSON"
+          },
+          "info": "List of flags the user will be able to turn on and off"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A list of boolean flags\nWill be stored as a single int value in the JSON without any of the labels"
     },
     {
       "title": "Text Line Slot",
@@ -705,19 +892,30 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TEXT_LINE"
+          "defaultValue": "TEXT_LINE",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "String"
+          "defaultValue": "String",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultValue",
-          "defaultValue": "String"
+          "defaultValue": "String",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for a single line of text\nStores as a string"
     },
     {
       "title": "Text Area Slot",
@@ -732,12 +930,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TEXT_AREA"
+          "defaultValue": "TEXT_AREA",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "FLOAT",
@@ -747,15 +947,25 @@
           "max": 0.0,
           "hasMin": true,
           "min": 18.0,
-          "defaultValue": 40.0
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
         },
         {
           "fieldType": "TEXT_AREA",
           "label": "defaultValue",
           "minHeight": 40.0,
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string"
     },
     {
       "title": "Rich Text Slot",
@@ -770,12 +980,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TEXT_AREA_RICH"
+          "defaultValue": "TEXT_AREA_RICH",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "FLOAT",
@@ -785,15 +997,25 @@
           "max": 0.0,
           "hasMin": true,
           "min": 18.0,
-          "defaultValue": 40.0
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
         },
         {
           "fieldType": "TEXT_AREA_RICH",
           "label": "defaultValue",
           "minHeight": 40.0,
-          "defaultValue": "Some text"
+          "defaultValue": "Some text",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string\nNOTE: should display rich text preview but something appears to be wrong"
     },
     {
       "title": "Float Slot",
@@ -808,12 +1030,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "FLOAT"
+          "defaultValue": "FLOAT",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DOUBLE",
@@ -823,13 +1047,15 @@
           "max": "0",
           "hasMin": true,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Size of the increment when the up and down arrows are pressed"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
-          "id": "B-aH6"
+          "id": "B-aH6",
+          "info": "If false the max will be ignored"
         },
         {
           "fieldType": "FLOAT",
@@ -839,13 +1065,15 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 0.0
+          "defaultValue": 0.0,
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
-          "id": "B-2hF"
+          "id": "B-2hF",
+          "info": "If false the min will be ignored"
         },
         {
           "fieldType": "FLOAT",
@@ -855,7 +1083,8 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 0.0
+          "defaultValue": 0.0,
+          "info": ""
         },
         {
           "fieldType": "FLOAT",
@@ -865,9 +1094,18 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 0.0
+          "defaultValue": 0.0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a floatign point value"
     },
     {
       "title": "Double Slot",
@@ -882,12 +1120,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "DOUBLE"
+          "defaultValue": "DOUBLE",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DOUBLE",
@@ -897,13 +1137,15 @@
           "max": "0",
           "hasMin": true,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Size of the increment when the up and down arrows are pressed"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
-          "id": "BOOL-uGT"
+          "id": "BOOL-uGT",
+          "info": "If false the max will be ignored"
         },
         {
           "fieldType": "DOUBLE",
@@ -913,13 +1155,15 @@
           "max": "0",
           "hasMin": false,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
-          "id": "BOOL-yIn"
+          "id": "BOOL-yIn",
+          "info": "If false the min will be ignored"
         },
         {
           "fieldType": "DOUBLE",
@@ -929,7 +1173,8 @@
           "max": "0",
           "hasMin": false,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": ""
         },
         {
           "fieldType": "DOUBLE",
@@ -939,9 +1184,18 @@
           "max": "0",
           "hasMin": false,
           "min": "0",
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a double value"
     },
     {
       "title": "Int Slot",
@@ -956,66 +1210,82 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "INT"
+          "defaultValue": "INT",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
-          "fieldType": "DOUBLE",
+          "fieldType": "INT",
           "label": "MinStepSize",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
-          "max": "0",
+          "max": 0,
           "hasMin": true,
-          "min": "0",
-          "defaultValue": "0"
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Size of the increment when the up and down arrows are pressed"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMax",
           "defaultValue": false,
-          "id": "B-zqM"
+          "id": "B-zqM",
+          "info": "If false the max will be ignored"
         },
         {
           "fieldType": "INT",
           "label": "max",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "hasMin",
           "defaultValue": false,
-          "id": "B-Y2e"
+          "id": "B-Y2e",
+          "info": "If false the min will be ignored"
         },
         {
           "fieldType": "INT",
           "label": "min",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": ""
         },
         {
           "fieldType": "INT",
           "label": "defaultValue",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": false,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for an integer"
     },
     {
       "title": "Long Slot",
@@ -1030,26 +1300,38 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "LONG"
+          "defaultValue": "LONG",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Value"
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "allowNegative",
           "defaultValue": true,
-          "id": "B-zqM"
+          "id": "B-zqM",
+          "info": "True makes it a normal long\nFalse basically  makes it a ulong "
         },
         {
           "fieldType": "LONG",
           "label": "defaultValue",
           "allowNegative": true,
-          "defaultValue": "0"
+          "defaultValue": "0",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a long value\nStores as a string "
     },
     {
       "title": "Boolean Slot",
@@ -1064,27 +1346,39 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "BOOLEAN"
+          "defaultValue": "BOOLEAN",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "IsActive"
+          "defaultValue": "IsActive",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "defaultValue",
           "defaultValue": false,
-          "id": "B-SAC"
+          "id": "B-SAC",
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "KEY",
           "label": "id",
           "slotType": 0,
           "keyPrefix": "BOOL-",
-          "keySize": 3
+          "keySize": 3,
+          "info": "Used by linked booleans"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a true false value"
     },
     {
       "title": "Linked Boolean Slot",
@@ -1099,25 +1393,29 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "BOOLEAN"
+          "defaultValue": "BOOLEAN",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "IsActive"
+          "defaultValue": "IsActive",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "defaultValue",
           "defaultValue": false,
-          "id": "B-Ili"
+          "id": "B-Ili",
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "KEY",
           "label": "id",
           "slotType": 0,
           "keyPrefix": "BOOL-",
-          "keySize": 3
+          "keySize": 3,
+          "info": "Used by linked booleans"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1126,8 +1424,10 @@
             "fieldType": "KEY_TRACKER",
             "label": "true when true",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set TRUE all linked booleans will also be turned TRUE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1136,8 +1436,10 @@
             "fieldType": "KEY_TRACKER",
             "label": "false when true",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set TRUE all linked booleans will also be turned FALSE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1146,8 +1448,10 @@
             "fieldType": "KEY_TRACKER",
             "label": "false when false",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set FALSE all linked booleans will also be turned FALSE"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1156,10 +1460,20 @@
             "fieldType": "KEY_TRACKER",
             "label": "true when false",
             "slotType": 0,
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set FALSE all linked booleans will be turned TRUE"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "Slot for a true false value that has conditional relations to other boolean slots within this node"
     },
     {
       "title": "Vector2 Slot",
@@ -1174,12 +1488,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VECTOR2"
+          "defaultValue": "VECTOR2",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Vector"
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "VECTOR2",
@@ -1187,9 +1503,18 @@
           "defaultValue": {
             "x": 0.0,
             "y": 0.0
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for X and Y coordinates\nStores as a nssted data set"
     },
     {
       "title": "Vector3 Slot",
@@ -1204,12 +1529,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VECTOR3"
+          "defaultValue": "VECTOR3",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Vector"
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "VECTOR3",
@@ -1218,9 +1545,18 @@
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for X, Y, and Z\nStores as a nssted data set"
     },
     {
       "title": "Vector4 Slot",
@@ -1235,12 +1571,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "VECTOR4"
+          "defaultValue": "VECTOR4",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Vector"
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "VECTOR4",
@@ -1250,9 +1588,18 @@
             "y": 0.0,
             "z": 0.0,
             "w": 0.0
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for X, Y, Z, and W\nStores as a nssted data set"
     },
     {
       "title": "Color Slot",
@@ -1267,12 +1614,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "COLOR"
+          "defaultValue": "COLOR",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Color"
+          "defaultValue": "Color",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "COLOR",
@@ -1283,15 +1632,25 @@
             "b": 1.0,
             "a": 1.0
           },
-          "asHtml": false
+          "asHtml": false,
+          "info": "Value that the field will start with"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "asHtml",
           "defaultValue": false,
-          "id": "B-Dog"
+          "id": "B-Dog",
+          "info": "Should the value be stored as an HTML hash string #AARRGGBB"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for a color value\nCan store as either a nested set (R,G,B,A) or a hash string #AARRGGBB"
     },
     {
       "title": "Date Time Offset Slot",
@@ -1306,12 +1665,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "DATE_TIME_OFFSET"
+          "defaultValue": "DATE_TIME_OFFSET",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Date"
+          "defaultValue": "Date",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DATE_TIME_OFFSET",
@@ -1319,9 +1680,18 @@
           "defaultValue": {
             "date": "2020-07-16T14:34:11.0000000",
             "offset": "-07:00"
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For storing a date time with a timezone component\nstores as a nested string"
     },
     {
       "title": "Date Time Slot",
@@ -1336,12 +1706,14 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "DATE_TIME"
+          "defaultValue": "DATE_TIME",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Date"
+          "defaultValue": "Date",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "DATE_TIME",
@@ -1349,9 +1721,18 @@
           "defaultValue": {
             "date": "2020-07-16T14:34:16.0000000",
             "offset": "-00:00"
-          }
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For storing a date time \nstores as a nested set of strings"
     },
     {
       "title": "Time Span Slot",
@@ -1366,26 +1747,38 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "TIME_SPAN"
+          "defaultValue": "TIME_SPAN",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Duration"
+          "defaultValue": "Duration",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "BOOLEAN",
           "label": "asSeconds",
           "defaultValue": false,
-          "id": "BOOL-9KE"
+          "id": "BOOL-9KE",
+          "info": "If true will be stored as a total number of seconds in an int\nIf false will be stored as a total number of ticks in a long"
         },
         {
           "fieldType": "TIME_SPAN",
           "label": "defaultValue",
           "defaultValue": "0",
-          "asSeconds": false
+          "asSeconds": false,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "For storing a timespan"
     },
     {
       "title": "Relative Path Slot",
@@ -1400,27 +1793,31 @@
         {
           "fieldType": "AUTO",
           "label": "fieldType",
-          "defaultValue": "RELATIVE_PATH"
+          "defaultValue": "RELATIVE_PATH",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
-          "defaultValue": "Path"
+          "defaultValue": "Path",
+          "info": "Label name that will display for this field"
         },
         {
           "fieldType": "INT",
           "label": "startOffset",
-          "MinStepSize": "0",
+          "MinStepSize": 0,
           "hasMax": false,
           "max": 0,
           "hasMin": true,
           "min": 0,
-          "defaultValue": 0
+          "defaultValue": 0,
+          "info": "how many characters to trim off the front of the relative path"
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "prefix",
-          "defaultValue": ""
+          "defaultValue": "",
+          "info": "Text that will be put in front of the relative path"
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1428,10 +1825,20 @@
           "field": {
             "fieldType": "TEXT_LINE",
             "label": "-",
-            "defaultValue": "*.png"
-          }
+            "defaultValue": "*.png",
+            "info": ""
+          },
+          "info": "What file types to show as options"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
         }
-      ]
+      ],
+      "info": "A slot for storing paths based on the file structure around your graph"
     }
   ],
   "metaMakerVersion": "0.7.4"

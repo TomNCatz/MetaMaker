@@ -1,111 +1,5 @@
 {
-  "data": {
-    "actions": [
-      {
-        "ngMapNodeName": "Action",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 200.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "name": "Drive",
-        "live": true,
-        "isAxis": true,
-        "max": 1.0,
-        "min": -1.0,
-        "gravity": 1.0,
-        "controls": [
-          {
-            "ngMapNodeName": "Key Control",
-            "ngMapNodePosition": {
-              "x": 720.0,
-              "y": 220.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "Class Type": "LibT.UX.UserInput.InputControlKey",
-            "positive": "W",
-            "negative": "S"
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Action",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 600.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "name": "Slide",
-        "live": true,
-        "isAxis": true,
-        "max": 1.0,
-        "min": -1.0,
-        "gravity": 1.0,
-        "controls": [
-          {
-            "ngMapNodeName": "Key Control",
-            "ngMapNodePosition": {
-              "x": 720.0,
-              "y": 620.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "Class Type": "LibT.UX.UserInput.InputControlKey",
-            "positive": "D",
-            "negative": "A"
-          }
-        ]
-      },
-      {
-        "ngMapNodeName": "Action",
-        "ngMapNodePosition": {
-          "x": 400.0,
-          "y": 1000.0
-        },
-        "ngMapNodeSize": {
-          "x": 202.0,
-          "y": 66.0
-        },
-        "name": "Jump",
-        "live": true,
-        "isAxis": false,
-        "max": 1.0,
-        "min": -1.0,
-        "gravity": 1.0,
-        "controls": [
-          {
-            "ngMapNodeName": "Key Control",
-            "ngMapNodePosition": {
-              "x": 720.0,
-              "y": 1020.0
-            },
-            "ngMapNodeSize": {
-              "x": 202.0,
-              "y": 66.0
-            },
-            "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "Class Type": "LibT.UX.UserInput.InputControlKey",
-            "positive": "Space",
-            "negative": "None"
-          }
-        ]
-      }
-    ]
-  },
-  "metaMakerVersion": "0.7.0",
+  "metaMakerVersion": "0.7.4",
   "defaultListing": "actions",
   "explicitNode": "Action",
   "reuseDll": true,
@@ -133,19 +27,22 @@
         {
           "fieldType": "TEXT_LINE",
           "label": "name",
-          "defaultValue": "Unique Name"
+          "defaultValue": "Unique Name",
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "live",
           "defaultValue": true,
-          "id": "BOOL-j86"
+          "id": "BOOL-j86",
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "isAxis",
           "defaultValue": false,
-          "id": "BOOL-j86"
+          "id": "BOOL-j86",
+          "info": ""
         },
         {
           "fieldType": "FLOAT",
@@ -155,7 +52,8 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 1.0
+          "defaultValue": 1.0,
+          "info": ""
         },
         {
           "fieldType": "FLOAT",
@@ -165,7 +63,8 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": -1.0
+          "defaultValue": -1.0,
+          "info": ""
         },
         {
           "fieldType": "FLOAT",
@@ -175,7 +74,8 @@
           "max": 0.0,
           "hasMin": false,
           "min": 0.0,
-          "defaultValue": 1.0
+          "defaultValue": 1.0,
+          "info": ""
         },
         {
           "fieldType": "FIELD_LIST",
@@ -185,10 +85,13 @@
             "label": "0",
             "slotType": 0,
             "explicitNode": "",
-            "emptyHandling": "SKIP"
-          }
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": ""
         }
-      ]
+      ],
+      "info": "A signal that can be listened for"
     },
     {
       "title": "Key Control",
@@ -203,7 +106,8 @@
         {
           "fieldType": "TYPE",
           "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Class Type": "LibT.UX.UserInput.InputControlKey"
+          "Class Type": "LibT.UX.UserInput.InputControlKey",
+          "info": ""
         },
         {
           "fieldType": "ENUM",
@@ -535,7 +439,8 @@
             "Joystick8Button17",
             "Joystick8Button18",
             "Joystick8Button19"
-          ]
+          ],
+          "info": "Key press that activates the posative axis\nif not an axis control then this is the key that fires the Action"
         },
         {
           "fieldType": "ENUM",
@@ -867,9 +772,11 @@
             "Joystick8Button17",
             "Joystick8Button18",
             "Joystick8Button19"
-          ]
+          ],
+          "info": "Key press that activates the negative axis"
         }
-      ]
+      ],
+      "info": ""
     },
     {
       "title": "Unity Control",
@@ -884,18 +791,21 @@
         {
           "fieldType": "TYPE",
           "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Class Type": "LibT.UX.UserInput.InputControlUnity"
+          "Class Type": "LibT.UX.UserInput.InputControlUnity",
+          "info": ""
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "identifier",
-          "defaultValue": "Unity ID"
+          "defaultValue": "Unity ID",
+          "info": ""
         },
         {
           "fieldType": "BOOLEAN",
           "label": "invertAxis",
           "defaultValue": false,
-          "id": "BOOL-KRs"
+          "id": "BOOL-KRs",
+          "info": "Should the axis signal be inverted (*-1)"
         },
         {
           "fieldType": "FLOAT",
@@ -905,7 +815,8 @@
           "max": 0.0,
           "hasMin": true,
           "min": 0.0,
-          "defaultValue": 1.0
+          "defaultValue": 1.0,
+          "info": "multiplier on output signal"
         },
         {
           "fieldType": "FLOAT",
@@ -915,9 +826,117 @@
           "max": 0.0,
           "hasMin": true,
           "min": 0.0,
-          "defaultValue": 0.1
+          "defaultValue": 0.1,
+          "info": "sensor values betwee -deadZone and deadzone will not be sent"
         }
-      ]
+      ],
+      "info": ""
     }
-  ]
+  ],
+  "data": {
+    "actions": [
+      {
+        "ngMapNodeName": "Action",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 200.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "name": "Drive",
+        "live": true,
+        "isAxis": true,
+        "max": 1.0,
+        "min": -1.0,
+        "gravity": 1.0,
+        "controls": [
+          {
+            "ngMapNodeName": "Key Control",
+            "ngMapNodePosition": {
+              "x": 720.0,
+              "y": 220.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "LibT.UX.UserInput.InputControlKey",
+            "positive": "W",
+            "negative": "S"
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Action",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 600.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "name": "Slide",
+        "live": true,
+        "isAxis": true,
+        "max": 1.0,
+        "min": -1.0,
+        "gravity": 1.0,
+        "controls": [
+          {
+            "ngMapNodeName": "Key Control",
+            "ngMapNodePosition": {
+              "x": 720.0,
+              "y": 620.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "LibT.UX.UserInput.InputControlKey",
+            "positive": "D",
+            "negative": "A"
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Action",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1000.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 66.0
+        },
+        "name": "Jump",
+        "live": true,
+        "isAxis": false,
+        "max": 1.0,
+        "min": -1.0,
+        "gravity": 1.0,
+        "controls": [
+          {
+            "ngMapNodeName": "Key Control",
+            "ngMapNodePosition": {
+              "x": 720.0,
+              "y": 1020.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 66.0
+            },
+            "Class Assembly": "LibT.UX, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "LibT.UX.UserInput.InputControlKey",
+            "positive": "Space",
+            "negative": "None"
+          }
+        ]
+      }
+    ]
+  }
 }
