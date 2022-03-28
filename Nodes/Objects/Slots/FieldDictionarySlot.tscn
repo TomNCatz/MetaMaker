@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Code/NodeCode/NodeSlots/FieldDictionarySlot.cs" type="Script" id=1]
 
-
 [node name="FieldListSlot" type="HBoxContainer"]
 margin_right = 180.0
 margin_bottom = 24.0
@@ -21,6 +20,7 @@ _deleteButtonPath = NodePath("Button2")
 margin_top = 5.0
 margin_right = 39.0
 margin_bottom = 19.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "List"
 

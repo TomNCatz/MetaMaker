@@ -17,6 +17,7 @@ _fieldPath = NodePath("Field")
 margin_top = 13.0
 margin_right = 7.0
 margin_bottom = 27.0
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="Field" type="OptionButton" parent="."]

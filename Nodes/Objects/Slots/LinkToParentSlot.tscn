@@ -19,6 +19,7 @@ _downButtonPath = NodePath("ButtonDown")
 margin_top = 3.0
 margin_right = 62.0
 margin_bottom = 17.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "Linked at "
 __meta__ = {

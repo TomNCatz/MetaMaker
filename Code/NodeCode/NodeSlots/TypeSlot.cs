@@ -43,6 +43,11 @@ namespace MetaMaker
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
+			_assemblyLabel.HintTooltip = info;
+			_typeLabel.HintTooltip = info;
+			
 			template.GetValue( "Class Assembly", out assembly );
 			_assemblyLabel.Text = assembly;
 			

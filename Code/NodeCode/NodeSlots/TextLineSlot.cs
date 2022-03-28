@@ -27,6 +27,13 @@ namespace MetaMaker
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
+			
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
+			_field.HintTooltip = info;
+			
+			template.GetValue( "expandedField", out bool expandedField );
+			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
 			parentModel.TryGetValue(_label.Text, out GenericDataObject nullToken);

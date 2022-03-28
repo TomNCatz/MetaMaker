@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Code/NodeCode/NodeSlots/Vector2Slot.cs" type="Script" id=1]
 
-
 [node name="Vector2Slot" type="HBoxContainer"]
 margin_right = 185.0
 margin_bottom = 24.0
@@ -18,6 +17,7 @@ _yPath = NodePath("../Vector2Slot/FieldY")
 margin_top = 5.0
 margin_right = 6.0
 margin_bottom = 19.0
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="LabelX" type="Label" parent="."]

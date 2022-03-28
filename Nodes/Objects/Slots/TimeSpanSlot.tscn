@@ -25,6 +25,7 @@ margin_bottom = 14.0
 [node name="Label" type="Label" parent="HBoxContainer"]
 margin_right = 74.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "Color"
 
@@ -32,6 +33,7 @@ text = "Color"
 margin_left = 78.0
 margin_right = 153.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "Color"
 

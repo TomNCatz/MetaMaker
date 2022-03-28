@@ -28,6 +28,14 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
+			_field.HintTooltip = info;
+			
+			template.GetValue( "expandedField", out bool expandedField );
+			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;
+			_field.Align = expandedField ? Godot.Button.TextAlign.Right : Godot.Button.TextAlign.Left;
+			
 			template.GetValue( "values", out List<string> values );
 			foreach( string value in values )
 			{

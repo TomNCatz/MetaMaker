@@ -31,6 +31,7 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
 			_field.HintTooltip = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);

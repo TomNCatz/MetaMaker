@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Code/NodeCode/NodeSlots/Vector3Slot.cs" type="Script" id=1]
 
-
 [node name="Vector3Slot" type="VBoxContainer"]
 margin_right = 138.0
 margin_bottom = 40.0
@@ -19,6 +18,7 @@ _zPath = NodePath("../Vector3Slot/HBoxContainer2/FieldZ")
 [node name="Label" type="Label" parent="."]
 margin_right = 265.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]

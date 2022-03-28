@@ -19,6 +19,7 @@ _typeLabelPath = NodePath("PopupDialog/PanelContainer/VBoxContainer/Label2")
 margin_top = 13.0
 margin_right = 67.0
 margin_bottom = 27.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "Class Type"
 
@@ -27,6 +28,7 @@ margin_left = 71.0
 margin_top = 13.0
 margin_right = 71.0
 margin_bottom = 27.0
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="PopupDialog" type="PopupDialog" parent="."]

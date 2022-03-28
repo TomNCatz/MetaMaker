@@ -42,6 +42,7 @@ _clearButtonPath = NodePath("Control/PopupPanel/HBoxContainer2/ClearButton")
 margin_top = 6.0
 margin_right = 31.0
 margin_bottom = 20.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "label"
 

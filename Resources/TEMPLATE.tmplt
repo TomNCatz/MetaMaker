@@ -2,7 +2,7 @@
   "defaultListing": "nodeList",
   "explicitNode": "Graph",
   "reuseDll": false,
-  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keysToRemove, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue( graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet()\n\t\t\t{\n\t\t\t\trelativeSavePath = \"$name.tmplt\", \n\t\t\t\tgdoExportTarget = \"data\" \n\t\t\t};\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, \n\t\tList<string> keysToRemove, \n\t\tstring exportName, \n\t\tstring exportLocation, \n\t\tint exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue( graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
   "nestingColors": [
     {
       "r": 0.0,
@@ -52,13 +52,15 @@
           "fieldType": "TEXT_LINE",
           "label": "defaultListing",
           "defaultValue": "listing",
-          "info": "Name of the "
+          "info": "Name of the ",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
           "defaultValue": "",
-          "info": "Name of the node typ expected as children\n(This feature needs a refactor"
+          "info": "Name of the node typ expected as children\n(This feature needs a refactor",
+          "expandedField": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -73,7 +75,8 @@
               "a": 1.0
             },
             "asHtml": false,
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "Colors used for Parent Child links"
         },
@@ -90,7 +93,8 @@
               "a": 1.0
             },
             "asHtml": false,
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "Colors used for Key links"
         },
@@ -138,7 +142,8 @@
           "fieldType": "TEXT_LINE",
           "label": "title",
           "defaultValue": "Node",
-          "info": "Human readable name of the node\nNot stored in the final JSON"
+          "info": "Human readable name of the node\nNot stored in the final JSON",
+          "expandedField": false
         },
         {
           "fieldType": "COLOR",
@@ -150,7 +155,8 @@
             "a": 1.0
           },
           "asHtml": false,
-          "info": "Tint that will be applied to this type of node"
+          "info": "Tint that will be applied to this type of node",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -161,7 +167,8 @@
           "hasMin": true,
           "min": -1,
           "defaultValue": -1,
-          "info": "Type of parent this node can be connected to\nIf -1 then this node has only the graph as a parent"
+          "info": "Type of parent this node can be connected to\nIf -1 then this node has only the graph as a parent",
+          "expandedField": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -200,7 +207,8 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "SEPARATOR",
-          "info": ""
+          "info": "",
+          "expandedField": false
         }
       ],
       "info": "A buffer that can be insterted between fields"
@@ -219,13 +227,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "KEY",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "id",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -236,13 +246,15 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "Keys only match up to the same type"
+          "info": "Keys only match up to the same type",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyPrefix",
           "defaultValue": "",
-          "info": "Characters that remain the same for each key\nEG 'id' in id1234"
+          "info": "Characters that remain the same for each key\nEG 'id' in id1234",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -253,7 +265,15 @@
           "hasMin": true,
           "min": 1,
           "defaultValue": 1,
-          "info": "how many characters will be generated for the key after the prefix"
+          "info": "how many characters will be generated for the key after the prefix",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-GmT",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -279,13 +299,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "KEY_MANUAL",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "id",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -296,19 +318,29 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "Keys only match up to the same type"
+          "info": "Keys only match up to the same type",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyPrefix",
           "defaultValue": "id_",
-          "info": "Characters that remain the same for each key\nEG 'id_' in id_Jeff"
+          "info": "Characters that remain the same for each key\nEG 'id_' in id_Jeff",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "key",
           "defaultValue": "",
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-trI",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -334,13 +366,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "KEY_TRACKER",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "target",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -351,7 +385,8 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "Keys only match up to the same type"
+          "info": "Keys only match up to the same type",
+          "expandedField": false
         },
         {
           "fieldType": "ENUM",
@@ -361,7 +396,15 @@
             "NULL_STRING",
             "SKIP"
           ],
-          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-BJj",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -387,13 +430,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "KEY_SELECT",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "target",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -404,7 +449,8 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "Keys only match up to the same type"
+          "info": "Keys only match up to the same type",
+          "expandedField": false
         },
         {
           "fieldType": "ENUM",
@@ -414,7 +460,15 @@
             "NULL_STRING",
             "SKIP"
           ],
-          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-nmp",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -440,13 +494,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "SUB_GRAPH_LIST",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "children",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -457,13 +513,15 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
           "defaultValue": "",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA",
@@ -489,13 +547,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "SUB_GRAPH_DICTIONARY",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "children",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -506,19 +566,22 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
           "defaultValue": "",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "keyField",
           "defaultValue": "id",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA",
@@ -544,13 +607,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "LINK_TO_CHILD",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "children",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -561,13 +626,15 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "Slot can only match up to a child node of this type"
+          "info": "Slot can only match up to a child node of this type",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "explicitNode",
           "defaultValue": "",
-          "info": "Name of the node type expected as children\n(This feature needs a refactor"
+          "info": "Name of the node type expected as children\n(This feature needs a refactor",
+          "expandedField": false
         },
         {
           "fieldType": "ENUM",
@@ -577,7 +644,8 @@
             "NULL",
             "SKIP"
           ],
-          "info": "What to put in the JSON if no value is assigned\nEMPTY_OBJECT stores an empty object {}\nNULL Stores as a null\nSKIP leaves this entry out"
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_OBJECT stores an empty object {}\nNULL Stores as a null\nSKIP leaves this entry out",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA",
@@ -603,13 +671,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "FIELD_LIST",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Fields",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "LINK_TO_CHILD",
@@ -643,13 +713,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "FIELD_DICTIONARY",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Fields",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "LINK_TO_CHILD",
@@ -683,7 +755,8 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "INFO",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA_RICH",
@@ -701,7 +774,8 @@
           "hasMin": true,
           "min": 18.0,
           "defaultValue": 40.0,
-          "info": "Height of the area for drawing the text"
+          "info": "Height of the area for drawing the text",
+          "expandedField": false
         }
       ],
       "info": "This persistently displays non-editable text for information, but IS NOT stored in the JSON file"
@@ -720,19 +794,29 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "AUTO",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "text",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultValue",
           "defaultValue": "default",
-          "info": "Text that will display be stored for this auto slot"
+          "info": "Text that will display be stored for this auto slot",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-9Br",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -758,19 +842,22 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "TYPE",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "Class Assembly",
           "defaultValue": "fully qualified assembly name",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "Class Type",
           "defaultValue": "Full class name",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA",
@@ -796,13 +883,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "ENUM",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Type",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -811,9 +900,17 @@
             "fieldType": "TEXT_LINE",
             "label": "-",
             "defaultValue": "ENUM",
-            "info": ""
+            "info": "",
+            "expandedField": true
           },
           "info": "Options that will appear in the dropdown for a user to choose"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-CoD",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -839,13 +936,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "FLAGS",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Flags",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -856,7 +955,8 @@
           "hasMin": false,
           "min": 0,
           "defaultValue": 0,
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -865,7 +965,8 @@
             "fieldType": "TEXT_LINE",
             "label": "-",
             "defaultValue": "Flag",
-            "info": "Label for the flag to make it easier to edit\nWill not be sotred in the JSON"
+            "info": "Label for the flag to make it easier to edit\nWill not be sotred in the JSON",
+            "expandedField": true
           },
           "info": "List of flags the user will be able to turn on and off"
         },
@@ -893,19 +994,29 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "TEXT_LINE",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "String",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "defaultValue",
           "defaultValue": "String",
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-4EC",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -931,13 +1042,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "TEXT_AREA",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Some text",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "FLOAT",
@@ -948,7 +1061,8 @@
           "hasMin": true,
           "min": 18.0,
           "defaultValue": 40.0,
-          "info": "Height of the area for drawing the text"
+          "info": "Height of the area for drawing the text",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA",
@@ -981,13 +1095,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "TEXT_AREA_RICH",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Some text",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "FLOAT",
@@ -998,7 +1114,8 @@
           "hasMin": true,
           "min": 18.0,
           "defaultValue": 40.0,
-          "info": "Height of the area for drawing the text"
+          "info": "Height of the area for drawing the text",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA_RICH",
@@ -1031,13 +1148,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "FLOAT",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Value",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "DOUBLE",
@@ -1048,7 +1167,8 @@
           "hasMin": true,
           "min": "0",
           "defaultValue": "0",
-          "info": "Size of the increment when the up and down arrows are pressed"
+          "info": "Size of the increment when the up and down arrows are pressed",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1066,7 +1186,8 @@
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0,
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1084,7 +1205,8 @@
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0,
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "FLOAT",
@@ -1095,7 +1217,15 @@
           "hasMin": false,
           "min": 0.0,
           "defaultValue": 0.0,
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-X5H",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -1121,13 +1251,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "DOUBLE",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Value",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "DOUBLE",
@@ -1138,7 +1270,8 @@
           "hasMin": true,
           "min": "0",
           "defaultValue": "0",
-          "info": "Size of the increment when the up and down arrows are pressed"
+          "info": "Size of the increment when the up and down arrows are pressed",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1156,7 +1289,8 @@
           "hasMin": false,
           "min": "0",
           "defaultValue": "0",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1174,7 +1308,8 @@
           "hasMin": false,
           "min": "0",
           "defaultValue": "0",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "DOUBLE",
@@ -1185,7 +1320,15 @@
           "hasMin": false,
           "min": "0",
           "defaultValue": "0",
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-Rhz",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -1211,13 +1354,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "INT",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Value",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -1228,7 +1373,8 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "Size of the increment when the up and down arrows are pressed"
+          "info": "Size of the increment when the up and down arrows are pressed",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1246,7 +1392,8 @@
           "hasMin": false,
           "min": 0,
           "defaultValue": 0,
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1264,7 +1411,8 @@
           "hasMin": false,
           "min": 0,
           "defaultValue": 0,
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -1275,7 +1423,15 @@
           "hasMin": false,
           "min": 0,
           "defaultValue": 0,
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-ha3",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -1301,13 +1457,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "LONG",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Value",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1321,7 +1479,15 @@
           "label": "defaultValue",
           "allowNegative": true,
           "defaultValue": "0",
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": true
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-GEK",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -1347,13 +1513,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "BOOLEAN",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "IsActive",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1368,7 +1536,8 @@
           "slotType": 0,
           "keyPrefix": "BOOL-",
           "keySize": 3,
-          "info": "Used by linked booleans"
+          "info": "Used by linked booleans",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_AREA",
@@ -1394,13 +1563,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "BOOLEAN",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "IsActive",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1415,7 +1586,8 @@
           "slotType": 0,
           "keyPrefix": "BOOL-",
           "keySize": 3,
-          "info": "Used by linked booleans"
+          "info": "Used by linked booleans",
+          "expandedField": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1425,7 +1597,8 @@
             "label": "true when true",
             "slotType": 0,
             "emptyHandling": "SKIP",
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "When this boolean is set TRUE all linked booleans will also be turned TRUE"
         },
@@ -1437,7 +1610,8 @@
             "label": "false when true",
             "slotType": 0,
             "emptyHandling": "SKIP",
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "When this boolean is set TRUE all linked booleans will also be turned FALSE"
         },
@@ -1449,7 +1623,8 @@
             "label": "false when false",
             "slotType": 0,
             "emptyHandling": "SKIP",
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "When this boolean is set FALSE all linked booleans will also be turned FALSE"
         },
@@ -1461,7 +1636,8 @@
             "label": "true when false",
             "slotType": 0,
             "emptyHandling": "SKIP",
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "When this boolean is set FALSE all linked booleans will be turned TRUE"
         },
@@ -1489,13 +1665,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "VECTOR2",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Vector",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "VECTOR2",
@@ -1530,13 +1708,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "VECTOR3",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Vector",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "VECTOR3",
@@ -1572,13 +1752,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "VECTOR4",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Vector",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "VECTOR4",
@@ -1615,13 +1797,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "COLOR",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Color",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "COLOR",
@@ -1633,7 +1817,8 @@
             "a": 1.0
           },
           "asHtml": false,
-          "info": "Value that the field will start with"
+          "info": "Value that the field will start with",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1641,6 +1826,13 @@
           "defaultValue": false,
           "id": "B-Dog",
           "info": "Should the value be stored as an HTML hash string #AARRGGBB"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-jbA",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",
@@ -1666,13 +1858,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "DATE_TIME_OFFSET",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Date",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "DATE_TIME_OFFSET",
@@ -1707,13 +1901,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "DATE_TIME",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Date",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "DATE_TIME",
@@ -1748,13 +1944,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "TIME_SPAN",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Duration",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "BOOLEAN",
@@ -1794,13 +1992,15 @@
           "fieldType": "AUTO",
           "label": "fieldType",
           "defaultValue": "RELATIVE_PATH",
-          "info": ""
+          "info": "",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "label",
           "defaultValue": "Path",
-          "info": "Label name that will display for this field"
+          "info": "Label name that will display for this field",
+          "expandedField": false
         },
         {
           "fieldType": "INT",
@@ -1811,13 +2011,15 @@
           "hasMin": true,
           "min": 0,
           "defaultValue": 0,
-          "info": "how many characters to trim off the front of the relative path"
+          "info": "how many characters to trim off the front of the relative path",
+          "expandedField": false
         },
         {
           "fieldType": "TEXT_LINE",
           "label": "prefix",
           "defaultValue": "",
-          "info": "Text that will be put in front of the relative path"
+          "info": "Text that will be put in front of the relative path",
+          "expandedField": false
         },
         {
           "fieldType": "FIELD_LIST",
@@ -1826,9 +2028,17 @@
             "fieldType": "TEXT_LINE",
             "label": "-",
             "defaultValue": "*.png",
-            "info": ""
+            "info": "",
+            "expandedField": false
           },
           "info": "What file types to show as options"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "expandedField",
+          "defaultValue": false,
+          "id": "BOOL-gIR",
+          "info": "If checked will expand the field left to take up as much of the line as possible\nIf false will keep the left sid of the field in line with the center of the line"
         },
         {
           "fieldType": "TEXT_AREA",

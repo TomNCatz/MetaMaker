@@ -6,6 +6,7 @@
 margin_right = 138.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -16,6 +17,7 @@ _fieldPath = NodePath("../TextAreaSlot/Field")
 [node name="Label" type="Label" parent="."]
 margin_right = 138.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="Field" type="TextEdit" parent="."]

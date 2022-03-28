@@ -47,6 +47,9 @@ namespace MetaMaker
 			template.GetValue( "label", out string label );
 			_label.Text = label;
 			template.GetValue( "field", out _field );
+			
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataList model);
 			if(model != null)

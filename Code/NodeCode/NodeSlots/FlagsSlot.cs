@@ -33,6 +33,9 @@ namespace MetaMaker
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
+			
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
 
 			template.GetValue("flags", out List<string> flags);
 			foreach(var flag in flags)
@@ -40,6 +43,7 @@ namespace MetaMaker
 				FlagItem item = flagsScene.Instance() as FlagItem;
 				AddChild(item);
 				item.Label = flag;
+				item.Info = info;
 				item.OnValueUpdated += OnValueChange;
 				items.Add(item);
 			}

@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Code/NodeCode/NodeSlots/InfoSlot.cs" type="Script" id=1]
 
-
 [node name="InfoSlot" type="HBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0

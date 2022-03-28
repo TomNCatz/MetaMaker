@@ -16,6 +16,7 @@ _labelPath = NodePath("Label")
 [node name="Label" type="Label" parent="."]
 margin_right = 26.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 align = 2
 

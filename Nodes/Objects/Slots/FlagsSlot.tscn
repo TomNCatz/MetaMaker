@@ -22,6 +22,7 @@ margin_bottom = 14.0
 [node name="Label" type="Label" parent="HBoxContainer"]
 margin_right = 32.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "Flags"
 
@@ -29,5 +30,6 @@ text = "Flags"
 margin_left = 36.0
 margin_right = 44.0
 margin_bottom = 14.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "0"

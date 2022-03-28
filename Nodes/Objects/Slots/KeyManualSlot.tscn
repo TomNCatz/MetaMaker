@@ -19,6 +19,7 @@ margin_top = 13.0
 margin_right = 36.0
 margin_bottom = 27.0
 hint_tooltip = "Test"
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="PrefixLabel" type="Label" parent="."]

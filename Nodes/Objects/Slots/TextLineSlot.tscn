@@ -17,10 +17,11 @@ _fieldPath = NodePath("../TextLineSlot/Field")
 margin_top = 13.0
 margin_right = 67.0
 margin_bottom = 27.0
+mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="Field" type="LineEdit" parent="."]
 margin_left = 71.0
 margin_right = 138.0
 margin_bottom = 40.0
-size_flags_horizontal = 3
+size_flags_horizontal = 11

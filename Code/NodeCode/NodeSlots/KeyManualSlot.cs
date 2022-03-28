@@ -45,7 +45,11 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
 			_field.HintTooltip = info;
+			
+			template.GetValue( "expandedField", out bool expandedField );
+			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;
 			
 			template.GetValue( "keyPrefix", out _keyPrefix );
 			_prefixLabel.Text = _keyPrefix;

@@ -482,7 +482,7 @@ namespace MetaMaker
 
 		private void OnResizeRequest(Vector2 newSize)
 		{
-			RectSize = new Vector2( newSize.x, newSize.y < RectSize.y ? newSize.y : RectSize.y );
+			RectSize = newSize;
 			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
 			Dirty = true;
 		}

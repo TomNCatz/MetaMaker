@@ -21,5 +21,6 @@ margin_left = 28.0
 margin_top = 5.0
 margin_right = 54.0
 margin_bottom = 19.0
+mouse_filter = 0
 size_flags_horizontal = 3
 text = "List"

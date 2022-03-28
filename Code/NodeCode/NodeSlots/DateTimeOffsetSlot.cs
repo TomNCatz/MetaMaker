@@ -206,6 +206,10 @@ namespace MetaMaker
 		{
 			template.GetValue( "label", out string label );
 			_label.Text = label;
+			
+			template.GetValue( "info", out string info );
+			_label.HintTooltip = info;
+			_field.HintTooltip = info;
 
 			_model = parentModel.TryGetRelativeGdo(_label.Text);
 			if(_model != null)

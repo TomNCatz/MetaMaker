@@ -32,6 +32,15 @@ namespace MetaMaker
 		}
 		private bool _value;
 
+		public string Info
+		{
+			set
+			{
+				_title.HintTooltip = value;
+				_check.HintTooltip = value;
+			}
+		}
+
 		public override void _Ready()
 		{
 			_title = this.GetNodeFromPath<Label>( _titlePath );
