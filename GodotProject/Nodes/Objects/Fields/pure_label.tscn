@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1l1v3gpc8b1t"]
+
+[ext_resource type="Script" path="res://Code/UI/LayerFields/PureLabel.cs" id="1_0k8gl"]
+
+[node name="PureLabel" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0k8gl")
+labelPath = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2

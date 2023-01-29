@@ -1,4 +1,5 @@
 syntax: glob
+.godot/
 .mono
 .vscode
 .idea

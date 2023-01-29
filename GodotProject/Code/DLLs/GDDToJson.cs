@@ -65,7 +65,7 @@ public static class GDDToJson
 	/// <returns>a JSON string representing the object</returns>
 	public static string BakeToJson( this IGddSaveable self )
 	{
-		return self.GetObjectData().ToJson();
+		return self.GetObjectData().GddToJson();
 	}
 		
 	/// <summary>
@@ -78,7 +78,7 @@ public static class GDDToJson
 		GenericDataDictionary data = new GenericDataDictionary();
 		try
 		{
-			data.FromJson( json );
+			data.GddFromJson( json );
 		}
 		catch( Exception e )
 		{
@@ -109,7 +109,7 @@ public static class GDDToJson
 	{
 		var json = Serializer.GetTextFromFile(filePath);
 		var gdd = new GenericDataDictionary();
-		gdd.FromJson(json);
+		gdd.GddFromJson(json);
 		self.SetObjectData(gdd);
 	}
 		
@@ -141,7 +141,7 @@ public static class GDDToJson
 		}
 			
 		var gdd = new GenericDataDictionary();
-		gdd.FromJson(response.Payload);
+		gdd.GddFromJson(response.Payload);
 		self.SetObjectData(gdd);
 
 		return null;

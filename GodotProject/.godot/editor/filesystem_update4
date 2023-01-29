@@ -1,1 +1,2 @@
-res://Nodes/Scenes/MainView.tscn
+res://Nodes/Windows/app.tscn
+res://Themes/MenuBar.tres

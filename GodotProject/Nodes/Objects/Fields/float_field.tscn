@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://caf235dmb1xok"]
+
+[ext_resource type="Script" path="res://Code/UI/LayerFields/FloatField.cs" id="1_t1wp8"]
+
+[node name="FloatField" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_t1wp8")
+spinBoxPath = NodePath("SpinBox")
+labelPath = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+step = 0.1
+allow_greater = true
+allow_lesser = true

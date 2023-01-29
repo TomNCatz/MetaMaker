@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://qefn3ys1ld7o"]
+
+[ext_resource type="Script" path="res://Code/UI/LayerFields/StringField.cs" id="1_ahodx"]
+
+[node name="PureLabel" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_ahodx")
+lineEditPath = NodePath("LineEdit")
+labelPath = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3

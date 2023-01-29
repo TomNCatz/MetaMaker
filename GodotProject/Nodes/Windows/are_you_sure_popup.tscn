@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjx4v4ne5t8ev"]
+
+[ext_resource type="Script" path="res://Code/UI/AreYouSurePopup.cs" id="1_amq7y"]
+
+[node name="AreYouSurePopup" type="Window"]
+initial_position = 1
+title = "Are You Sure?"
+size = Vector2i(252, 100)
+current_screen = -1
+wrap_controls = true
+transient = true
+exclusive = true
+borderless = true
+popup_window = true
+content_scale_mode = 1
+script = ExtResource("1_amq7y")
+_infoLabelPath = NodePath("VBoxContainer/Message")
+_leftButtonPath = NodePath("VBoxContainer/HBoxContainer/LeftButton")
+_middleButtonPath = NodePath("VBoxContainer/HBoxContainer/MiddleButton")
+_rightButtonPath = NodePath("VBoxContainer/HBoxContainer/RightButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Message" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Ask the user a question 
+and confirm with them"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="LeftButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Left"
+
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MiddleButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Middle"
+
+[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="RightButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Right"
+
+[node name="ColorRect4" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)

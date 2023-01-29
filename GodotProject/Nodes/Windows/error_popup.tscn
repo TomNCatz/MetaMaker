@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bxy8tn5vgtcyq"]
+
+[node name="ErrorPopup" type="AcceptDialog"]
+title = "Encountered an Error"
+visible = true
+borderless = true

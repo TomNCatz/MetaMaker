@@ -1,0 +1,216 @@
+[gd_scene load_steps=24 format=3 uid="uid://cljiih4ygdbnb"]
+
+[ext_resource type="Script" path="res://Code/MetaMakerApp.cs" id="1_46hx6"]
+[ext_resource type="Script" path="res://Code/UI/Prefabricator.cs" id="2_ic6u4"]
+[ext_resource type="Script" path="res://Code/DLLs/Growl.cs" id="2_xtcmi"]
+[ext_resource type="Theme" uid="uid://dgsvqdax0sd0p" path="res://Themes/MenuBar.tres" id="3_37bsj"]
+[ext_resource type="Script" path="res://Code/UI/MainMenuBar.cs" id="4_cpisc"]
+[ext_resource type="PackedScene" uid="uid://b1l1v3gpc8b1t" path="res://Nodes/Objects/Fields/pure_label.tscn" id="4_mxxce"]
+[ext_resource type="Texture2D" uid="uid://cq1iyl1wm8e8w" path="res://Textures/FileIcon.png" id="5_n0i0n"]
+[ext_resource type="Texture2D" uid="uid://uhqwbixt6e63" path="res://Textures/DataIcon.png" id="6_tvbvx"]
+[ext_resource type="PackedScene" uid="uid://b30havevpl0n" path="res://Nodes/Objects/Fields/list_field.tscn" id="6_xf6g2"]
+[ext_resource type="PackedScene" uid="uid://kj8i8nyc3y8m" path="res://Nodes/Objects/Fields/int_field.tscn" id="7_3ykry"]
+[ext_resource type="PackedScene" uid="uid://br521jhgks2dx" path="res://Nodes/Objects/Fields/dictionary_field.tscn" id="7_4urgb"]
+[ext_resource type="Texture2D" uid="uid://ckpuwei1rbes8" path="res://Textures/EditIcon.png" id="7_8dakb"]
+[ext_resource type="PackedScene" uid="uid://caf235dmb1xok" path="res://Nodes/Objects/Fields/float_field.tscn" id="8_cpbcu"]
+[ext_resource type="Texture2D" uid="uid://chorq73qi2l7k" path="res://Textures/SettingsIcon.png" id="8_ndyw5"]
+[ext_resource type="PackedScene" uid="uid://brictt845tbka" path="res://Nodes/Windows/tree_view_layer.tscn" id="9_dnhwo"]
+[ext_resource type="PackedScene" uid="uid://c7h2tnyv0g3ig" path="res://Nodes/Objects/Fields/bool_field.tscn" id="9_kfkyp"]
+[ext_resource type="Script" path="res://Code/UI/Inspector.cs" id="10_ripsx"]
+[ext_resource type="PackedScene" uid="uid://qefn3ys1ld7o" path="res://Nodes/Objects/Fields/string_field.tscn" id="10_vf5m7"]
+[ext_resource type="PackedScene" uid="uid://cgwtsm5hj5wdj" path="res://Nodes/Windows/file_dialog.tscn" id="11_fu5ow"]
+[ext_resource type="Script" path="res://Code/UI/TreeView.cs" id="12_6f8sr"]
+[ext_resource type="PackedScene" uid="uid://bjx4v4ne5t8ev" path="res://Nodes/Windows/are_you_sure_popup.tscn" id="12_x8br4"]
+[ext_resource type="PackedScene" uid="uid://bxy8tn5vgtcyq" path="res://Nodes/Windows/error_popup.tscn" id="13_g74qk"]
+[ext_resource type="PackedScene" uid="uid://diwvvth0ywdwe" path="res://Nodes/Windows/settings_popup.tscn" id="14_pknk4"]
+
+[node name="App" type="Node"]
+script = ExtResource("1_46hx6")
+mainMenuBarPath = NodePath("MainView/TopBar")
+inspectorPath = NodePath("MainView/HSplitContainer/Inspector")
+prefabricatorPath = NodePath("Prefabricator")
+treeViewPath = NodePath("MainView/HSplitContainer/Main/TabContainer/Tree View")
+filePopup = NodePath("FileDialog")
+areYouSurePopup = NodePath("AreYouSurePopup")
+errorPopupPath = NodePath("ErrorPopup")
+settingsPopupPath = NodePath("SettingsPopup")
+
+[node name="Prefabricator" type="Node" parent="."]
+script = ExtResource("2_ic6u4")
+treeViewLayer = ExtResource("9_dnhwo")
+dictionaryField = ExtResource("7_4urgb")
+listField = ExtResource("6_xf6g2")
+labelField = ExtResource("4_mxxce")
+intField = ExtResource("7_3ykry")
+floatField = ExtResource("8_cpbcu")
+boolField = ExtResource("9_kfkyp")
+stringField = ExtResource("10_vf5m7")
+
+[node name="Growl" type="Node" parent="."]
+script = ExtResource("2_xtcmi")
+_lowestLogLevel = 7
+_logFile = "LogData.csv"
+
+[node name="MainView" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_37bsj")
+color = Color(0.27451, 0.262745, 0.290196, 1)
+
+[node name="TopBar" type="ColorRect" parent="MainView"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+color = Color(0.27451, 0.262745, 0.290196, 1)
+script = ExtResource("4_cpisc")
+_fileMenuPath = NodePath("HBoxContainer/File")
+_dataMenuPath = NodePath("HBoxContainer/Data")
+_editMenuPath = NodePath("HBoxContainer/Edit")
+_settingsMenuPath = NodePath("HBoxContainer/Settings")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainView/TopBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="File" type="MenuButton" parent="MainView/TopBar/HBoxContainer"]
+z_as_relative = false
+layout_mode = 2
+text = "File"
+icon = ExtResource("5_n0i0n")
+flat = false
+
+[node name="Data" type="MenuButton" parent="MainView/TopBar/HBoxContainer"]
+z_as_relative = false
+layout_mode = 2
+text = "Data"
+icon = ExtResource("6_tvbvx")
+flat = false
+
+[node name="Edit" type="MenuButton" parent="MainView/TopBar/HBoxContainer"]
+z_as_relative = false
+layout_mode = 2
+text = "Edit"
+icon = ExtResource("7_8dakb")
+flat = false
+
+[node name="Settings" type="MenuButton" parent="MainView/TopBar/HBoxContainer"]
+z_as_relative = false
+layout_mode = 2
+text = "Settings"
+icon = ExtResource("8_ndyw5")
+flat = false
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MainView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 3
+
+[node name="Main" type="ColorRect" parent="MainView/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.247059, 0.235294, 0.262745, 1)
+
+[node name="TabContainer" type="TabContainer" parent="MainView/HSplitContainer/Main"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Graph View" type="GraphEdit" parent="MainView/HSplitContainer/Main/TabContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+scroll_offset = Vector2(0, -31)
+
+[node name="Tree View" type="ColorRect" parent="MainView/HSplitContainer/Main/TabContainer"]
+visible = false
+layout_mode = 2
+color = Color(0.180392, 0.180392, 0.180392, 1)
+script = ExtResource("12_6f8sr")
+_contentAreaPath = NodePath("ScrollContainer/HBoxContainer")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainView/HSplitContainer/Main/TabContainer/Tree View"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainView/HSplitContainer/Main/TabContainer/Tree View/ScrollContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InspectorToggleButton" type="Button" parent="MainView/HSplitContainer/Main"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -18.0
+offset_bottom = 31.0
+grow_horizontal = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = ">"
+
+[node name="Inspector" type="ColorRect" parent="MainView/HSplitContainer"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.266667, 0.266667, 0.266667, 1)
+script = ExtResource("10_ripsx")
+_toggleButtonPath = NodePath("../Main/InspectorToggleButton")
+_headerLabelPath = NodePath("VBoxContainer/Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainView/HSplitContainer/Inspector"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MainView/HSplitContainer/Inspector/VBoxContainer"]
+layout_mode = 2
+text = "Inspector
+"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainView/HSplitContainer/Inspector/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainView/HSplitContainer/Inspector/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FileDialog" parent="." instance=ExtResource("11_fu5ow")]
+position = Vector2i(331, 139)
+visible = false
+
+[node name="AreYouSurePopup" parent="." instance=ExtResource("12_x8br4")]
+visible = false
+
+[node name="ErrorPopup" parent="." instance=ExtResource("13_g74qk")]
+visible = false
+
+[node name="SettingsPopup" parent="." instance=ExtResource("14_pknk4")]
+visible = false

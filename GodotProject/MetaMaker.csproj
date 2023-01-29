@@ -1,27 +1,41 @@
 <Project Sdk="Godot.NET.Sdk/4.0.0-beta.11">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>Test4Beta</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetaMakerLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>Code\DLLs\MetaMakerLib.dll</HintPath>
-    </Reference>
-    <Reference Include="LibT.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>Code\DLLs\LibT.Debugging.dll</HintPath>
-    </Reference>
-    <Reference Include="LibT.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>Code\DLLs\LibT.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="LibT, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Content Include="Code\DLLs\LibT.Debugging.dll" />
+    <Content Include="Code\DLLs\LibT.dll" />
+    <Content Include="Code\DLLs\LibT.Serialization.dll" />
+    <Content Include="Code\DLLs\LibTGodot.dll" />
+    <Content Include="Code\DLLs\MetaMakerLib.dll" />
+    <Content Include="Resources\Version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LibT">
       <HintPath>Code\DLLs\LibT.dll</HintPath>
     </Reference>
-    <Reference Include="LibTGodot, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="LibT.Debugging">
+      <HintPath>Code\DLLs\LibT.Debugging.dll</HintPath>
+    </Reference>
+    <Reference Include="LibT.Serialization">
+      <HintPath>Code\DLLs\LibT.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="LibTGodot">
       <HintPath>Code\DLLs\LibTGodot.dll</HintPath>
     </Reference>
-    <Reference Include="RSG.Promises, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="MetaMakerLib">
+      <HintPath>Code\DLLs\MetaMakerLib.dll</HintPath>
+    </Reference>
+    <Reference Include="RSG.Promises">
       <HintPath>Code\DLLs\RSG.Promises.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Code\UI\InspectorFields" />
+    <Folder Include="Code\UI\NodeFields" />
+    <Folder Include="Code\UI\SharedFields" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis">

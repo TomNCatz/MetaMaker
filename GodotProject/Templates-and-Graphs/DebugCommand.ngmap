@@ -1,158 +1,160 @@
 {
-  "metaMakerVersion": "0.7.4",
-  "defaultListing": "_commandHub",
-  "explicitNode": "Commands",
-  "reuseDll": true,
-  "exportScript": "",
-  "nestingColors": [
-    {
-      "r": 0.21875,
-      "g": 1.0,
-      "b": 0.0,
-      "a": 1.0
-    },
-    {
-      "r": 1.0,
-      "g": 1.0,
-      "b": 1.0,
-      "a": 1.0
-    }
-  ],
-  "keyColors": [],
-  "nodeList": [
-    {
-      "title": "Commands",
-      "color": {
-        "r": 0.234638348,
-        "g": 0.2578125,
-        "b": 0.248800322,
+  "template": {
+    "metaMakerVersion": "0.7.4",
+    "defaultListing": "_commandHub",
+    "explicitNode": "Commands",
+    "reuseDll": true,
+    "exportScript": "",
+    "nestingColors": [
+      {
+        "r": 0.21875,
+        "g": 1.0,
+        "b": 0.0,
         "a": 1.0
       },
-      "parentType": -1,
-      "fields": [
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "_commandHub",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "2",
-            "slotType": 0,
-            "explicitNode": "",
-            "emptyHandling": "SKIP",
+      {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    ],
+    "keyColors": [],
+    "nodeList": [
+      {
+        "title": "Commands",
+        "color": {
+          "r": 0.234638348,
+          "g": 0.2578125,
+          "b": 0.248800322,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "fieldType": "FIELD_LIST",
+            "label": "_commandHub",
+            "field": {
+              "fieldType": "LINK_TO_CHILD",
+              "label": "2",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "List of commands and sets that are available"
+          }
+        ],
+        "info": "Root of the command tree\nThere should be only one"
+      },
+      {
+        "title": "Command Set",
+        "color": {
+          "r": 0.431372553,
+          "g": 0.5019608,
+          "b": 0.4745098,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "fieldType": "TYPE",
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandSet",
             "info": ""
           },
-          "info": "List of commands and sets that are available"
-        }
-      ],
-      "info": "Root of the command tree\nThere should be only one"
-    },
-    {
-      "title": "Command Set",
-      "color": {
-        "r": 0.431372553,
-        "g": 0.5019608,
-        "b": 0.4745098,
-        "a": 1.0
-      },
-      "parentType": 0,
-      "fields": [
-        {
-          "fieldType": "TYPE",
-          "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Class Type": "CommandSet",
-          "info": ""
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Id",
-          "defaultValue": "String",
-          "info": ""
-        },
-        {
-          "fieldType": "TEXT_AREA",
-          "label": "Description",
-          "minHeight": 40.0,
-          "defaultValue": "Some text",
-          "info": ""
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Format",
-          "defaultValue": "String",
-          "info": ""
-        },
-        {
-          "fieldType": "FIELD_LIST",
-          "label": "SubCommands",
-          "field": {
-            "fieldType": "LINK_TO_CHILD",
-            "label": "3",
-            "slotType": 0,
-            "explicitNode": "",
-            "emptyHandling": "EMPTY_OBJECT",
+          {
+            "fieldType": "TEXT_LINE",
+            "label": "Id",
+            "defaultValue": "String",
             "info": ""
           },
-          "info": "List of commands and sets that fall under this branch"
-        }
-      ],
-      "info": "Adds a word in front of the command like a folder section"
-    },
-    {
-      "title": "Command",
-      "color": {
-        "r": 0.339946151,
-        "g": 0.578125,
-        "b": 0.5557957,
-        "a": 1.0
+          {
+            "fieldType": "TEXT_AREA",
+            "label": "Description",
+            "minHeight": 40.0,
+            "defaultValue": "Some text",
+            "info": ""
+          },
+          {
+            "fieldType": "TEXT_LINE",
+            "label": "Format",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "fieldType": "FIELD_LIST",
+            "label": "SubCommands",
+            "field": {
+              "fieldType": "LINK_TO_CHILD",
+              "label": "3",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "EMPTY_OBJECT",
+              "info": ""
+            },
+            "info": "List of commands and sets that fall under this branch"
+          }
+        ],
+        "info": "Adds a word in front of the command like a folder section"
       },
-      "parentType": 0,
-      "fields": [
-        {
-          "fieldType": "TYPE",
-          "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "Class Type": "CommandTerminal",
-          "info": ""
+      {
+        "title": "Command",
+        "color": {
+          "r": 0.339946151,
+          "g": 0.578125,
+          "b": 0.5557957,
+          "a": 1.0
         },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Id",
-          "defaultValue": "String",
-          "info": ""
-        },
-        {
-          "fieldType": "TEXT_AREA",
-          "label": "Description",
-          "minHeight": 40.0,
-          "defaultValue": "Some text",
-          "info": ""
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "Format",
-          "defaultValue": "String",
-          "info": ""
-        },
-        {
-          "fieldType": "TEXT_LINE",
-          "label": "EventId",
-          "defaultValue": "String",
-          "info": ""
-        },
-        {
-          "fieldType": "INT",
-          "label": "ParameterCount",
-          "MinStepSize": 0,
-          "hasMax": false,
-          "max": 0,
-          "hasMin": true,
-          "min": 0,
-          "defaultValue": 0,
-          "info": ""
-        }
-      ],
-      "info": ""
-    }
-  ],
+        "parentType": 0,
+        "fields": [
+          {
+            "fieldType": "TYPE",
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "info": ""
+          },
+          {
+            "fieldType": "TEXT_LINE",
+            "label": "Id",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "fieldType": "TEXT_AREA",
+            "label": "Description",
+            "minHeight": 40.0,
+            "defaultValue": "Some text",
+            "info": ""
+          },
+          {
+            "fieldType": "TEXT_LINE",
+            "label": "Format",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "fieldType": "TEXT_LINE",
+            "label": "EventId",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "fieldType": "INT",
+            "label": "ParameterCount",
+            "MinStepSize": 0,
+            "hasMax": false,
+            "max": 0,
+            "hasMin": true,
+            "min": 0,
+            "defaultValue": 0,
+            "info": ""
+          }
+        ],
+        "info": ""
+      }
+    ]
+  },
   "data": {
     "ngMapNodeName": "Commands",
     "ngMapNodePosition": {
