@@ -1,0 +1,14 @@
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\Rules.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\Rules.pdb
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\LibT.Debugging.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\LibT.Serialization.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\MetaMakerLib.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\System.Collections.Immutable.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\System.Memory.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\System.Numerics.Vectors.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\bin\Release\System.Buffers.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\obj\Release\Rules.csprojAssemblyReference.cache
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\obj\Release\Rules.csproj.CoreCompileInputs.cache
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\obj\Release\Rules.csproj.CopyComplete
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\obj\Release\Rules.dll
+C:\Users\tomnc\Dev\Godot\MetaMakerRules\Rules\obj\Release\Rules.pdb

@@ -1,0 +1,194 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Textures/Checker.png" type="Texture2D" id=1]
+[ext_resource path="res://Code/NodeCode/SettingsPopup.cs" type="Script" id=2]
+
+[node name="Settings" type="ConfirmationDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -720.0
+offset_bottom = -401.0
+window_title = "Settings"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_backColorRectPath = NodePath("VBoxContainer/GridBackgroundColor/TextureRect/ColorRect")
+_majorColorRectPath = NodePath("VBoxContainer/GridMajorColor/TextureRect/ColorRect")
+_minorColorRectPath = NodePath("VBoxContainer/GridMinorColor/TextureRect/ColorRect")
+_graphNavTogglePath = NodePath("VBoxContainer/GraphNavPanel/GraphNavPanel")
+_autoTogglePath = NodePath("VBoxContainer/BackupCheck/AutoBackup")
+_autoDelayPath = NodePath("VBoxContainer/BackupDelay/Minutes")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridBackgroundColor" type="HBoxContainer" parent="VBoxContainer"]
+offset_right = 288.0
+offset_bottom = 18.0
+
+[node name="Label" type="Label" parent="VBoxContainer/GridBackgroundColor"]
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 16.0
+minimum_size = Vector2( 170, 0 )
+text = "Graph Background Color"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridBackgroundColor"]
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/GridBackgroundColor/TextureRect"]
+anchor_left = -0.033
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridMajorColor" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 22.0
+offset_right = 288.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="VBoxContainer/GridMajorColor"]
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 16.0
+minimum_size = Vector2( 170, 0 )
+text = "Graph Grid Major Color"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridMajorColor"]
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/GridMajorColor/TextureRect"]
+anchor_left = -0.033
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridMinorColor" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 44.0
+offset_right = 288.0
+offset_bottom = 62.0
+
+[node name="Label" type="Label" parent="VBoxContainer/GridMinorColor"]
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 16.0
+minimum_size = Vector2( 170, 0 )
+text = "Graph Grid Minor Color"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridMinorColor"]
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/GridMinorColor/TextureRect"]
+anchor_left = -0.033
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GraphNavPanel" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 66.0
+offset_right = 288.0
+offset_bottom = 90.0
+
+[node name="Label" type="Label" parent="VBoxContainer/GraphNavPanel"]
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 19.0
+minimum_size = Vector2( 170, 0 )
+text = "Show Graph Nav Panel"
+
+[node name="GraphNavPanel" type="CheckBox" parent="VBoxContainer/GraphNavPanel"]
+offset_left = 174.0
+offset_right = 198.0
+offset_bottom = 24.0
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+offset_top = 94.0
+offset_right = 288.0
+offset_bottom = 99.0
+minimum_size = Vector2( 0, 5 )
+color = Color( 1, 1, 1, 0 )
+
+[node name="BackupCheck" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 103.0
+offset_right = 288.0
+offset_bottom = 127.0
+
+[node name="Label" type="Label" parent="VBoxContainer/BackupCheck"]
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 19.0
+minimum_size = Vector2( 170, 0 )
+text = "Keep backups"
+
+[node name="AutoBackup" type="CheckBox" parent="VBoxContainer/BackupCheck"]
+offset_left = 174.0
+offset_right = 198.0
+offset_bottom = 24.0
+
+[node name="BackupDelay" type="HBoxContainer" parent="VBoxContainer"]
+offset_top = 131.0
+offset_right = 288.0
+offset_bottom = 155.0
+
+[node name="Label" type="Label" parent="VBoxContainer/BackupDelay"]
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 19.0
+minimum_size = Vector2( 170, 0 )
+text = "Time Between backups"
+
+[node name="Minutes" type="SpinBox" parent="VBoxContainer/BackupDelay"]
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 60.0
+step = 0.5
+value = 0.5
+suffix = "M"

@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/SubGraphSlot.cs" type="Script" id=1]
+
+[node name="SubGraphSlot" type="HBoxContainer"]
+offset_right = 137.0
+offset_bottom = 20.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("Label")
+_countLabelPath = NodePath("Count")
+_openButtonPath = NodePath("ButtonOpen")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 3.0
+offset_right = 53.0
+offset_bottom = 17.0
+mouse_filter = 0
+size_flags_horizontal = 3
+text = "Children"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Count" type="Label" parent="."]
+offset_left = 57.0
+offset_top = 3.0
+offset_right = 86.0
+offset_bottom = 17.0
+size_flags_horizontal = 3
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonOpen" type="Button" parent="."]
+offset_left = 90.0
+offset_right = 137.0
+offset_bottom = 20.0
+text = "Open"

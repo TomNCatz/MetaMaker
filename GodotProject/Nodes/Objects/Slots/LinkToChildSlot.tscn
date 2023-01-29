@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/LinkToChildSlot.cs" type="Script" id=1]
+
+[node name="LinkToChildSlot" type="HBoxContainer"]
+offset_top = 13.0
+offset_right = 40.0
+offset_bottom = 27.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 26.0
+offset_bottom = 14.0
+mouse_filter = 0
+size_flags_horizontal = 3
+align = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 30.0
+offset_right = 40.0
+offset_bottom = 14.0
+minimum_size = Vector2( 10, 0 )
+color = Color( 1, 1, 1, 0 )

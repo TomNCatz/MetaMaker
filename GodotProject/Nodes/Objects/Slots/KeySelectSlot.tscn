@@ -1,0 +1,114 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/KeySelectSlot.cs" type="Script" id=1]
+[ext_resource path="res://Textures/SelectIcon.png" type="Texture2D" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.203922, 0.203922, 0.203922, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_size = 1
+
+[sub_resource type="Theme" id=2]
+PanelContainer/styles/panel = SubResource( 1 )
+
+[node name="KeySelectSlot" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 26.0
+scale = Vector2( 0.7, 0.7 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = SubResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_titlePath = NodePath("Label")
+_fieldPath = NodePath("PanelContainer/Field")
+_fieldContainerPath = NodePath("PanelContainer")
+_buttonPath = NodePath("Button")
+_popupPath = NodePath("Control/PopupPanel")
+_dropDownPath = NodePath("Control/PopupPanel/HBoxContainer2/OptionButton")
+_clearButtonPath = NodePath("Control/PopupPanel/HBoxContainer2/ClearButton")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 6.0
+offset_right = 31.0
+offset_bottom = 20.0
+mouse_filter = 0
+size_flags_horizontal = 3
+text = "label"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 35.0
+offset_top = 5.0
+offset_right = 62.0
+offset_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Field" type="Label" parent="PanelContainer"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 26.0
+offset_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+offset_left = 66.0
+offset_right = 89.0
+offset_bottom = 26.0
+clip_contents = true
+size_flags_horizontal = 9
+icon = ExtResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+offset_left = 93.0
+offset_right = 93.0
+offset_bottom = 26.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupPanel" type="ConfirmationDialog" parent="Control"]
+visible = true
+offset_top = -8.0
+offset_right = 250.0
+offset_bottom = 62.0
+window_title = "Select a Key"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PopupPanel"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 242.0
+offset_bottom = 34.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButton" type="OptionButton" parent="Control/PopupPanel/HBoxContainer2"]
+offset_right = 186.0
+offset_bottom = 26.0
+size_flags_horizontal = 3
+
+[node name="ClearButton" type="Button" parent="Control/PopupPanel/HBoxContainer2"]
+offset_left = 190.0
+offset_right = 234.0
+offset_bottom = 26.0
+text = "Clear"

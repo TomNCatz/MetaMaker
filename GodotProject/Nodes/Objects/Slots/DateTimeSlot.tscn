@@ -1,0 +1,153 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/DateTimeOffsetSlot.cs" type="Script" id=1]
+
+[node name="DateTimeSlot" type="VBoxContainer"]
+offset_right = 153.0
+offset_bottom = 18.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("../DateTimeSlot/HBoxContainer/Label")
+_fieldPath = NodePath("../DateTimeSlot/HBoxContainer/Field")
+_popupPath = NodePath("../DateTimeSlot/Control/PopupPanel")
+_yearPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer/Year")
+_monthPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer/Month")
+_dayPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer/Day")
+_hourPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer2/Hour")
+_minutePath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer2/Minute")
+_secondPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer2/Second")
+_timezonePath = NodePath("")
+_nowPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer4/Now")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 153.0
+offset_bottom = 14.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+offset_right = 74.0
+offset_bottom = 14.0
+mouse_filter = 0
+size_flags_horizontal = 3
+text = "Color"
+
+[node name="Field" type="Label" parent="HBoxContainer"]
+offset_left = 78.0
+offset_right = 153.0
+offset_bottom = 14.0
+size_flags_horizontal = 3
+text = "Color"
+
+[node name="Control" type="Control" parent="."]
+offset_top = 18.0
+offset_right = 153.0
+offset_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupPanel" type="ConfirmationDialog" parent="Control"]
+visible = true
+offset_top = -8.0
+offset_right = 246.0
+offset_bottom = 112.0
+window_title = "Pick a Date and Time"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PopupPanel"]
+anchor_left = 0.01
+anchor_right = 0.99
+offset_left = 5.54
+offset_top = 8.0
+offset_right = -5.54001
+offset_bottom = 84.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
+offset_right = 230.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Year" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
+offset_right = 74.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+min_value = 1900.0
+max_value = 2222.0
+value = 1900.0
+suffix = "AD"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Month" type="OptionButton" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
+offset_left = 78.0
+offset_right = 152.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Day" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
+offset_left = 156.0
+offset_right = 230.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 31.0
+value = 31.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
+offset_top = 28.0
+offset_right = 230.0
+offset_bottom = 52.0
+size_flags_horizontal = 3
+
+[node name="Hour" type="OptionButton" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
+offset_right = 74.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Minute" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
+offset_left = 78.0
+offset_right = 152.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 59.0
+suffix = "M"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Second" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
+offset_left = 156.0
+offset_right = 230.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 59.0
+suffix = "S"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
+offset_top = 56.0
+offset_right = 230.0
+offset_bottom = 76.0
+size_flags_horizontal = 3
+
+[node name="Now" type="Button" parent="Control/PopupPanel/VBoxContainer/HBoxContainer4"]
+offset_right = 230.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+text = "Set to Now"
+__meta__ = {
+"_edit_use_anchors_": false
+}

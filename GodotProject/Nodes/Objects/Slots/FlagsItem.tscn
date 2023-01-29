@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/FlagItem.cs" type="Script" id=1]
+
+[node name="FlagItem" type="HBoxContainer"]
+offset_right = 54.0
+offset_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_titlePath = NodePath("FlagLabel")
+_checkPath = NodePath("CheckBox")
+
+[node name="CheckBox" type="CheckBox" parent="."]
+offset_right = 24.0
+offset_bottom = 24.0
+
+[node name="FlagLabel" type="Label" parent="."]
+offset_left = 28.0
+offset_top = 5.0
+offset_right = 54.0
+offset_bottom = 19.0
+mouse_filter = 0
+size_flags_horizontal = 3
+text = "List"

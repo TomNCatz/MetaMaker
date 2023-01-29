@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{ECF34752-9C0A-427E-AC01-93BB4C8F5B5C}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>Rules</RootNamespace>
+        <AssemblyName>Rules</AssemblyName>
+        <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MetaMakerPull|AnyCPU' ">
+      <OutputPath>bin\MetaMakerPull\</OutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="LibT.Debugging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\ResourceDLLs\LibT.Debugging.dll</HintPath>
+        </Reference>
+        <Reference Include="LibT.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\ResourceDLLs\LibT.Serialization.dll</HintPath>
+        </Reference>
+        <Reference Include="MetaMakerLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\ResourceDLLs\MetaMakerLib.dll</HintPath>
+        </Reference>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="ExportRules.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Target Name="BeforeBuild">
+        <Copy Condition=" '$(Configuration)' == 'MetaMakerPull' " SourceFiles="$(ProjectDir)\..\..\MetaMaker\Code\DLLs\LibT.Debugging.dll" DestinationFolder="$(ProjectDir)\..\ResourceDLLs" />
+        <Copy Condition=" '$(Configuration)' == 'MetaMakerPull' " SourceFiles="$(ProjectDir)\..\..\MetaMaker\Code\DLLs\LibT.Serialization.dll" DestinationFolder="$(ProjectDir)\..\ResourceDLLs" />
+        <Copy Condition=" '$(Configuration)' == 'MetaMakerPull' " SourceFiles="$(ProjectDir)\..\..\MetaMaker\Code\DLLs\MetaMakerLib.dll" DestinationFolder="$(ProjectDir)\..\ResourceDLLs" />
+    </Target>
+    <Target Name="AfterBuild">
+        <Copy Condition=" '$(Configuration)' == 'MetaMakerPull' " SourceFiles="$(ProjectDir)\bin\MetaMakerPull\Rules.dll" DestinationFolder="$(ProjectDir)\..\OutputDLLs" />
+        <Copy Condition=" '$(Configuration)' == 'Debug' " SourceFiles="$(ProjectDir)\bin\Debug\Rules.dll" DestinationFolder="$(ProjectDir)\..\OutputDLLs" />
+        <Copy Condition=" '$(Configuration)' == 'Release' " SourceFiles="$(ProjectDir)\bin\Release\Rules.dll" DestinationFolder="$(ProjectDir)\..\OutputDLLs" />
+    </Target>
+
+</Project>

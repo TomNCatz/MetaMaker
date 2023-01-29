@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Code/NodeCode/SlottedGraphNode.cs" type="Script" id=1]
+[ext_resource path="res://Textures/NodeBackground.png" type="Texture2D" id=2]
+[ext_resource path="res://Textures/NodeBackgroundSelected.png" type="Texture2D" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 64, 64 )
+offset_left = 4.0
+offset_right = 4.0
+offset_top = 22.0
+offset_bottom = 4.0
+modulate_color = Color( 0.435294, 0.392157, 0.439216, 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 64, 64 )
+offset_left = 4.0
+offset_right = 4.0
+offset_top = 22.0
+offset_bottom = 4.0
+modulate_color = Color( 0.435294, 0.392157, 0.439216, 1 )
+
+[node name="SlottedGraphNode" type="GraphNode"]
+offset_right = 202.0
+offset_bottom = 66.0
+size_flags_horizontal = 2
+size_flags_vertical = 14
+custom_styles/frame = SubResource( 1 )
+custom_styles/selected_frame = SubResource( 2 )
+show_close = true
+resizable = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+normalStyle = SubResource( 1 )
+selectedStyle = SubResource( 2 )

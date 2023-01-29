@@ -1,0 +1,2162 @@
+{
+  "metaMakerVersion": "0.7.4",
+  "defaultListing": "nodeList",
+  "explicitNode": "Graph",
+  "reuseDll": false,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"Template\"] = new ExportSet(){relativeSavePath = \"$name.tmplt\", gdoExportTarget = \"data\" };\n\t\t}\n\n\t\tpublic override void PreprocessExportGdo(GenericDataObject genericDataObject, List<string> keysToRemove, string exportName, string exportLocation, int exportIndex)\n\t\t{\n\t\t\tgenericDataObject.TryAddValue( graphVersionKey, metaMakerVersion  );\n\t\t}\n\t}\n}",
+  "nestingColors": [
+    {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.84375,
+      "g": 0.84375,
+      "b": 0.84375,
+      "a": 1.0
+    },
+    {
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    }
+  ],
+  "keyColors": [
+    {
+      "r": 0.64794004,
+      "g": 0.295880139,
+      "b": 1.0,
+      "a": 1.0
+    },
+    {
+      "r": 0.0,
+      "g": 1.0,
+      "b": 0.0625,
+      "a": 1.0
+    }
+  ],
+  "nodeList": [
+    {
+      "title": "Graph",
+      "color": {
+        "r": 0.328125,
+        "g": 0.328125,
+        "b": 0.328125,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultListing",
+          "defaultValue": "listing",
+          "info": "Name of the "
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": "",
+          "info": "Name of the node typ expected as children\n(This feature needs a refactor"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "nestingColors",
+          "field": {
+            "fieldType": "COLOR",
+            "label": "1",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false,
+            "info": ""
+          },
+          "info": "Colors used for Parent Child links"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "keyColors",
+          "field": {
+            "fieldType": "COLOR",
+            "label": "Color",
+            "defaultValue": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "asHtml": false,
+            "info": ""
+          },
+          "info": "Colors used for Key links"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "reuseDll",
+          "defaultValue": true,
+          "id": "BOOL-LYn",
+          "info": "If this graph uses a generated DLL, should it reuse the same one?\nIf not, it will rebuild from scratch each time\nShould also be checked if there is an externally generated DLL for this file"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "exportScript",
+          "minHeight": 200.0,
+          "defaultValue": "",
+          "info": "Code used for generating JSON files\nIf empty will generate a single JSON file or the same name as the graph file being exported from\nNOTE: BETTER DOCUMENTATION NEEDED HERE"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "nodeList",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "2",
+            "slotType": 0,
+            "explicitNode": "Node",
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "List of child nodes this graph can contain"
+        }
+      ],
+      "info": "Stores info about the graph itself\nThere should be only one per template"
+    },
+    {
+      "title": "Node",
+      "color": {
+        "r": 0.6862745,
+        "g": 0.6862745,
+        "b": 0.6862745,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "title",
+          "defaultValue": "Node",
+          "info": "Human readable name of the node\nNot stored in the final JSON"
+        },
+        {
+          "fieldType": "COLOR",
+          "label": "color",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false,
+          "info": "Tint that will be applied to this type of node"
+        },
+        {
+          "fieldType": "INT",
+          "label": "parentType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": -1,
+          "defaultValue": -1,
+          "info": "Type of parent this node can be connected to\nIf -1 then this node has only the graph as a parent"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "fields",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "5",
+            "slotType": 1,
+            "explicitNode": "",
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "List of fields this node type will have"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Defines an individual node"
+    },
+    {
+      "title": "Separator Slot",
+      "color": {
+        "r": 0.716467738,
+        "g": 0.828125,
+        "b": 0.828125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SEPARATOR",
+          "info": ""
+        }
+      ],
+      "info": "A buffer that can be insterted between fields"
+    },
+    {
+      "title": "Key Slot",
+      "color": {
+        "r": 0.6156863,
+        "g": 0.8117647,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "id",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyPrefix",
+          "defaultValue": "",
+          "info": "Characters that remain the same for each key\nEG 'id' in id1234"
+        },
+        {
+          "fieldType": "INT",
+          "label": "keySize",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 1,
+          "defaultValue": 1,
+          "info": "how many characters will be generated for the key after the prefix"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot that generates a unique key per node\nStores as a string in the JSON"
+    },
+    {
+      "title": "Key Manual Slot",
+      "color": {
+        "r": 0.6156863,
+        "g": 0.8117647,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_MANUAL",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "id",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyPrefix",
+          "defaultValue": "id_",
+          "info": "Characters that remain the same for each key\nEG 'id_' in id_Jeff"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "key",
+          "defaultValue": "",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot that the user can manually enter a key\nAttempts to auto update any linked slots if it changes\nStores as a string in the JSON"
+    },
+    {
+      "title": "Key Tracker Slot",
+      "color": {
+        "r": 0.51924175,
+        "g": 0.671875,
+        "b": 0.299449921,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_TRACKER",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "target",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_STRING",
+            "NULL_STRING",
+            "SKIP"
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for linking to a key\ndraws a line to the target key\ndouble clicking the key in the slot with take the view to the linked node"
+    },
+    {
+      "title": "Key Select Slot",
+      "color": {
+        "r": 0.51924175,
+        "g": 0.671875,
+        "b": 0.299449921,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "KEY_SELECT",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "target",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Keys only match up to the same type"
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_STRING",
+            "NULL_STRING",
+            "SKIP"
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_STRING stores an empty string \"\"\nNULL_STRING Stores as a null string\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Shows a dropdown of keys and allows their selection\nif the key goes away it remains tracked until cleard or updated to prevent accidental data loss"
+    },
+    {
+      "title": "Graph List Slot",
+      "color": {
+        "r": 0.875,
+        "g": 0.7667193,
+        "b": 0.4358614,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_LIST",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": "",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "NOT YET IMPLIMENTED"
+    },
+    {
+      "title": "Graph Dictionary Slot",
+      "color": {
+        "r": 0.8812586,
+        "g": 0.890625,
+        "b": 0.5370435,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "SUB_GRAPH_DICTIONARY",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": "",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "keyField",
+          "defaultValue": "id",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "NOT YET IMPLIMENTED"
+    },
+    {
+      "title": "Link To Child Slot",
+      "color": {
+        "r": 0.316713482,
+        "g": 0.6875,
+        "b": 0.5476952,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LINK_TO_CHILD",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "children",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "slotType",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Slot can only match up to a child node of this type"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "explicitNode",
+          "defaultValue": "",
+          "info": "Name of the node type expected as children\n(This feature needs a refactor"
+        },
+        {
+          "fieldType": "ENUM",
+          "label": "emptyHandling",
+          "values": [
+            "EMPTY_OBJECT",
+            "NULL",
+            "SKIP"
+          ],
+          "info": "What to put in the JSON if no value is assigned\nEMPTY_OBJECT stores an empty object {}\nNULL Stores as a null\nSKIP leaves this entry out"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot to creat a parent child relationship\nChild node are actually nested objects in the generated JSON file"
+    },
+    {
+      "title": "Field List Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.6222496,
+        "b": 0.19212313,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FIELD_LIST",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Fields",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "field",
+          "slotType": 1,
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT",
+          "info": "Type of slot to populate this list with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "For creating a resizable list of a particular data type"
+    },
+    {
+      "title": "Field Dictionary Slot",
+      "color": {
+        "r": 0.8408679,
+        "g": 0.859375,
+        "b": 0.267146528,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FIELD_DICTIONARY",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Fields",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "LINK_TO_CHILD",
+          "label": "field",
+          "slotType": 1,
+          "explicitNode": "",
+          "emptyHandling": "EMPTY_OBJECT",
+          "info": "Type of slot to populate this dictiionary with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "For creating a dictionary of a particular data type"
+    },
+    {
+      "title": "Info Slot",
+      "color": {
+        "r": 0.78039217,
+        "g": 0.872794151,
+        "b": 0.882352948,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "INFO",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "label",
+          "minHeight": 40.0,
+          "defaultValue": "Some text",
+          "info": "Text that will display for this info slot"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
+        }
+      ],
+      "info": "This persistently displays non-editable text for information, but IS NOT stored in the JSON file"
+    },
+    {
+      "title": "Auto Slot",
+      "color": {
+        "r": 0.451662,
+        "g": 0.53125,
+        "b": 0.53125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "AUTO",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "text",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultValue",
+          "defaultValue": "default",
+          "info": "Text that will display be stored for this auto slot"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "This persistently displays non-editable text that IS stored in the JSON file"
+    },
+    {
+      "title": "Type Slot",
+      "color": {
+        "r": 0.531367064,
+        "g": 0.6162219,
+        "b": 0.625,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TYPE",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Class Assembly",
+          "defaultValue": "fully qualified assembly name",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Class Type",
+          "defaultValue": "Full class name",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "this is symilar to the Auto Slot, but is specifically designed for C# type data used in reflection"
+    },
+    {
+      "title": "Enum Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.40288505,
+        "b": 0.260943323,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "ENUM",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Type",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "values",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "ENUM",
+            "info": ""
+          },
+          "info": "Options that will appear in the dropdown for a user to choose"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot that shows a dropdown of options\nStores in the JSON as a string matching the selected option"
+    },
+    {
+      "title": "Flags Slot",
+      "color": {
+        "r": 0.765625,
+        "g": 0.40288505,
+        "b": 0.260943323,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FLAGS",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Flags",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "defaultValue",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "flags",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "Flag",
+            "info": "Label for the flag to make it easier to edit\nWill not be sotred in the JSON"
+          },
+          "info": "List of flags the user will be able to turn on and off"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A list of boolean flags\nWill be stored as a single int value in the JSON without any of the labels"
+    },
+    {
+      "title": "Text Line Slot",
+      "color": {
+        "r": 0.383251429,
+        "g": 0.517907262,
+        "b": 0.921875,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_LINE",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "String",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "defaultValue",
+          "defaultValue": "String",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for a single line of text\nStores as a string"
+    },
+    {
+      "title": "Text Area Slot",
+      "color": {
+        "r": 0.292310417,
+        "g": 0.3179863,
+        "b": 0.703125,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_AREA",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Some text",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "defaultValue",
+          "minHeight": 40.0,
+          "defaultValue": "Some text",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string"
+    },
+    {
+      "title": "Rich Text Slot",
+      "color": {
+        "r": 0.120962083,
+        "g": 0.243065327,
+        "b": 0.609375,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TEXT_AREA_RICH",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Some text",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "minHeight",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": true,
+          "min": 18.0,
+          "defaultValue": 40.0,
+          "info": "Height of the area for drawing the text"
+        },
+        {
+          "fieldType": "TEXT_AREA_RICH",
+          "label": "defaultValue",
+          "minHeight": 40.0,
+          "defaultValue": "Some text",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for multiple lines of text that can be scrolled through\nStores as a string\nNOTE: should display rich text preview but something appears to be wrong"
+    },
+    {
+      "title": "Float Slot",
+      "color": {
+        "r": 0.8117647,
+        "g": 0.333333343,
+        "b": 0.5127451,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "FLOAT",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "MinStepSize",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": true,
+          "min": "0",
+          "defaultValue": "0",
+          "info": "Size of the increment when the up and down arrows are pressed"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "B-aH6",
+          "info": "If false the max will be ignored"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "max",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0,
+          "info": ""
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "B-2hF",
+          "info": "If false the min will be ignored"
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "min",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0,
+          "info": ""
+        },
+        {
+          "fieldType": "FLOAT",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": 0.0,
+          "hasMin": false,
+          "min": 0.0,
+          "defaultValue": 0.0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Slot for a floatign point value"
+    },
+    {
+      "title": "Double Slot",
+      "color": {
+        "r": 0.515625,
+        "g": 0.252984554,
+        "b": 0.351474732,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DOUBLE",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "MinStepSize",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": true,
+          "min": "0",
+          "defaultValue": "0",
+          "info": "Size of the increment when the up and down arrows are pressed"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "BOOL-uGT",
+          "info": "If false the max will be ignored"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "max",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": false,
+          "min": "0",
+          "defaultValue": "0",
+          "info": ""
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "BOOL-yIn",
+          "info": "If false the min will be ignored"
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "min",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": false,
+          "min": "0",
+          "defaultValue": "0",
+          "info": ""
+        },
+        {
+          "fieldType": "DOUBLE",
+          "label": "defaultValue",
+          "MinStepSize": "0",
+          "hasMax": false,
+          "max": "0",
+          "hasMin": false,
+          "min": "0",
+          "defaultValue": "0",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Slot for a double value"
+    },
+    {
+      "title": "Int Slot",
+      "color": {
+        "r": 0.8117647,
+        "g": 0.333333343,
+        "b": 0.333333343,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "INT",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "MinStepSize",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Size of the increment when the up and down arrows are pressed"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMax",
+          "defaultValue": false,
+          "id": "B-zqM",
+          "info": "If false the max will be ignored"
+        },
+        {
+          "fieldType": "INT",
+          "label": "max",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0,
+          "info": ""
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "hasMin",
+          "defaultValue": false,
+          "id": "B-Y2e",
+          "info": "If false the min will be ignored"
+        },
+        {
+          "fieldType": "INT",
+          "label": "min",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0,
+          "info": ""
+        },
+        {
+          "fieldType": "INT",
+          "label": "defaultValue",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": false,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Slot for an integer"
+    },
+    {
+      "title": "Long Slot",
+      "color": {
+        "r": 0.59375,
+        "g": 0.0378042981,
+        "b": 0.0378042981,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "LONG",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Value",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "allowNegative",
+          "defaultValue": true,
+          "id": "B-zqM",
+          "info": "True makes it a normal long\nFalse basically  makes it a ulong "
+        },
+        {
+          "fieldType": "LONG",
+          "label": "defaultValue",
+          "allowNegative": true,
+          "defaultValue": "0",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Slot for a long value\nStores as a string "
+    },
+    {
+      "title": "Boolean Slot",
+      "color": {
+        "r": 0.5294118,
+        "g": 0.333333343,
+        "b": 0.8117647,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "BOOLEAN",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "IsActive",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "defaultValue",
+          "defaultValue": false,
+          "id": "B-SAC",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "BOOL-",
+          "keySize": 3,
+          "info": "Used by linked booleans"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Slot for a true false value"
+    },
+    {
+      "title": "Linked Boolean Slot",
+      "color": {
+        "r": 0.345098048,
+        "g": 0.05490196,
+        "b": 0.7647059,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "BOOLEAN",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "IsActive",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "defaultValue",
+          "defaultValue": false,
+          "id": "B-Ili",
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "KEY",
+          "label": "id",
+          "slotType": 0,
+          "keyPrefix": "BOOL-",
+          "keySize": 3,
+          "info": "Used by linked booleans"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "matchTrue",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "true when true",
+            "slotType": 0,
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set TRUE all linked booleans will also be turned TRUE"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "invertTrue",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "false when true",
+            "slotType": 0,
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set TRUE all linked booleans will also be turned FALSE"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "matchFalse",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "false when false",
+            "slotType": 0,
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set FALSE all linked booleans will also be turned FALSE"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "invertFalse",
+          "field": {
+            "fieldType": "KEY_TRACKER",
+            "label": "true when false",
+            "slotType": 0,
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "When this boolean is set FALSE all linked booleans will be turned TRUE"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "Slot for a true false value that has conditional relations to other boolean slots within this node"
+    },
+    {
+      "title": "Vector2 Slot",
+      "color": {
+        "r": 0.7058824,
+        "g": 0.333333343,
+        "b": 0.8117647,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR2",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "VECTOR2",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for X and Y coordinates\nStores as a nssted data set"
+    },
+    {
+      "title": "Vector3 Slot",
+      "color": {
+        "r": 0.549019635,
+        "g": 0.286274523,
+        "b": 0.623529434,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR3",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "VECTOR3",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for X, Y, and Z\nStores as a nssted data set"
+    },
+    {
+      "title": "Vector4 Slot",
+      "color": {
+        "r": 0.380392164,
+        "g": 0.23137255,
+        "b": 0.423529416,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "VECTOR4",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Vector",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "VECTOR4",
+          "label": "defaultValue",
+          "defaultValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for X, Y, Z, and W\nStores as a nssted data set"
+    },
+    {
+      "title": "Color Slot",
+      "color": {
+        "r": 0.900632,
+        "g": 0.642556131,
+        "b": 0.9375,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "COLOR",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Color",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "COLOR",
+          "label": "defaultValue",
+          "defaultValue": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "asHtml": false,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "asHtml",
+          "defaultValue": false,
+          "id": "B-Dog",
+          "info": "Should the value be stored as an HTML hash string #AARRGGBB"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for a color value\nCan store as either a nested set (R,G,B,A) or a hash string #AARRGGBB"
+    },
+    {
+      "title": "Date Time Offset Slot",
+      "color": {
+        "r": 0.78039217,
+        "g": 0.0,
+        "b": 0.58431375,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DATE_TIME_OFFSET",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Date",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "DATE_TIME_OFFSET",
+          "label": "defaultValue",
+          "defaultValue": {
+            "date": "2020-07-16T14:34:11.0000000",
+            "offset": "-07:00"
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "For storing a date time with a timezone component\nstores as a nested string"
+    },
+    {
+      "title": "Date Time Slot",
+      "color": {
+        "r": 0.5647059,
+        "g": 0.0,
+        "b": 0.423529416,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "DATE_TIME",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Date",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "DATE_TIME",
+          "label": "defaultValue",
+          "defaultValue": {
+            "date": "2020-07-16T14:34:16.0000000",
+            "offset": "-00:00"
+          },
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "For storing a date time \nstores as a nested set of strings"
+    },
+    {
+      "title": "Time Span Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "TIME_SPAN",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Duration",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "BOOLEAN",
+          "label": "asSeconds",
+          "defaultValue": false,
+          "id": "BOOL-9KE",
+          "info": "If true will be stored as a total number of seconds in an int\nIf false will be stored as a total number of ticks in a long"
+        },
+        {
+          "fieldType": "TIME_SPAN",
+          "label": "defaultValue",
+          "defaultValue": "0",
+          "asSeconds": false,
+          "info": "Value that the field will start with"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "For storing a timespan"
+    },
+    {
+      "title": "Relative Path Slot",
+      "color": {
+        "r": 0.3984375,
+        "g": 0.0,
+        "b": 0.298418134,
+        "a": 1.0
+      },
+      "parentType": 1,
+      "fields": [
+        {
+          "fieldType": "AUTO",
+          "label": "fieldType",
+          "defaultValue": "RELATIVE_PATH",
+          "info": ""
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "label",
+          "defaultValue": "Path",
+          "info": "Label name that will display for this field"
+        },
+        {
+          "fieldType": "INT",
+          "label": "startOffset",
+          "MinStepSize": 0,
+          "hasMax": false,
+          "max": 0,
+          "hasMin": true,
+          "min": 0,
+          "defaultValue": 0,
+          "info": "how many characters to trim off the front of the relative path"
+        },
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "prefix",
+          "defaultValue": "",
+          "info": "Text that will be put in front of the relative path"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "extensions",
+          "field": {
+            "fieldType": "TEXT_LINE",
+            "label": "-",
+            "defaultValue": "*.png",
+            "info": ""
+          },
+          "info": "What file types to show as options"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "info",
+          "minHeight": 40.0,
+          "defaultValue": "",
+          "info": "Text to put in tooltip if field is hovered over.\nIf blank no tooltip will show."
+        }
+      ],
+      "info": "A slot for storing paths based on the file structure around your graph"
+    }
+  ],
+  "data": {
+    "ngMapNodeName": "Graph",
+    "ngMapNodePosition": {
+      "x": -260.0,
+      "y": 160.0
+    },
+    "ngMapNodeSize": {
+      "x": 252.0,
+      "y": 248.0
+    },
+    "defaultListing": "_commandHub",
+    "explicitNode": "Commands",
+    "nestingColors": [
+      {
+        "r": 0.21875,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    ],
+    "keyColors": [],
+    "nodeList": [
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": -500.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 209.0
+        },
+        "title": "Commands",
+        "color": {
+          "r": 0.234638348,
+          "g": 0.2578125,
+          "b": 0.248800322,
+          "a": 1.0
+        },
+        "parentType": -1,
+        "fields": [
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": -500.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "_commandHub",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 680.0,
+                "y": -500.0
+              },
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "CMD",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "SKIP",
+              "info": ""
+            },
+            "info": "List of commands and sets that are available"
+          }
+        ],
+        "info": "Root of the command tree\nThere should be only one"
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": -80.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 209.0
+        },
+        "title": "Command Set",
+        "color": {
+          "r": 0.431372553,
+          "g": 0.5019608,
+          "b": 0.4745098,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodeName": "Type Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": -80.0
+            },
+            "ngMapNodeSize": {
+              "x": 402.0,
+              "y": 105.0
+            },
+            "fieldType": "TYPE",
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandSet",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 100.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Id",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodePosition": {
+              "x": 900.0,
+              "y": -80.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "Description",
+            "minHeight": 40.0,
+            "defaultValue": "Some text",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 900.0,
+              "y": 160.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Format",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Field List Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 280.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 95.0
+            },
+            "fieldType": "FIELD_LIST",
+            "label": "SubCommands",
+            "field": {
+              "ngMapNodeName": "Link To Child Slot",
+              "ngMapNodePosition": {
+                "x": 660.0,
+                "y": 220.0
+              },
+              "ngMapNodeSize": {
+                "x": 230.0,
+                "y": 151.0
+              },
+              "fieldType": "LINK_TO_CHILD",
+              "label": "children",
+              "slotType": 0,
+              "explicitNode": "",
+              "emptyHandling": "EMPTY_OBJECT",
+              "info": ""
+            },
+            "info": "List of commands and sets that fall under this branch"
+          }
+        ],
+        "info": "Adds a word in front of the command like a folder section"
+      },
+      {
+        "ngMapNodeName": "Node",
+        "ngMapNodePosition": {
+          "x": 200.0,
+          "y": 560.0
+        },
+        "ngMapNodeSize": {
+          "x": 202.0,
+          "y": 224.0
+        },
+        "title": "Command",
+        "color": {
+          "r": 0.339946151,
+          "g": 0.578125,
+          "b": 0.5557957,
+          "a": 1.0
+        },
+        "parentType": 0,
+        "fields": [
+          {
+            "ngMapNodeName": "Type Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 402.0,
+              "y": 105.0
+            },
+            "fieldType": "TYPE",
+            "Class Assembly": "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "Class Type": "CommandTerminal",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 760.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Id",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Area Slot",
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 164.0
+            },
+            "fieldType": "TEXT_AREA",
+            "label": "Description",
+            "minHeight": 40.0,
+            "defaultValue": "Some text",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 880.0,
+              "y": 800.0
+            },
+            "ngMapNodeSize": {
+              "x": 342.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "Format",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Text Line Slot",
+            "ngMapNodePosition": {
+              "x": 660.0,
+              "y": 760.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 105.0
+            },
+            "fieldType": "TEXT_LINE",
+            "label": "EventId",
+            "defaultValue": "String",
+            "info": ""
+          },
+          {
+            "ngMapNodeName": "Int Slot",
+            "ngMapNodePosition": {
+              "x": 440.0,
+              "y": 940.0
+            },
+            "ngMapNodeSize": {
+              "x": 202.0,
+              "y": 230.0
+            },
+            "fieldType": "INT",
+            "label": "ParameterCount",
+            "MinStepSize": 0,
+            "hasMax": false,
+            "max": 0,
+            "hasMin": true,
+            "min": 0,
+            "defaultValue": 0,
+            "info": ""
+          }
+        ],
+        "info": ""
+      }
+    ],
+    "reuseDll": true,
+    "exportScript": ""
+  }
+}

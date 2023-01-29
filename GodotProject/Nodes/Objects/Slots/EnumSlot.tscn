@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/EnumSlot.cs" type="Script" id=1]
+
+[node name="EnumSlot" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("Label")
+_fieldPath = NodePath("Field")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 13.0
+offset_right = 7.0
+offset_bottom = 27.0
+mouse_filter = 0
+size_flags_horizontal = 3
+
+[node name="Field" type="OptionButton" parent="."]
+offset_left = 11.0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3

@@ -1,0 +1,583 @@
+{
+  "metaMakerVersion": "0.7.4",
+  "defaultListing": "listing",
+  "explicitNode": "",
+  "reuseDll": true,
+  "exportScript": "using System.Collections.Generic;\nusing LibT.Serialization;\nusing MetaMakerLib;\n\nnamespace Rules\n{\n\tpublic class ExportRules : ExportRulesAbstract\n\t{\n\t\tpublic ExportRules()\n\t\t{\n\t\t\t_exportTargets[\"HelpInfo JSON\"] = new ExportSet(){relativeSavePath = \"../Resources/HelpInfo.json\", gdoExportTarget = \"data\" };\n\t\t}\n\t}\n}",
+  "nestingColors": [],
+  "keyColors": [],
+  "nodeList": [
+    {
+      "title": "HelpInfo",
+      "color": {
+        "r": 0.40625,
+        "g": 0.40625,
+        "b": 0.40625,
+        "a": 1.0
+      },
+      "parentType": -1,
+      "fields": [
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "helpInfo",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "5",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "Child branches that appear in the drawer"
+        }
+      ],
+      "info": "Root node for the tree"
+    },
+    {
+      "title": "Branch",
+      "color": {
+        "r": 0.6853932,
+        "g": 0.7050562,
+        "b": 0.7050562,
+        "a": 1.0
+      },
+      "parentType": 0,
+      "fields": [
+        {
+          "fieldType": "TEXT_LINE",
+          "label": "Entry",
+          "defaultValue": "Action",
+          "info": "What text will appear in the tree for this entry"
+        },
+        {
+          "fieldType": "TEXT_AREA",
+          "label": "Info",
+          "minHeight": 40.0,
+          "defaultValue": "Detailed description",
+          "info": "What text will appear on the right to explain the node"
+        },
+        {
+          "fieldType": "FIELD_LIST",
+          "label": "Branches",
+          "field": {
+            "fieldType": "LINK_TO_CHILD",
+            "label": "1",
+            "slotType": 0,
+            "explicitNode": "Branch",
+            "emptyHandling": "SKIP",
+            "info": ""
+          },
+          "info": "Child branches that appear in the drawer\nIf there are no child branches then there is no drawer and just the text at this node will be displayed"
+        }
+      ],
+      "info": "A branch that can also be a leaf if it has no child branches"
+    }
+  ],
+  "data": {
+    "ngMapNodeName": "HelpInfo",
+    "ngMapNodePosition": {
+      "x": 20.0,
+      "y": 420.0
+    },
+    "ngMapNodeSize": {
+      "x": 242.0,
+      "y": 140.0
+    },
+    "helpInfo": [
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": -520.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 358.0
+        },
+        "Entry": "File",
+        "Info": "File operations are accessed under this menu",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Build Template (CTRL+N)",
+            "Info": "Loads a template for authoring templates",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Load Template",
+            "Info": "Load a specific template",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Export as Template",
+            "Info": "Creates a template from the data in this graph\nThis only creates a usable template if you are using the basic template",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1540.0,
+              "y": -740.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Shift Template Under Data",
+            "Info": "Attempts to load a different template under the current data\nUseful for when a template has changed and you want to update your graph",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -520.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Save Graph (CTRL+S)",
+            "Info": "Saves a graph file that contains it's own template and data\nThis can be easily loaded back up to edit and re-export data",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -520.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Save Graph As",
+            "Info": "Saves a graph into a new file you specify",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": -520.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Load Graph",
+            "Info": "Loaded a the template and data stored in a graph file",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Clear Data",
+            "Info": "Clears the data out of a graph, but keeps the current template open",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Export Slim JSON",
+            "Info": "Export data as JSON that leaves out metadata \nCannot be imported",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Export Data to JSON",
+            "Info": "Export data as JSON\nIncludes some metadata to allow it to be imported",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1540.0,
+              "y": -280.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Import Data from JSON",
+            "Info": "Attempts to import a JSON into the currently loaded template\nDoes not  work on JSONs generated outside this tool or Slim jSONs",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": -60.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Help and FAQ",
+            "Info": "Opens this help window",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": -60.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Quit",
+            "Info": "Exits the application\nIf unsaved edits have been detected you will be promted to save",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 180.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 223.0
+        },
+        "Entry": "Edit",
+        "Info": "Menu for editing nodes\nCan also be brought up by right clicking",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Create",
+            "Info": "A submenu that creates the node selected at the last clicked position\nWill be filled with node options based on the loaded template",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Copy Downstream (CTRL+C)",
+            "Info": "Copies the selected node and its children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Paste Nodes (CTRL+V)",
+            "Info": "Will attempt to paste copied data at the last clicked postion\nThis can be used even after changing templates",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1540.0,
+              "y": 200.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Delete Node (DEL)",
+            "Info": "Deletes the selected node",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 660.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 314.0
+        },
+        "Entry": "Mouse and Keyboard",
+        "Info": "Basic application controls",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 149.0
+            },
+            "Entry": "Left Click",
+            "Info": "Select a node\nSelect a field",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 240.0,
+              "y": 149.0
+            },
+            "Entry": "Left Drag",
+            "Info": "Select a box of nodes",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Left Drag Selected Node",
+            "Info": "Moves all currently highlighted nodes",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 560.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL Left Click Node",
+            "Info": "Toggles the node selected and unselected",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Middle Drag",
+            "Info": "Pan view",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Right Click",
+            "Info": "Open Edit window",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Scroll Wheel",
+            "Info": "Pans the view vertically",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1520.0,
+              "y": 740.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "Shift Scroll Wheel",
+            "Info": "Pans the view horizontally",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL C",
+            "Info": "Copy selected node and it's children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "CTRL V",
+            "Info": "Paste selected node and it's children",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 1260.0,
+              "y": 920.0
+            },
+            "ngMapNodeSize": {
+              "x": 224.0,
+              "y": 149.0
+            },
+            "Entry": "DEL",
+            "Info": "Delete selected node",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1180.0
+        },
+        "ngMapNodeSize": {
+          "x": 248.0,
+          "y": 183.0
+        },
+        "Entry": "FAQ",
+        "Info": "Frequently asked questions, or at least questions I think will be asked\nif something behaves oddly it might be explained here\nIf you have a question not answered here, you can ask\nat D.Tom.Norris@gmail.com",
+        "Branches": [
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 700.0,
+              "y": 1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 163.0
+            },
+            "Entry": "Multi-select behaves oddly",
+            "Info": "Engine limitations make currently prevent detecting mulitselect\nAs a result, multiselect cannot be used for Copy, Paste, or Delete",
+            "Branches": []
+          },
+          {
+            "ngMapNodeName": "Branch",
+            "ngMapNodePosition": {
+              "x": 980.0,
+              "y": 1180.0
+            },
+            "ngMapNodeSize": {
+              "x": 248.0,
+              "y": 153.0
+            },
+            "Entry": "Nulls saving poorly",
+            "Info": "Currently a NULL saves as an empty object instead of a NULL litteral\nIf this functionality causes issues I may create another export option for it",
+            "Branches": []
+          }
+        ]
+      },
+      {
+        "ngMapNodeName": "Branch",
+        "ngMapNodePosition": {
+          "x": 400.0,
+          "y": 1440.0
+        },
+        "ngMapNodeSize": {
+          "x": 614.0,
+          "y": 149.0
+        },
+        "Entry": "License Info",
+        "Info": "The MIT License (MIT)\n\nCopyright (c) 2020 Blade End\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+        "Branches": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+syntax: glob
+.mono
+.vscode
+.idea
+*.meta
+Templates-and-Graphs/*.dll
+Templates-and-Graphs/*.tmplt
+Templates-and-Graphs/*.json
+Builds

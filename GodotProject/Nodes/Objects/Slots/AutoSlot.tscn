@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Code/NodeCode/NodeSlots/AutoSlot.cs" type="Script" id=1]
+
+[node name="AutoSlot" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_labelPath = NodePath("../AutoSlot/Label")
+_fieldPath = NodePath("../AutoSlot/Field")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 13.0
+offset_right = 18.0
+offset_bottom = 27.0
+size_flags_horizontal = 3
+
+[node name="Field" type="Label" parent="."]
+offset_left = 22.0
+offset_top = 13.0
+offset_right = 40.0
+offset_bottom = 27.0
+size_flags_horizontal = 3
