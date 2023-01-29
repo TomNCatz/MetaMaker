@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class ColorSlot : Container, IField
+	public partial class ColorSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -25,7 +25,7 @@ namespace MetaMaker
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			
 			_colorRect = this.GetNodeFromPath<ColorRect>( _colorRectPath );
-			_colorRect.Connect( "gui_input", this, nameof(_GuiInput) );
+			_colorRect.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 		}
 
 		public override void _GuiInput( InputEvent @event )
@@ -47,8 +47,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_colorRect.HintTooltip = info;
+			_label.TooltipText = info;
+			_colorRect.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

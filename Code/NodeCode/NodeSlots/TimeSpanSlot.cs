@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TimeSpanSlot : Container, IField
+	public partial class TimeSpanSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -36,10 +36,10 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
-			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+			_field.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 
 			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
-			_popup.Connect( "confirmed", this, nameof(UpdateDate) );
+			_popup.Connect("confirmed",new Callable(this,nameof(UpdateDate)));
 			
 			_day = this.GetNodeFromPath<SpinBox>( _dayPath );
 			_hour = this.GetNodeFromPath<SpinBox>( _hourPath );
@@ -54,7 +54,7 @@ namespace MetaMaker
 			{
 				SetDateInPopup(span);
 				_popup.Popup_();
-				_popup.RectPosition = GetGlobalMousePosition();
+				_popup.Position = GetGlobalMousePosition();
 			}
 		}
 
@@ -104,8 +104,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 
 			template.GetValue( "asSeconds", out asSeconds );
 

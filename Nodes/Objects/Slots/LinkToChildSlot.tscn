@@ -3,9 +3,9 @@
 [ext_resource path="res://Code/NodeCode/NodeSlots/LinkToChildSlot.cs" type="Script" id=1]
 
 [node name="LinkToChildSlot" type="HBoxContainer"]
-margin_top = 13.0
-margin_right = 40.0
-margin_bottom = 27.0
+offset_top = 13.0
+offset_right = 40.0
+offset_bottom = 27.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 __meta__ = {
@@ -14,15 +14,15 @@ __meta__ = {
 _labelPath = NodePath("Label")
 
 [node name="Label" type="Label" parent="."]
-margin_right = 26.0
-margin_bottom = 14.0
+offset_right = 26.0
+offset_bottom = 14.0
 mouse_filter = 0
 size_flags_horizontal = 3
 align = 2
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 30.0
-margin_right = 40.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 10, 0 )
+offset_left = 30.0
+offset_right = 40.0
+offset_bottom = 14.0
+minimum_size = Vector2( 10, 0 )
 color = Color( 1, 1, 1, 0 )

@@ -6,7 +6,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class SubGraphSlot : Container, IField
+	public partial class SubGraphSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -29,7 +29,7 @@ namespace MetaMaker
 			_countLabel = this.GetNodeFromPath<Label>( _countLabelPath );
 			
 			_openButton = this.GetNodeFromPath<Button>( _openButtonPath );
-			_openButton.Connect( "pressed", this, nameof(Open) );
+			_openButton.Connect("pressed",new Callable(this,nameof(Open)));
 		}
 		
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)

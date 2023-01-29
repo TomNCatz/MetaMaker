@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeyLinkSlot : Container, IField, IKeyStore
+	public partial class KeyLinkSlot : Container, IField, IKeyStore
 	{
 		private enum EmptyHandling
 		{
@@ -46,7 +46,7 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _titlePath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
-			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+			_field.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 		}
 
 		public override void _GuiInput( InputEvent @event )
@@ -85,8 +85,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

@@ -4,7 +4,7 @@ using LibT;
 
 namespace MetaMaker
 {
-	public class AreYouSurePopup : WindowDialog
+	public partial class AreYouSurePopup : Window
 	{
 		[Export] public NodePath _infoLabelPath;
 		private Label _infoLabel;
@@ -19,7 +19,7 @@ namespace MetaMaker
 		private event Action MiddlePressed;
 		private event Action RightPressed;
 
-		public class AreYouSureArgs
+		public partial class AreYouSureArgs
 		{
 			public string title = "Proceed?";
 			public string info = "Are You Sure?";
@@ -41,13 +41,13 @@ namespace MetaMaker
 			_infoLabel = this.GetNodeFromPath<Label>( _infoLabelPath );
 
 			_leftButton = this.GetNodeFromPath<Button>( _leftButtonPath );
-			_leftButton.Connect( "pressed", this, nameof(LeftPress) );
+			_leftButton.Connect("pressed",new Callable(this,nameof(LeftPress)));
 			
 			_middleButton = this.GetNodeFromPath<Button>( _middleButtonPath );
-			_middleButton.Connect( "pressed", this, nameof(MiddlePress) );
+			_middleButton.Connect("pressed",new Callable(this,nameof(MiddlePress)));
 			
 			_rightButton = this.GetNodeFromPath<Button>( _rightButtonPath );
-			_rightButton.Connect( "pressed", this, nameof(RightPress) );
+			_rightButton.Connect("pressed",new Callable(this,nameof(RightPress)));
 		}
 
 		public void Display( AreYouSureArgs args )

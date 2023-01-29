@@ -7,7 +7,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class SlottedGraphNode : GraphNode
+	public partial class SlottedGraphNode : GraphNode
 	{
 		[Export] public StyleBoxTexture normalStyle;
 		[Export] public StyleBoxTexture selectedStyle;
@@ -57,7 +57,7 @@ namespace MetaMaker
 			_definition = definition;
 			definition.GetValue( "title", out _title );
 			definition.GetValue( "info", out string info );
-			this.HintTooltip = info;
+			this.TooltipText = info;
 			Dirty = false;
 
 			if(objData != null)
@@ -72,7 +72,7 @@ namespace MetaMaker
 				if(objData.values.ContainsKey( App.NODE_SIZE_KEY ))
 				{
 					objData.GetValue( App.NODE_SIZE_KEY, out Vector2 size );
-					RectSize = size;
+					Size = size;
 				}
 			}
 			else
@@ -81,12 +81,12 @@ namespace MetaMaker
 
 				_model.AddValue( App.NODE_NAME_KEY, _title );
 				_model.AddValue( App.NODE_POSITION_KEY, Offset );
-				_model.AddValue( App.NODE_SIZE_KEY, RectSize );
+				_model.AddValue( App.NODE_SIZE_KEY, Size );
 			}
 			
-			Connect( "close_request", this, nameof(CloseRequest) );
-			Connect( "resize_request", this, nameof(OnResizeRequest) );
-			Connect( "offset_changed", this, nameof(OnMove) );
+			Connect("close_request",new Callable(this,nameof(CloseRequest)));
+			Connect("resize_request",new Callable(this,nameof(OnResizeRequest)));
+			Connect("offset_changed",new Callable(this,nameof(OnMove)));
 			
 			if(definition.values.ContainsKey( "color" ))
 			{
@@ -329,12 +329,12 @@ namespace MetaMaker
 
 			if( child is ITextSearchable searchable )
 			{
-				_app.textSearch.Remove(searchable);
+				_app.textSearch.RemoveAt(searchable);
 			}
 			
 			if( child is IKeyStore keyStore )
 			{
-				_mainView.keyStores.Remove(keyStore);
+				_mainView.keyStores.RemoveAt(keyStore);
 			}
 			
 			var connections = _mainView.GetConnectionsToNode( this );
@@ -342,7 +342,7 @@ namespace MetaMaker
 			
 			ShiftSlotsUp( index );
 
-			slots.Remove( child );
+			slots.RemoveAt( child );
 			child.QueueFree();
 			ShiftConnections( index, connections, true );
 		}
@@ -467,12 +467,12 @@ namespace MetaMaker
 			{
 				if( slot is ITextSearchable searchable )
 				{
-					_app.textSearch.Remove(searchable);
+					_app.textSearch.RemoveAt(searchable);
 				}
 			
 				if( slot is IKeyStore keyStore )
 				{
-					_mainView.keyStores.Remove(keyStore);
+					_mainView.keyStores.RemoveAt(keyStore);
 				}
 			}
 			
@@ -482,8 +482,8 @@ namespace MetaMaker
 
 		private void OnResizeRequest(Vector2 newSize)
 		{
-			RectSize = newSize;
-			_model.AddValue( App.NODE_SIZE_KEY, RectSize );
+			Size = newSize;
+			_model.AddValue( App.NODE_SIZE_KEY, Size );
 			Dirty = true;
 		}
 

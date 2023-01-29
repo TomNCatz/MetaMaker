@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TextAreaSlot : Container, IField, ITextSearchable
+	public partial class TextAreaSlot : Container, IField, ITextSearchable
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -20,9 +20,9 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<TextEdit>( _fieldPath );
-			_field.Connect("text_changed",this,nameof(OnTextChanged));
-			_field.Connect("mouse_entered",this,nameof(OnEnter));
-			_field.Connect("mouse_exited",this,nameof(OnExit));
+			_field.Connect("text_changed",new Callable(this,nameof(OnTextChanged)));
+			_field.Connect("mouse_entered",new Callable(this,nameof(OnEnter)));
+			_field.Connect("mouse_exited",new Callable(this,nameof(OnExit)));
 		}
 		
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -31,8 +31,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
 			parentModel.TryGetValue(_label.Text, out GenericDataObject nullToken);
@@ -55,7 +55,7 @@ namespace MetaMaker
 			}
 			
 			template.GetValue( "minHeight", out float height );
-			_field.RectMinSize = new Vector2(0,height);
+			_field.CustomMinimumSize = new Vector2(0,height);
 		}
 
 		private void OnTextChanged()

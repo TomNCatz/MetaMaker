@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class DateTimeOffsetSlot : Container, IField
+	public partial class DateTimeOffsetSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -41,10 +41,10 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
-			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+			_field.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 
 			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
-			_popup.Connect( "confirmed", this, nameof(UpdateDate) );
+			_popup.Connect("confirmed",new Callable(this,nameof(UpdateDate)));
 			
 			_year = this.GetNodeFromPath<SpinBox>( _yearPath );
 			_month = this.GetNodeFromPath<OptionButton>( _monthPath );
@@ -54,7 +54,7 @@ namespace MetaMaker
 			_second = this.GetNodeFromPath<SpinBox>( _secondPath );
 			
 			_now = this.GetNodeFromPath<Button>( _nowPath );
-			_now.Connect( "pressed", this, nameof(OnNowButton) );
+			_now.Connect("pressed",new Callable(this,nameof(OnNowButton)));
 
 			isOffset = !_timezonePath.IsEmpty();
 			if( isOffset )
@@ -208,8 +208,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 
 			_model = parentModel.TryGetRelativeGdo(_label.Text);
 			if(_model != null)

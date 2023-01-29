@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class EnumSlot : Container, IField
+	public partial class EnumSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -20,7 +20,7 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<OptionButton>( _fieldPath );
-			_field.Connect("item_selected",this,nameof(OnChanged));
+			_field.Connect("item_selected",new Callable(this,nameof(OnChanged)));
 		}
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -29,8 +29,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

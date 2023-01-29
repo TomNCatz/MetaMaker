@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeyManualSlot : KeyAbstraction
+	public partial class KeyManualSlot : KeyAbstraction
 	{
 		[Export] public NodePath _prefixLabelPath;
 		private Label _prefixLabel;
@@ -28,7 +28,7 @@ namespace MetaMaker
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_prefixLabel = this.GetNodeFromPath<Label>( _prefixLabelPath );
 			_field = this.GetNodeFromPath<LineEdit>( _fieldPath );
-			_field.Connect("text_changed",this,nameof(OnChanged));
+			_field.Connect("text_changed",new Callable(this,nameof(OnChanged)));
 		}
 
 		public override void _GuiInput( InputEvent @event )
@@ -45,8 +45,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

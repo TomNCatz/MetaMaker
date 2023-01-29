@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-    public class SearchPopup : AcceptDialog
+    public partial class SearchPopup : AcceptDialog
     {
 		[Export] public NodePath _searchFieldPath;
 		private LineEdit _searchField;
@@ -27,11 +27,11 @@ namespace MetaMaker
 	        _searchButton = this.GetNodeFromPath<Button>( _searchButtonPath );
 	        _resultsList = this.GetNodeFromPath<Container>( _resultsListPath );
 	        
-	        _searchField.Connect( "text_entered", this, nameof(OnSearch) );
-	        _searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
+	        _searchField.Connect("text_entered",new Callable(this,nameof(OnSearch)));
+	        _searchButton.Connect("pressed",new Callable(this,nameof(OnSearchPress)));
 
-			Connect( "about_to_show", this, nameof(OnPrep) );
-			Connect( "confirmed", this, nameof(OnConfirm) );
+			Connect("about_to_show",new Callable(this,nameof(OnPrep)));
+			Connect("confirmed",new Callable(this,nameof(OnConfirm)));
         }
 
         public void OnPrep()
@@ -71,7 +71,7 @@ namespace MetaMaker
 		        item.SizeFlagsHorizontal = 0;
 		        var binds = new Godot.Collections.Array {result.Value};
 		        
-		        item.Connect( "pressed", this, nameof(OnPress), binds );
+		        item.Connect("pressed",new Callable(this,nameof(OnPress)),binds);
 		        _resultsList.AddChild(item);
 	        }
         }

@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class BooleanSlot : Container, IField
+	public partial class BooleanSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -29,7 +29,7 @@ namespace MetaMaker
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			
 			_field = this.GetNodeFromPath<CheckBox>( _fieldPath );
-			_field.Connect( "toggled", this, nameof(OnToggled) );
+			_field.Connect("toggled",new Callable(this,nameof(OnToggled)));
 			
 			_parent = GetParent<SlottedGraphNode>();
 		}
@@ -40,8 +40,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<bool> model);
 			if(model != null)

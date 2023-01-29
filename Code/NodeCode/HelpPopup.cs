@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class HelpPopup : WindowDialog, IGddLoadable
+	public partial class HelpPopup : Window, IGddLoadable
 	{
 		[Export] public NodePath _treePath;
 		private Tree _tree;
@@ -32,7 +32,7 @@ namespace MetaMaker
 			_info = this.GetNodeFromPath<Label>( _infoPath );
 
 			_tree.HideRoot = true;
-			_tree.Connect( "item_selected", this, nameof(HandleSelect) );
+			_tree.Connect("item_selected",new Callable(this,nameof(HandleSelect)));
 		}
 
 		public void SetObjectData( GenericDataDictionary data )

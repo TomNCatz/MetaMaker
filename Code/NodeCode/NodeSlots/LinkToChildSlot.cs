@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class LinkToChildSlot : Control, IField
+	public partial class LinkToChildSlot : Control, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -55,7 +55,7 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
+			_label.TooltipText = info;
 
 			if( template.values.ContainsKey( App.GRAPH_EXPLICIT_KEY ) )
 			{
@@ -107,7 +107,7 @@ namespace MetaMaker
 			if( _child != child ) return false;
 
 			_child = null;
-			_parent.children.Remove( child );
+			_parent.children.RemoveAt( child );
 			UpdateField();
 
 			return true;

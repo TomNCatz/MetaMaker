@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class Vector2Slot : Container, IField
+	public partial class Vector2Slot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -24,8 +24,8 @@ namespace MetaMaker
 			_x = this.GetNodeFromPath<SpinBox>( _xPath );
 			_y = this.GetNodeFromPath<SpinBox>( _yPath );
 			
-			_x.Connect("value_changed",this,nameof(OnChanged));
-			_y.Connect("value_changed",this,nameof(OnChanged));
+			_x.Connect("value_changed",new Callable(this,nameof(OnChanged)));
+			_y.Connect("value_changed",new Callable(this,nameof(OnChanged)));
 		}
 		
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -34,9 +34,9 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_x.HintTooltip = info;
-			_y.HintTooltip = info;
+			_label.TooltipText = info;
+			_x.TooltipText = info;
+			_y.TooltipText = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataDictionary model);
 			if(model != null)

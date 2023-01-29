@@ -12,7 +12,7 @@ using Vector2 = Godot.Vector2;
 
 namespace MetaMaker
 {
-	public class MainView : ColorRect
+	public partial class MainView : ColorRect
 	{
 		#region Resources
 		[Export] public PackedScene nodeScene;
@@ -144,7 +144,7 @@ namespace MetaMaker
 		public void Init(App app)
 		{
 			_app = app;
-			_advancedSearchButton.Connect("pressed", _app, nameof(_app.OpenSearch));
+			_advancedSearchButton.Connect("pressed",new Callable(_app,nameof(_app.OpenSearch)));
 		}
 
 		#region Godot and signal connectors
@@ -175,16 +175,16 @@ namespace MetaMaker
 				_createSubmenu = new PopupMenu { Name = "CreateMenu" };
 				_exportSubmenu = new PopupMenu { Name = "ExportMenu" };
 
-				_recentTemplateSubmenu.Connect( "id_pressed", this, nameof(OnRecentTemplateMenuSelection));
-				_recentShiftSubmenu.Connect( "id_pressed", this, nameof(OnRecentShiftMenuSelection));
-				_recentSubmenu.Connect( "id_pressed", this, nameof(OnRecentMenuSelection));
+				_recentTemplateSubmenu.Connect("id_pressed",new Callable(this,nameof(OnRecentTemplateMenuSelection)));
+				_recentShiftSubmenu.Connect("id_pressed",new Callable(this,nameof(OnRecentShiftMenuSelection)));
+				_recentSubmenu.Connect("id_pressed",new Callable(this,nameof(OnRecentMenuSelection)));
 
 				_errorPopup.AddButton("Copy",true,nameof(CopyErrorInfo));
 
-				_errorPopup.Connect( "custom_action", this, nameof(ErrorCustomActions) );
+				_errorPopup.Connect("custom_action",new Callable(this,nameof(ErrorCustomActions)));
 
 				PopupMenu menu = _fileMenuButton.GetPopup();
-				menu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
+				menu.Connect("id_pressed",new Callable(this,nameof(OnFileMenuSelection)));
 				menu.AddItem( "New Graph (CTRL+N)", 14 );
 				menu.AddItem( "Save Graph (CTRL+S)", 11 );
 				menu.AddItem( "Save Graph As", 2 );
@@ -193,14 +193,14 @@ namespace MetaMaker
 				menu.AddSubmenuItem( "Recent Graph", "RecentMenu" );
 				menu.AddSeparator(  );
 				menu.AddItem( "Export All (CTRL+E)", 4 );
-				_exportSubmenu.Connect( "id_pressed", this, nameof(OnExportMenuSelection));
+				_exportSubmenu.Connect("id_pressed",new Callable(this,nameof(OnExportMenuSelection)));
 				menu.AddChild(_exportSubmenu);
 				menu.AddSubmenuItem( "Export", "ExportMenu" );
 				menu.AddSeparator(  );
 				menu.AddItem( "Quit", 8 );
 
 				PopupMenu dataMenu = _dataMenuButton.GetPopup();
-				dataMenu.Connect( "id_pressed", this, nameof(OnFileMenuSelection));
+				dataMenu.Connect("id_pressed",new Callable(this,nameof(OnFileMenuSelection)));
 				dataMenu.AddItem( "Build Template (CTRL+SHIFT+N)", 0 );
 				dataMenu.AddItem( "Load Template", 1 );
 				dataMenu.AddChild( _recentTemplateSubmenu );
@@ -214,10 +214,10 @@ namespace MetaMaker
 				dataMenu.AddItem( "Trim Dissconnected Data", 13 );
 				dataMenu.AddItem( "Import Data from JSON", 5 );
 
-				_createSubmenu.Connect( "id_pressed", this, nameof(OnCreateMenuSelection));
+				_createSubmenu.Connect("id_pressed",new Callable(this,nameof(OnCreateMenuSelection)));
 
 				_editMenu = _editMenuButton.GetPopup();
-				_editMenu.Connect( "id_pressed", this, nameof(OnEditMenuSelection));
+				_editMenu.Connect("id_pressed",new Callable(this,nameof(OnEditMenuSelection)));
 				_editMenu.AddChild( _createSubmenu );
 				_editMenu.AddSubmenuItem( "Create", "CreateMenu" );
 				_editMenu.AddSeparator(  );
@@ -228,28 +228,28 @@ namespace MetaMaker
 				_editMenu.AddItem( "Find (CTRL+F)", 3 );
 				
 				PopupMenu settingsMenu = _settingsMenuButton.GetPopup();
-				settingsMenu.Connect( "id_pressed", this, nameof(OnSettingsMenuSelection));
+				settingsMenu.Connect("id_pressed",new Callable(this,nameof(OnSettingsMenuSelection)));
 				settingsMenu.AddItem( "Editor Settings...", 4 );
 				settingsMenu.AddSeparator(  );
 				settingsMenu.AddItem( "Help and FAQ", 3 );
 
-				_navUpButton.Connect( "pressed", this, nameof(OnNavUpPress) );
+				_navUpButton.Connect("pressed",new Callable(this,nameof(OnNavUpPress)));
 
-				_searchBar.Connect( "text_entered", this, nameof(OnSearch) );
-				_searchButton.Connect( "pressed", this, nameof(OnSearchPress) );
+				_searchBar.Connect("text_entered",new Callable(this,nameof(OnSearch)));
+				_searchButton.Connect("pressed",new Callable(this,nameof(OnSearchPress)));
 				
-				_colorPopup.Connect( "popup_hide", this, nameof(SelectColor) );
+				_colorPopup.Connect("popup_hide",new Callable(this,nameof(SelectColor)));
 
 				
-				_graph.Connect( "connection_request", this, nameof(OnConnectionRequest) );
-				_graph.Connect( "disconnection_request", this, nameof(OnDisconnectionRequest) );
-				_graph.Connect( "node_selected", this, nameof(SelectNode) );
-				_graph.Connect( "node_unselected", this, nameof(DeselectNode) );
-				_graph.Connect( "copy_nodes_request", this, nameof(RequestCopyNode) );
-				_graph.Connect( "paste_nodes_request", this, nameof(RequestPasteNode) );
-				_graph.Connect( "delete_nodes_request", this, nameof(RequestDeleteNode) );
-				_graph.Connect( "gui_input", this, nameof(GraphClick) );
-				_graph.Connect( "scroll_offset_changed", this, nameof(GraphOnScroll) );
+				_graph.Connect("connection_request",new Callable(this,nameof(OnConnectionRequest)));
+				_graph.Connect("disconnection_request",new Callable(this,nameof(OnDisconnectionRequest)));
+				_graph.Connect("node_selected",new Callable(this,nameof(SelectNode)));
+				_graph.Connect("node_unselected",new Callable(this,nameof(DeselectNode)));
+				_graph.Connect("copy_nodes_request",new Callable(this,nameof(RequestCopyNode)));
+				_graph.Connect("paste_nodes_request",new Callable(this,nameof(RequestPasteNode)));
+				_graph.Connect("delete_nodes_request",new Callable(this,nameof(RequestDeleteNode)));
+				_graph.Connect("gui_input",new Callable(this,nameof(GraphClick)));
+				_graph.Connect("scroll_offset_changed",new Callable(this,nameof(GraphOnScroll)));
 								
 				_tween = new Tween();
 				AddChild( _tween );
@@ -276,7 +276,7 @@ namespace MetaMaker
 				if (eventKey.IsPressed()) return;
 				if (!eventKey.Control && !eventKey.Command) return;
 
-				var key = OS.GetScancodeString(eventKey.Scancode);
+				var key = OS.GetKeycodeString(eventKey.Scancode);
 				
 				// CTRL + SHIFT + <key>
 				if (eventKey.Shift)
@@ -502,7 +502,7 @@ namespace MetaMaker
 					if( eventMouse.ButtonIndex == 2 )
 					{
 						_editMenu.Popup_(  );
-						_editMenu.RectPosition = eventMouse.Position;
+						_editMenu.Position = eventMouse.Position;
 					}
 				}
 			}
@@ -612,7 +612,7 @@ namespace MetaMaker
 				Log.Error($"should trim {toRemove.Count}");
 				foreach (GenericDataDictionary item in toRemove)
 				{
-					_copied.Remove(item);
+					_copied.RemoveAt(item);
 				}
 			}
 			catch(Exception ex)
@@ -778,7 +778,7 @@ namespace MetaMaker
 			
 			if( !_selection.Contains( graphNode ) ) return;
 			
-			_selection.Remove( graphNode );
+			_selection.RemoveAt( graphNode );
 		}
 
 		private void OnNavUpPress()
@@ -833,7 +833,7 @@ namespace MetaMaker
 		public void ResetCreateMenu(List<string> nodeNames)
 		{
 			_createSubmenu.Clear();
-			_createSubmenu.RectSize = Vector2.Zero;
+			_createSubmenu.Size = Vector2.Zero;
 
 			foreach( string name in nodeNames )
 			{
@@ -844,7 +844,7 @@ namespace MetaMaker
 		public void ResetExportMenu(Dictionary<string, ExportSet> exports)
 		{
 			_exportSubmenu.Clear();
-			_exportSubmenu.RectSize = Vector2.Zero;
+			_exportSubmenu.Size = Vector2.Zero;
 
 			foreach( var export in exports )
 			{
@@ -952,7 +952,7 @@ namespace MetaMaker
 		private Vector2 SortChild( SlottedGraphNode node, Vector2 corner )
 		{
 			node.Offset = corner;
-			Vector2 sizeMin = node.RectSize + _buffer;
+			Vector2 sizeMin = node.Size + _buffer;
 			corner += new Vector2( sizeMin.x, 0 );
 			float x = 0;
 			float y = 0;
@@ -976,7 +976,7 @@ namespace MetaMaker
 		{
 			_colorPicker.Color = original;
 			_colorPopup.Popup_();
-			_colorPopup.RectPosition = GetGlobalMousePosition();
+			_colorPopup.Position = GetGlobalMousePosition();
 
 			_pickingColor = new Promise<Color>();
 			return _pickingColor;
@@ -993,16 +993,16 @@ namespace MetaMaker
 		
 		public void CenterViewOnNode(SlottedGraphNode node)
 		{
-			CenterView( node.Offset + (node.RectSize * 0.5f));
+			CenterView( node.Offset + (node.Size * 0.5f));
 		}
 
 		public void CenterView( Vector2 position )
 		{
-			_tween.Remove( _graph, "scroll_offset" );
+			_tween.RemoveAt( _graph, "scroll_offset" );
 			_tween.InterpolateProperty( _graph,
 				"scroll_offset",
 				_graph.ScrollOffset,
-				(position * _graph.Zoom) - (_graph.RectSize * 0.5f),
+				(position * _graph.Zoom) - (_graph.Size * 0.5f),
 				0.3f );
 			_tween.Start();
 		}
@@ -1081,7 +1081,7 @@ namespace MetaMaker
 		{
 			if( _selection.Contains( graphNode ) )
 			{
-				_selection.Remove( graphNode );
+				_selection.RemoveAt( graphNode );
 			}
 			
 			Godot.Collections.Array connections = _graph.GetConnectionList();
@@ -1097,7 +1097,7 @@ namespace MetaMaker
 				}
 			}
 
-			nodes.Remove( graphNode );
+			nodes.RemoveAt( graphNode );
 			_app.RemoveNode(graphNode);
 		}
 		

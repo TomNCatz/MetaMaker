@@ -3,8 +3,8 @@
 [ext_resource path="res://Code/NodeCode/NodeSlots/SubGraphSlot.cs" type="Script" id=1]
 
 [node name="SubGraphSlot" type="HBoxContainer"]
-margin_right = 137.0
-margin_bottom = 20.0
+offset_right = 137.0
+offset_bottom = 20.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,9 +14,9 @@ _countLabelPath = NodePath("Count")
 _openButtonPath = NodePath("ButtonOpen")
 
 [node name="Label" type="Label" parent="."]
-margin_top = 3.0
-margin_right = 53.0
-margin_bottom = 17.0
+offset_top = 3.0
+offset_right = 53.0
+offset_bottom = 17.0
 mouse_filter = 0
 size_flags_horizontal = 3
 text = "Children"
@@ -25,10 +25,10 @@ __meta__ = {
 }
 
 [node name="Count" type="Label" parent="."]
-margin_left = 57.0
-margin_top = 3.0
-margin_right = 86.0
-margin_bottom = 17.0
+offset_left = 57.0
+offset_top = 3.0
+offset_right = 86.0
+offset_bottom = 17.0
 size_flags_horizontal = 3
 text = "0"
 align = 2
@@ -37,7 +37,7 @@ __meta__ = {
 }
 
 [node name="ButtonOpen" type="Button" parent="."]
-margin_left = 90.0
-margin_right = 137.0
-margin_bottom = 20.0
+offset_left = 90.0
+offset_right = 137.0
+offset_bottom = 20.0
 text = "Open"

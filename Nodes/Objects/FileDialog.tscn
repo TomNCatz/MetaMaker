@@ -4,8 +4,8 @@
 
 [node name="FileDialog" type="FileDialog"]
 visible = true
-margin_right = 788.0
-margin_bottom = 428.0
+offset_right = 788.0
+offset_bottom = 428.0
 access = 2
 current_dir = "/Dev/Godot/MetaMaker"
 current_path = "/Dev/Godot/MetaMaker/"

@@ -4,8 +4,8 @@
 [ext_resource path="res://Nodes/Objects/Slots/FlagsItem.tscn" type="PackedScene" id=2]
 
 [node name="FlagsSlot" type="VBoxContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 __meta__ = {
@@ -16,20 +16,20 @@ _titlePath = NodePath("HBoxContainer/Label")
 _currentPath = NodePath("HBoxContainer/Value")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 44.0
-margin_bottom = 14.0
+offset_right = 44.0
+offset_bottom = 14.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_right = 32.0
-margin_bottom = 14.0
+offset_right = 32.0
+offset_bottom = 14.0
 mouse_filter = 0
 size_flags_horizontal = 3
 text = "Flags"
 
 [node name="Value" type="Label" parent="HBoxContainer"]
-margin_left = 36.0
-margin_right = 44.0
-margin_bottom = 14.0
+offset_left = 36.0
+offset_right = 44.0
+offset_bottom = 14.0
 mouse_filter = 0
 size_flags_horizontal = 3
 text = "0"

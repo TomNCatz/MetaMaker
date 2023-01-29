@@ -6,7 +6,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FieldListSlot : Container, IField
+	public partial class FieldListSlot : Container, IField
 	{
 		[Export] public NodePath _titlePath;
 		private Label _label;
@@ -36,10 +36,10 @@ namespace MetaMaker
 			_selector = this.GetNodeFromPath<SpinBox>( _selectorPath );
 			
 			_addButton = this.GetNodeFromPath<Button>( _addButtonPath );
-			_addButton.Connect( "pressed", this, nameof(Add) );
+			_addButton.Connect("pressed",new Callable(this,nameof(Add)));
 			
 			_deleteButton = this.GetNodeFromPath<Button>( _deleteButtonPath );
-			_deleteButton.Connect( "pressed", this, nameof(Delete) );
+			_deleteButton.Connect("pressed",new Callable(this,nameof(Delete)));
 		}
 		
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -49,7 +49,7 @@ namespace MetaMaker
 			template.GetValue( "field", out _field );
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
+			_label.TooltipText = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataList model);
 			if(model != null)
@@ -118,7 +118,7 @@ namespace MetaMaker
 			if(target<0) return;
 			
 			Node child = _children[target];
-			_children.Remove( child );
+			_children.RemoveAt( child );
 			_graphNode.RemoveChild( child );
 			_model.RemoveValue(target);
 			_selector.MaxValue = _children.Count;

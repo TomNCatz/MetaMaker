@@ -3,8 +3,8 @@
 [ext_resource path="res://Code/NodeCode/NodeSlots/DateTimeOffsetSlot.cs" type="Script" id=1]
 
 [node name="DateTimeSlot" type="VBoxContainer"]
-margin_right = 153.0
-margin_bottom = 18.0
+offset_right = 153.0
+offset_bottom = 18.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,36 +22,36 @@ _timezonePath = NodePath("")
 _nowPath = NodePath("../DateTimeSlot/Control/PopupPanel/VBoxContainer/HBoxContainer4/Now")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 153.0
-margin_bottom = 14.0
+offset_right = 153.0
+offset_bottom = 14.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_right = 74.0
-margin_bottom = 14.0
+offset_right = 74.0
+offset_bottom = 14.0
 mouse_filter = 0
 size_flags_horizontal = 3
 text = "Color"
 
 [node name="Field" type="Label" parent="HBoxContainer"]
-margin_left = 78.0
-margin_right = 153.0
-margin_bottom = 14.0
+offset_left = 78.0
+offset_right = 153.0
+offset_bottom = 14.0
 size_flags_horizontal = 3
 text = "Color"
 
 [node name="Control" type="Control" parent="."]
-margin_top = 18.0
-margin_right = 153.0
-margin_bottom = 18.0
+offset_top = 18.0
+offset_right = 153.0
+offset_bottom = 18.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PopupPanel" type="ConfirmationDialog" parent="Control"]
 visible = true
-margin_top = -8.0
-margin_right = 246.0
-margin_bottom = 112.0
+offset_top = -8.0
+offset_right = 246.0
+offset_bottom = 112.0
 window_title = "Pick a Date and Time"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -60,23 +60,23 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PopupPanel"]
 anchor_left = 0.01
 anchor_right = 0.99
-margin_left = 5.54
-margin_top = 8.0
-margin_right = -5.54001
-margin_bottom = 84.0
+offset_left = 5.54
+offset_top = 8.0
+offset_right = -5.54001
+offset_bottom = 84.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
-margin_right = 230.0
-margin_bottom = 24.0
+offset_right = 230.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Year" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_right = 74.0
-margin_bottom = 24.0
+offset_right = 74.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 min_value = 1900.0
 max_value = 2222.0
@@ -87,15 +87,15 @@ __meta__ = {
 }
 
 [node name="Month" type="OptionButton" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 78.0
-margin_right = 152.0
-margin_bottom = 24.0
+offset_left = 78.0
+offset_right = 152.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Day" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
-margin_left = 156.0
-margin_right = 230.0
-margin_bottom = 24.0
+offset_left = 156.0
+offset_right = 230.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 min_value = 1.0
 max_value = 31.0
@@ -105,20 +105,20 @@ __meta__ = {
 }
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
-margin_top = 28.0
-margin_right = 230.0
-margin_bottom = 52.0
+offset_top = 28.0
+offset_right = 230.0
+offset_bottom = 52.0
 size_flags_horizontal = 3
 
 [node name="Hour" type="OptionButton" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_right = 74.0
-margin_bottom = 24.0
+offset_right = 74.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="Minute" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 78.0
-margin_right = 152.0
-margin_bottom = 24.0
+offset_left = 78.0
+offset_right = 152.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 max_value = 59.0
 suffix = "M"
@@ -127,9 +127,9 @@ __meta__ = {
 }
 
 [node name="Second" type="SpinBox" parent="Control/PopupPanel/VBoxContainer/HBoxContainer2"]
-margin_left = 156.0
-margin_right = 230.0
-margin_bottom = 24.0
+offset_left = 156.0
+offset_right = 230.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 max_value = 59.0
 suffix = "S"
@@ -138,14 +138,14 @@ __meta__ = {
 }
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
-margin_top = 56.0
-margin_right = 230.0
-margin_bottom = 76.0
+offset_top = 56.0
+offset_right = 230.0
+offset_bottom = 76.0
 size_flags_horizontal = 3
 
 [node name="Now" type="Button" parent="Control/PopupPanel/VBoxContainer/HBoxContainer4"]
-margin_right = 230.0
-margin_bottom = 20.0
+offset_right = 230.0
+offset_bottom = 20.0
 size_flags_horizontal = 3
 text = "Set to Now"
 __meta__ = {

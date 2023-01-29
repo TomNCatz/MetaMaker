@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Code/NodeCode/NodeSlots/ColorSlot.cs" type="Script" id=1]
-[ext_resource path="res://Textures/Checker.png" type="Texture" id=2]
+[ext_resource path="res://Textures/Checker.png" type="Texture2D" id=2]
 
 [node name="ColorSlot" type="VBoxContainer"]
-margin_right = 153.0
-margin_bottom = 18.0
+offset_right = 153.0
+offset_bottom = 18.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -14,21 +14,21 @@ _labelPath = NodePath("../ColorSlot/HBoxContainer/Label")
 _colorRectPath = NodePath("../ColorSlot/HBoxContainer/TextureRect/ColorRect")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_right = 153.0
-margin_bottom = 18.0
+offset_right = 153.0
+offset_bottom = 18.0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_top = 2.0
-margin_right = 74.0
-margin_bottom = 16.0
+offset_top = 2.0
+offset_right = 74.0
+offset_bottom = 16.0
 mouse_filter = 0
 size_flags_horizontal = 3
 text = "Color"
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-margin_left = 78.0
-margin_right = 153.0
-margin_bottom = 18.0
+offset_left = 78.0
+offset_right = 153.0
+offset_bottom = 18.0
 size_flags_horizontal = 3
 texture = ExtResource( 2 )
 stretch_mode = 2

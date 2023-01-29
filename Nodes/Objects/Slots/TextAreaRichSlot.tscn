@@ -3,8 +3,8 @@
 [ext_resource path="res://Code/NodeCode/NodeSlots/TextAreaRichSlot.cs" type="Script" id=1]
 
 [node name="TextAreaRichSlot" type="VBoxContainer"]
-margin_right = 138.0
-margin_bottom = 40.0
+offset_right = 138.0
+offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
@@ -16,24 +16,24 @@ _fieldPath = NodePath("../TextAreaRichSlot/Field")
 _displayPath = NodePath("../TextAreaRichSlot/RichTextLabel")
 
 [node name="Label" type="Label" parent="."]
-margin_right = 138.0
-margin_bottom = 14.0
+offset_right = 138.0
+offset_bottom = 14.0
 mouse_filter = 0
 size_flags_horizontal = 3
 
 [node name="Field" type="TextEdit" parent="."]
-margin_top = 18.0
-margin_right = 138.0
-margin_bottom = 27.0
+offset_top = 18.0
+offset_right = 138.0
+offset_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 caret_blink = true
-caret_blink_speed = 0.5
+caret_blink_interval = 0.5
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_top = 31.0
-margin_right = 138.0
-margin_bottom = 40.0
+offset_top = 31.0
+offset_right = 138.0
+offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true

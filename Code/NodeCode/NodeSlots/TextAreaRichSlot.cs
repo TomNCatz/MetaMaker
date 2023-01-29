@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TextAreaRichSlot : Container, IField, ITextSearchable
+	public partial class TextAreaRichSlot : Container, IField, ITextSearchable
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -24,9 +24,9 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<TextEdit>( _fieldPath );
 			_display = this.GetNodeFromPath<RichTextLabel>( _displayPath );
 
-			_field.Connect( "text_changed", this, nameof(OnTextChanged) );
-			_field.Connect("mouse_entered",this,nameof(OnEnter));
-			_field.Connect("mouse_exited",this,nameof(OnExit));
+			_field.Connect("text_changed",new Callable(this,nameof(OnTextChanged)));
+			_field.Connect("mouse_entered",new Callable(this,nameof(OnEnter)));
+			_field.Connect("mouse_exited",new Callable(this,nameof(OnExit)));
 		}
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -35,12 +35,12 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "minHeight", out float height );
-			_field.RectMinSize = new Vector2(0,height);
-			_display.RectMinSize = new Vector2(0,height);
+			_field.CustomMinimumSize = new Vector2(0,height);
+			_display.CustomMinimumSize = new Vector2(0,height);
 
 			parentModel.TryGetValue(_label.Text, out GenericDataObject<string> model);
 			parentModel.TryGetValue(_label.Text, out GenericDataObject nullToken);
@@ -61,12 +61,12 @@ namespace MetaMaker
 				_model = parentModel.TryAddValue(_label.Text, value) as GenericDataObject<string>;
 				_field.Text = value;
 			}
-			_display.BbcodeText = _field.Text;
+			_display.Text = _field.Text;
 		}
 
 		private void OnTextChanged()
 		{
-			_display.BbcodeText = _field.Text;
+			_display.Text = _field.Text;
 			_model.value = _field.Text;
 			OnValueUpdated?.Invoke();
 		}

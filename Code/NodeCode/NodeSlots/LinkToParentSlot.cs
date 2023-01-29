@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class LinkToParentSlot : Control
+	public partial class LinkToParentSlot : Control
 	{
 		[Export] public NodePath _indexPath;
 		private Label _indexLabel;
@@ -39,8 +39,8 @@ namespace MetaMaker
 			_indexLabel = this.GetNodeFromPath<Label>( _indexPath );
 			_upButton = this.GetNodeFromPath<Button>( _upButtonPath );
 			_downButton = this.GetNodeFromPath<Button>( _downButtonPath );
-			_upButton.Connect( "pressed", this, nameof(OnUpPressed) );
-			_downButton.Connect( "pressed", this, nameof(OnDownPressed) );
+			_upButton.Connect("pressed",new Callable(this,nameof(OnUpPressed)));
+			_downButton.Connect("pressed",new Callable(this,nameof(OnDownPressed)));
 			UpdateDisplay();
 		}
 
@@ -62,7 +62,7 @@ namespace MetaMaker
 				{
 					link.parentListing.OnValueUpdated -= UpdateDisplay;
 				}
-				_links.Remove(link);
+				_links.RemoveAt(link);
 			}
 
 			UpdateDisplay();

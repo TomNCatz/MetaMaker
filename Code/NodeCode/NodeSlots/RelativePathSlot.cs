@@ -6,7 +6,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class RelativePathSlot : Container, IField
+	public partial class RelativePathSlot : Container, IField
 	{
 		private static Color good = new Color(1,1,1,1);
 		private static Color bad = new Color(1f,0.4f,0.4f,1);
@@ -33,14 +33,14 @@ namespace MetaMaker
 		{
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
-			_field.Connect( "gui_input", this, nameof(_GuiInput) );
+			_field.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 		}
 
 		public override void _GuiInput( InputEvent @event )
 		{
 			if (@event is InputEventMouseButton mouseButton && !mouseButton.Pressed)
 			{
-				_mainView.FilePopup.Show( _extensions, false, "Select a File For a Path" )
+				_mainView.FilePopup.Show( _extensions, false, "Select a File For a Path3D" )
 				.Then( path =>
 				{
 					path = path.PathAbsoluteToRelative(_app.SaveFilePath);
@@ -50,7 +50,7 @@ namespace MetaMaker
 					}
 					else
 					{
-						_app.CatchException(new Exception($"Path({path}) was shorter than startOffest({_startOffset})"));
+						_app.CatchException(new Exception($"Path3D({path}) was shorter than startOffest({_startOffset})"));
 					}
 
 					_relativePath = _prefix + path;
@@ -76,7 +76,7 @@ namespace MetaMaker
 		{
 			if(string.IsNullOrEmpty(_relativePath))
 			{
-				_field.Text = "Path Not Set";
+				_field.Text = "Path3D Not Set";
 			}
 			else
 			{
@@ -98,8 +98,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

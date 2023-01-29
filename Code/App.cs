@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MetaMaker
 {
-	public class App : LibT.Services.App
+	public partial class App : LibT.Services.App
 	{
 		#region Const Values
 		public const string SETTINGS_SOURCE = "user://Settings.json";
@@ -140,7 +140,7 @@ namespace MetaMaker
 
 			_backupTimer = this.GetNodeFromPath<Timer>( _backupTimerPath );
 			_backupTimer.WaitTime = BackupFrequency;
-			_backupTimer.Connect("timeout", this, nameof(SaveBackup));
+			_backupTimer.Connect("timeout",new Callable(this,nameof(SaveBackup)));
 			_backupTimer.Start();
 
 			_helpInfoPopup = this.GetNodeFromPath<HelpPopup>( _helpInfoPopupPath );
@@ -265,7 +265,7 @@ namespace MetaMaker
 		{
 			if( _recentFiles.Contains( path ) )
 			{
-				_recentFiles.Remove( path );
+				_recentFiles.RemoveAt( path );
 			}
 			_recentFiles.Insert( 0, path );
 			
@@ -276,7 +276,7 @@ namespace MetaMaker
 		{
 			if( _recentTemplates.Contains( path ) )
 			{
-				_recentTemplates.Remove( path );
+				_recentTemplates.RemoveAt( path );
 			}
 			_recentTemplates.Insert( 0, path );
 			
@@ -370,7 +370,7 @@ namespace MetaMaker
 		{
 			if(_topModels.Contains(node.Model))
 			{
-				_topModels.Remove(node.Model);
+				_topModels.RemoveAt(node.Model);
 				UpdateData();
 			}
 		}
@@ -547,8 +547,8 @@ namespace MetaMaker
 			if(string.IsNullOrEmpty(slot.GetKey)) return;
 			if( !generatedKeys.ContainsKey( slot.GetKey ) ) return;
 			
-			generatedKeys.Remove( slot.GetKey );
-			keySearch[slot.LinkType].Remove(slot.GetKey);
+			generatedKeys.RemoveAt( slot.GetKey );
+			keySearch[slot.LinkType].RemoveAt(slot.GetKey);
 		}
 
 		public bool ContainsKey(string key)
@@ -673,7 +673,7 @@ namespace MetaMaker
 			for (int i = 0; i < fileCount; i++)
 			{
 				string myPath = path.Replace("$index",$"{i+1}");
-				myPath = System.IO.Path.GetFullPath(myPath);
+				myPath = System.IO.Path3D.GetFullPath(myPath);
 				if(myPath.Contains(".."))
 				{
 					CatchException(new Exception($"Export failed at path '{myPath}'. Check the export rules and try again."));

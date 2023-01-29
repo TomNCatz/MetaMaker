@@ -1,9 +1,9 @@
 [gd_scene format=2]
 
 [node name="ErrorPopup" type="AcceptDialog"]
-margin_right = 200.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 200, 60 )
+offset_right = 200.0
+offset_bottom = 60.0
+minimum_size = Vector2( 200, 60 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 window_title = "Encountered an Error"

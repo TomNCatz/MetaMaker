@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class LongSlot : Container, IField
+	public partial class LongSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -22,8 +22,8 @@ namespace MetaMaker
 			_label = this.GetNodeFromPath<Label>( _labelPath );
 			
 			_field = this.GetNodeFromPath<LineEdit>( _fieldPath );
-			_field.Connect( "text_changed", this, nameof(OnTextChange) );
-			_field.Connect( "text_entered", this, nameof(OnTextEnter) );
+			_field.Connect("text_changed",new Callable(this,nameof(OnTextChange)));
+			_field.Connect("text_entered",new Callable(this,nameof(OnTextEnter)));
 		}
 
 		private void OnTextChange( string text )
@@ -66,8 +66,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

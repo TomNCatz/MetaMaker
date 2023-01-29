@@ -5,7 +5,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class Vector4Slot : Container, IField
+	public partial class Vector4Slot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private Label _label;
@@ -31,10 +31,10 @@ namespace MetaMaker
 			_z = this.GetNodeFromPath<SpinBox>( _zPath );
 			_w = this.GetNodeFromPath<SpinBox>( _wPath );
 
-			_x.Connect("value_changed",this,nameof(OnChanged));
-			_y.Connect("value_changed",this,nameof(OnChanged));
-			_z.Connect("value_changed",this,nameof(OnChanged));
-			_w.Connect("value_changed",this,nameof(OnChanged));
+			_x.Connect("value_changed",new Callable(this,nameof(OnChanged)));
+			_y.Connect("value_changed",new Callable(this,nameof(OnChanged)));
+			_z.Connect("value_changed",new Callable(this,nameof(OnChanged)));
+			_w.Connect("value_changed",new Callable(this,nameof(OnChanged)));
 		}
 		
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
@@ -43,11 +43,11 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_x.HintTooltip = info;
-			_y.HintTooltip = info;
-			_z.HintTooltip = info;
-			_w.HintTooltip = info;
+			_label.TooltipText = info;
+			_x.TooltipText = info;
+			_y.TooltipText = info;
+			_z.TooltipText = info;
+			_w.TooltipText = info;
 
 			parentModel.TryGetValue(_label.Text, out GenericDataDictionary model);
 			if(model != null)

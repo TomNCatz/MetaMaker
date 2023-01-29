@@ -7,7 +7,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class FlagsSlot : Container, IField
+	public partial class FlagsSlot : Container, IField
 	{
 		[Export] public PackedScene flagsScene;
 		[Export] public NodePath _titlePath;
@@ -35,7 +35,7 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
+			_label.TooltipText = info;
 
 			template.GetValue("flags", out List<string> flags);
 			foreach(var flag in flags)

@@ -4,12 +4,12 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class TypeSlot : Container, IField
+	public partial class TypeSlot : Container, IField
 	{
 		[Export] public NodePath _fieldPath;
 		private Label _label;
 		[Export] public NodePath _popupPath;
-		private PopupDialog _popup;
+		private Popup _popup;
 		[Export] public NodePath _assemblyLabelPath;
 		private Label _assemblyLabel;
 		[Export] public NodePath _typeLabelPath;
@@ -24,10 +24,10 @@ namespace MetaMaker
 		public override void _Ready()
 		{
 			_label = this.GetNodeFromPath<Label>( _fieldPath );
-			_label.Connect( "gui_input", this, nameof(_GuiInput) );
+			_label.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 			
 			
-			_popup = this.GetNodeFromPath<PopupDialog>( _popupPath );
+			_popup = this.GetNodeFromPath<Popup>( _popupPath );
 			_assemblyLabel = this.GetNodeFromPath<Label>( _assemblyLabelPath );
 			_typeLabel = this.GetNodeFromPath<Label>( _typeLabelPath );
 		}
@@ -37,16 +37,16 @@ namespace MetaMaker
 			if (@event is InputEventMouseButton mouseButton && !mouseButton.Pressed)
 			{
 				_popup.Popup_();
-				_popup.RectPosition = GetGlobalMousePosition();
+				_popup.Position = GetGlobalMousePosition();
 			}
 		}
 
 		public void Init(GenericDataDictionary template, GenericDataObject parentModel)
 		{
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_assemblyLabel.HintTooltip = info;
-			_typeLabel.HintTooltip = info;
+			_label.TooltipText = info;
+			_assemblyLabel.TooltipText = info;
+			_typeLabel.TooltipText = info;
 			
 			template.GetValue( "Class Assembly", out assembly );
 			_assemblyLabel.Text = assembly;

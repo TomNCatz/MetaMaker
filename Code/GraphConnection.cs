@@ -1,6 +1,6 @@
 namespace MetaMaker
 {
-	public class GraphConnection
+	public partial class GraphConnection
 	{
 		public bool goingRight;
 		public string from;

@@ -3,30 +3,31 @@ using System;
 using LibT;
 using LibT.Debugging;
 
-public class Growl : Node
+public partial class Growl : Node
 {
 	[Export]private Log.LogLevel _lowestLogLevel = Log.LogLevel.WARNINGS;
 	[Export]private string _logFile = string.Empty;
 
 	private static bool isLoaded;
 	
-	// Called when the node enters the scene tree for the first time.
+	/// <summary>
+	/// Called when the node enters the scene tree for the first time.
+	/// </summary>
 	public override void _Ready()
 	{
 		// todo find out why when I load certain files this script gets started over with no settings applied
 		if(isLoaded) return;
 		isLoaded = true; 
 		GD.Print( "Growl Ready" );
-		
-		
+
 		Log.lowestDebug = _lowestLogLevel;
 		Log.PassLogs += LogOnPassLogs;
 		
 		GD.Print( OS.GetUserDataDir()+"/"+_logFile );
 
-		if( !string.IsNullOrEmpty( _logFile ) ) new LogToCsv( OS.GetUserDataDir() + "/" + _logFile );
+		if( !string.IsNullOrEmpty( _logFile ) ) new LogToCsv( OS.GetUserDataDir() + "/" + _logFile, 100, Log.lowestDebug );
 	}
-
+	
 	private void LogOnPassLogs( LogArgs args )
 	{
 		string message;

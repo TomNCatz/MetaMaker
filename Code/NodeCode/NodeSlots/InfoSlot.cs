@@ -4,7 +4,7 @@ using LibT.Serialization;
 
 namespace MetaMaker
 {
-	public class InfoSlot : Container, IField
+	public partial class InfoSlot : Container, IField
 	{
 		[Export] public NodePath _labelPath;
 		private RichTextLabel _label;
@@ -23,7 +23,7 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "minHeight", out float height );
-			_label.RectMinSize = new Vector2(0,height);
+			_label.CustomMinimumSize = new Vector2(0,height);
 		}
 	}
 }

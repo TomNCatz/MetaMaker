@@ -4,14 +4,14 @@ using RSG.Exceptions;
 
 namespace MetaMaker
 {
-	public class FileDialogExtended : FileDialog
+	public partial class FileDialogExtended : FileDialog
 	{
 		private Promise<string> _promise;
 		
 		public override void _Ready()
 		{
-			Connect( "file_selected", this, nameof(OnSelect) );
-			Connect( "popup_hide", this, nameof(OnClose) );
+			Connect("file_selected",new Callable(this,nameof(OnSelect)));
+			Connect("popup_hide",new Callable(this,nameof(OnClose)));
 		}
 
 		public IPromise<string> Show(string[] filters, bool save, string title = null)

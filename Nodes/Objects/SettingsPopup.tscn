@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Textures/Checker.png" type="Texture" id=1]
+[ext_resource path="res://Textures/Checker.png" type="Texture2D" id=1]
 [ext_resource path="res://Code/NodeCode/SettingsPopup.cs" type="Script" id=2]
 
 [node name="Settings" type="ConfirmationDialog"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -720.0
-margin_bottom = -401.0
+offset_right = -720.0
+offset_bottom = -401.0
 window_title = "Settings"
 script = ExtResource( 2 )
 __meta__ = {
@@ -23,29 +23,29 @@ _autoDelayPath = NodePath("VBoxContainer/BackupDelay/Minutes")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-margin_bottom = -36.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -36.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GridBackgroundColor" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 288.0
-margin_bottom = 18.0
+offset_right = 288.0
+offset_bottom = 18.0
 
 [node name="Label" type="Label" parent="VBoxContainer/GridBackgroundColor"]
-margin_top = 2.0
-margin_right = 170.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 170, 0 )
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 16.0
+minimum_size = Vector2( 170, 0 )
 text = "Graph Background Color"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridBackgroundColor"]
-margin_left = 174.0
-margin_right = 288.0
-margin_bottom = 18.0
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 18.0
 size_flags_horizontal = 3
 texture = ExtResource( 1 )
 stretch_mode = 2
@@ -64,21 +64,21 @@ __meta__ = {
 }
 
 [node name="GridMajorColor" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 22.0
-margin_right = 288.0
-margin_bottom = 40.0
+offset_top = 22.0
+offset_right = 288.0
+offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="VBoxContainer/GridMajorColor"]
-margin_top = 2.0
-margin_right = 170.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 170, 0 )
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 16.0
+minimum_size = Vector2( 170, 0 )
 text = "Graph Grid Major Color"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridMajorColor"]
-margin_left = 174.0
-margin_right = 288.0
-margin_bottom = 18.0
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 18.0
 size_flags_horizontal = 3
 texture = ExtResource( 1 )
 stretch_mode = 2
@@ -97,21 +97,21 @@ __meta__ = {
 }
 
 [node name="GridMinorColor" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 44.0
-margin_right = 288.0
-margin_bottom = 62.0
+offset_top = 44.0
+offset_right = 288.0
+offset_bottom = 62.0
 
 [node name="Label" type="Label" parent="VBoxContainer/GridMinorColor"]
-margin_top = 2.0
-margin_right = 170.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 170, 0 )
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 16.0
+minimum_size = Vector2( 170, 0 )
 text = "Graph Grid Minor Color"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/GridMinorColor"]
-margin_left = 174.0
-margin_right = 288.0
-margin_bottom = 18.0
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 18.0
 size_flags_horizontal = 3
 texture = ExtResource( 1 )
 stretch_mode = 2
@@ -130,62 +130,62 @@ __meta__ = {
 }
 
 [node name="GraphNavPanel" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 66.0
-margin_right = 288.0
-margin_bottom = 90.0
+offset_top = 66.0
+offset_right = 288.0
+offset_bottom = 90.0
 
 [node name="Label" type="Label" parent="VBoxContainer/GraphNavPanel"]
-margin_top = 5.0
-margin_right = 170.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 170, 0 )
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 19.0
+minimum_size = Vector2( 170, 0 )
 text = "Show Graph Nav Panel"
 
 [node name="GraphNavPanel" type="CheckBox" parent="VBoxContainer/GraphNavPanel"]
-margin_left = 174.0
-margin_right = 198.0
-margin_bottom = 24.0
+offset_left = 174.0
+offset_right = 198.0
+offset_bottom = 24.0
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
-margin_top = 94.0
-margin_right = 288.0
-margin_bottom = 99.0
-rect_min_size = Vector2( 0, 5 )
+offset_top = 94.0
+offset_right = 288.0
+offset_bottom = 99.0
+minimum_size = Vector2( 0, 5 )
 color = Color( 1, 1, 1, 0 )
 
 [node name="BackupCheck" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 103.0
-margin_right = 288.0
-margin_bottom = 127.0
+offset_top = 103.0
+offset_right = 288.0
+offset_bottom = 127.0
 
 [node name="Label" type="Label" parent="VBoxContainer/BackupCheck"]
-margin_top = 5.0
-margin_right = 170.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 170, 0 )
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 19.0
+minimum_size = Vector2( 170, 0 )
 text = "Keep backups"
 
 [node name="AutoBackup" type="CheckBox" parent="VBoxContainer/BackupCheck"]
-margin_left = 174.0
-margin_right = 198.0
-margin_bottom = 24.0
+offset_left = 174.0
+offset_right = 198.0
+offset_bottom = 24.0
 
 [node name="BackupDelay" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 131.0
-margin_right = 288.0
-margin_bottom = 155.0
+offset_top = 131.0
+offset_right = 288.0
+offset_bottom = 155.0
 
 [node name="Label" type="Label" parent="VBoxContainer/BackupDelay"]
-margin_top = 5.0
-margin_right = 170.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 170, 0 )
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 19.0
+minimum_size = Vector2( 170, 0 )
 text = "Time Between backups"
 
 [node name="Minutes" type="SpinBox" parent="VBoxContainer/BackupDelay"]
-margin_left = 174.0
-margin_right = 288.0
-margin_bottom = 24.0
+offset_left = 174.0
+offset_right = 288.0
+offset_bottom = 24.0
 size_flags_horizontal = 3
 min_value = 0.5
 max_value = 60.0

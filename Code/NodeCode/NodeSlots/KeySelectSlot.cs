@@ -5,7 +5,7 @@ using LibT.Services;
 
 namespace MetaMaker
 {
-	public class KeySelectSlot : Container, IField, IKeyStore
+	public partial class KeySelectSlot : Container, IField, IKeyStore
 	{
 		private enum EmptyHandling
 		{
@@ -51,14 +51,14 @@ namespace MetaMaker
 			_field = this.GetNodeFromPath<Label>( _fieldPath );
 			_fieldContainer = this.GetNodeFromPath<Container>( _fieldContainerPath );
 			_button = this.GetNodeFromPath<Button>( _buttonPath );
-			_button.Connect( "pressed", this, nameof(OpenPopup) );
+			_button.Connect("pressed",new Callable(this,nameof(OpenPopup)));
 			_popup = this.GetNodeFromPath<ConfirmationDialog>( _popupPath );
-			_popup.Connect( "confirmed", this, nameof(PullKey) );
+			_popup.Connect("confirmed",new Callable(this,nameof(PullKey)));
 			_dropDown = this.GetNodeFromPath<OptionButton>( _dropDownPath );
 			_clearButton = this.GetNodeFromPath<Button>( _clearButtonPath );
-			_clearButton.Connect( "pressed", this, nameof(ClearSelection) );
-			_field.Connect( "gui_input", this, nameof(_GuiInput) );
-			_fieldContainer.Connect( "gui_input", this, nameof(_GuiInput) );
+			_clearButton.Connect("pressed",new Callable(this,nameof(ClearSelection)));
+			_field.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
+			_fieldContainer.Connect("gui_input",new Callable(this,nameof(_GuiInput)));
 		}
 
 		public override void _GuiInput( InputEvent @event )
@@ -75,7 +75,7 @@ namespace MetaMaker
 		{
 			FillOptions();
 			_popup.Popup_();
-			_popup.RectPosition = GetGlobalMousePosition();
+			_popup.Position = GetGlobalMousePosition();
 		}
 
 		private void FillOptions()
@@ -123,8 +123,8 @@ namespace MetaMaker
 			_label.Text = label;
 			
 			template.GetValue( "info", out string info );
-			_label.HintTooltip = info;
-			_field.HintTooltip = info;
+			_label.TooltipText = info;
+			_field.TooltipText = info;
 			
 			template.GetValue( "expandedField", out bool expandedField );
 			_label.SizeFlagsHorizontal = expandedField ? (int) SizeFlags.Fill : (int) SizeFlags.ExpandFill;

@@ -4,7 +4,7 @@ using LibT;
 
 namespace MetaMaker
 {
-	public class FlagItem : Container
+	public partial class FlagItem : Container
 	{
 		[Export] public NodePath _titlePath;
 		private Label _title;
@@ -36,8 +36,8 @@ namespace MetaMaker
 		{
 			set
 			{
-				_title.HintTooltip = value;
-				_check.HintTooltip = value;
+				_title.TooltipText = value;
+				_check.TooltipText = value;
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace MetaMaker
 		{
 			_title = this.GetNodeFromPath<Label>( _titlePath );
 			_check = this.GetNodeFromPath<CheckBox>( _checkPath );
-			_check.Connect( "toggled", this, nameof(OnToggled) );
+			_check.Connect("toggled",new Callable(this,nameof(OnToggled)));
 		}
 
 		private void OnToggled(bool buttonPressed)
