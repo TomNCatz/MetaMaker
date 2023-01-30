@@ -58,14 +58,6 @@
             "GodotSharpEditor": {
               "target": "Package",
               "version": "[4.0.0-beta.11, )"
-            },
-            "Microsoft.CodeAnalysis": {
-              "target": "Package",
-              "version": "[3.10.0-1.final, )"
-            },
-            "NUnit": {
-              "target": "Package",
-              "version": "[3.13.1, )"
             }
           },
           "imports": [

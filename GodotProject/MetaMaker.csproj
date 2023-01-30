@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <RootNamespace>Test4Beta</RootNamespace>
+    <RootNamespace>MetaMaker</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Code\DLLs\LibT.Debugging.dll" />
@@ -36,13 +36,5 @@
     <Folder Include="Code\UI\InspectorFields" />
     <Folder Include="Code\UI\NodeFields" />
     <Folder Include="Code\UI\SharedFields" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis">
-      <Version>3.10.0-1.final</Version>
-    </PackageReference>
-    <PackageReference Include="NUnit">
-      <Version>3.13.1</Version>
-    </PackageReference>
   </ItemGroup>
 </Project>

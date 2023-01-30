@@ -99,6 +99,53 @@ public partial class MainMenuBar : Control
 		settingsMenu.AddSeparator();
 		settingsMenu.AddItem("Help and FAQ", 1);
 	}
+	
+	/// <summary>
+	/// keyboard shortcuts
+	/// </summary>
+	public override void _Input( InputEvent @event )
+	{
+		try
+		{
+			if (!(@event is InputEventKey eventKey)) return;
+			if (eventKey.IsPressed()) return;
+			if (!eventKey.CtrlPressed && !eventKey.MetaPressed) return;
+
+			// CTRL + SHIFT + <key>
+			if (eventKey.ShiftPressed)
+			{
+				if( eventKey.Keycode == Key.N )
+				{
+					//_app.LoadDefaultTemplate();
+				}
+				return;
+			}
+
+			// CTRL + <key>
+			switch (eventKey.Keycode)
+			{
+				case Key.S:
+					_saveService.SaveGraph();
+					break;
+				case Key.N:
+					//_app.NewFromLastTemplate();
+					break;
+				case Key.P:
+					//SortNodes();
+					break;
+				case Key.F:
+					//_app.OpenSearch();
+					break;
+				case Key.E:
+					//_app.ExportAll();
+					break;
+			}
+		}
+		catch( Exception e )
+		{
+			_app.CatchException( e );
+		}
+	}
 
 
 	private void OnFileMenuSelection( int id )
@@ -108,8 +155,8 @@ public partial class MainMenuBar : Control
 			switch(id)
 			{
 				// case 0 : _app.NewFromLastTemplate(); break;
-				// case 1 : _app.SaveGraph(); break;
-				// case 2 : SaveGraphAs(); break;
+				case 1 : _saveService.SaveGraph(); break;
+				case 2 : _saveService.SaveGraphAs(); break;
 				case 3 : _saveService.PickGraphToLoad(); break;
 				// case 4 :  _app.ExportAll(); break;
 				case 5 :  _app.RequestQuit(); break;

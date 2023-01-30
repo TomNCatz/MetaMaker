@@ -342,12 +342,48 @@ public class SaveService
 			await ClearData();
 			
 			_model.GddFromJson( json );
-			_model.GetValue( TemplateService.GRAPH_TEMPLATE_KEY, out GenericDataDictionary template );
 			
-			_templateService.LoadTemplate(template);
+			if (_model.values.ContainsKey(TemplateService.GRAPH_TEMPLATE_KEY))
+			{
+				_model.GetValue( TemplateService.GRAPH_TEMPLATE_KEY, out GenericDataDictionary template );
+				// todo should update the template name here if successful
+				_templateService.LoadTemplate(template);
+			}
+			else
+			{
+				// todo should probably skip this popup if no template is currently loaded
+				var choice = await _areYouSurePopup.Display(new AreYouSurePopup.AreYouSureArgs(){
+					title = "Choose a Template",
+					info = "File does not contain a template.\nShould the currently loaded template be used?",
+					leftText = "Current",
+					middleText = "No Template",
+					rightText = "Cancel"
+				});
 
-			_model.GetValue( DataService.GRAPH_DATA_KEY, out GenericDataDictionary graph );
-			_dataService.LoadData( graph );
+				switch (choice)
+				{
+					case AreYouSurePopup.Choice.LEFT:
+						break;
+					case AreYouSurePopup.Choice.MIDDLE:
+						// todo Template service needs a clear option and it should be called here
+						break;
+					case AreYouSurePopup.Choice.RIGHT:
+					case AreYouSurePopup.Choice.CANCEL:
+						return;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+
+			if (_model.values.ContainsKey(DataService.GRAPH_DATA_KEY))
+			{
+				_model.GetValue(DataService.GRAPH_DATA_KEY, out GenericDataDictionary graph);
+				_dataService.LoadData(graph);
+			}
+			else
+			{
+				_dataService.LoadData(_model);
+			}
 
 			SaveFilePath = path;
 			HasUnsavedChanges = false;
