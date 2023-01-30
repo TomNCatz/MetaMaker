@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://bxy8tn5vgtcyq"]
+[gd_scene load_steps=2 format=3 uid="uid://bxy8tn5vgtcyq"]
+
+[ext_resource type="Script" path="res://Code/UI/NoticePopup.cs" id="1_e7lvh"]
 
 [node name="ErrorPopup" type="AcceptDialog"]
 title = "Encountered an Error"
 visible = true
 borderless = true
+script = ExtResource("1_e7lvh")

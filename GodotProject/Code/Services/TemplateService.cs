@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 using LibT.Serialization;
 using LibT.Services;
@@ -31,23 +32,23 @@ public class TemplateService
 	[Injectable]
 	private MainMenuBar _mainMenuBar;
 
-	public bool LoadTemplate(GenericDataDictionary template)
+	public async Task<bool> LoadTemplate(GenericDataDictionary template)
 	{
 		try
 		{
-			LoadTemplateInternal(template);
+			await LoadTemplateInternal(template);
 			Template = template;
 			return true;
 		}
 		catch (Exception e)
 		{
-			_app.CatchException(e);
+			await _app.CatchException(e);
 			// todo return to previous template
 			return false;
 		}
 	}
 
-	private void LoadTemplateInternal(GenericDataDictionary template)
+	private async Task LoadTemplateInternal(GenericDataDictionary template)
 	{
 		_nodeData.Clear();
 		_parentChildColors.Clear();
@@ -57,7 +58,7 @@ public class TemplateService
 
 		if( targetVersion != _app.VersionDisplay )
 		{
-			_app.ShowNotice($"File version is '{targetVersion}' which does not match app version '{_app.VersionDisplay}'");
+			await _app.ShowNotice($"File version is '{targetVersion}' which does not match app version '{_app.VersionDisplay}'");
 		}
 
 		template.GetValue( GRAPH_LISTING_KEY, out string defaultListing );
@@ -135,7 +136,7 @@ public class TemplateService
 		
 			if( _nodeData.ContainsKey( title ) )
 			{
-				_app.ShowNotice( $"Duplicate node title '{title}' found in the template.\nNodes must all have unique titles" );
+				await _app.ShowNotice( $"Duplicate node title '{title}' found in the template.\nNodes must all have unique titles" );
 			}
 			else
 			{

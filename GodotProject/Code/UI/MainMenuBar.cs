@@ -147,7 +147,6 @@ public partial class MainMenuBar : Control
 		}
 	}
 
-
 	private void OnFileMenuSelection( int id )
 	{
 		try
@@ -230,7 +229,7 @@ public partial class MainMenuBar : Control
 		}
 		catch( Exception e )
 		{
-			_app.CatchException( e );
+			await _app.CatchException( e );
 		}
 	}
 	
@@ -242,7 +241,7 @@ public partial class MainMenuBar : Control
 		}
 		catch( Exception e )
 		{
-			_app.CatchException( e );
+			await _app.CatchException( e );
 		}
 	}
 	
@@ -255,7 +254,7 @@ public partial class MainMenuBar : Control
 		}
 		catch( Exception e )
 		{
-			_app.CatchException( e );
+			await _app.CatchException( e );
 		}
 	}
 	

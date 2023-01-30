@@ -32,7 +32,7 @@ prefabricatorPath = NodePath("Prefabricator")
 treeViewPath = NodePath("MainView/HSplitContainer/Main/TabContainer/Tree View")
 filePopup = NodePath("FileDialog")
 areYouSurePopup = NodePath("AreYouSurePopup")
-errorPopupPath = NodePath("ErrorPopup")
+noticePopupPath = NodePath("ErrorPopup")
 settingsPopupPath = NodePath("SettingsPopup")
 
 [node name="Prefabricator" type="Node" parent="."]

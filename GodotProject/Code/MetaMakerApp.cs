@@ -16,10 +16,10 @@ public partial class MetaMakerApp : App
 	[Export] public NodePath treeViewPath;
 	[Export] public NodePath filePopup;
 	[Export] public NodePath areYouSurePopup;
-	[Export] public NodePath errorPopupPath;
+	[Export] public NodePath noticePopupPath;
 	[Export] public NodePath settingsPopupPath;
 
-	private AcceptDialog _errorPopup;
+	private NoticePopup _noticePopup;
 	private SaveService _saveService;
 	
 	public override void _Ready()
@@ -49,7 +49,7 @@ public partial class MetaMakerApp : App
 		context.Set(GetNode<TreeView>( treeViewPath ));
 		context.Set(GetNode<FileDialogAsync>( filePopup ));
 		context.Set(GetNode<AreYouSurePopup>( areYouSurePopup ));
-		_errorPopup = GetNode<AcceptDialog>( errorPopupPath );
+		_noticePopup = GetNode<NoticePopup>( noticePopupPath );
 		context.Set(GetNode<SettingsPopup>( settingsPopupPath ));
 		
 		// Create and Bind Services
@@ -96,30 +96,26 @@ public partial class MetaMakerApp : App
 	/// app wide error handling
 	/// </summary>
 	/// <param name="ex"></param>
-	public void CatchException( Exception ex )
+	public async Task CatchException( Exception ex )
 	{
-		// todo error popup should probably be async and be awaited so if multiple messages pop at once the user has a chance to read them all
 		Log.Except( ex );
 		
-		_errorPopup.DialogText = ex.Message;
-			
 #if DEBUG
-		_errorPopup.DialogText = $"{ex.Message} \n\n{ex.StackTrace}";
+		await _noticePopup.Show($"{ex.Message} \n\n{ex.StackTrace}");
+#else
+		await _errorPopup.Show(ex.Message);
 #endif
 			
-		_errorPopup.PopupCentered();
 	}
 	
 	/// <summary>
 	/// Show a notice to the user that isn't necessarily an error
 	/// </summary>
 	/// <param name="notice"> text that will display</param>
-	public void ShowNotice( string notice )
+	public async Task ShowNotice( string notice )
 	{
-		// todo error popup should probably be async and be awaited so if multiple messages pop at once the user has a chance to read them all
 		Log.LogL( notice );
-		_errorPopup.DialogText = notice;
-		_errorPopup.PopupCentered();
+		await _noticePopup.Show(notice);
 	}
 	
 	public async Task RequestQuit()

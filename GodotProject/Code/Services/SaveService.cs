@@ -168,7 +168,7 @@ public class SaveService
 				}
 				catch( Exception e )
 				{
-					_app.CatchException( e );
+					await _app.CatchException( e );
 					return false;
 				}
 			case AreYouSurePopup.Choice.MIDDLE:
@@ -194,7 +194,7 @@ public class SaveService
 		}
 		catch (Exception e)
 		{
-			_app.CatchException(e);
+			await _app.CatchException(e);
 			throw;
 		}
 	}
@@ -215,7 +215,7 @@ public class SaveService
 		SaveGraph( SaveFilePath );
 	}
 
-	public void SaveBackup()
+	public async Task SaveBackup()
 	{
 		if( !_settings.AutoBackup ) return;
 		if( !_hasUnbackedChanges ) return;
@@ -229,12 +229,12 @@ public class SaveService
 		}	
 		catch(Exception e)
 		{
-			_app.CatchException(e);
+			await _app.CatchException(e);
 		}
 	}
 	
 	
-	public void SaveGraph( string path )
+	public async Task SaveGraph( string path )
 	{
 		try
 		{
@@ -247,11 +247,11 @@ public class SaveService
 		}
 		catch( Exception e )
 		{
-			_app.CatchException( e );
+			await _app.CatchException( e );
 		}
 	}
 	
-	public void SaveJsonFile( string path, string json )
+	public async Task SaveJsonFile( string path, string json )
 	{
 		try
 		{
@@ -276,7 +276,7 @@ public class SaveService
 		}
 		catch(Exception ex)
 		{
-			_app.CatchException(ex);
+			await _app.CatchException(ex);
 		}
 	}
 	#endregion
@@ -311,7 +311,7 @@ public class SaveService
 		}
 		catch(Exception ex)
 		{
-			_app.CatchException(ex);
+			await _app.CatchException(ex);
 		}
 	}
 
@@ -327,7 +327,7 @@ public class SaveService
 		}
 		catch (Exception e)
 		{
-			_app.CatchException(e);
+			await _app.CatchException(e);
 		}
 	}
 	
@@ -391,7 +391,7 @@ public class SaveService
 		}
 		catch(Exception ex)
 		{
-			_app.CatchException(ex);
+			await _app.CatchException(ex);
 		}
 	}
 	
