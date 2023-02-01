@@ -2,7 +2,7 @@ using Godot;
 
 namespace MetaMaker.UI;
 
-public partial class ControlResizer : Object
+public partial class ControlResizer : GodotObject
 {
 	private Control _resizeGrip;
 	private Control _parent;
@@ -29,7 +29,7 @@ public partial class ControlResizer : Object
 		if(!pressed) return;
 		
 		var pos = _parent.GetViewport().GetMousePosition();
-		var x = pos.x - startingPosition + startingWidth;
+		var x = pos.X - startingPosition + startingWidth;
 		if (x < trueMin) x = trueMin;
 		_parent.CustomMinimumSize = new Vector2(x, 0);
 	}
@@ -41,8 +41,8 @@ public partial class ControlResizer : Object
 		{
 			if( mouseButton.Pressed)
 			{
-				startingPosition = _parent.GetViewport().GetMousePosition().x;
-				startingWidth = _parent.Size.x;
+				startingPosition = _parent.GetViewport().GetMousePosition().X;
+				startingWidth = _parent.Size.X;
 				pressed = true;
 			}
 			else

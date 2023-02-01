@@ -283,7 +283,7 @@ public class SaveService
 
 	#region Load Flow
 	
-	private async Task PickTemplateToLoad()
+	public async Task PickTemplateToLoad()
 	{
 		string path = await _fileDialog.Show( new[] { "*.tmplt" }, false, "Open a Template file" );
 		if (string.IsNullOrEmpty(path)) return;

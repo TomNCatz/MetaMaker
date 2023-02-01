@@ -13,7 +13,7 @@ public partial class NoticePopup : AcceptDialog
 		
 		Connect("custom_action", new Callable(this, nameof(CopyErrorInfo)));
 		Connect("confirmed", new Callable(this, nameof(Close)));
-		Connect("cancelled", new Callable(this, nameof(Close)));
+		Connect("canceled", new Callable(this, nameof(Close)));
 	}
 
 	public async Task Show(string message)

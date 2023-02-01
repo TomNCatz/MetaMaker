@@ -1,15 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "uxa4oL2hqmqDkl2v6+JYhtND6NXt+XIxZhlvlr5YZ1QefQz0IKFBA3S+/AA+fhUlI6NxS57tBsxql7VfzgLqnw==",
+  "dgSpecHash": "7g08XR+8M9alBt/jiFpEVgIL2UnSra/oqE7jho+kzy3n4Hfwa2NlYjs98m18GVw0K9IvbAdmDW/9dmQ9Xagstw==",
   "success": true,
   "projectFilePath": "C:\\Users\\tomnc\\Dev\\Godot\\MetaMaker - New\\GodotProject\\MetaMaker.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\tomnc\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder\\godot.sourcegenerators\\4.0.0-beta.11\\godot.sourcegenerators.4.0.0-beta.11.nupkg.sha512",
-    "C:\\Users\\tomnc\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder\\godotsharp\\4.0.0-beta.11\\godotsharp.4.0.0-beta.11.nupkg.sha512",
-    "C:\\Users\\tomnc\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder\\godotsharpeditor\\4.0.0-beta.11\\godotsharpeditor.4.0.0-beta.11.nupkg.sha512",
-    "C:\\Users\\tomnc\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.13\\microsoft.netcore.app.ref.6.0.13.nupkg.sha512",
-    "C:\\Users\\tomnc\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.13\\microsoft.windowsdesktop.app.ref.6.0.13.nupkg.sha512",
-    "C:\\Users\\tomnc\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.13\\microsoft.aspnetcore.app.ref.6.0.13.nupkg.sha512"
+    "C:\\Users\\tomnc\\.nuget\\packages\\godot.sourcegenerators\\4.0.0-beta.16\\godot.sourcegenerators.4.0.0-beta.16.nupkg.sha512",
+    "C:\\Users\\tomnc\\.nuget\\packages\\godotsharp\\4.0.0-beta.16\\godotsharp.4.0.0-beta.16.nupkg.sha512",
+    "C:\\Users\\tomnc\\.nuget\\packages\\godotsharpeditor\\4.0.0-beta.16\\godotsharpeditor.4.0.0-beta.16.nupkg.sha512"
   ],
   "logs": []
 }

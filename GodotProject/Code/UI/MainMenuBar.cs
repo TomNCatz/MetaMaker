@@ -174,7 +174,7 @@ public partial class MainMenuBar : Control
 			switch(id)
 			{
 				// case 0 :  _app.LoadDefaultTemplate(); break;
-				// case 1 :  PickTemplateToLoad(); break;
+				case 1 :  _saveService.PickTemplateToLoad(); break;
 				// case 2 :  ShiftTemplateUnderData(); break;
 				// case 3 :  _app.ClearData(); break;
 				// case 4 :  TrimOldData(); break;
@@ -237,7 +237,7 @@ public partial class MainMenuBar : Control
 	{
 		try
 		{
-			await _saveService.LoadGraph( _settings.RecentTemplates[id] );
+			await _saveService.LoadTemplate( _settings.RecentTemplates[id] );
 		}
 		catch( Exception e )
 		{
@@ -289,7 +289,7 @@ public partial class MainMenuBar : Control
 	public void UpdateCreateMenu(List<string> nodeNames)
 	{
 		_createSubmenu.Clear();
-		_createSubmenu.Size = Vector2i.Zero;
+		_createSubmenu.Size = Vector2I.Zero;
 
 		foreach( string name in nodeNames )
 		{

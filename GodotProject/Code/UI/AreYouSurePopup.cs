@@ -53,7 +53,7 @@ public partial class AreYouSurePopup : Window
 
 	public async Task<Choice> Display(AreYouSureArgs args)
 	{
-		SetSize(new Vector2i(10, 10));
+		Size = new Vector2I(10, 10);
 
 		Title = args.title;
 		_infoLabel.Text = args.info;

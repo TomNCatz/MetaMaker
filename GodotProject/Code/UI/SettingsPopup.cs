@@ -40,7 +40,7 @@ public partial class SettingsPopup : ConfirmationDialog
 
 		Connect("about_to_popup", new Callable(this, nameof(OnPrep)));
 		Connect("confirmed", new Callable(this, nameof(OnConfirm)));
-		Connect("cancelled", new Callable(this, nameof(OnCancel)));
+		Connect("canceled", new Callable(this, nameof(OnCancel)));
 	}
 
 	private void GetBackgroundColor(Color color)

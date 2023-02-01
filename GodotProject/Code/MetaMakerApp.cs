@@ -29,7 +29,7 @@ public partial class MetaMakerApp : App
 
 	public override void _Notification(long what)
 	{
-		if( what == NotificationWmCloseRequest )
+		if( what == NotificationWMCloseRequest )
 		{
 			RequestQuit();
 		}
@@ -38,8 +38,8 @@ public partial class MetaMakerApp : App
 	public override async Task Bindings(Context context)
 	{
 		OS.LowProcessorUsageMode = true;
-		
-		GetTree().SetAutoAcceptQuit(false);
+
+		GetTree().AutoAcceptQuit = false;
 		
 		// Pull in Directly Linked Bindings
 		context.Set(this);

@@ -11,7 +11,7 @@ public partial class FileDialogAsync : FileDialog
 	public override void _Ready()
 	{
 		Connect("file_selected", new Callable(this, nameof(OnSelect)));
-		Connect("cancelled", new Callable(this, nameof(OnCancel)));
+		Connect("canceled", new Callable(this, nameof(OnCancel)));
 		Access = AccessEnum.Filesystem;
 	}
 

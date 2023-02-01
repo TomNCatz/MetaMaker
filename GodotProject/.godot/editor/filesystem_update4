@@ -1,3 +1,2 @@
-res://Nodes/Windows/error_popup.tscn
-res://Themes/MenuBar.tres
 res://Nodes/Windows/app.tscn
+res://Themes/MenuBar.tres
